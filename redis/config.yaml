@@ -1,0 +1,20 @@
+name: Redis DB
+version: 7.4.0-v1
+slug: redis
+description: Redis database
+url: https://redis.io
+startup: initialize
+arch:
+  - aarch64
+  - amd64
+init: false
+map:
+  - addon_config:rw
+ports:
+  6379/tcp: null
+  8001/tcp: null
+  9121/tcp: null
+ports_description:
+  6379/tcp: Database
+  8001/tcp: Redis Insight
+  9121/tcp: Redis Exporter
