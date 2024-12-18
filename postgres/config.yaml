@@ -1,0 +1,32 @@
+name: Postgres
+version: "pg16-v0.3.0"
+slug: postgres
+description: Postgres 16 with pgvecto.rs
+url: https://github.com/tensorchord/pgvecto.rs
+startup: initialize
+apparmor: true
+arch:
+  - aarch64
+  - amd64
+map:
+  - addon_config:rw
+  - media:rw
+  - share:rw
+backup: cold
+backup_exclude:
+  - "*/log"
+ports:
+  5432/tcp: null
+ports_description:
+  5432/tcp: Database
+options:
+  POSTGRES_INITDB_ARGS: "--data-checksum"
+  POSTGRES_HOST_AUTH_METHOD: trust
+schema:
+  POSTGRES_DB: str
+  POSTGRES_HOST_AUTH_METHOD: str
+  POSTGRES_USER: str
+  POSTGRES_PASSWORD: password
+  POSTGRES_INITDB_ARGS: str?
+environment:
+  PGDATA: /config
