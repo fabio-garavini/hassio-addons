@@ -1,0 +1,28 @@
+#!/usr/bin/with-contenv bash
+
+# make redis folders
+mkdir -p \
+	/config/redis \
+	/config/logs \
+	/var/run/redis
+
+# copy redis defaults
+[[ ! -f /config/redis/redis.conf ]] &&
+	cp /defaults/redis.conf /config/redis/redis.conf
+
+# permissions
+chown -R abc:abc \
+	/config/redis \
+	/config/log \
+	/var/run/redis
+
+s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost 6379" \
+    s6-setuidgid abc \
+	redis-server /config/redis/redis.conf \
+	--bind 0.0.0.0 \
+	--port 6379 \
+	--pidfile /var/run/redis/redis.pid \
+	--always-show-logo no \
+	--dir /config/redis \
+	--daemonize no \
+	--logfile /config/logs/redis.log

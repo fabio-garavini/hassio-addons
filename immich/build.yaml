@@ -1,0 +1,5 @@
+build_from:
+  aarch64: ghcr.io/imagegenius/immich
+  amd64: ghcr.io/imagegenius/immich
+codenotary:
+  signer: fabio.garavini@outlook.it
