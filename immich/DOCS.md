@@ -33,10 +33,10 @@ Any folder or network storage mounted under `/media` or `/share` is visible insi
 
 ## NAS storage
 
-If you want to save your immich library on your nas, you have to add a network storage for `Media` named `immich` **before running Immich for the first time** or you will need to manually move all the contents inside your `/media/immich` folder to your nas before stating the add-on
+If you want to store your immich library on your nas, you have to add a network storage for `Media` usage named `immich` **before running Immich for the first time** or you will need to manually move all the contents inside your `/media/immich` folder to your nas before stating the add-on
 
 ## Permissions
 
-You can change your library owner user and group by changing the `PUID` with the user uid and `PGID` with the group uid
+You can change your library owner (user and group) by changing the `PUID` with the user uid and `PGID` with the group uid
 
-For example if you are mounting an NFS share
+For example if you are mounting an NFS share with custom permissions
