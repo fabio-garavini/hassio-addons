@@ -1,0 +1,40 @@
+name: Syncthing
+version: "1.28.1"
+slug: syncthing
+description: "Open Source Continuous File Synchronization"
+url: https://syncthing.net
+ingress: true
+ingress_port: 8384
+ingress_stream: true
+panel_title: Syncthing
+panel_icon: mdi:sync
+arch:
+  - armv7
+  - aarch64
+  - amd64
+init: false
+map:
+  - addon_config:rw
+  - addons:rw
+  - all_addon_configs:rw
+  - backup:rw
+  - homeassistant_config:rw
+  - media:rw
+  - share:rw
+  - data:rw
+  - ssl:rw
+ports:
+  8384/tcp: null
+  22000/tcp: 22000
+  22000/udp: 22000
+  21027/udp: 21027
+ports_description:
+  8384/tcp: Web frontend (not needed with Ingress)
+  22000/tcp: Sync protocol tcp
+  22000/udp: Sync protocol udp
+  21027/udp: Discovery broadcast
+environment:
+  PUID: "0"
+  PGID: "0"
+  TZ: "Etc/UTC"
+image: linuxserver/syncthing
