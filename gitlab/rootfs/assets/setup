@@ -1,0 +1,73 @@
+#!/bin/bash
+
+set -e
+
+source /etc/lsb-release
+source /RELEASE
+
+# Remove sensitive content from RELEASE file. We can't remove the file because
+# we are using it in assets/wrapper.
+sed -i "/DOWNLOAD_URL/d;/CI_JOB_TOKEN/d;" /RELEASE
+
+# Install GitLab
+if [[ "${TARGETARCH}" == "amd64" ]]; then
+  export DOWNLOAD_URL=${DOWNLOAD_URL_amd64}
+elif [[ "${TARGETARCH}" == "arm64" ]]; then
+  export DOWNLOAD_URL=${DOWNLOAD_URL_arm64}
+else
+  echo "Unknown TARGETARCH: DOWNLOAD_URL not set"
+fi
+
+DOWNLOAD_URL=${DOWNLOAD_URL} CI_JOB_TOKEN=${CI_JOB_TOKEN} /assets/download-package && dpkg -i /tmp/gitlab.deb 
+rm -rf /tmp/gitlab.deb /var/lib/apt/lists/*
+
+unset DOWNLOAD_URL_amd64
+unset DOWNLOAD_URL_arm64
+unset DOWNLOAD_URL
+unset CI_JOB_TOKEN
+
+# Create sshd daemon
+mkdir -p /opt/gitlab/sv/sshd/supervise /opt/gitlab/sv/sshd/log/supervise
+mkfifo /opt/gitlab/sv/sshd/supervise/ok /opt/gitlab/sv/sshd/log/supervise/ok
+printf "#!/bin/sh\nexec 2>&1\numask 077\nexec /usr/sbin/sshd -D -f /assets/sshd_config -e" > /opt/gitlab/sv/sshd/run
+printf "#!/bin/sh\nexec svlogd -tt /var/log/gitlab/sshd" > /opt/gitlab/sv/sshd/log/run
+chmod a+x /opt/gitlab/sv/sshd/run /opt/gitlab/sv/sshd/log/run
+
+# Remove current gitlab.rb file
+rm -f /var/opt/gitlab/gitlab.rb
+
+# Patch omnibus package
+sed -i "s/external_url 'GENERATED_EXTERNAL_URL'/# external_url 'GENERATED_EXTERNAL_URL'/" /opt/gitlab/etc/gitlab.rb.template
+sed -i "s/\/var\/opt\/gitlab\/gitlab.rb/\/assets\/gitlab.rb/" /opt/gitlab/embedded/cookbooks/gitlab/recipes/show_config.rb
+sed -i "s/\/var\/opt\/gitlab\/gitlab.rb/\/assets\/gitlab.rb/" /opt/gitlab/embedded/cookbooks/gitlab/recipes/config.rb
+
+# Set install type to docker
+echo 'gitlab-docker' > /opt/gitlab/embedded/service/gitlab-rails/INSTALLATION_TYPE
+
+# Create groups
+groupadd -g 998 git
+groupadd -g 999 gitlab-www
+groupadd -g 997 gitlab-redis
+groupadd -g 996 gitlab-psql
+
+groupadd -g 994 mattermost
+groupadd -g 993 registry
+groupadd -g 992 gitlab-prometheus
+groupadd -g 991 gitlab-consul
+groupadd -g 990 gitlab-backup
+
+# Create accounts
+## The git account is created with * as crypted password as ssh treats the account as locked if it has a ! 
+## Issue #5891 https://gitlab.com/gitlab-org/omnibus-gitlab
+useradd -m -u 998 -g git -p '*' -m -s /bin/sh -d /var/opt/gitlab git
+useradd -m -u 999 -g gitlab-www -m -s /bin/false -d /var/opt/gitlab/nginx gitlab-www
+useradd -m -u 997 -g gitlab-redis -m -s /bin/false -d /var/opt/gitlab/redis gitlab-redis
+useradd -m -u 996 -g gitlab-psql -m -s /bin/sh -d /var/opt/gitlab/postgresql gitlab-psql
+useradd -m -u 994 -g mattermost -m -s /bin/sh -d /var/opt/gitlab/mattermost mattermost
+useradd -m -u 993 -g registry -m -s /bin/sh -d /var/opt/gitlab/registry registry
+useradd -m -u 992 -g gitlab-prometheus -m -s /bin/sh -d /var/opt/gitlab/prometheus gitlab-prometheus
+useradd -m -u 991 -g gitlab-consul -m -s /bin/sh -d /var/opt/gitlab/consul gitlab-consul
+useradd -m -u 990 -g gitlab-backup -m -s /bin/sh -d /var/opt/gitlab/backups gitlab-backup
+
+# The gitlab-backup user needs access to these groups for backup/restore purposes
+usermod -a -G gitlab-psql,registry,git gitlab-backup

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+echo "Downloading package as artifact - ${DOWNLOAD_URL}"
+wget --quiet --header "JOB-TOKEN: ${CI_JOB_TOKEN}" ${DOWNLOAD_URL} -O /tmp/gitlab.deb
+
+results=$?
+if [ ${results} -ne 0 ]; then
+    >&2 echo "There was an error downloading ${DOWNLOAD_URL}. Please check the output for more information"
+    exit ${results}
+fi
