@@ -13,6 +13,7 @@ arch:
   - aarch64
   - amd64
 init: false
+backup: cold
 map:
   - addon_config:rw
   - addons:rw

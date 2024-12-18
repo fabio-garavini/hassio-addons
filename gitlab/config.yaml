@@ -18,6 +18,7 @@ map:
     read_only: False
     path: /etc/gitlab
   - ssl
+backup: cold
 backup_exclude:
   - "*/cache"
   - "*/logs"
