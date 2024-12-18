@@ -1,0 +1,27 @@
+name: OpenSpeedTest
+version: "v2.0.5"
+slug: openspeedtest
+description: SpeedTest by OpenSpeedTest™ is a Free and Open-Source HTML5 Network Performance Estimation Tool Written in Vanilla Javascript
+url: https://openspeedtest.com
+webui: http://[HOST]:[PORT:3000]
+ingress: true
+panel_icon: mdi:speedometer
+panel_admin: false
+ingress_port: 3000
+ingress_stream: true
+arch:
+  - aarch64
+  - armv7
+  - amd64
+init: false
+map:
+  - type: ssl
+    read_only: False
+    path: /etc/ssl
+ports:
+  3000/tcp: null
+  3001/tcp: null
+ports_description:
+  3000/tcp: HTTP (Not required for Ingress)
+  3001/tcp: HTTPS (Not required for Ingress)
+image: openspeedtest/latest
