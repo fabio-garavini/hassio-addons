@@ -1,0 +1,23 @@
+name: Prometheus
+version: v2.54.1
+slug: prometheus
+description: Prometheus monitoring system
+startup: initialize
+backup: cold
+arch:
+  - aarch64
+  - armv7
+  - amd64
+init: false
+backup: cold
+map:
+  - type: data
+    read_only: False
+    path: /prometheus
+  - type: addon_config
+    read_only: True
+    path: /etc/prometheus
+ports:
+  9090/tcp: null
+ports_description:
+  9090/tcp: Metrics
