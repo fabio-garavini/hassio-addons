@@ -1,0 +1,57 @@
+name: Nextcloud
+version: "30.0.4"
+slug: nextcloud
+description: Nextcloud all-in-one
+url: https://nextcloud.com
+arch:
+  - aarch64
+  - amd64
+init: false
+apparmor: true
+webui: https://[HOST]:[PORT:443]
+map:
+  - addon_config:rw
+  - data:rw
+  - share:rw
+  - media:rw
+  - ssl
+backup: cold
+backup_exclude:
+  - "**/log"
+tempfs: true
+video: true
+devices:
+  - /dev/kfd
+  - /dev/dri
+  - /dev/vchiq
+  - /dev/video0
+  - /dev/video10
+schema:
+  PUID: int(0,)
+  PGID: int(0,)
+  TZ: str?
+  DEFAULT_PHONE_REGION: str?
+  OVERWRITEPROTOCOL: str?
+  OVERWRITEHOST: str?
+  OVERWRITECLIURL: str?
+  SMTP_HOST: str?
+  SMTP_SECURE: str?
+  SMTP_PORT: port?
+  SMTP_AUTHTYPE: list(LOGIN|PLAIN)?
+  SMTP_USERNAME: str?
+  SMTP_PASSWORD: password?
+  MAIL_FROM_ADDRESS: str?
+  MAIL_DOMAIN: str?
+options:
+  PUID: 1000
+  PGID: 1000
+ports:
+  80/tcp: null
+  443/tcp: 8443
+  6379/tcp: null
+  3306/tcp: null
+ports_description:
+  80/tcp: HTTP
+  443/tcp: HTTPS
+  6379/tcp: Redis DB
+  3306/tcp: MariaDB
