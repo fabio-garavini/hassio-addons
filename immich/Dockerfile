@@ -47,8 +47,9 @@ ARG PG_MAJOR=16 \
 
 # Postgres install
 RUN mkdir /docker-entrypoint-initdb.d; \
-    apt-get update && apt-get upgrade -y; \
-    apt-get install -y --no-install-recommends \
+    apt-get update; \
+    apt-get install -y --allow-downgrades \
+        postgresql-client-common=257build1.1 \
         postgresql \
         postgresql-contrib; \
     if [ "$BUILD_ARCH" = "aarch64" ]; then \
@@ -59,23 +60,25 @@ RUN mkdir /docker-entrypoint-initdb.d; \
             "https://github.com/tensorchord/pgvecto.rs/releases/download/v${PGVECTORS_VERSION}/vectors-pg${PG_MAJOR}_${PGVECTORS_VERSION}_${BUILD_ARCH}.deb"; \
     fi; \
     apt-get install /tmp/pgvectors.deb && rm -f /tmp/pgvectors.deb; \
-    apt-get clean; \
+    apt-get autoremove -y; \
+    apt-get autoclean -y; \
     rm -rf \
         /tmp/* \
         /var/{cache,log}/* \
         /var/lib/apt/lists/*; \
-    groupadd -r -g 900 postgres; \
-	useradd -r -u 900 -g postgres --home-dir=/var/lib/postgresql --shell=/bin/bash postgres; \
+#    groupadd -r -g 900 postgres; \
+#	useradd -r -u 900 -g postgres --home-dir=/var/lib/postgresql --shell=/bin/bash postgres; \
 	install --verbose --directory --owner postgres --group postgres --mode 1777 /var/lib/postgresql; \
     install --verbose --directory --owner postgres --group postgres --mode 3777 /var/run/postgresql
 
 ENV PATH $PATH:/usr/lib/postgresql/$PG_MAJOR/bin
 
 # Redis install
-RUN apt-get update && apt-get upgrade -y; \
+RUN apt-get update; \
     apt-get install -y --no-install-recommends \
         redis-server; \
-    apt-get clean; \
+    apt-get autoremove -y; \
+    apt-get autoclean -y; \
     rm -rf \
         /tmp/* \
         /var/{cache,log}/* \
