@@ -24,6 +24,7 @@ map:
   - share:rw
   - data:rw
   - ssl:rw
+host_network: true
 ports:
   8384/tcp: null
   22000/tcp: 22000
@@ -34,8 +35,11 @@ ports_description:
   22000/tcp: Sync protocol tcp
   22000/udp: Sync protocol udp
   21027/udp: Discovery broadcast
-environment:
-  PUID: "0"
-  PGID: "0"
-  TZ: "Etc/UTC"
-image: linuxserver/syncthing
+schema:
+  PUID: int(0,)
+  PGID: int(0,)
+  TZ: str?
+options:
+  PUID: 1000
+  PGID: 1000
+  TZ: Etc/UTC
