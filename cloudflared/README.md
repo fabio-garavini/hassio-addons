@@ -1,5 +1,3 @@
 # Home Assistant add-on: Cloudflare Tunneling Service ☁️
 
-> [!NOTE]
->
-> This addon is still under development and many of its configuration are not available
+Cloudflare Tunnel provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address.

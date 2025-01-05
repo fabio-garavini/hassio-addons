@@ -1,7 +1,14 @@
 ARG BUILD_VERSION
 FROM cloudflare/cloudflared:${BUILD_VERSION}
 
-CMD ["tunnel", "--config", "/config/config.yml", "run"]
+COPY --from=busybox:1.37-uclibc /bin/sh /bin/mv /bin/cat /bin/find /bin/head /bin/basename /bin/xargs /bin/
+
+COPY entrypoint.sh /entrypoint.sh
+
+USER root
+
+ENTRYPOINT ["/bin/sh", "/entrypoint.sh"]
+CMD []
 
 ARG BUILD_VERSION
 ARG BUILD_ARCH
