@@ -1,4 +1,4 @@
-# Postgres
+# Home Assistant add-on: PostgreSQL DB 📝 by Fabio Garavini
 
 > [!NOTE]
 >

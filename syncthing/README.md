@@ -1,4 +1,4 @@
-# Home Assistant add-on: Syncthing
+# Home Assistant add-on: Syncthing 🔄 by Fabio Garavini
 
 ![Addon Stage][dev-badge]
 ![Supports aarch64 Architecture][aarch64-badge]

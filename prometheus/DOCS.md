@@ -1,4 +1,4 @@
-# Prometheus monitoring System 🔥
+# Home Assistant add-on: Prometheus 🔥 by Fabio Garavini
 
 > [!NOTE]
 >
