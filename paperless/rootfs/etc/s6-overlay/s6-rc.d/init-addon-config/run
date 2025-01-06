@@ -18,7 +18,7 @@ for KEYS in "${arr[@]}"; do
     line="${KEYS}='${VALUE}'"
 
     # text
-    if [[ "${KEYS}" == *"PASS"* ]]; then
+    if [[ "${KEYS}" == *"PASS"* ]] || [[ "${KEYS}" == *"SECRET"* ]]; then
         echo "${log_prefix} ${KEYS}=******"
     else
         echo "${log_prefix} $line"
