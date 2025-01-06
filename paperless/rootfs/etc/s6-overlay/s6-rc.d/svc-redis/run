@@ -1,0 +1,28 @@
+#!/command/with-contenv /usr/bin/bash
+
+# make redis folders
+mkdir -p \
+	${REDIS_DATADIR} \
+	/config/logs \
+	/var/run/redis
+
+# copy redis defaults
+[[ ! -f ${REDIS_DATADIR}/redis.conf ]] &&
+	cp /defaults/redis.conf ${REDIS_DATADIR}/redis.conf
+
+# permissions
+chown -R paperless:paperless \
+	${REDIS_DATADIR} \
+	/config/logs \
+	/var/run/redis
+
+s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost 6379" \
+	s6-setuidgid paperless \
+	redis-server ${REDIS_DATADIR}/redis.conf \
+	--bind 0.0.0.0 \
+	--port 6379 \
+	--pidfile /var/run/redis/redis.pid \
+	--always-show-logo no \
+	--dir ${REDIS_DATADIR} \
+	--daemonize no \
+	--logfile /config/logs/redis.log

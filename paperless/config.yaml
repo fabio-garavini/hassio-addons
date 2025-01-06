@@ -1,0 +1,36 @@
+name: Paperless
+version: "2.13.4"
+slug: paperless
+description: Document management system that transforms your physical documents into a searchable online archive
+url: https://docs.paperless-ngx.com
+webui: http://[HOST]:[PORT:8000]
+arch:
+  - aarch64
+  - amd64
+init: false
+map:
+  - addon_config:rw
+  - share:rw
+  - media:rw
+  - ssl
+backup: cold
+backup_exclude:
+  - "**/logs"
+tempfs: true
+schema:
+  USERMAP_UID: int(0,)
+  USERMAP_GID: int(0,)
+  PAPERLESS_TIME_ZONE: str?
+  PAPERLESS_ADMIN_USER: str
+  PAPERLESS_ADMIN_PASSWORD: password
+  PAPERLESS_OCR_LANGUAGE: str?
+  PAPERLESS_URL: str?
+  PAPERLESS_SECRET_KEY: str?
+options:
+  USERMAP_UID: 0
+  USERMAP_GID: 0
+  PAPERLESS_TIME_ZONE: Etc/UTC
+ports:
+  8000/tcp: 8010
+ports_description:
+  8000/tcp: Web UI (not required for ingress)

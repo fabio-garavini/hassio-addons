@@ -1,0 +1,45 @@
+#!/command/with-contenv /usr/bin/bash
+set -e
+
+declare -r log_prefix="[init-addon-config]"
+
+echo "${log_prefix} Loading env variables:"
+
+OPTIONS_SOURCE=/data/options.json
+
+mapfile -t arr < <(jq -r 'keys[]' "${OPTIONS_SOURCE}")
+
+for KEYS in "${arr[@]}"; do
+    # export key
+    VALUE=$(jq ."$KEYS" "${OPTIONS_SOURCE}")
+    
+    # Continue for single values
+    VALUE="${VALUE//[\"\']/}"
+    line="${KEYS}='${VALUE}'"
+
+    # text
+    if [[ "${KEYS}" == *"PASS"* ]]; then
+        echo "${log_prefix} ${KEYS}=******"
+    else
+        echo "${log_prefix} $line"
+    fi
+
+    export "$line"
+
+    # set .env
+    echo "$line" >> /.env || true
+
+    # set /etc/environment
+    echo "$line" >> /etc/environment
+
+    # For s6
+    if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
+    echo "export ${KEYS}='${VALUE}'" >> ~/.bashrc
+done
+
+if [ -n "$PAPERLESS_TIME_ZONE" ] && [ -f /etc/localtime ]; then
+    if [ -f /usr/share/zoneinfo/"$PAPERLESS_TIME_ZONE" ]; then
+        echo "${log_prefix} Timezone set from $(cat /etc/timezone) to $PAPERLESS_TIME_ZONE"
+        ln -snf /usr/share/zoneinfo/"$PAPERLESS_TIME_ZONE" /etc/localtime && echo "$PAPERLESS_TIME_ZONE" >/etc/timezone
+    fi
+fi
