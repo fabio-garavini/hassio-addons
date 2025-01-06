@@ -1,4 +1,4 @@
-# Home Assistant 🏠 add-ons: Fabio Garavini
+# Home Assistant 🏠 add-ons: by Fabio Garavini
 
 Collection of easy to use self-hosted services tuned for Home Assistant
 
