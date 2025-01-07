@@ -1,0 +1,32 @@
+name: Gitea
+version: "1.22.6"
+slug: gitea
+description: Gitea is a Git hosting, code review, team collaboration, package registry, and CI/CD
+url: https://about.gitea.com/
+webui: http://[HOST]:[PORT:3000]
+arch:
+  - aarch64
+  - amd64
+init: false
+map:
+  - addon_config:rw
+  - data:rw
+  - share:rw
+  - ssl
+backup: cold
+backup_exclude:
+  - "**/logs"
+schema:
+  USER_UID: int(1000,)
+  USER_GID: int(1000,)
+  TZ: str?
+options:
+  USER_UID: 1000
+  USER_GID: 1000
+  TZ: Etc/UTC
+ports:
+  3000/tcp: 3080
+  22/tcp: 222
+ports_description:
+  3000/tcp: Web UI
+  22/tcp: SSH
