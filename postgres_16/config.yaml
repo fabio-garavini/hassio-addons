@@ -1,6 +1,6 @@
-name: Postgres
+name: Postgres 16
 version: "pg16-v0.3.0"
-slug: postgres
+slug: postgres_16
 description: Postgres 16 with pgvecto.rs
 url: https://github.com/tensorchord/pgvecto.rs
 startup: initialize
