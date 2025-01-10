@@ -1,7 +1,3 @@
 # Home Assistant add-on: Redis in-memory database 📝
 
-Redis database with Redis Insight and Redis Exporter built in
-
-> [!NOTE]
->
-> This addon is still under development and many of its configuration are not available
+[Redis](https://redis.io) is the world’s fastest in-memory database with [Redis Insight](https://redis.io/insight) and [Redis Exporter](https://github.com/oliver006/redis_exporter) built in

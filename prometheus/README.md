@@ -1,5 +1,3 @@
 # Home Assistant add-on: Prometheus 🔥 by Fabio Garavini
 
-> [!NOTE]
->
-> This addon is still under development and many of its configuration are not available
+[Prometheus](https://prometheus.io) is an open-source monitoring system with a dimensional data model, flexible query language, efficient time series database and modern alerting approach.

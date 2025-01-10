@@ -6,8 +6,8 @@
 
 ## Setup
 
-1. Start and stop the addon to generate the `addon_local` folder
-2. Then create a `prometheus.yml` file inside your *addon_local* prometheus folder
+1. Start and stop the addon to generate the `addon_configs` folder
+2. Then create a `prometheus.yml` file inside your *addon_configs* prometheus folder
 3. Write inside your config
 
 ## Config
