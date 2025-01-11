@@ -15,7 +15,7 @@ for KEYS in "${arr[@]}"; do
     
     # Continue for single values
     VALUE="${VALUE//[\"\']/}"
-    line="${KEYS}='${VALUE}'"
+    line="${KEYS}=${VALUE}"
 
     # text
     if [[ "${KEYS}" == *"PASS"* ]] || [[ "${KEYS}" == *"SECRET"* ]]; then
@@ -34,7 +34,7 @@ for KEYS in "${arr[@]}"; do
 
     # For s6
     if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
-    echo "export ${KEYS}='${VALUE}'" >> ~/.bashrc
+    echo "export ${KEYS}=${VALUE}" >> ~/.bashrc
 done
 
 if [ -n "$PAPERLESS_TIME_ZONE" ] && [ -f /etc/localtime ]; then
