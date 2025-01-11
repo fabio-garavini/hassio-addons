@@ -61,6 +61,12 @@ SpeedTest by [OpenSpeedTest™](https://openspeedtest.com/) is a Free and Open-S
 
 [Paperless-ngx](https://docs.paperless-ngx.com) is a community-supported open-source document management system that transforms your physical documents into a searchable online archive so you can keep, well, less paper.
 
+### PocketBase 🗄️
+
+*All-in-one*
+
+[Pocketbase](https://pocketbase.io) is an open source backend consisting of embedded database (SQLite) with realtime subscriptions, built-in auth management, convenient dashboard UI and simple REST-ish API. It can be used both as Go framework and as standalone application.
+
 ### Postgres 🐘
 
 *All-in-one*

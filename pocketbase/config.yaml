@@ -1,0 +1,27 @@
+name: PocketBase
+version: 0.24.2
+slug: pocketbase
+description: Pocketbase is an open source backend
+url: "https://pocketbase.io"
+webui: "http://[HOST]:[PORT:8090]/_/"
+backup: cold
+arch:
+  - aarch64
+  - armv7
+  - amd64
+init: false
+map:
+  - data:rw
+  - addon_config:rw
+  - ssl
+schema:
+  ADMIN_EMAIL: str
+  ADMIN_PASSWORD: password
+  ENCRYPTION_KEY: password
+  TZ: str?
+options:
+  ENCRYPTION_KEY: xogmwSqmcMauBi8wootWVdBz4PCMEjC8
+ports:
+  8090/tcp: 8090
+ports_description:
+  8090/tcp: Web UI

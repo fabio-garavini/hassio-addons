@@ -1,0 +1,22 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+
+bashio::log.info "Starting PocketBase"
+
+if [ ! -d "/config/pb_hooks" ]; then
+    mkdir /config/pb_hooks
+fi
+
+if [ ! -d "/config/pb_migrations" ]; then
+    mkdir /config/pb_migrations
+fi
+
+if [ ! -d "/config/pb_public" ]; then
+    mkdir /config/pb_public
+fi
+
+if [ ! -f "/data/data.db" ]; then
+    /pb/pocketbase superuser create --dir /data --encryptionEnv "$ENCRYPTION_KEY" $ADMIN_EMAIL $ADMIN_PASSWORD
+fi
+
+/pb/pocketbase serve --http=0.0.0.0:8090 --dir /data --encryptionEnv "$ENCRYPTION_KEY" --hooksDir /config/pb_hooks --migrationsDir /config/pb_migrations --publicDir /config/pb_public
