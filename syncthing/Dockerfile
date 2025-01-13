@@ -1,56 +1,9 @@
-# syntax=docker/dockerfile:1
-
-FROM ghcr.io/linuxserver/baseimage-alpine:3.20 as buildstage
-
-# build variables
+ARG BUILD_FROM
 ARG BUILD_VERSION
 
-RUN \
- echo "**** install build packages ****" && \
-  apk add --no-cache \
-    build-base \
-    go
+FROM ${BUILD_FROM}:${BUILD_VERSION}
 
-RUN \
-  echo "**** fetch source code ****" && \
-  mkdir -p \
-    /tmp/sync && \
-  curl -o \
-  /tmp/syncthing-src.tar.gz -L \
-    "https://github.com/syncthing/syncthing/archive/v${BUILD_VERSION}.tar.gz" && \
-  tar xf \
-  /tmp/syncthing-src.tar.gz -C \
-    /tmp/sync --strip-components=1 && \
-  echo "**** compile syncthing  ****" && \
-  cd /tmp/sync && \
-  go clean -modcache && \
-  CGO_ENABLED=0 go run build.go \
-    -no-upgrade \
-    -version=v${BUILD_VERSION} \
-    build syncthing
-
-############## runtime stage ##############
-FROM ghcr.io/linuxserver/baseimage-alpine:3.20
-
-# environment settings
-ENV HOME=/share \
-    STCONFDIR=/config \
-    STDATADIR=/data \
-    STNODEFAULTFOLDER=1 \
-    STNORESTART=1 \
-    STNOUPGRADE=1
-
-RUN \
-  echo "**** create var lib folder ****" && \
-  install -d -o abc -g abc /var/lib/syncthing
-
-# copy files from build stage and local files
-COPY --from=buildstage /tmp/sync/syncthing /usr/bin/
 COPY root/ /
-
-# ports and volumes
-EXPOSE 8384 22000/tcp 22000/udp 21027/udp
-VOLUME /config
 
 ARG BUILD_VERSION
 ARG BUILD_ARCH
