@@ -1,3 +1,5 @@
+# v30.0.4
+
 ## What's Changed
 
 - Bump Nextcloud Server to 28.0.12 / 29.0.9 / 30.0.2 by [@J0WI](https://github.com/J0WI)
