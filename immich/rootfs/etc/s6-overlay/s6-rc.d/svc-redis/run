@@ -13,7 +13,7 @@ mkdir -p \
 # permissions
 chown -R abc:abc \
 	/config/redis \
-	/config/log \
+	/config/logs \
 	/var/run/redis
 
 s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost 6379" \
