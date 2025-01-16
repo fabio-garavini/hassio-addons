@@ -4,11 +4,11 @@
 mkdir -p "$PGDATA" "/config/logs/postgres"
 
 # copy defaults
-[[ ! -f ${PGDATA}/postgresql.conf ]] &&
-	cp /defaults/postgresql.conf ${PGDATA}/postgresql.conf
+#[[ ! -f ${PGDATA}/postgresql.conf ]] &&
+#	cp /defaults/postgresql.conf ${PGDATA}/postgresql.conf
 
 # permissions
 chown postgres:postgres -R "$PGDATA" "/config/logs/postgres"
 chmod 755 -R "$PGDATA" "/config/logs/postgres"
 
-exec s6-setuidgid postgres postgres-entrypoint.sh postgres -c shared_preload_libraries=vectors.so -c search_path=postgres,public,vectors -c log_directory="/config/logs/postgres" -c log_rotation_size=10MB
+exec s6-setuidgid postgres postgres-entrypoint.sh postgres -c timezone="$TZ" -c shared_preload_libraries=vectors.so -c search_path=postgres,public,vectors -c log_directory="/config/logs/postgres" -c log_timezone="$TZ" -c log_rotation_size=10MB
