@@ -52,3 +52,4 @@ ports_description:
   8080/tcp: Web UI
   5432/tcp: Postgresql DB
   6379/tcp: Redis DB
+image: fabioogaravini/hassio-{arch}-immich
