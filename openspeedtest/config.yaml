@@ -3,7 +3,6 @@ version: "v2.0.5"
 slug: openspeedtest
 description: SpeedTest by OpenSpeedTest™ is a Free and Open-Source HTML5 Network Performance Estimation Tool Written in Vanilla Javascript
 url: https://openspeedtest.com
-webui: http://[HOST]:[PORT:3000]
 ingress: true
 panel_icon: mdi:speedometer
 panel_admin: false
