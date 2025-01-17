@@ -3,6 +3,7 @@ ARG BUILD_FROM
 FROM $BUILD_FROM
 
 ARG BUILD_VERSION
+ARG BUILD_ARCH
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -54,8 +55,17 @@ ARG TARGETARCH
 RUN { \
     echo 'RELEASE_PACKAGE=gitlab-ce'; \
     echo 'RELEASE_VERSION=${BUILD_VERSION}'; \
-    echo 'DOWNLOAD_URL=https://packages.gitlab.com/gitlab/gitlab-ce/packages/ubuntu/jammy/gitlab-ce_${BUILD_VERSION}_amd64.deb/download.deb'; \
 } > /RELEASE
+
+RUN \
+    if [[ "${BUILD_ARCH}" == "aarch64" ]]; then \
+        export DOWNLOAD_ARCH="arm64"; \
+    else \
+        export DOWNLOAD_ARCH=${BUILD_ARCH}; \
+    fi; \
+    wget --quiet "https://packages.gitlab.com/gitlab/gitlab-ce/packages/ubuntu/jammy/gitlab-ce_${BUILD_VERSION}_${DOWNLOAD_ARCH}.deb/download.deb" -O /tmp/gitlab.deb; \
+    dpkg -i /tmp/gitlab.deb; \
+    rm -rf /tmp/gitlab.deb /var/lib/apt/lists/*
 
 # as gitlab-ci checks out with mode 666 we need to set permissions of the files we copied into the
 # container to a secure value. Issue #5956
@@ -77,7 +87,6 @@ CMD ["/assets/wrapper"]
 HEALTHCHECK --interval=60s --timeout=30s --retries=5 \
 CMD /opt/gitlab/bin/gitlab-healthcheck --fail --max-time 10
 
-ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION
 ARG BUILD_NAME
