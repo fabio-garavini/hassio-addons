@@ -64,4 +64,4 @@ arch:
   - aarch64
 map:
   - "media:rw"
-  - "config:rw"
+  - "homeassistant_config:rw"
