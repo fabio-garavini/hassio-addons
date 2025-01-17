@@ -19,7 +19,8 @@ for dir in \
 	"${media_root_dir}" "${media_root_dir}/documents" "${media_root_dir}/documents/originals" "${media_root_dir}/documents/thumbnails" \
     "${empty_trash_dir}" \
 	"${consume_dir}" \
-	"${tmp_dir}"; do
+	"${tmp_dir}" \
+	${PAPERLESS_LOGGING_DIR}; do
 	if [[ ! -d "${dir}" ]]; then
 		mkdir --parents --verbose "${dir}"
 	fi
@@ -32,6 +33,7 @@ for dir in \
 	"${media_root_dir}" \
     "${empty_trash_dir}" \
 	"${consume_dir}" \
-	"${tmp_dir}"; do
+	"${tmp_dir}" \
+	${PAPERLESS_LOGGING_DIR}; do
 	find "${dir}" -not \( -user paperless -and -group paperless \) -exec chown --changes paperless:paperless {} +
 done
