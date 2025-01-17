@@ -32,3 +32,4 @@ schema:
   POSTGRES_INITDB_ARGS: str?
 environment:
   PGDATA: /config
+image: fabioogaravini/hassio-{arch}-postgres-16-pgvectors

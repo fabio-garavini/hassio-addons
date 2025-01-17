@@ -52,4 +52,4 @@ export POSTGRES_INITDB_ARGS=$(bashio::config 'POSTGRES_INITDB_ARGS')
 
 set +e
 
-exec docker-entrypoint.sh postgres -c shared_preload_libraries=vectors.so -c search_path=postgres,public,vectors -c logging_collector=on
+exec docker-entrypoint.sh postgres -c shared_preload_libraries=vectors.so -c search_path=postgres,public,vectors -c logging_collector=on -c log_rotation_size=10MB -c log_timezone="$TZ" -c timezone="$TZ"
