@@ -8,7 +8,7 @@ ARG BUILD_VERSION
 ARG BUILD_ARCH
 
 ARG MARIADB_VERSION=10.11.10-r0 \
-    REDIS_VERSION=7.2.5-r1
+    REDIS_VERSION=7.2.7-r0
 
 # environment settings
 ENV LD_PRELOAD="/usr/local/lib/libjemalloc.so.2"
