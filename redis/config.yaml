@@ -10,7 +10,8 @@ arch:
 init: false
 backup: cold
 map:
-  - addon_config:rw
+  - type: addon_config
+    read_only: false
 ports:
   6379/tcp: null
   8001/tcp: null

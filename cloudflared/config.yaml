@@ -8,5 +8,4 @@ arch:
 init: false
 map:
   - type: addon_config
-    read_only: False
-    path: /config
+    read_only: false

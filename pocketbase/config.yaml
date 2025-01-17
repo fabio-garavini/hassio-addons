@@ -11,9 +11,11 @@ arch:
   - amd64
 init: false
 map:
-  - data:rw
-  - addon_config:rw
-  - ssl
+  - type: addon_config
+    read_only: false
+  - type: data
+    read_only: false
+  - type: ssl
 schema:
   ADMIN_EMAIL: str
   ADMIN_PASSWORD: password

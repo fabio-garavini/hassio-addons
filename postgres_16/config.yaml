@@ -8,9 +8,12 @@ arch:
   - aarch64
   - amd64
 map:
-  - addon_config:rw
-  - media:rw
-  - share:rw
+  - type: addon_config
+    read_only: false
+  - type: media
+    read_only: false
+  - type: share
+    read_only: false
 backup: cold
 backup_exclude:
   - "*/log"

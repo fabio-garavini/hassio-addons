@@ -9,10 +9,13 @@ arch:
   - amd64
 init: false
 map:
-  - addon_config:rw
-  - share:rw
-  - media:rw
-  - ssl
+  - type: addon_config
+    read_only: false
+  - type: share
+    read_only: false
+  - type: media
+    read_only: false
+  - type: ssl
 backup: cold
 backup_exclude:
   - "**/machine-learning"

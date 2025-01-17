@@ -12,14 +12,13 @@ arch:
 init: false
 map:
   - type: addon_config
-    read_only: False
+    read_only: false
     path: /var/opt/gitlab
   - type: data
-    read_only: False
+    read_only: false
     path: /etc/gitlab
   - type: ssl
-    read_only: False
-    path: /ssl
+    read_only: false
 backup: cold
 backup_exclude:
   - "*/cache"

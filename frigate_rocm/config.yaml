@@ -57,5 +57,7 @@ arch:
   - amd64
   - aarch64
 map:
-  - "media:rw"
-  - "homeassistant_config:rw"
+  - type: media
+    read_only: false
+  - type: homeassistant_config
+    read_only: false

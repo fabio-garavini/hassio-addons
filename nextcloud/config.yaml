@@ -9,11 +9,15 @@ arch:
 init: false
 webui: https://[HOST]:[PORT:443]
 map:
-  - addon_config:rw
-  - data:rw
-  - share:rw
-  - media:rw
-  - ssl
+  - type: addon_config
+    read_only: false
+  - type: data
+    read_only: false
+  - type: share
+    read_only: false
+  - type: media
+    read_only: false
+  - type: ssl
 backup: cold
 backup_exclude:
   - "**/log"
