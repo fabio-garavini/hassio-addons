@@ -9,7 +9,7 @@
 Monolithic version of Nextcloud composed of:
 
 - Nextcloud
-- PostgreSQL (with pgvecto.rs)
+- MariaDB
 - Redis
 
 Just one click install

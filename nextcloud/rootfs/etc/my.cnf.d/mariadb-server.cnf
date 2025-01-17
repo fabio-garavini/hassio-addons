@@ -1,6 +1,6 @@
 [mysqld]
 port=3306
-log_error=/config/log/mariadb/error.log
+log_error=/config/logs/mariadb/error.log
 
 # Persistent storage location
 datadir=/config/mariadb

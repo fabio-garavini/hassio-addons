@@ -4,7 +4,7 @@ ARG BUILD_FROM
 
 FROM $BUILD_FROM
 
-ARG BUILD_VERSION
+ARG NEXTCLOUD_VERSION=30.0.5
 ARG BUILD_ARCH
 
 ARG MARIADB_VERSION=10.11.10-r0 \
@@ -109,7 +109,7 @@ RUN \
   } >> "/etc/php83/conf.d/nextcloud.ini" && \
   echo "**** install nextcloud ****" && \
   mkdir -p /app/www/src/ && \
-  curl -o /tmp/nextcloud.tar.bz2 -L "https://download.nextcloud.com/server/releases/nextcloud-${BUILD_VERSION}.tar.bz2" && \
+  curl -o /tmp/nextcloud.tar.bz2 -L "https://download.nextcloud.com/server/releases/nextcloud-${NEXTCLOUD_VERSION}.tar.bz2" && \
   tar xf /tmp/nextcloud.tar.bz2 -C /app/www/src --strip-components=1 && \
   rm -rf /app/www/src/updater && \
   mkdir -p /app/www/src/data && \
@@ -138,6 +138,7 @@ EXPOSE 80 443 6379 3306
 
 VOLUME /config /data /share /media
 
+ARG BUILD_VERSION
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION
 ARG BUILD_NAME

@@ -4,7 +4,7 @@
 # make folders if required
 mkdir -p \
     ${MARIADB_DATADIR} \
-	/config/log/mariadb \
+	/config/logs/mariadb \
     /var/run/mysqld
 
 # set permissions
@@ -12,5 +12,5 @@ chmod -R 777 /var/run/mysqld
 
 chown -R abc:abc \
     ${MARIADB_DATADIR} \
-	/config/log/mariadb \
+	/config/logs/mariadb \
     /var/run/mysqld

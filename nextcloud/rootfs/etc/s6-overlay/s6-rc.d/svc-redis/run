@@ -3,7 +3,7 @@
 # make redis folders
 mkdir -p \
 	${REDIS_DATADIR} \
-	/config/log \
+	/config/logs \
 	/var/run/redis
 
 # copy redis defaults
@@ -13,7 +13,7 @@ mkdir -p \
 # permissions
 chown -R abc:abc \
 	${REDIS_DATADIR} \
-	/config/log \
+	/config/logs \
 	/var/run/redis
 
 s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost 6379" \
@@ -25,4 +25,4 @@ s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost 6379" \
 	--always-show-logo no \
 	--dir ${REDIS_DATADIR} \
 	--daemonize no \
-	--logfile /config/log/redis.log
+	--logfile /config/logs/redis.log

@@ -66,7 +66,7 @@ RUN mkdir /docker-entrypoint-initdb.d; \
         /var/{cache,log}/* \
         /var/lib/apt/lists/*; \
 #    groupadd -r -g 900 postgres; \
-#	useradd -r -u 900 -g postgres --home-dir=/var/lib/postgresql --shell=/bin/bash postgres; \
+#	 useradd -r -u 900 -g postgres --home-dir=/var/lib/postgresql --shell=/bin/bash postgres; \
 	install --verbose --directory --owner postgres --group postgres --mode 1777 /var/lib/postgresql; \
     install --verbose --directory --owner postgres --group postgres --mode 3777 /var/run/postgresql
 
