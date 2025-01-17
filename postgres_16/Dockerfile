@@ -65,7 +65,7 @@ RUN \
         /var/lib/apt/lists/*
 
 # Add rootfs
-COPY root/ /
+COPY rootfs/ /
 
 RUN chmod +x /entrypoint.sh
 
