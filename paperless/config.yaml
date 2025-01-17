@@ -37,3 +37,4 @@ ports:
   8000/tcp: 8010
 ports_description:
   8000/tcp: Web UI
+image: fabioogaravini/hassio-{arch}-paperless
