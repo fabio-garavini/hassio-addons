@@ -27,3 +27,4 @@ ports:
   8090/tcp: 8090
 ports_description:
   8090/tcp: Web UI
+image: fabioogaravini/hassio-{arch}-pocketbase
