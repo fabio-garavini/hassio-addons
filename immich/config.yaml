@@ -20,7 +20,7 @@ backup: cold
 backup_exclude:
   - "**/machine-learning"
   - "**/logs"
-tempfs: true
+tmpfs: true
 video: true
 devices:
   - /dev/kfd

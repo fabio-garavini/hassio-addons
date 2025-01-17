@@ -21,7 +21,7 @@ map:
 backup: cold
 backup_exclude:
   - "**/log"
-tempfs: true
+tmpfs: true
 video: true
 devices:
   - /dev/kfd

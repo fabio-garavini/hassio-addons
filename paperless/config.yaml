@@ -19,7 +19,7 @@ map:
 backup: cold
 backup_exclude:
   - "**/logs"
-tempfs: true
+tmpfs: true
 schema:
   USERMAP_UID: int(0,)
   USERMAP_GID: int(0,)
