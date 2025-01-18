@@ -1,5 +1,6 @@
-ARG BUILD_VERSION
-FROM cloudflare/cloudflared:${BUILD_VERSION}
+ARG BUILD_FROM
+
+FROM ${BUILD_FROM}
 
 COPY --from=busybox:1.37-uclibc /bin/sh /bin/mv /bin/cat /bin/find /bin/head /bin/basename /bin/xargs /bin/
 
