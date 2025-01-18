@@ -51,3 +51,4 @@ options:
   PUID: 1000
   PGID: 1000
   TZ: Etc/UTC
+image: fabioogaravini/hassio-{arch}-syncthing
