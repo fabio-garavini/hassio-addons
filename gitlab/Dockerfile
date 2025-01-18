@@ -2,7 +2,7 @@ ARG BUILD_FROM
 
 FROM $BUILD_FROM
 
-ARG BUILD_VERSION
+ARG GITLAB_VERSION=17.7.1-ce.0
 ARG BUILD_ARCH
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -54,7 +54,7 @@ ARG TARGETARCH
 
 RUN { \
     echo 'RELEASE_PACKAGE=gitlab-ce'; \
-    echo 'RELEASE_VERSION=${BUILD_VERSION}'; \
+    echo 'RELEASE_VERSION=${GITLAB_VERSION}'; \
 } > /RELEASE
 
 RUN \
@@ -63,7 +63,7 @@ RUN \
     else \
         export DOWNLOAD_ARCH=${BUILD_ARCH}; \
     fi; \
-    wget --quiet "https://packages.gitlab.com/gitlab/gitlab-ce/packages/ubuntu/jammy/gitlab-ce_${BUILD_VERSION}_${DOWNLOAD_ARCH}.deb/download.deb" -O /tmp/gitlab.deb; \
+    wget --quiet "https://packages.gitlab.com/gitlab/gitlab-ce/packages/ubuntu/jammy/gitlab-ce_${GITLAB_VERSION}_${DOWNLOAD_ARCH}.deb/download.deb" -O /tmp/gitlab.deb; \
     dpkg -i /tmp/gitlab.deb; \
     rm -rf /tmp/gitlab.deb /var/lib/apt/lists/*
 
@@ -87,6 +87,7 @@ CMD ["/assets/wrapper"]
 HEALTHCHECK --interval=60s --timeout=30s --retries=5 \
 CMD /opt/gitlab/bin/gitlab-healthcheck --fail --max-time 10
 
+ARG BUILD_VERSION
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION
 ARG BUILD_NAME

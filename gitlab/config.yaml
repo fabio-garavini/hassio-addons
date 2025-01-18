@@ -1,6 +1,7 @@
 name: Gitlab
-version: 17.7.1-ce.0
+version: 17.7.1-ce.0-v0
 slug: gitlab
+codenotary: info@fabiogaravini.dev
 description: Gitlab Comunity Edition
 url: https://gitlab.com/rluna-gitlab/gitlab-ce
 webui: http://[HOST]:[PORT:80]
