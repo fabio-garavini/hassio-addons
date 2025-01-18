@@ -1,6 +1,7 @@
 name: Syncthing
-version: "1.29.2"
+version: 1.29.2-v0
 slug: syncthing
+codenotary: info@fabiogaravini.dev
 description: "Open Source Continuous File Synchronization"
 url: https://syncthing.net
 ingress: true

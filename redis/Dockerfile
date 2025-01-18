@@ -1,9 +1,8 @@
 ARG BUILD_FROM
-ARG BUILD_VERSION
 
 FROM oliver006/redis_exporter:alpine AS redis-exporter
 
-FROM ${BUILD_FROM}:${BUILD_VERSION}
+FROM ${BUILD_FROM}
 
 ENV REDIS_DATA_DIR="/config" \
     RIPORT=8001

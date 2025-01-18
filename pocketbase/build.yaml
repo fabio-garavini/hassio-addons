@@ -3,4 +3,5 @@ build_from:
   amd64: ghcr.io/hassio-addons/base:stable
   armv7: ghcr.io/hassio-addons/base:stable
 codenotary:
+  signer: info@fabiogaravini.dev
   base_image: codenotary@frenck.dev

@@ -1,3 +1,5 @@
 build_from:
   aarch64: tensorchord/pgvecto-rs:pg16-v0.3.0
   amd64: tensorchord/pgvecto-rs:pg16-v0.3.0
+codenotary:
+  signer: info@fabiogaravini.dev

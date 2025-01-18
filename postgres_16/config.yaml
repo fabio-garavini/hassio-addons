@@ -1,6 +1,7 @@
 name: Postgres 16
-version: "pg16-v0.3.0"
+version: "pg16-v0.3.0-v0"
 slug: postgres_16
+codenotary: info@fabiogaravini.dev
 description: Postgres 16 with pgvecto.rs
 url: https://www.postgresql.org/about/news/postgresql-16-released-2715
 startup: initialize
