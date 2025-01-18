@@ -9,7 +9,6 @@ ingress_stream: true
 panel_title: Syncthing
 panel_icon: mdi:sync
 arch:
-  - armv7
   - aarch64
   - amd64
 init: false
