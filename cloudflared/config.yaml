@@ -1,9 +1,8 @@
 name: Cloudflared
-version: "2025.1.0-v1"
+version: "2025.1.0-b1"
 slug: cloudflared
 codenotary: info@fabiogaravini.dev
 description: Cloudflare tunneling and Zero Trust service
-apparmor: true
 arch:
   - aarch64
   - amd64
