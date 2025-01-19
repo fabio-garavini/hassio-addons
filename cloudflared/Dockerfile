@@ -2,11 +2,11 @@ ARG BUILD_FROM
 
 FROM ${BUILD_FROM}
 
-COPY --from=busybox:1.37-uclibc /bin/sh /bin/mv /bin/cat /bin/find /bin/head /bin/basename /bin/xargs /bin/
-
-COPY entrypoint.sh /entrypoint.sh
-
 USER root
+
+COPY --from=busybox:1.37-uclibc /bin/sh /bin/cat /bin/find /bin/head /bin/basename /bin/xargs /bin/
+
+COPY rootfs/ /
 
 ENTRYPOINT ["/bin/sh", "/entrypoint.sh"]
 CMD []

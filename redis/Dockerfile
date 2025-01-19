@@ -10,8 +10,7 @@ ENV REDIS_DATA_DIR="/config" \
 COPY --from=redis-exporter /redis_exporter /redis_exporter
 COPY --from=redis-exporter /etc/ssl/certs /etc/ssl/certs
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x entrypoint.sh
+COPY rootfs/ /
 
 EXPOSE 9121
 
