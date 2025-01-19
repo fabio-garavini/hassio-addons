@@ -9,8 +9,6 @@ on:
     paths:
       - "**/config.yaml"
       - "**/build.yaml"
-  schedule:
-    - cron: "0 0 * * *"
 
 jobs:
   find:
@@ -22,7 +20,7 @@ jobs:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v4.2.2
 
-      - name: 🔍 Find add-on directories
+      - name: 🔍 Find add-ons
         id: addons
         uses: home-assistant/actions/helpers/find-addons@master
 
