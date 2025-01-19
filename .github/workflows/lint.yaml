@@ -2,10 +2,9 @@ name: Lint
 
 on:
   push:
-    paths:
-      - "**/config.yaml"
-      - "**/build.yaml"
-  pull_request:
+    branches:
+      - main
+      - dev
     paths:
       - "**/config.yaml"
       - "**/build.yaml"
