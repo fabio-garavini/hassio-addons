@@ -1,28 +1,28 @@
 name: Builder
 
 env:
-  BUILD_ARGS: "--test"
-  MONITORED_FILES: "build.yaml config.yaml Dockerfile rootfs"
+  BUILD_ARGS: ""
+  MONITORED_FILES: "apparmor.txt build.yaml config.yaml Dockerfile rootfs"
 
 on:
   workflow_call:
   push:
     branches:
       - main
-      - dev
     paths:
       - "**/config.yaml"
       - "**/build.yaml"
       - "**/Dockerfile"
+      - "**/apparmor.txt"
       - "**/rootfs/**"
   pull_request:
     branches:
       - main
-      - dev
     paths:
       - "**/config.yaml"
       - "**/build.yaml"
       - "**/Dockerfile"
+      - "**/apparmor.txt"
       - "**/rootfs/**"
 
 jobs:
@@ -38,11 +38,16 @@ jobs:
 
       - name: Get changed files
         id: changed_files
-        uses: jitterbit/get-changed-files@v1
+        uses: masesgroup/retrieve-changed-files@v3.0.0
 
-      - name: Find add-on directories
+      - name: 🔍 Find add-ons
         id: addons
-        uses: home-assistant/actions/helpers/find-addons@master
+        run: |
+          declare -a addons
+          for addon in $(find ./ -name config.yaml | cut -d "/" -f2 | sort -u); do
+            addons+=("$addon");
+          done
+          echo "addons=${addons[@]}" >> "$GITHUB_OUTPUT"
 
       - name: Get changed add-ons
         id: changed_addons
@@ -69,6 +74,7 @@ jobs:
           else
             echo "No add-on had any monitored files changed (${{ env.MONITORED_FILES }})";
           fi
+
   build:
     needs: init
     runs-on: ubuntu-latest
@@ -93,7 +99,7 @@ jobs:
         with:
           path: "./${{ matrix.addon }}"
 
-      - name: Check if add-on should be built
+      - name: Check add-on arch
         id: check
         run: |
           if [[ "${{ steps.info.outputs.image }}" == "null" ]]; then
@@ -102,12 +108,16 @@ jobs:
           elif [[ "${{ steps.info.outputs.architectures }}" =~ ${{ matrix.arch }} ]]; then
             echo "build_arch=true" >> $GITHUB_OUTPUT;
             echo "image=$(echo ${{ steps.info.outputs.image }} | cut -d'/' -f2)" >> $GITHUB_OUTPUT;
-            if [[ -z "${{ github.head_ref }}" ]] && [[ "${{ github.event_name }}" == "push" ]]; then
-                echo "BUILD_ARGS=" >> $GITHUB_ENV;
-            fi
           else
             echo "${{ matrix.arch }} is not a valid arch for ${{ matrix.addon }}, skipping build";
             echo "build_arch=false" >> $GITHUB_OUTPUT;
+          fi
+
+      - name: Set build arguments
+        if: steps.check.outputs.build_arch == 'true'
+        run: |
+          if [[ -z "${{ github.head_ref }}" ]] && [[ "${{ github.event_name }}" == "push" ]]; then
+              echo "BUILD_ARGS=--docker-hub-check" >> $GITHUB_ENV;
           fi
 
       - name: Login to DockerHub

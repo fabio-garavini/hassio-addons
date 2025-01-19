@@ -9,8 +9,6 @@ on:
     paths:
       - "**/config.yaml"
       - "**/build.yaml"
-  schedule:
-    - cron: "0 0 * * *"
 
 jobs:
   find:
@@ -22,9 +20,14 @@ jobs:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v4.2.2
 
-      - name: 🔍 Find add-on directories
+      - name: 🔍 Find add-ons
         id: addons
-        uses: home-assistant/actions/helpers/find-addons@master
+        run: |
+          declare -a addons
+          for addon in $(find ./ -name config.yaml | cut -d "/" -f2 | sort -u); do
+            addons+=("$addon");
+          done
+          echo "addons=${addons[@]}" >> "$GITHUB_OUTPUT"
 
   lint:
     name: Lint add-on ${{ matrix.path }}
@@ -32,7 +35,7 @@ jobs:
     needs: find
     strategy:
       matrix:
-        path: ${{ fromJson(needs.find.outputs.addons) }}
+        path: ${{ needs.find.outputs.addons }}
     steps:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v4.2.2
