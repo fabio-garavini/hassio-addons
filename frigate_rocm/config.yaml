@@ -1,5 +1,5 @@
 name: Frigate ROCm
-version: 0.15.0-beta5-rocm
+version: 0.15.0-beta7-rocm
 panel_icon: "mdi:cctv"
 panel_title: Frigate
 slug: frigate_rocm
