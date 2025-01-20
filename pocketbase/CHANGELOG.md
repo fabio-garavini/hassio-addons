@@ -1,5 +1,4 @@
-# 0.24.3
+# 0.24.4
 
-- Fixed incorrectly reported unique validator error for fields starting with name of another field (#6281; thanks @svobol13).
-- Reload the created/edited records data in the RecordsPicker UI.
-- Updated Go dependencies.
+- Fixed fields extraction for view queries with nested comments ([#6309](https://github.com/pocketbase/pocketbase/discussions/6309)).
+- Bumped GitHub action min Go version to 1.23.5 as it comes with some [minor security fixes](https://github.com/golang/go/issues?q=milestone%3AGo1.23.5).
