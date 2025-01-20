@@ -1,5 +1,5 @@
 name: Postgres 16
-version: "pg16-v0.3.0-v0"
+version: "pg16-v0.3.0-v1"
 slug: postgres_16
 codenotary: info@fabiogaravini.dev
 description: Postgres 16 with pgvecto.rs
@@ -11,10 +11,6 @@ arch:
 map:
   - type: addon_config
     read_only: false
-  - type: media
-    read_only: false
-  - type: share
-    read_only: false
 backup: cold
 backup_exclude:
   - "*/log"
@@ -24,13 +20,11 @@ ports_description:
   5432/tcp: Database
 options:
   POSTGRES_INITDB_ARGS: "--data-checksum"
-  POSTGRES_HOST_AUTH_METHOD: trust
+  POSTGRES_HOST_AUTH_METHOD: password
 schema:
   POSTGRES_DB: str
   POSTGRES_HOST_AUTH_METHOD: str
   POSTGRES_USER: str
   POSTGRES_PASSWORD: password
   POSTGRES_INITDB_ARGS: str?
-environment:
-  PGDATA: /config
 image: fabioogaravini/hassio-{arch}-postgres-16-pgvectors

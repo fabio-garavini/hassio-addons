@@ -1,6 +1,6 @@
 #include <tunables/global>
 
-profile syncthing flags=(attach_disconnected,mediate_deleted) {
+profile paperless flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
   capability,
@@ -42,20 +42,11 @@ profile syncthing flags=(attach_disconnected,mediate_deleted) {
   /run/{,**} rwk,
   /dev/tty rw,
 
-  /dev/** mrwkl,
-
   # Bashio
   /usr/lib/bashio/** ix,
   /tmp/** mrwk,
 
   # Data access
-  /data/** rw,
-  /config/** rw,
-  /addon_configs/** rw,
-  /homeassistant/** rw,
-  /addons/** rw,
-  /backup/** rw,
-  /share/** rw,
-  /media/** rw,
-  /ssl/** r,
+  /prometheus/** rw,
+  /etc/prometheus/** rw,
 }

@@ -1,6 +1,6 @@
 #include <tunables/global>
 
-profile syncthing flags=(attach_disconnected,mediate_deleted) {
+profile nextcloud flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
   capability,
@@ -51,11 +51,16 @@ profile syncthing flags=(attach_disconnected,mediate_deleted) {
   # Data access
   /data/** rw,
   /config/** rw,
-  /addon_configs/** rw,
-  /homeassistant/** rw,
-  /addons/** rw,
-  /backup/** rw,
   /share/** rw,
   /media/** rw,
   /ssl/** r,
+
+  /defaults/** r,
+  /usr/share/zoneinfo/** rw,
+  /etc/localtime rw,
+  /etc/environment rw,
+
+  /app/{,**} rwix,
+  /etc/crontabs/{,**} rix,
+  /etc/my.cnf.d/{,**} rw,
 }

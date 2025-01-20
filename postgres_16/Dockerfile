@@ -19,7 +19,8 @@ ENV \
     S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0 \
     YARN_HTTP_TIMEOUT=1000000 \
-    TERM="xterm-256color"
+    TERM="xterm-256color" \
+    PGDATA="/config"
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
