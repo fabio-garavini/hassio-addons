@@ -54,6 +54,12 @@ profile gitea flags=(attach_disconnected,mediate_deleted) {
   /share/** rw,
   /ssl/** r,
 
+  /etc/templates/** r,
+  /usr/share/zoneinfo/** r,
+  /etc/localtime rw,
+  /etc/environment rw,
+  /etc/nsswitch.conf r,
+
   /app/{,**} rwix,
   /usr/sbin/** ix,
 }
