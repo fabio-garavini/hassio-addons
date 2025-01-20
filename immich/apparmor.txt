@@ -29,6 +29,7 @@ profile immich flags=(attach_disconnected,mediate_deleted) {
   /init ix,
   /bin/** ix,
   /usr/bin/** ix,
+  /usr/local/bin/** ix,
   /run/{s6,s6-rc*,service}/** ix,
   /package/** ix,
   /command/** ix,
@@ -59,4 +60,5 @@ profile immich flags=(attach_disconnected,mediate_deleted) {
   /media/** rw,
   /ssl/** r,
 
+  /usr/lib/postgresql/** rwix,
 }
