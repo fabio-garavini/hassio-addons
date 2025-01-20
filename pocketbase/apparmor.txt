@@ -52,5 +52,9 @@ profile pocketbase flags=(attach_disconnected,mediate_deleted) {
   /config/** rw,
   /ssl/** r,
 
+  /usr/share/zoneinfo/** rw,
+  /etc/localtime rw,
+  /etc/environment rw,
+
   /pb/{,**} rwix,
 }
