@@ -4,7 +4,7 @@ FROM ${BUILD_FROM}
 
 USER root
 
-COPY --from=busybox:1.37-uclibc /bin/sh /bin/cat /bin/find /bin/head /bin/basename /bin/xargs /bin/
+COPY --from=busybox:1.37-uclibc /bin/sh /bin/mv /bin/cat /bin/find /bin/head /bin/basename /bin/xargs /bin/
 
 COPY rootfs/ /
 

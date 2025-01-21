@@ -46,5 +46,5 @@ profile cloudflared flags=(attach_disconnected,mediate_deleted) {
   # Access to options.json and other files within your addon
   /data/** rw,
   /config/** rw,
-  /root/** rw,
+  /root/{,**} rw,
 }

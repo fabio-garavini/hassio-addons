@@ -1,7 +1,9 @@
 #!/bin/bash
 
 if [ ! -f /config/cert.pem ]; then
-    cloudflared --no-autoupdate tunnel --origincert /config/cert.pem login
+    cloudflared --no-autoupdate tunnel login
+
+    mv /root/.cloudflared/* /config/
 
     if [ ! -f /config/cert.pem ]; then
         echo "Login error"
@@ -12,9 +14,13 @@ fi
 tunnel_id=$(find /config -maxdepth 1 -type f -name "*.json" | head -n 1 | xargs -n 1 basename 2>/dev/null)
 
 if [ ! -n "$tunnel_id" ]; then
-    cloudflared tunnel --origincert /config/cert.pem --credentials-file /config/tunnel.json create HomeAssistant
+    cloudflared tunnel --origincert /config/cert.pem --credentials-file /config/tunnel.json create HomeAssistant >/dev/null 2>&1
+
+    mv /root/.cloudflared/* /config/
 
     if [ ! -f /config/tunnel.json ]; then
+        echo "HomeAssistant tunnel created"
+    else
         echo "Could not create tunnel"
         exit
     fi
