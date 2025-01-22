@@ -48,13 +48,15 @@ Follow these steps to install Paperless-ngx in Home Assistant:
 To store documents on a NAS:
 
 1. **Existing Users**:
-   - If adding NAS later, manually move contents from `/share/paperless` to your NAS before starting the add-on.
+   - Stop Paperless
+   - Manually move contents from `/share/paperless` to your NAS.
 1. **Mount Share Folder**:
    - Add a network storage via **Supervisor** → **System** → **Storage**.
    - Configure with:
      - **Name**: `paperless`
      - **Usage**: `Share`
      - Protocol: SMB/NFS (configure credentials as needed).
+1. **Start the addon**
 
 ⚠️ **Warning**: Failure to set up NAS storage before initial startup will default to local storage. Changing later requires manual file migration.
 
