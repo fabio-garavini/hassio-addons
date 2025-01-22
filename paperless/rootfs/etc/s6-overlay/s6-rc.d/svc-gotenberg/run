@@ -1,0 +1,5 @@
+#!/command/with-contenv /usr/bin/bash
+
+cd /etc/gotenberg
+
+exec /usr/bin/tini -- gotenberg --chromium-disable-javascript=true --chromium-allow-list=file:///tmp/.*
