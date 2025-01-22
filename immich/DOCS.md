@@ -1,42 +1,96 @@
 # Home Assistant add-on: Immich (all in one) 📷 by Fabio Garavini
 
-[Immich](https://github.com/immich-app/immich) is a high performance self-hosted photo and video management solution
+**Immich** is a high-performance self-hosted solution for managing personal photos and videos. This all-in-one addon bundles essential services for immediate use.
 
-> [!WARNING]
-> The project is under very active development. Expect bugs and changes. Do not use it as the only way to store your photos and videos!
-> *from the project developers*
+> [!WARNING]  
+> **Project Status**: Immich is under active development.  
+> Do not use as your sole photo/video storage solution!  
+> *Official developer advisory*
 
-## About
+## 🧩 All-in-One Components
 
-Monolithic version of Immich composed of:
+This monolithic package includes:
 
-- Immich
-- Immich Machine Learning
-- PostgreSQL with pgvecto.rs
-- Redis
+- **Immich Core**: Photo/video management interface
+- **Machine Learning**: Object/scene recognition & facial recognition
+- **PostgreSQL with pgvecto.rs**: Vector-optimized database
+- **Redis**: Real-time notifications and caching
 
-Just one click install
+[Official Immich Documentation](https://immich.app/docs)
 
-## Installation
+---
 
-The installation of this add-on is pretty straightforward and not different in
-comparison to installing any other Home Assistant add-on.
+## 🛠 Installation Guide
 
-1. Click the "Install" button to install the add-on.
-1. Start the add-on.
-1. Click the "OPEN WEB UI" button and follow the setup instructions.
-1. Ready to go!
+1. **Add Repository** (if not in your add-on store)
+2. **Install the Add-on**:
+   - Navigate to **Home Assistant Supervisor** → **Add-on Store**
+   - Search for "Immich All-in-One" → Click **Install**
+3. **Initial Setup**:
+   - Start the add-on
+   - Click **OPEN WEB UI** and follow first-run wizard
+4. **Configure Libraries** (see Storage section below)
 
-## External Libraries
+---
 
-Any folder or network storage mounted under `/media` or `/share` is visible inside the add-on and thus can be used as external library
+## ⚙️ Configuration Options
 
-## NAS storage
+| Parameter | Required | Default | Description |
+|-----------|----------|---------|-------------|
+| `PUID`    | No       | `0`     | User ID for file permissions |
+| `PGID`    | No       | `0`     | Group ID for file permissions |
+| `TZ`      | Yes      | -       | Timezone (e.g., `Europe/London`) |
 
-If you want to store your immich library on your nas, you have to add a network storage for `Media` usage named `immich` **before running Immich for the first time** or you will need to manually move all the contents inside your `/media/immich` folder to your nas before stating the add-on
+---
 
-## Permissions
+## 📚 Storage Management
 
-You can change your library owner (user and group) by changing the `PUID` with the user uid and `PGID` with the group uid
+### External Libraries
 
-For example if you are mounting an NFS share with custom permissions
+- Can be used as external storage any path mounted under:
+  - `/media`
+  - `/share`
+
+### Immich library
+
+Everything inside the main Immich library will be stored under `/media/immich`  
+It's not recommended to move or modify the contents inside this folder manually
+
+---
+
+## 💾 NAS Storage Setup
+
+To store documents on a NAS:
+
+1. **Existing Users**:
+   - Stop Immich
+   - Manually move contents from `/media/immich` to your NAS.
+1. **Mount Share Folder**:
+   - Add a network storage via **Supervisor** → **System** → **Storage**.
+   - Configure with:
+     - **Name**: `immich`
+     - **Usage**: `Media`
+     - Protocol: SMB/NFS (configure credentials as needed).
+1. **Start the addon**
+
+⚠️ **Warning**: Failure to set up NAS storage before initial startup will default to local storage. Changing later requires manual file migration.
+
+---
+
+## 🚨 Troubleshooting
+
+### Common Issues
+
+- **Upload Errors:**
+
+  - Confirm storage permissions match PUID/PGID
+  - Check free space on target storage
+
+---
+
+## ❓ Support
+
+For assistance:
+
+- [GitHub Issues](https://github.com/fabio-garavini/hassio-addons/issues)
+- [Home Assistant Community Forum](https://community.home-assistant.io)

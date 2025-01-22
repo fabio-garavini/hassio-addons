@@ -1,21 +1,28 @@
 # Home Assistant add-on: Immich (all in one) 📷 by Fabio Garavini
 
-[Immich](https://github.com/immich-app/immich) is a high performance self-hosted photo and video management solution
+**Immich** is a self-hosted photo and video backup solution designed to replace proprietary cloud services. This all-in-one addon provides a complete media management ecosystem with AI-powered features.
+
+> [!WARNING]  
+> **Project Status**: Immich is under active development.  
+> Do not use as your sole photo/video storage solution!  
+> *Official developer advisory*
 
 ![main screenshot](https://github.com/immich-app/immich/raw/main/design/immich-screenshots.png)
 
-> [!WARNING]
->
-> The project is under very active development. Expect bugs and changes. Do not use it as the only way to store your photos and videos!<br>
-> *from the project developers*
+## 🧩 Features
 
-## About
+- **Automatic Backup**: Sync from mobile/web clients
+- **AI-Powered Search**: Object/face recognition
+- **Timeline View**: Chronological media organization
+- **Shared Albums**: Collaborative photo management
+- **RAW Support**: Professional photography workflows
 
-Monolithic version of Immich composed of:
+## 🧰 All-in-One Components
 
-- Immich
-- Immich Machine Learning
-- PostgreSQL with pgvecto.rs
-- Redis
+This addon bundles:
+- **Immich Server**: Core application
+- **Machine Learning**: TensorFlow-based recognition
+- **PostgreSQL**: Media metadata database (with pgvecto.rs extension)
+- **Redis**: Real-time notification system
 
-Just one click install
+[Official Immich Documentation](https://immich.app/docs)
