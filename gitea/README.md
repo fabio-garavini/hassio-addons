@@ -17,3 +17,9 @@
 ![screenshot](https://about.gitea.com/img/home-screenshot.png)
 
 [Gitea](https://about.gitea.com) is a painless, self-hosted, all-in-one software development service. It includes Git hosting, code review, team collaboration, package registry, and CI/CD. It is similar to GitHub, Bitbucket and GitLab.
+
+## 🌟 Key Features
+
+- **Simplified Configuration**: Minimal setup required
+- **Lightweight**: Optimized for Home Assistant performance
+- **Secure**: Runs with non-root privileges by default
