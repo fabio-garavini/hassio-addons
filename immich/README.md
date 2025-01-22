@@ -3,8 +3,8 @@
 **Immich** is a self-hosted photo and video backup solution designed to replace proprietary cloud services. This all-in-one addon provides a complete media management ecosystem with AI-powered features.
 
 > [!WARNING]  
-> **Project Status**: Immich is under active development.  
-> Do not use as your sole photo/video storage solution!  
+> **Project Status**: Immich is under active development. 
+> Do not use as your sole photo/video storage solution! 
 > *Official developer advisory*
 
 ![main screenshot](https://github.com/immich-app/immich/raw/main/design/immich-screenshots.png)
@@ -20,6 +20,7 @@
 ## 🧰 All-in-One Components
 
 This addon bundles:
+
 - **Immich Server**: Core application
 - **Machine Learning**: TensorFlow-based recognition
 - **PostgreSQL**: Media metadata database (with pgvecto.rs extension)
