@@ -193,6 +193,10 @@ ENV CHROMIUM_BIN_PATH=/usr/bin/chromium \
 
 ENV TIKA_VERSION=3.0.0
 
+RUN \
+    groupadd -g 9998 -o tika; \
+    useradd -m -u 9998 -g 9998 -o tika
+
 COPY --from=apache/tika:3.0.0.0 /tika-server-standard-${TIKA_VERSION}.jar /
 
 COPY rootfs/ /
