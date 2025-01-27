@@ -44,19 +44,22 @@ ENV PGDATA="/config/postgres" \
 ARG PG_MAJOR=16 \
     PGVECTORS_VERSION=0.3.0
 
-# Postgres install
+# Postgres & Redis install
 RUN mkdir /docker-entrypoint-initdb.d; \
     apt-get update; \
-    apt-get install -y --allow-downgrades \
-        postgresql-client-common=257build1.1 \
-        postgresql \
-        postgresql-contrib; \
+    apt-get install -y lsb-release; \
+    install -d /usr/share/postgresql-common/pgdg; \
+    curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc; \
+    sh -c 'echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+        logrotate \
+        postgresql-$PG_MAJOR \
+        redis-server; \
     if [ "$BUILD_ARCH" = "aarch64" ]; then \
-        curl -L -s -o /tmp/pgvectors.deb \
-            "https://github.com/tensorchord/pgvecto.rs/releases/download/v${PGVECTORS_VERSION}/vectors-pg${PG_MAJOR}_${PGVECTORS_VERSION}_arm64.deb"; \
+        curl -L -s -o /tmp/pgvectors.deb "https://github.com/tensorchord/pgvecto.rs/releases/download/v${PGVECTORS_VERSION}/vectors-pg${PG_MAJOR}_${PGVECTORS_VERSION}_arm64.deb"; \
     else \
-        curl -L -s -o /tmp/pgvectors.deb \
-            "https://github.com/tensorchord/pgvecto.rs/releases/download/v${PGVECTORS_VERSION}/vectors-pg${PG_MAJOR}_${PGVECTORS_VERSION}_${BUILD_ARCH}.deb"; \
+        curl -L -s -o /tmp/pgvectors.deb "https://github.com/tensorchord/pgvecto.rs/releases/download/v${PGVECTORS_VERSION}/vectors-pg${PG_MAJOR}_${PGVECTORS_VERSION}_${BUILD_ARCH}.deb"; \
     fi; \
     apt-get install /tmp/pgvectors.deb && rm -f /tmp/pgvectors.deb; \
     apt-get autoremove -y; \
@@ -66,22 +69,11 @@ RUN mkdir /docker-entrypoint-initdb.d; \
         /var/{cache,log}/* \
         /var/lib/apt/lists/*; \
 #    groupadd -r -g 900 postgres; \
-#	 useradd -r -u 900 -g postgres --home-dir=/var/lib/postgresql --shell=/bin/bash postgres; \
+#    useradd -r -u 900 -g postgres --home-dir=/var/lib/postgresql --shell=/bin/bash postgres; \
 	install --verbose --directory --owner postgres --group postgres --mode 1777 /var/lib/postgresql; \
     install --verbose --directory --owner postgres --group postgres --mode 3777 /var/run/postgresql
 
 ENV PATH $PATH:/usr/lib/postgresql/$PG_MAJOR/bin
-
-# Redis install
-RUN apt-get update; \
-    apt-get install -y --no-install-recommends \
-        redis-server; \
-    apt-get autoremove -y; \
-    apt-get autoclean -y; \
-    rm -rf \
-        /tmp/* \
-        /var/{cache,log}/* \
-        /var/lib/apt/lists/*
 
 COPY rootfs/ /
 
