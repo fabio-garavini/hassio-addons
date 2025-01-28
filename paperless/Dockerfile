@@ -5,6 +5,8 @@ FROM $BUILD_FROM:feature-s6-overlay
 
 ENV PAPERLESS_DATA_DIR="/config/paperless" \
     PAPERLESS_MEDIA_ROOT="/share/paperless" \
+    PAPERLESS_EXPORT_DIR="/share/paperless/export" \
+    PAPERLESS_CONSUMPTION_DIR="/share/paperless/consume" \
     PAPERLESS_EMPTY_TRASH_DIR="/share/paperless/.trash" \
     PAPERLESS_LOGGING_DIR="/config/logs/paperless" \
     PAPERLESS_REDIS="redis://localhost:6379" \

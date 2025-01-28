@@ -3,8 +3,7 @@
 
 declare -r log_prefix="[init-folders]"
 
-declare -r export_dir="/usr/src/paperless/export"
-
+declare -r export_dir="${PAPERLESS_EXPORT_DIR:-/usr/src/paperless/export}"
 declare -r data_dir="${PAPERLESS_DATA_DIR:-/usr/src/paperless/data}"
 declare -r media_root_dir="${PAPERLESS_MEDIA_ROOT:-/usr/src/paperless/media}"
 declare -r empty_trash_dir="${PAPERLESS_EMPTY_TRASH_DIR:-/usr/src/paperless/media/.trash}"
