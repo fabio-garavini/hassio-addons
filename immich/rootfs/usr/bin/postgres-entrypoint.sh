@@ -155,38 +155,6 @@ docker_verify_minimum_env() {
 	fi
 }
 
-# usage: docker_process_init_files [file [file [...]]]
-#    ie: docker_process_init_files /always-initdb.d/*
-# process initializer files, based on file extensions and permissions
-docker_process_init_files() {
-	# psql here for backwards compatibility "${psql[@]}"
-	psql=( docker_process_sql )
-
-	printf '\n'
-	local f
-	for f; do
-		case "$f" in
-			*.sh)
-				# https://github.com/docker-library/postgres/issues/450#issuecomment-393167936
-				# https://github.com/docker-library/postgres/pull/452
-				if [ -x "$f" ]; then
-					printf '%s: running %s\n' "$0" "$f"
-					"$f"
-				else
-					printf '%s: sourcing %s\n' "$0" "$f"
-					. "$f"
-				fi
-				;;
-			*.sql)     printf '%s: running %s\n' "$0" "$f"; docker_process_sql -f "$f"; printf '\n' ;;
-			*.sql.gz)  printf '%s: running %s\n' "$0" "$f"; gunzip -c "$f" | docker_process_sql; printf '\n' ;;
-			*.sql.xz)  printf '%s: running %s\n' "$0" "$f"; xzcat "$f" | docker_process_sql; printf '\n' ;;
-			*.sql.zst) printf '%s: running %s\n' "$0" "$f"; zstd -dc "$f" | docker_process_sql; printf '\n' ;;
-			*)         printf '%s: ignoring %s\n' "$0" "$f" ;;
-		esac
-		printf '\n'
-	done
-}
-
 # Execute sql script, passed via stdin (or -f flag of pqsl)
 # usage: docker_process_sql [psql-cli-args]
 #    ie: docker_process_sql --dbname=mydb <<<'INSERT ...'
@@ -317,9 +285,6 @@ _main() {
 		if [ -z "$DATABASE_ALREADY_EXISTS" ]; then
 			docker_verify_minimum_env
 
-			# check dir permissions to reduce likelihood of half-initialized database
-			ls /docker-entrypoint-initdb.d/ > /dev/null
-
 			docker_init_database_dir
 			pg_setup_hba_conf "$@"
 
@@ -329,7 +294,6 @@ _main() {
 			docker_temp_server_start "$@"
 
 			docker_setup_db
-			docker_process_init_files /docker-entrypoint-initdb.d/*
 
 			docker_temp_server_stop
 			unset PGPASSWORD
