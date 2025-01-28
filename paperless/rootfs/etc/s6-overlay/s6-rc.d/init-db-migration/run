@@ -1,0 +1,30 @@
+#!/command/with-contenv /usr/bin/bash
+set -e
+
+if [ -f "$PGDATA/PG_VERSION" ] && ! grep -q "$PG_MAJOR" "$PGDATA/PG_VERSION"; then
+
+    current_pg_major=$(cat "$PGDATA/PG_VERSION" | cut -d '.' -f 1)
+
+    echo "Postgres $current_pg_major needs an upgrade"
+
+    mv $PGDATA ${PGDATA}-${current_pg_major}-backup
+
+    mkdir -p "$PGDATA"
+
+    # permissions
+    chown postgres:postgres -R "$PGDATA"
+    chmod 755 -R "$PGDATA"
+
+    apt-get update
+    apt-get install -y postgresql-${current_pg_major}
+
+    cd /var/run/postgresql
+
+    su postgres -c '/usr/lib/postgresql/$PG_MAJOR/bin/initdb --username="$POSTGRES_USER" --pwfile=<(printf "%s\n" "$POSTGRES_PASSWORD") -c log_directory="/config/logs/postgres" -c log_rotation_size=10MB -D $PGDATA'
+
+    su postgres -c '/usr/lib/postgresql/$PG_MAJOR/bin/pg_upgrade -d '"${PGDATA}-${current_pg_major}-backup"' -D '"$PGDATA"' -b '"/usr/lib/postgresql/$current_pg_major/bin"' -B '"/usr/lib/postgresql/$PG_MAJOR/bin"' --username="$POSTGRES_USER"'
+
+    apt-get remove -y postgresql-${current_pg_major}
+    apt autoremove -y
+    apt autoclean -y
+fi

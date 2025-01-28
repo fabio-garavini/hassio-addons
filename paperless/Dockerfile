@@ -16,23 +16,29 @@ ENV PAPERLESS_DATA_DIR="/config/paperless" \
     PGDATA="/config/postgres" \
     POSTGRES_DB=paperless \
     POSTGRES_USER=paperless \
-    POSTGRES_PASSWORD=paperless
+    POSTGRES_PASSWORD=paperless \
+    PG_MAJOR=16
 
-ARG PG_MAJOR=15
-
+# Postgres & Redis install
 RUN apt-get update; \
+    apt-get install -y lsb-release; \
+    install -d /usr/share/postgresql-common/pgdg; \
+    curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc; \
+    sh -c 'echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'; \
+    apt-get update; \
     apt-get install -y --no-install-recommends \
         jq \
+        logrotate \
         netcat-traditional \
-        lsb-release \
         curl \
         gpg \
         postgresql-$PG_MAJOR \
+        postgresql-common \
         redis-server; \
     apt-get autoclean -y; \
     rm -rf \
         /tmp/* \
-        /var/{cache,log}/* \
+        /var/{cache,log,tmp}/* \
         /var/lib/apt/lists/*; \
     mkdir /docker-entrypoint-initdb.d; \
 #    groupadd -r -g 900 postgres; \
@@ -54,7 +60,11 @@ RUN \
     apt-get upgrade -yqq &&\
     DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends curl gnupg tini default-jre-headless ca-certificates &&\
     python3 -m pip install --upgrade setuptools &&\
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    apt-get autoclean -y; \
+    rm -rf \
+        /tmp/* \
+        /var/{cache,log,tmp}/* \
+        /var/lib/apt/lists/*
 
 RUN \
     curl -o ./ttf-mscorefonts-installer_3.8.1_all.deb http://httpredir.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.8.1_all.deb &&\
@@ -103,7 +113,11 @@ RUN \
     # https://github.com/googlefonts/noto-emoji.
     curl -Ls "https://github.com/googlefonts/noto-emoji/raw/$NOTO_COLOR_EMOJI_VERSION/fonts/NotoColorEmoji.ttf" -o /usr/local/share/fonts/NotoColorEmoji.ttf &&\
     # Cleanup.
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    apt-get autoclean -y; \
+    rm -rf \
+        /tmp/* \
+        /var/{cache,log,tmp}/* \
+        /var/lib/apt/lists/*
 
 RUN \
     # Install either Google Chrome stable on amd64 architecture or
@@ -137,7 +151,11 @@ RUN \
     # Verify installation.
     chromium --version &&\
     # Cleanup.
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    apt-get autoclean -y; \
+    rm -rf \
+        /tmp/* \
+        /var/{cache,log,tmp}/* \
+        /var/lib/apt/lists/*
 
 RUN \
     # Install LibreOffice & unoconverter.
@@ -152,7 +170,11 @@ RUN \
     libreoffice --version &&\
     unoconverter --version &&\
     # Cleanup.
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    apt-get autoclean -y; \
+    rm -rf \
+        /tmp/* \
+        /var/{cache,log,tmp}/* \
+        /var/lib/apt/lists/*
 
 RUN \
     # Install PDFtk, QPDF & ExifTool (PDF engines).
@@ -171,7 +193,11 @@ RUN \
     qpdf --version &&\
     exiftool --version &&\
     # Cleanup.
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    apt-get autoclean -y; \
+    rm -rf \
+        /tmp/* \
+        /var/{cache,log,tmp}/* \
+        /var/lib/apt/lists/*
 
 # Improve fonts subpixel hinting and smoothing.
 # Credits:
