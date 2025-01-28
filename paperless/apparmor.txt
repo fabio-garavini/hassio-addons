@@ -50,7 +50,7 @@ profile paperless flags=(attach_disconnected,mediate_deleted) {
 
   # Data access
   /data/** rw,
-  /config/** rw,
+  /config/** mrwkl,
   /share/** rw,
   /media/** rw,
   /ssl/** r,
@@ -61,7 +61,6 @@ profile paperless flags=(attach_disconnected,mediate_deleted) {
   /etc/environment rw,
 
   /usr/lib/postgresql/** rwix,
-  /var/run/postgresql/** rwix,
 
   /etc/ImageMagic-6/** rw,
   /etc/gotenberg/{,**} rwix,

@@ -1,6 +1,14 @@
 #!/command/with-contenv /usr/bin/bash
 set -e
 
+mkdir -p /config/postgres-backups
+chown postgres:postgres -R /config/postgres-backups
+
+if [ -d "${PGDATA}-15-backup" ]; then
+    mv $PGDATA "/config/postgres-backups/$(date +"%Y-%m-%d_%H-%M-%S")"
+    mv "${PGDATA}-15-backup" $PGDATA
+fi
+
 if [ -f "$PGDATA/PG_VERSION" ] && ! grep -q "$PG_MAJOR" "$PGDATA/PG_VERSION"; then
 
     current_pg_major=$(cat "$PGDATA/PG_VERSION" | cut -d '.' -f 1)
@@ -22,9 +30,11 @@ if [ -f "$PGDATA/PG_VERSION" ] && ! grep -q "$PG_MAJOR" "$PGDATA/PG_VERSION"; th
 
     su postgres -c '/usr/lib/postgresql/$PG_MAJOR/bin/initdb --username="$POSTGRES_USER" --pwfile=<(printf "%s\n" "$POSTGRES_PASSWORD") -c log_directory="/config/logs/postgres" -c log_rotation_size=10MB -D $PGDATA'
 
-    su postgres -c '/usr/lib/postgresql/$PG_MAJOR/bin/pg_upgrade -d '"${PGDATA}-${current_pg_major}-backup"' -D '"$PGDATA"' -b '"/usr/lib/postgresql/$current_pg_major/bin"' -B '"/usr/lib/postgresql/$PG_MAJOR/bin"' --username="$POSTGRES_USER"'
+    su postgres -c '/usr/lib/postgresql/$PG_MAJOR/bin/pg_upgrade -v --copy -d '"${PGDATA}-${current_pg_major}-backup"' -D '"$PGDATA"' -b '"/usr/lib/postgresql/$current_pg_major/bin"' -B '"/usr/lib/postgresql/$PG_MAJOR/bin"' --username="$POSTGRES_USER"'
 
     apt-get remove -y postgresql-${current_pg_major}
     apt autoremove -y
     apt autoclean -y
+
+    mv "${PGDATA}-${current_pg_major}-backup" "/config/postgres-backups/$(date +"%Y-%m-%d_%H-%M-%S")"
 fi
