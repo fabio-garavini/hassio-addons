@@ -2,7 +2,16 @@ ARG BUILD_FROM
 
 FROM $BUILD_FROM
 
-ENV GITEA_WORK_DIR=/data
+ENV GITEA_WORK_DIR=/data \
+    INSTALL_LOCK=true \
+    DB_TYPE=sqlite3 \
+    DB_HOST=localhost:3306 \
+    DB_NAME=gitea \
+    DB_USER=root \
+    DB_PASSWD="" \
+    HTTP_PORT=3000 \
+    SSH_LISTEN_PORT=22 \
+    SSH_PORT=222
 
 RUN apk --no-cache add \
     shadow \

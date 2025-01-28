@@ -1,5 +1,5 @@
 name: Gitea
-version: "1.23.1-v4"
+version: "1.23.1-v5"
 slug: gitea
 codenotary: info@fabiogaravini.dev
 description: Gitea is a Git hosting, code review, team collaboration, package registry, and CI/CD
@@ -24,10 +24,18 @@ schema:
   USER_UID: int(1000,)
   USER_GID: int(1000,)
   TZ: str?
+  DISABLE_REGISTRATION: bool
+  LFS_START_SERVER: bool
+  DISABLE_SSH: bool
+  SECRET_KEY: password
 options:
   USER_UID: 1000
   USER_GID: 1000
   TZ: Etc/UTC
+  DISABLE_REGISTRATION: false
+  LFS_START_SERVER: true
+  DISABLE_SSH: false
+  SECRET_KEY: "RNXVG8MSeh5ik6abGFctBMllvVAFWmP2"
 ports:
   3000/tcp: 3080
   22/tcp: 222

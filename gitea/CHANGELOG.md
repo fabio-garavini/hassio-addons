@@ -1,5 +1,7 @@
 # v1.23.1
 
+- Improved setup process
+
 - ENHANCEMENTS
   - Move repo size to sidebar (#33155) (#33182)
 - BUGFIXES
