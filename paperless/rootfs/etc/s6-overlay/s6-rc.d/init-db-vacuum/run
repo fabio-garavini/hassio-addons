@@ -1,0 +1,4 @@
+#!/command/with-contenv /usr/bin/bash
+set -e
+
+vacuum -u $POSTGRES_USER --all --analyze-in-stages

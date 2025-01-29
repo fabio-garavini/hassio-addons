@@ -5,7 +5,7 @@ mkdir -p /config/postgres-backups
 chown postgres:postgres -R /config/postgres-backups
 
 if [ -d "${PGDATA}-15-backup" ]; then
-    mv $PGDATA "/config/postgres-backups/$(date +"%Y-%m-%d_%H-%M-%S")"
+    mv $PGDATA "${PGDATA}-backups/$(date +"%Y-%m-%d_%H-%M-%S")"
     mv "${PGDATA}-15-backup" $PGDATA
 fi
 
@@ -15,26 +15,32 @@ if [ -f "$PGDATA/PG_VERSION" ] && ! grep -q "$PG_MAJOR" "$PGDATA/PG_VERSION"; th
 
     echo "Postgres $current_pg_major needs an upgrade"
 
-    mv $PGDATA ${PGDATA}-${current_pg_major}-backup
+    mv $PGDATA ${PGDATA}-migrate
 
-    mkdir -p "$PGDATA"
+    source postgres-entrypoint.sh
 
-    # permissions
-    chown postgres:postgres -R "$PGDATA"
-    chmod 755 -R "$PGDATA"
+    docker_setup_env
+
+    docker_create_db_directories
+
+    gosu postgres bash -c "
+        source postgres-entrypoint.sh
+
+        docker_setup_env
+        
+        docker_init_database_dir
+    "
 
     apt-get update
     apt-get install -y postgresql-${current_pg_major}
 
-    cd /var/run/postgresql
+    cd $PGDATA
 
-    su postgres -c '/usr/lib/postgresql/$PG_MAJOR/bin/initdb --username="$POSTGRES_USER" --pwfile=<(printf "%s\n" "$POSTGRES_PASSWORD") -c log_directory="/config/logs/postgres" -c log_rotation_size=10MB -D $PGDATA'
-
-    su postgres -c '/usr/lib/postgresql/$PG_MAJOR/bin/pg_upgrade -v --copy -d '"${PGDATA}-${current_pg_major}-backup"' -D '"$PGDATA"' -b '"/usr/lib/postgresql/$current_pg_major/bin"' -B '"/usr/lib/postgresql/$PG_MAJOR/bin"' --username="$POSTGRES_USER"'
+    su postgres -c '/usr/lib/postgresql/16/bin/pg_upgrade --copy -d '"${PGDATA}-migrate"' -D '"$PGDATA"' -b '"/usr/lib/postgresql/$current_pg_major/bin"' -B '"/usr/lib/postgresql/$PG_MAJOR/bin"' --username="$POSTGRES_USER"'
 
     apt-get remove -y postgresql-${current_pg_major}
     apt autoremove -y
     apt autoclean -y
 
-    mv "${PGDATA}-${current_pg_major}-backup" "/config/postgres-backups/$(date +"%Y-%m-%d_%H-%M-%S")"
+    mv "${PGDATA}-migrate" "${PGDATA}-backups/$(date +"%Y-%m-%d_%H-%M-%S")"
 fi
