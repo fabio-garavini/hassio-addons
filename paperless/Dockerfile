@@ -2,6 +2,8 @@ ARG BUILD_FROM
 
 FROM $BUILD_FROM:feature-s6-overlay
 
+ARG BUILD_ARCH
+
 ENV PAPERLESS_DATA_DIR="/config/paperless" \
     PAPERLESS_MEDIA_ROOT="/share/paperless" \
     PAPERLESS_EXPORT_DIR="/share/paperless/export" \
@@ -18,23 +20,18 @@ ENV PAPERLESS_DATA_DIR="/config/paperless" \
     POSTGRES_DB=paperless \
     POSTGRES_USER=paperless \
     POSTGRES_PASSWORD=paperless \
-    PG_MAJOR=16
+    PG_MAJOR=15
 
 # Postgres & Redis install
-RUN apt-get update; \
-    apt-get install -y lsb-release; \
-    install -d /usr/share/postgresql-common/pgdg; \
-    curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc; \
-    sh -c 'echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'; \
+RUN \
     apt-get update; \
-    apt-get upgrade -y; \
-    apt-get install -y --no-install-recommends --no-install-suggests \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends \
         jq \
         logrotate \
         netcat-traditional \
         curl \
         gpg \
-        postgresql-common \
+        postgresql-client-$PG_MAJOR \
         postgresql-$PG_MAJOR \
         redis-server; \
     apt-get autoclean -y; \
@@ -42,13 +39,12 @@ RUN apt-get update; \
         /tmp/* \
         /var/{cache,log,tmp}/* \
         /var/lib/apt/lists/*; \
-    mkdir /docker-entrypoint-initdb.d; \
 #    groupadd -r -g 900 postgres; \
 #    useradd -r -u 900 -g postgres --home-dir=/var/lib/postgresql --shell=/bin/bash postgres; \
 	install --verbose --directory --owner postgres --group postgres --mode 1777 /var/lib/postgresql; \
     install --verbose --directory --owner postgres --group postgres --mode 3777 /var/run/postgresql
 
-ENV PATH $PATH:/usr/lib/postgresql/$PG_MAJOR/bin
+ENV PATH=$PATH:/usr/lib/postgresql/$PG_MAJOR/bin
 
 # ---------------GOTENBERG-TIKA--------------------
 
@@ -130,14 +126,14 @@ RUN \
     # See: https://github.com/gotenberg/gotenberg/issues/709.
     /bin/bash -c \
     'set -e &&\
-    if [[ "$(dpkg --print-architecture)" == "amd64" ]]; then \
+    if [[ "$BUILD_ARCH" == "amd64" ]]; then \
       curl https://dl.google.com/linux/linux_signing_key.pub | apt-key add - &&\
       echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | tee /etc/apt/sources.list.d/google-chrome.list &&\
       apt-get update -qq &&\
       apt-get upgrade -yqq &&\
       DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends --allow-unauthenticated google-chrome-stable &&\
       mv /usr/bin/google-chrome-stable /usr/bin/chromium; \
-    elif [[ "$(dpkg --print-architecture)" == "armhf" ]]; then \
+    elif [[ "$BUILD_ARCH" == "armhf" ]]; then \
       apt-get update -qq &&\
       DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends devscripts &&\
       debsnap chromium-common "$TMP_CHOMIUM_VERSION_ARMHF" -v --force --binary --architecture armhf &&\

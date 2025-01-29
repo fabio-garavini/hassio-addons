@@ -11,36 +11,18 @@ fi
 
 if [ -f "$PGDATA/PG_VERSION" ] && ! grep -q "$PG_MAJOR" "$PGDATA/PG_VERSION"; then
 
-    current_pg_major=$(cat "$PGDATA/PG_VERSION" | cut -d '.' -f 1)
+    backup_root="${PGDATA}-backups"
+    target_dir=""
 
-    echo "Postgres $current_pg_major needs an upgrade"
+    # Search for all PG_VERSION files and check their content
+    while IFS= read -r version_file; do
+        if grep -q "$PG_MAJOR" "$version_file"; then
+            target_dir=$(dirname "$version_file")
+        fi
+    done < <(find "$backup_root" -type f -name PG_VERSION 2>/dev/null)
 
-    mv $PGDATA ${PGDATA}-migrate
-
-    source postgres-entrypoint.sh
-
-    docker_setup_env
-
-    docker_create_db_directories
-
-    gosu postgres bash -c "
-        source postgres-entrypoint.sh
-
-        docker_setup_env
-        
-        docker_init_database_dir
-    "
-
-    apt-get update
-    apt-get install -y postgresql-${current_pg_major}
-
-    cd $PGDATA
-
-    su postgres -c '/usr/lib/postgresql/16/bin/pg_upgrade --copy -d '"${PGDATA}-migrate"' -D '"$PGDATA"' -b '"/usr/lib/postgresql/$current_pg_major/bin"' -B '"/usr/lib/postgresql/$PG_MAJOR/bin"' --username="$POSTGRES_USER"'
-
-    apt-get remove -y postgresql-${current_pg_major}
-    apt autoremove -y
-    apt autoclean -y
-
-    mv "${PGDATA}-migrate" "${PGDATA}-backups/$(date +"%Y-%m-%d_%H-%M-%S")"
+    # Move the last found directory if any were found
+    if [ -n "$target_dir" ]; then
+        mv "$target_dir" ${PGDATA}
+    fi
 fi
