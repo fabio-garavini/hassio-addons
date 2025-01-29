@@ -1,6 +1,6 @@
-ARG BUILD_FROM
+ARG BUILD_FROM=ghcr.io/paperless-ngx/paperless-ngx
 
-FROM $BUILD_FROM:feature-s6-overlay
+FROM $BUILD_FROM:feature-s6-overlay@sha256:320b01d458d41a831743bd13388a21c88815cc72c4940196ad7a91e3e432f521
 
 ARG BUILD_ARCH
 
@@ -29,6 +29,7 @@ RUN \
         jq \
         logrotate \
         netcat-traditional \
+        lsb-release \
         curl \
         gpg \
         postgresql-client-$PG_MAJOR \
