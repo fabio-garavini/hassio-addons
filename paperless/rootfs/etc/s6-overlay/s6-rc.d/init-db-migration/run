@@ -1,8 +1,8 @@
 #!/command/with-contenv /usr/bin/bash
 set -e
 
-mkdir -p /config/postgres-backups
-chown postgres:postgres -R /config/postgres-backups
+mkdir -p ${PGDATA}-backups
+chown postgres:postgres -R ${PGDATA}-backups
 
 if [ -d "${PGDATA}-15-backup" ]; then
     mv $PGDATA "${PGDATA}-backups/$(date +"%Y-%m-%d_%H-%M-%S")"

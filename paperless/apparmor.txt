@@ -39,7 +39,7 @@ profile paperless flags=(attach_disconnected,mediate_deleted) {
   /etc/cont-init.d/** rwix,
   /etc/cont-finish.d/** rwix,
   /var/run/{,**} mrwkl,
-  /run/{,**} rwk,
+  /run/{,**} mrwkl,
   /dev/tty rw,
 
   /dev/** mrwkl,
@@ -61,6 +61,8 @@ profile paperless flags=(attach_disconnected,mediate_deleted) {
   /etc/environment rw,
 
   /usr/lib/postgresql/** rwix,
+  /etc/postgresql/** rwix,
+  /usr/share/postgresql/** rwix,
 
   /etc/ImageMagic-6/** rw,
   /etc/gotenberg/{,**} rwix,
