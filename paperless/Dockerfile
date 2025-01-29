@@ -27,7 +27,7 @@ RUN apt-get update; \
     curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc; \
     sh -c 'echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'; \
     apt-get update; \
-    apt-get upgrade; \
+    apt-get upgrade -y; \
     apt-get install -y --no-install-recommends --no-install-suggests \
         jq \
         logrotate \
@@ -35,8 +35,6 @@ RUN apt-get update; \
         curl \
         gpg \
         postgresql-common \
-        postgresql-client \
-        postgresql-client-17 \
         postgresql-$PG_MAJOR \
         redis-server; \
     apt-get autoclean -y; \
