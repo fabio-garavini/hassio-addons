@@ -3,7 +3,6 @@ version: 10.10.5-v0
 slug: jellyfin
 description: Jellyfin is the volunteer-built media solution that puts you in control of your media
 url: https://jellyfin.org
-codenotary: info@fabiogaravini.dev
 ingress: true
 panel_icon: mdi:filmstrip
 panel_admin: false
