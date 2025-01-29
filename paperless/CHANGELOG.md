@@ -1,31 +1,12 @@
-# v2.14.5
-
-## Features
-
-- Change: restrict altering and creation of superusers to superusers only @shamoon (#8837)
+# v2.14.6
 
 ## Bug Fixes
 
-- Fix: fix long tag visual wrapping @shamoon (#8833)
-- Fix: Enforce classifier training ordering to prevent extra training @stumpylog (#8822)
-- Fix: import router module to not found component @shamoon (#8821)
-- Fix: better reflect some mail account / rule permissions in UI @shamoon (#8812)
-
-## Dependencies
-
-- Chore(deps-dev): Bump undici from 5.28.4 to 5.28.5 in /src-ui @dependabot[bot] (#8851)
-- Chore(deps-dev): Bump the development group with 2 updates @dependabot[bot] (#8841)
-
-## All App Changes
-
-**9 changes**
-
-- Chore(deps-dev): Bump undici from 5.28.4 to 5.28.5 in /src-ui @dependabot[bot] (#8851)
-- Chore(deps-dev): Bump the development group with 2 updates @dependabot[bot] (#8841)
-- Chore: use simpler method for attaching files to emails @shamoon (#8845)
-- Change: restrict altering and creation of superusers to superusers only @shamoon (#8837)
-- Fix: fix long tag visual wrapping @shamoon (#8833)
-- Change: allow generate auth token without a usable password @shamoon (#8824)
-- Fix: Enforce classifier training ordering to prevent extra training @stumpylog (#8822)
-- Fix: import router module to not found component @shamoon (#8821)
-- Fix: better reflect some mail account / rule permissions in UI @shamoon (#8812)
+- Fix: backwards-compatible versioned API response for custom field select fields, update default API version @shamoon (#8912)
+- Tweak: place items with 0 documents at bottom of filterable list, retain alphabetical @shamoon (#8924)
+- Fix: set larger page size for abstract service getFew @shamoon (#8920)
+- Fix/refactor: remove doc observables, fix username async @shamoon (#8908)
+- Fix: include missing fields for saved view widgets @shamoon (#8905)
+- Fix: force set document not dirty before close after save @shamoon (#8888)
+- Fixhancement: restore search highlighting and add for built-in viewer @shamoon (#8885)
+- Fix: resolve cpu usage due to incorrect interval use @shamoon (#8884)
