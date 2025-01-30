@@ -37,11 +37,21 @@ Help me expand the documentation making it as easy as possible for anyone to use
 
 [Gitlab Comunity Edition (CE)](https://gitlab.com/rluna-gitlab/gitlab-ce) is an open source end-to-end software development platform with built-in version control, issue tracking, code review, CI/CD, and more
 
+### Hoarder 💾
+
+*All-in-one*
+
+A self-hostable bookmark-everything app with a touch of AI for the data hoarders out there.
+
 ### Immich 📷
 
 *All-in-one*
 
 [Immich](https://github.com/immich-app/immich) is a high performance self-hosted photo and video management solution
+
+### Jellyfin 📷
+
+[Jellyfin](https://jellyfin.org) is a Free Software Media System that puts you in control of managing and streaming your media.
 
 ### Nextcloud ☁️
 
