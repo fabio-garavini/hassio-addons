@@ -1,0 +1,52 @@
+name: Hoarder
+version: "0.21.0-v0"
+slug: hoarder
+codenotary: info@fabiogaravini.dev
+description: bookmark-everything app with a touch of AI for the data hoarders out there
+url: https://hoarder.app/
+webui: http://[HOST]:[PORT:3000]
+arch:
+  - aarch64
+  - amd64
+init: false
+ingress: true
+ingress_port: 3000
+ingress_entry: /
+map:
+  - type: share
+    read_only: false
+  - type: ssl
+backup: cold
+backup_exclude:
+  - "**/logs"
+schema:
+  PUID: int(0,)
+  PGID: int(0,)
+  TZ: str?
+  DISABLE_SIGNUPS: bool
+  NEXTAUTH_SECRET: passwd
+  MAX_ASSET_SIZE_MB: int?
+  NEXTAUTH_URL: url?
+  OCR_LANGS: str?
+  OCR_CONFIDENCE_THRESHOLD: int(0,100)?
+  OPENAI_API_KEY: str?
+  OPENAI_BASE_URL: url?
+  OLLAMA_BASE_URL: url?
+  INFERENCE_TEXT_MODEL: str?
+  INFERENCE_IMAGE_MODEL: str?
+  EMBEDDING_TEXT_MODEL: str?
+  INFERENCE_CONTEXT_LENGTH: int(0,)?
+  INFERENCE_LANG: str?
+  INFERENCE_JOB_TIMEOUT_SEC: int(0,)?
+options:
+  PUID: 0
+  PGID: 0
+  TZ: Etc/UTC
+  DISABLE_SIGNUPS: false
+  NEXTAUTH_SECRET: "jnE2An0WyIKZvO+WgKJrn8WPW+c3DzV+c9ntBp8CdobTOmpJ"
+  MAX_ASSET_SIZE_MB: 4
+ports:
+  3000/tcp: 3011
+ports_description:
+  3000/tcp: Web UI
+image: fabioogaravini/hassio-{arch}-hoarder
