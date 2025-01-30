@@ -1,0 +1,54 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+set -e
+
+echo "Loading env variables:"
+
+OPTIONS_SOURCE=/data/options.json
+
+mapfile -t arr < <(jq -r 'keys[]' "${OPTIONS_SOURCE}")
+
+for KEYS in "${arr[@]}"; do
+    # export key
+    VALUE=$(jq ."$KEYS" "${OPTIONS_SOURCE}")
+    
+    # Continue for single values
+    VALUE="${VALUE//[\"\']/}"
+    line="${KEYS}=${VALUE}"
+
+    # text
+    if [[ "${KEYS}" == *"PASS"* ]] || [[ "${KEYS}" == *"SECRET"* ]] || [[ "${KEYS}" == *"KEY"* ]]; then
+        echo "${KEYS}=******"
+    else
+        echo "$line"
+    fi
+
+    export "$line"
+
+    # set .env
+    echo "$line" >> /.env || true
+
+    # set /etc/environment
+    echo "$line" >> /etc/environment
+
+    # For s6
+    if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
+    echo "export ${KEYS}=${VALUE}" >> ~/.bashrc
+done
+
+if [ -n "$TZ" ] && [ -f /etc/localtime ]; then
+    if [ -f /usr/share/zoneinfo/"$TZ" ]; then
+        echo "Timezone set from $(cat /etc/timezone) to $TZ"
+        ln -snf /usr/share/zoneinfo/"$TZ" /etc/localtime && echo "$TZ" >/etc/timezone
+    fi
+fi
+
+mkdir -p $DATA_DIR
+
+if [ ! -f "/var/run/s6/container_environment/NEXTAUTH_URL" ]; then
+    ha_address=$(bashio::network.ipv4_address)
+
+    if [ -n "$ha_address" ]; then
+        echo "http://${ha_address%%/*}:$(bashio::addon.port 3000)" > /var/run/s6/container_environment/NEXTAUTH_URL
+    fi
+fi

@@ -1,0 +1,39 @@
+# Home Assistant add-on: Hoarder (all-in-one) 💾 by Fabio Garavini
+
+The Hoarder Addon is a bookmark-everything app with a touch of AI, designed specifically for data hoarders. This addon allows you to save and organize your favorite bookmarks, with features like AI-powered search and recommendation.
+
+## Configuration
+
+* `TZ`: The timezone to use for the addon. Example `Europe/Rome`.
+* `DISABLE_SIGNUPS`: Whether to disable signups for new users. Defaults to `false`.
+* `NEXTAUTH_SECRET`: A secret key used for authentication. Defaults to a random value.
+* `MAX_ASSET_SIZE_MB`: The maximum size of assets (e.g. images) that can be uploaded. Defaults to `4`.
+* `NEXTAUTH_URL`: The URL of the NextAuth instance. Defaults to `http://<homeassistant-url>:<port>`.
+* `OCR_LANGS`: A comma-separated list of languages to use for optical character recognition (OCR). Defaults to `eng`.
+* `OCR_CONFIDENCE_THRESHOLD`: The minimum confidence threshold for OCR results. Defaults to `50`.
+* `OPENAI_API_KEY`: An API key for OpenAI. Optional.
+* `OPENAI_BASE_URL`: The base URL of the OpenAI API. Optional.
+* `OLLAMA_BASE_URL`: The base URL of the OLLAMA API. Optional.
+* `INFERENCE_TEXT_MODEL`: The text model to use for inference. Defaults to `gpt-4o-mini`.
+* `INFERENCE_IMAGE_MODEL`: The image model to use for inference. Defaults to `gpt-4o-mini`.
+* `EMBEDDING_TEXT_MODEL`: The text model to use for embedding. Defaults to `text-embedding-3-small`.
+* `INFERENCE_CONTEXT_LENGTH`: The length of the context to use for inference. Defaults to `2048`.
+* `INFERENCE_LANG`: The language to use for inference. Defaults to `english`.
+* `INFERENCE_JOB_TIMEOUT_SEC`: The timeout for inference jobs in seconds. Defaults to `30`.
+
+## Ports
+
+The Hoarder Addon exposes the following ports:
+
+* `3000/tcp`: The web UI port.
+
+## Installation
+
+To install the Hoarder Addon, follow these steps:
+
+1. Open the Home Assistant UI and navigate to the Add-ons page.
+1. Click the "Hoarder" addon.
+1. Click the "Install" button.
+1. Click the "Open Web UI" button.
+1. Create a new user.
+1. Happy hoarding!
