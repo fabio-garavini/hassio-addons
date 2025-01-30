@@ -43,10 +43,12 @@ if [ -n "$TZ" ] && [ -f /etc/localtime ]; then
     fi
 fi
 
-mkdir -p $MEILI_DIR $DATA_DIR
+mkdir -p $DATA_DIR
 
-if [ -n "${NEXTAUTH_URL}" ]; then
+if [ ! -f "/var/run/s6/container_environment/NEXTAUTH_URL" ]; then
     ha_address=$(bashio::network.ipv4_address)
 
-    export NEXTAUTH_URL="http://${ha_address%%/*}:$(bashio::addon.port 3000)"
+    if [ -n "$ha_address" ]; then
+        echo "http://${ha_address%%/*}:$(bashio::addon.port 3000)" > /var/run/s6/container_environment/NEXTAUTH_URL
+    fi
 fi

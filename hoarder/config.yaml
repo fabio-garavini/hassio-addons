@@ -11,6 +11,7 @@ init: false
 ingress: true
 ingress_port: 3000
 ingress_entry: /
+hassio_api: true
 map:
   - type: share
     read_only: false

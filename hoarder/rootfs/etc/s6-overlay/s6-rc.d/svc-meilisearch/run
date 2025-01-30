@@ -1,6 +1,8 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
 
+mkdir -p $MEILI_DIR
+
 cd $MEILI_DIR
 
 exec /bin/meilisearch
