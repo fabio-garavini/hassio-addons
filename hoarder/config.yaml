@@ -25,7 +25,7 @@ schema:
   NEXTAUTH_URL: url?
   OCR_LANGS: str?
   OCR_CONFIDENCE_THRESHOLD: int(0,100)?
-  OPENAI_API_KEY: str?
+  OPENAI_API_KEY: password?
   OPENAI_BASE_URL: url?
   OLLAMA_BASE_URL: url?
   INFERENCE_TEXT_MODEL: str?
