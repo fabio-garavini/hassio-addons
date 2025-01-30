@@ -1,6 +1,7 @@
 name: Jellyfin
-version: 10.10.5-v0
+version: 10.10.5-v1
 slug: jellyfin
+codenotary: info@fabiogaravini.dev
 description: Jellyfin is the volunteer-built media solution that puts you in control of your media
 url: https://jellyfin.org
 ingress: true
@@ -52,3 +53,4 @@ options:
   require_https: false
   certfile: fullchain.pem
   keyfile: privkey.pem
+image: fabioogaravini/hassio-{arch}-jellyfin
