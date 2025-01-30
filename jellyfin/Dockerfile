@@ -2,6 +2,8 @@ ARG BUILD_FROM
 
 FROM $BUILD_FROM
 
+ARG BUILD_ARCH
+
 ENV JELLYFIN_DATA_DIR=/config \
     JELLYFIN_CONFIG_DIR=/config/config \
     JELLYFIN_CACHE_DIR=/config/cache \
@@ -32,7 +34,7 @@ ENV \
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install base system
-ARG BUILD_ARCH=amd64 \
+ARG \
     BASHIO_VERSION="v0.16.2" \
     S6_OVERLAY_VERSION="3.2.0.0" \
     TEMPIO_VERSION="2021.09.0"
