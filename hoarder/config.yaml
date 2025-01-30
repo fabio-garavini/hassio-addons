@@ -4,7 +4,6 @@ slug: hoarder
 codenotary: info@fabiogaravini.dev
 description: bookmark-everything app with a touch of AI for the data hoarders out there
 url: https://hoarder.app/
-webui: http://[HOST]:[PORT:3000]
 arch:
   - aarch64
   - amd64
@@ -24,7 +23,7 @@ schema:
   PGID: int(0,)
   TZ: str?
   DISABLE_SIGNUPS: bool
-  NEXTAUTH_SECRET: passwd
+  NEXTAUTH_SECRET: password
   MAX_ASSET_SIZE_MB: int?
   NEXTAUTH_URL: url?
   OCR_LANGS: str?
