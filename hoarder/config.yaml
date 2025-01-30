@@ -20,8 +20,6 @@ backup: cold
 backup_exclude:
   - "**/logs"
 schema:
-  PUID: int(0,)
-  PGID: int(0,)
   TZ: str?
   DISABLE_SIGNUPS: bool
   NEXTAUTH_SECRET: password
@@ -39,8 +37,6 @@ schema:
   INFERENCE_LANG: str?
   INFERENCE_JOB_TIMEOUT_SEC: int(0,)?
 options:
-  PUID: 0
-  PGID: 0
   TZ: Etc/UTC
   DISABLE_SIGNUPS: false
   NEXTAUTH_SECRET: "jnE2An0WyIKZvO+WgKJrn8WPW+c3DzV+c9ntBp8CdobTOmpJ"
