@@ -53,6 +53,12 @@ A self-hostable bookmark-everything app with a touch of AI for the data hoarders
 
 [Jellyfin](https://jellyfin.org) is a Free Software Media System that puts you in control of managing and streaming your media.
 
+### Memos 🦜
+
+*All-in-one*
+
+An open-source, self-hosted note-taking solution designed for seamless deployment and multi-platform access. Experience effortless plain text writing with pain-free, complemented by robust Markdown syntax support for enhanced formatting.
+
 ### Nextcloud ☁️
 
 *All-in-one*
