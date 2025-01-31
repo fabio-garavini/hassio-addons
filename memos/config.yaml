@@ -4,8 +4,7 @@ slug: memos
 codenotary: info@fabiogaravini.dev
 description: note-taking solution designed for seamless deployment and multi-platform access
 url: https://www.usememos.com/
-ingress: true
-ingress_port: 5230
+webui: http://[HOST]:[PORT:5230]
 arch:
   - aarch64
   - amd64
