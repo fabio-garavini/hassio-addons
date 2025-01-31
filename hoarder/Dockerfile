@@ -28,7 +28,8 @@ ENV \
     CHROME_PATH=/usr/lib/chromium/ \
     CHROMIUM_FLAGS="--disable-software-rasterizer --disable-dev-shm-usage" \
     MEILI_HTTP_ADDR=0.0.0.0:7700 \
-    MEILI_SERVER_PROVIDER=docker
+    MEILI_SERVER_PROVIDER=docker \
+    MEILI_ENV=production
 
 # Install base system
 ARG \
