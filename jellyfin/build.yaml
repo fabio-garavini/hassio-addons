@@ -1,6 +1,6 @@
 build_from:
-  aarch64: jellyfin/jellyfin:10.10.5
-  amd64: jellyfin/jellyfin:10.10.5
-  armv7: jellyfin/jellyfin:10.10.5
+  aarch64: jellyfin/jellyfin:10.10.6
+  amd64: jellyfin/jellyfin:10.10.6
+  armv7: jellyfin/jellyfin:10.10.6
 codenotary:
   signer: fabio.garavini@outlook.it
