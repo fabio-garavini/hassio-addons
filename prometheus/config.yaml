@@ -1,5 +1,5 @@
 name: Prometheus
-version: v3.1.0-v1
+version: v3.2.0-v0
 slug: prometheus
 codenotary: info@fabiogaravini.dev
 description: Prometheus monitoring system
