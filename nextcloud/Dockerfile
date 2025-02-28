@@ -4,7 +4,7 @@ ARG BUILD_FROM
 
 FROM $BUILD_FROM
 
-ARG NEXTCLOUD_VERSION=30.0.6
+ARG NEXTCLOUD_VERSION=31.0.0
 ARG BUILD_ARCH
 
 ARG MARIADB_VERSION=10.11.10-r0 \
@@ -19,8 +19,12 @@ RUN \
     ffmpeg \
     gnu-libiconv \
     imagemagick \
-    imagemagick-heic \
     imagemagick-pdf \
+    imagemagick-jpeg \
+    imagemagick-raw \
+    imagemagick-tiff \
+    imagemagick-heic \
+    imagemagick-webp \
     imagemagick-svg \
     libxml2 \
     php83-apcu \

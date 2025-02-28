@@ -1,5 +1,5 @@
 name: Nextcloud
-version: "30.0.6-v0"
+version: "31.0.0-v0"
 slug: nextcloud
 codenotary: info@fabiogaravini.dev
 description: Nextcloud all-in-one
