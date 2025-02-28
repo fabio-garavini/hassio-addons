@@ -1,5 +1,5 @@
 name: Cloudflared
-version: "2025.2.0-v0"
+version: "2025.2.1-v0"
 slug: cloudflared
 codenotary: info@fabiogaravini.dev
 description: Cloudflare tunneling and Zero Trust service
