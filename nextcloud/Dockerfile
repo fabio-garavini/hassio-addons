@@ -7,9 +7,6 @@ FROM $BUILD_FROM
 ARG NEXTCLOUD_VERSION=31.0.0
 ARG BUILD_ARCH
 
-ARG MARIADB_VERSION=10.11.10-r0 \
-    REDIS_VERSION=7.2.7-r0
-
 # environment settings
 ENV LD_PRELOAD="/usr/local/lib/libjemalloc.so.2"
 
@@ -64,11 +61,11 @@ RUN \
     imagemagick \
     supervisor \
     g++ \
-    redis==${REDIS_VERSION} \
+    redis \
     gnupg \
-    mariadb==${MARIADB_VERSION} \
-    mariadb-client==${MARIADB_VERSION} \
-    mariadb-server-utils==${MARIADB_VERSION} && \
+    mariadb \
+    mariadb-client \
+    mariadb-server-utils && \
   echo "**** install python packages ****" && \
   python3 -m venv /lsiopy && \
   python3 -m pip install -U pip wheel setuptools && \
