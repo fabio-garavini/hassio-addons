@@ -52,6 +52,8 @@ RUN mkdir /docker-entrypoint-initdb.d; \
     curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc; \
     sh -c 'echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'; \
     apt-get update; \
+    # TODO: Remove line below, temporary fix for arm64
+    apt-get install -y --allow-downgrades postgresql-client-common=274; \
     apt-get install -y --no-install-recommends \
         logrotate \
         postgresql-$PG_MAJOR \
