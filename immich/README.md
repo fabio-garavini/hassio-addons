@@ -23,7 +23,7 @@ This addon bundles:
 
 - **Immich Server**: Core application
 - **Machine Learning**: TensorFlow-based recognition
-- **PostgreSQL**: Media metadata database (with pgvecto.rs extension)
-- **Redis**: Real-time notification system
+- **PostgreSQL**: Relational database (with pgvecto.rs extension)
+- **Redis**: In-memory database
 
 [Official Immich Documentation](https://immich.app/docs)
