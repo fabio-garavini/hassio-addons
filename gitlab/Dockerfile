@@ -2,7 +2,7 @@ ARG BUILD_FROM
 
 FROM $BUILD_FROM
 
-ARG GITLAB_VERSION=17.7.3-ce.0
+ARG GITLAB_VERSION=17.10.1-ce.0
 ARG BUILD_ARCH
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
