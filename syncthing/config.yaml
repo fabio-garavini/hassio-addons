@@ -1,5 +1,5 @@
 name: Syncthing
-version: 1.29.3-v0
+version: 1.29.4-v0
 slug: syncthing
 codenotary: info@fabiogaravini.dev
 description: "Open Source Continuous File Synchronization"
