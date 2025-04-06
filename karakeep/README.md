@@ -1,8 +1,8 @@
-# Home Assistant add-on: Hoarder (all-in-one) 💾 by Fabio Garavini
+# Home Assistant add-on: Karakeep (all-in-one) 💾 by Fabio Garavini
 
 A self-hostable bookmark-everything app with a touch of AI for the data hoarders out there.
 
-![screenshot](https://github.com/hoarder-app/hoarder/raw/main/screenshots/homepage.png?raw=true)
+![screenshot](https://github.com/karakeep-app/karakeep/raw/main/screenshots/homepage.png?raw=true)
 
 ## Features
 

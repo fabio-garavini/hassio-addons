@@ -45,6 +45,10 @@ fi
 
 mkdir -p $DATA_DIR
 
+if [ -d "/share/hoarder" ]; then
+    mv /share/hoarder/* $DATA_DIR/.
+fi
+
 if [ ! -f "/var/run/s6/container_environment/NEXTAUTH_URL" ]; then
     ha_address=$(bashio::network.ipv4_address)
 

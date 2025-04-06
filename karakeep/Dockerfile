@@ -15,7 +15,7 @@ ENV \
     S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0 \
     TERM="xterm-256color" \
-    DATA_DIR="/share/hoarder" \
+    DATA_DIR="/share/karakeep" \
     MEILI_DIR="/config/meili" \
     DISABLE_NEW_RELEASE_CHECK=true \
     BROWSER_WEB_URL="http://127.0.0.1:9222" \

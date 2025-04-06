@@ -1,9 +1,9 @@
-name: Hoarder
+name: Karakeep
 version: "0.23.0-v0"
-slug: hoarder
+slug: karakeep
 codenotary: info@fabiogaravini.dev
 description: bookmark-everything app with a touch of AI for the data hoarders out there
-url: https://hoarder.app/
+url: https://karakeep.app/
 webui: http://[HOST]:[PORT:3000]
 arch:
   - aarch64
@@ -58,4 +58,4 @@ ports:
   3000/tcp: 3011
 ports_description:
   3000/tcp: Web UI
-image: fabioogaravini/hassio-{arch}-hoarder
+image: fabioogaravini/hassio-{arch}-karakeep

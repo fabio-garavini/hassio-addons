@@ -14,6 +14,6 @@ To install the Memos Addon, follow these steps:
 
 ## Ports
 
-The Hoarder Addon exposes the following ports:
+The Memos Addon exposes the following ports:
 
 - `5230/tcp`: The web UI port

@@ -1,6 +1,6 @@
 #include <tunables/global>
 
-profile hoarder flags=(attach_disconnected,mediate_deleted) {
+profile karakeep flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
   capability,

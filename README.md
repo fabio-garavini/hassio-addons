@@ -37,7 +37,7 @@ Help me expand the documentation making it as easy as possible for anyone to use
 
 [Gitlab Comunity Edition (CE)](https://gitlab.com/rluna-gitlab/gitlab-ce) is an open source end-to-end software development platform with built-in version control, issue tracking, code review, CI/CD, and more
 
-### Hoarder 💾
+### Karakeep 💾
 
 *All-in-one*
 
