@@ -1,5 +1,5 @@
 build_from:
-  amd64: ghcr.io/paperless-ngx/paperless-ngx
-  aarch64: ghcr.io/paperless-ngx/paperless-ngx
+  amd64: ghcr.io/paperless-ngx/paperless-ngx:2.15.0
+  aarch64: ghcr.io/paperless-ngx/paperless-ngx:2.15.0
 codenotary:
   signer: info@fabiogaravini.dev
