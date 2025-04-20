@@ -1,5 +1,5 @@
 build_from:
-  aarch64: prom/prometheus:v3.2.1
-  amd64: prom/prometheus:v3.2.1
+  aarch64: prom/prometheus:v3.3.0
+  amd64: prom/prometheus:v3.3.0
 codenotary:
   signer: info@fabiogaravini.dev
