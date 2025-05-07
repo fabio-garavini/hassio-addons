@@ -1,14 +1,12 @@
-# syntax=docker/dockerfile:1
-
 ARG BUILD_FROM
 
 FROM $BUILD_FROM
 
-ARG NEXTCLOUD_VERSION=31.0.3
+ARG NEXTCLOUD_VERSION=31.0.4
 ARG BUILD_ARCH
 
 # environment settings
-ENV LD_PRELOAD="/usr/local/lib/libjemalloc.so.2"
+ENV LD_PRELOAD="/usr/lib/preloadable_libiconv.so"
 
 RUN \
   echo "**** install runtime packages ****" && \
@@ -57,8 +55,6 @@ RUN \
     sudo \
     python3-dev \
     perl \
-    ffmpeg \
-    imagemagick \
     supervisor \
     g++ \
     redis \
@@ -135,16 +131,17 @@ ENV MARIADB_DATADIR="/config/mariadb" \
 COPY rootfs/ /
 
 # ports and volumes
-EXPOSE 80 443 6379 3306
+EXPOSE 80 443
 
-VOLUME /config /data /share /media
+VOLUME /config /data /share /media /ssl
 
-ARG BUILD_VERSION
-ARG BUILD_DATE
-ARG BUILD_DESCRIPTION
-ARG BUILD_NAME
-ARG BUILD_REF
-ARG BUILD_REPOSITORY
+ARG BUILD_VERSION \
+    BUILD_DATE \
+    BUILD_DESCRIPTION \
+    BUILD_NAME \
+    BUILD_REF \
+    BUILD_REPOSITORY
+
 LABEL \
     io.hass.name="${BUILD_NAME}" \
     io.hass.description="${BUILD_DESCRIPTION}" \
