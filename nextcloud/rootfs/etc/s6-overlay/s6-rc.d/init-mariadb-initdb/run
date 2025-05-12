@@ -75,8 +75,8 @@ EONEWSQL
     fi
 
     # set some permissions needed before we begin
-    lsiown -R abc:abc "${tempSqlFile}" /config/logs/mariadb /var/run/mysqld /var/lib/mysql
-    chmod -R 777 /config/logs/mariadb /var/run/mysqld /var/lib/mysql
+    lsiown -R abc:abc "${tempSqlFile}" /config/log/mariadb /var/run/mysqld /var/lib/mysql
+    chmod -R 777 /config/log/mariadb /var/run/mysqld /var/lib/mysql
 
     # initialise database structure
     mariadb-install-db --datadir="${MARIADB_DATADIR}" --user=abc --auth-root-authentication-method=normal > /dev/null

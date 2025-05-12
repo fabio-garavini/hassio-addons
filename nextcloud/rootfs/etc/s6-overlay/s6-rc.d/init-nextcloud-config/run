@@ -5,6 +5,7 @@
 mkdir -p \
     /app/www/public \
     /config/www/nextcloud/apps \
+    /config/www/nextcloud/custom_apps \
     /config/www/nextcloud/config \
     /config/www/nextcloud/themes \
     ${NEXTCLOUD_DATA_DIR}

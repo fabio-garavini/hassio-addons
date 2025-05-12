@@ -1,5 +1,5 @@
 build_from:
-  amd64: ghcr.io/linuxserver/baseimage-alpine-nginx:3.21
-  aarch64: ghcr.io/linuxserver/baseimage-alpine-nginx:3.21
+  amd64: ghcr.io/linuxserver/nextcloud:31.0.4
+  aarch64: ghcr.io/linuxserver/nextcloud:31.0.4
 codenotary:
   signer: info@fabiogaravini.dev
