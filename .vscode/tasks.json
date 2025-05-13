@@ -49,12 +49,27 @@
     ],
     "inputs": [
         {
-        "id": "addonName",
-        "type": "pickString",
-        "description": "Name of addon (to add your addon to this list, please edit .vscode/tasks.json)",
-        "options": [
-            "cloudflared",
-        ]
+            "id": "addonName",
+            "type": "pickString",
+            "description": "Name of addon (to add your addon to this list, please edit .vscode/tasks.json)",
+            "options": [
+                "cloudflared",
+                "frigate_rocm",
+                "gitea",
+                "gitlab",
+                "immich",
+                "jellyfin",
+                "karakeep",
+                "memos",
+                "nextcloud",
+                "openspeedtest",
+                "paperless",
+                "pocketbase",
+                "postgres_16",
+                "prometheus",
+                "redis",
+                "syncthing"
+            ]
         }
     ]
 }
