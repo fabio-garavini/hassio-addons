@@ -1,8 +1,8 @@
-#!/command/with-contenv bashio
+#!/command/with-contenv bash
 # shellcheck shell=bash
 
-mkdir -p $MEILI_DIR
+mkdir -p "$MEILI_DIR"
 
-cd $MEILI_DIR
+cd "$MEILI_DIR" || exit
 
 exec /bin/meilisearch --no-analytics

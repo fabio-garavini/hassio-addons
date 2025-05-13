@@ -1,6 +1,6 @@
-#!/command/with-contenv bashio
+#!/command/with-contenv bash
 # shellcheck shell=bash
 
-cd /usr/src/chrome
+cd /usr/src/chrome || exit
 
 su chrome -c "chromium-browser --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --remote-debugging-address=0.0.0.0 --remote-debugging-port=9222 --hide-scrollbars &> /dev/null"

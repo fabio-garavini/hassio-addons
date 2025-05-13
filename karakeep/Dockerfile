@@ -6,14 +6,8 @@ ARG BUILD_ARCH
 
 # Environment variables
 ENV \
-    DEBIAN_FRONTEND="noninteractive" \
     HOME="/root" \
-    LANG="C.UTF-8" \
     PS1="$(whoami)@$(hostname):$(pwd)$ " \
-    S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
-    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
-    S6_CMD_WAIT_FOR_SERVICES=1 \
-    S6_SERVICES_GRACETIME=0 \
     TERM="xterm-256color" \
     DATA_DIR="/share/karakeep" \
     MEILI_DIR="/config/meili" \
@@ -31,11 +25,6 @@ ENV \
     MEILI_SERVER_PROVIDER=docker \
     MEILI_ENV=production
 
-# Install base system
-ARG \
-    BASHIO_VERSION="0.16.2" \
-    TEMPIO_VERSION="2021.09.0"
-
 RUN \
     set -x \
     && apk add --no-cache \
@@ -47,27 +36,10 @@ RUN \
         libstdc++ \
         tzdata \
         xz \
-        libgcc \
-    \
-    && mkdir -p /usr/src/bashio \
-    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-        | tar -xzf - --strip 1 -C /usr/src/bashio \
-    && mv /usr/src/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    \
-    && curl -L -f -s -o /usr/bin/tempio \
-        "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" \
-    && chmod a+x /usr/bin/tempio \
-    \
-    && rm -rf /usr/src/*
+        libgcc
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
-# Add Chrome as a user
-RUN mkdir -p /usr/src/chrome \
-    && adduser -D chrome \
-    && chown -R chrome:chrome /usr/src/chrome
 
 # Installs latest Chromium package.
 RUN apk upgrade --no-cache --available \
@@ -77,20 +49,22 @@ RUN apk upgrade --no-cache --available \
       font-noto-emoji \
     && apk add --no-cache \
       --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community \
-      font-wqy-zenhei
+      font-wqy-zenhei \
+    && mkdir -p /usr/src/chrome \
+    && adduser -D chrome \
+    && chown -R chrome:chrome /usr/src/chrome
 
-COPY --from=getmeili/meilisearch:v1.11.1 /bin/meilisearch /bin/meilitool /bin/
+COPY --from=getmeili/meilisearch:v1.13.3 /bin/meilisearch /bin/meilitool /bin/
 
 COPY rootfs/ /
 
-VOLUME /config /data /share /media
+ARG BUILD_VERSION \
+    BUILD_DATE \
+    BUILD_DESCRIPTION \
+    BUILD_NAME \
+    BUILD_REF \
+    BUILD_REPOSITORY
 
-ARG BUILD_VERSION
-ARG BUILD_DATE
-ARG BUILD_DESCRIPTION
-ARG BUILD_NAME
-ARG BUILD_REF
-ARG BUILD_REPOSITORY
 LABEL \
     io.hass.name="${BUILD_NAME}" \
     io.hass.description="${BUILD_DESCRIPTION}" \
