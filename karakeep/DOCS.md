@@ -4,11 +4,11 @@ The Karakeep Addon is a bookmark-everything app with a touch of AI, designed spe
 
 ## Configuration
 
+- `NEXTAUTH_URL`: The URL of the Karakeep instance. Example `http://<homeassistant-ip>:3011`.
 - `TZ`: The timezone to use for the addon. Example `Europe/Rome`.
 - `DISABLE_SIGNUPS`: Whether to disable signups for new users. Defaults to `false`.
 - `NEXTAUTH_SECRET`: A secret key used for authentication. Defaults to a random value.
 - `MAX_ASSET_SIZE_MB`: The maximum size of assets (e.g. images) that can be uploaded. Defaults to `4`.
-- `NEXTAUTH_URL`: The URL of the Karakeep instance. Defaults to `http://<homeassistant-url>:<port>`.
 - `OCR_LANGS`: A comma-separated list of languages to use for optical character recognition (OCR). Defaults to `eng`.
 - `OCR_CONFIDENCE_THRESHOLD`: The minimum confidence threshold for OCR results. Defaults to `50`.
 - `OPENAI_API_KEY`: An API key for OpenAI. Optional.
@@ -36,6 +36,7 @@ To install the Karakeep Addon, follow these steps:
 1. Open the Home Assistant UI and navigate to the Add-ons page.
 1. Click the "Karakeep" addon.
 1. Click the "Install" button.
+1. (Optional) under `Configuration` set `NEXTAUTH_URL` as specified above
 1. Click the "Open Web UI" button.
 1. Create a new user.
 1. Happy hoarding!
