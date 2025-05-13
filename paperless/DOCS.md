@@ -40,6 +40,7 @@ Follow these steps to install Paperless-ngx in Home Assistant:
 | `PAPERLESS_OCR_LANGUAGE`      | No       | `eng`   | OCR language code (e.g., `deu` for German, `fra` for French).               |
 | `PAPERLESS_URL`               | No       | -       | Full URL (e.g., `http://paperless.example.com:8000`). Required for reverse proxies. |
 | `PAPERLESS_SECRET_KEY`        | No       | Auto-generated | Secret key for session security. **Change this if exposed to the internet!** Generate via `openssl rand -hex 32`. |
+| `PAPERLESS_CONSUMER_POLLING`    | No      | -       | If paperless won't find documents added to your consume folder, it might not be able to automatically detect filesystem changes. In that case, specify a polling interval in seconds here, which will then cause paperless to periodically check your consumption directory for changes.                                          |
 
 ---
 

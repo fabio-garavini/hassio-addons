@@ -1,5 +1,5 @@
 name: Paperless
-version: "2.15.3-v0"
+version: "2.15.3-v1"
 slug: paperless
 codenotary: info@fabiogaravini.dev
 description: Document management system that transforms your physical documents into a searchable online archive
@@ -30,6 +30,7 @@ schema:
   PAPERLESS_OCR_LANGUAGE: str?
   PAPERLESS_URL: str?
   PAPERLESS_SECRET_KEY: password?
+  PAPERLESS_CONSUMER_POLLING: int(0,)?
 options:
   USERMAP_UID: 0
   USERMAP_GID: 0
