@@ -38,7 +38,7 @@ if (getenv('SQLITE_DATABASE')) {
 }
 
 if ($autoconfig_enabled) {
-    $AUTOCONFIG['directory'] = getenv('NEXTCLOUD_DATA_DIR') ?: '/share/nextcloud';
+    $AUTOCONFIG['directory'] = getenv('NEXTCLOUD_DATADIR') ?: '/share/nextcloud';
     $AUTOCONFIG['enable_previews'] = true;
     $AUTOCONFIG['enabledPreviewProviders'] = array (
         0 => 'OC\\Preview\\PNG',

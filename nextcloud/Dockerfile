@@ -34,7 +34,7 @@ ENV MYSQL_ROOT_PASSWORD="nextcloud" \
 
 ENV MARIADB_DATADIR="/config/mariadb" \
     REDIS_DATADIR="/config/redis" \
-    NEXTCLOUD_DATA_DIR="/share/nextcloud"
+    NEXTCLOUD_DATADIR="/share/nextcloud"
 
 # copy local files
 COPY rootfs/ /
