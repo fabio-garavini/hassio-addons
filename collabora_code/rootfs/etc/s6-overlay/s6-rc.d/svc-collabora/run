@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+
+s6-setuidgid cool /start-collabora.sh

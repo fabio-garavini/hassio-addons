@@ -16,6 +16,11 @@ comparison to installing any other Home Assistant add-on.
 
 `DEFAULT_PHONE_REGION` is a 2 letter [country code](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes). for example `IT` for Italy
 
+## Office
+
+1. Install `Collabora CODE` addon and start it
+1. 
+
 ## External Storage
 
 Any folder or network storage mounted under `/media` or `/share` is visible inside the add-on and can be accessed by mounting a local folder through the External Storage app
