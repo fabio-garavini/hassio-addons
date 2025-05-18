@@ -7,7 +7,7 @@ export NOTIFY_PUSH_BIN="$NEXTCLOUD_BASE/apps/notify_push/bin/$(arch)/notify_push
 
 installed_version=$(php -r "require '/config/www/nextcloud/config/config.php'; echo \$CONFIG['version'];" 2>/dev/null)
 if [ "${installed_version}" = "" ]; then
-    echo "**** Nextcloud not installed yet. Please go through the wizard and restart the container. Then notify_push will be enabled. ****"
+    echo "**** Nextcloud not installed yet. Please go through the wizard and restart the addon. Then notify_push will be enabled. ****"
     sleep infinity
 fi
 # Check redis
@@ -22,9 +22,9 @@ occ app:enable notify_push
 
 # Check if notify-push is installed
 if [ ! -d "$NEXTCLOUD_BASE/apps/notify_push/" ]; then
-    echo "**** Notify-push folder not found. Install the notify-push/client-push app and restart the container. ****"
+    echo "**** Notify-push folder not found. Install the notify-push/client-push app and restart the addon. ****"
     sleep infinity
-fi 
+fi
 # Check cpu arch
 if [ ! -f "$NOTIFY_PUSH_BIN" ]; then
     echo "**** Did not find a matching notify-push binary for your cpu arch: $(arch) ****"
@@ -43,7 +43,7 @@ for PROXY in '127.0.0.1' '::1'; do
     fi
 done
 
-# run notify-push binary 
+# run notify-push binary
 echo "**** Starting notify-push ****"
 exec \
     s6-notifyoncheck  -d -n 300 -w 1000 -c "nc -z localhost 7867" \

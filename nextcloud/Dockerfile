@@ -15,7 +15,6 @@ RUN \
     imagemagick-svg \
     python3-dev \
     perl \
-    libreoffice \
     redis \
     gnupg \
     mariadb \
