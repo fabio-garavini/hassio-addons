@@ -15,6 +15,12 @@ Help me expand the documentation making it as easy as possible for anyone to use
 > [!NOTE]
 > *All-in-one* addons are configured to work completely stand-alone, as they pack everything that they need
 
+### 📄 Collabora CODE
+
+*Nextcloud extension*
+
+[Collabora CODE](https://www.collaboraonline.com/code/) is a powerful online document editing suite.
+
 ### 🌐 Cloudflared
 
 *All-in-one*

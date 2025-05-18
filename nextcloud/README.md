@@ -13,3 +13,7 @@ Monolithic version of Nextcloud composed of:
 - Redis
 
 Just one click install
+
+## Office
+
+For office functionalities follow the Documentation page
