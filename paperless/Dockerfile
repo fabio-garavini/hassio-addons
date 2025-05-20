@@ -202,10 +202,10 @@ RUN \
 # Credits:
 # https://github.com/arachnys/athenapdf/issues/69.
 # https://github.com/arachnys/athenapdf/commit/ba25a8d80a25d08d58865519c4cd8756dc9a336d.
-COPY --from=gotenberg/gotenberg:8.17 /etc/fonts/conf.d/100-gotenberg.conf /etc/fonts/conf.d/
+COPY --from=gotenberg/gotenberg:8.20 /etc/fonts/conf.d/100-gotenberg.conf /etc/fonts/conf.d/
 
 # Copy the pdfcpu binary from the pdfcpu-binary-stage.
-COPY --from=gotenberg/gotenberg:8.17 /usr/bin/pdfcpu /usr/bin/gotenberg /usr/bin/
+COPY --from=gotenberg/gotenberg:8.20 /usr/bin/pdfcpu /usr/bin/gotenberg /usr/bin/
 
 # Environment variables required by modules or else.
 ENV CHROMIUM_BIN_PATH=/usr/bin/chromium \
