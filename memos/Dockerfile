@@ -21,7 +21,7 @@ RUN apk add --no-cache bash logrotate postgresql$PG_MAJOR postgresql$PG_MAJOR-cl
 	install --verbose --directory --owner postgres --group postgres --mode 1777 /var/lib/postgresql; \
     install --verbose --directory --owner postgres --group postgres --mode 3777 /var/run/postgresql
 
-COPY --from=neosmemo/memos:0.24.2 /usr/local/memos/memos /usr/local/memos/
+COPY --from=neosmemo/memos:0.24.3 /usr/local/memos/memos /usr/local/memos/
 
 COPY rootfs/ /
 
