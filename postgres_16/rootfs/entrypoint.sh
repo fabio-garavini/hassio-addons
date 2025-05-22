@@ -49,7 +49,8 @@ export POSTGRES_HOST_AUTH_METHOD=$(bashio::config 'POSTGRES_HOST_AUTH_METHOD')
 export POSTGRES_USER=$(bashio::config 'POSTGRES_USER')
 export POSTGRES_PASSWORD=$(bashio::config 'POSTGRES_PASSWORD')
 export POSTGRES_INITDB_ARGS=$(bashio::config 'POSTGRES_INITDB_ARGS')
+export DB_STORAGE_TYPE=$(bashio::config 'DB_STORAGE_TYPE')
 
 set +e
 
-exec docker-entrypoint.sh postgres -c shared_preload_libraries=vectors.so -c search_path=postgres,public,vectors -c logging_collector=on -c log_rotation_size=10MB -c log_timezone="$TZ" -c timezone="$TZ"
+exec /usr/local/bin/immich-docker-entrypoint.sh postgres -c config_file=/etc/postgresql/postgresql.conf -c logging_collector=on -c log_rotation_size=10MB -c log_timezone="$TZ" -c timezone="$TZ"

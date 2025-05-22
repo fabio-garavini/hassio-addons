@@ -1,8 +1,8 @@
 name: Postgres 16
-version: "pg16-v0.3.0-v1"
+version: "pg16-v0.3.0-v2"
 slug: postgres_16
 codenotary: info@fabiogaravini.dev
-description: Postgres 16 with pgvecto.rs
+description: Postgres 16 with VectorChord (and pgvecto.rs for legacy support)
 url: https://www.postgresql.org/about/news/postgresql-16-released-2715
 startup: initialize
 arch:
@@ -21,10 +21,12 @@ ports_description:
 options:
   POSTGRES_INITDB_ARGS: "--data-checksum"
   POSTGRES_HOST_AUTH_METHOD: password
+  DB_STORAGE_TYPE: HDD
 schema:
   POSTGRES_DB: str
   POSTGRES_HOST_AUTH_METHOD: str
   POSTGRES_USER: str
   POSTGRES_PASSWORD: password
   POSTGRES_INITDB_ARGS: str?
+  DB_STORAGE_TYPE: list(SSD|HDD)
 image: fabioogaravini/hassio-{arch}-postgres-16-pgvectors
