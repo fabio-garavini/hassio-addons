@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
 set -Eeuo pipefail
 
 #
@@ -27,7 +28,7 @@ docker_setup_env
 docker_create_db_directories
 if [ "$(id -u)" = '0' ]; then
 	# then restart script as postgres user
-	exec gosu postgres "$BASH_SOURCE" "$@"
+	exec s6-setuidgid postgres "$BASH_SOURCE" "$@"
 fi
 
 # only run initialization on an empty data directory

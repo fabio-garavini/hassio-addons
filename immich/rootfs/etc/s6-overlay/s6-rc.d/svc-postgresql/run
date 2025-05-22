@@ -1,14 +1,26 @@
 #!/usr/bin/with-contenv bash
+# shellcheck shell=bash
 
 # make db config folder
-mkdir -p "$PGDATA" "/config/logs/postgres"
+#mkdir -p "$PGDATA" "/config/logs/postgres"
+mkdir -p "/config/logs/postgres"
 
-# copy defaults
-#[[ ! -f ${PGDATA}/postgresql.conf ]] &&
-#	cp /defaults/postgresql.conf ${PGDATA}/postgresql.conf
+# load postgres config file
+case "${DB_STORAGE_TYPE^^}" in
+  SSD|HDD)
+    echo "Using ${DB_STORAGE_TYPE^^} storage"
+    cp -n "/etc/postgresql/postgresql.${DB_STORAGE_TYPE,,}.conf" "/etc/postgresql/postgresql.conf"
+    ;;
+  *)
+    echo "Error: DB_STORAGE_TYPE must be set to 'SSD' or 'HDD'" >&2
+    exit 1
+    ;;
+esac
 
 # permissions
-chown postgres:postgres -R "$PGDATA" "/config/logs/postgres"
-chmod 755 -R "$PGDATA" "/config/logs/postgres"
+#chown postgres:postgres -R "$PGDATA" "/config/logs/postgres"
+#chmod 750 -R "$PGDATA" "/config/logs/postgres"
+chown postgres:postgres -R "/config/logs/postgres"
+chmod 750 -R "/config/logs/postgres"
 
-exec s6-setuidgid postgres postgres-entrypoint.sh postgres -c timezone="$TZ" -c shared_preload_libraries=vectors.so -c search_path=postgres,public,vectors -c log_directory="/config/logs/postgres" -c log_timezone="$TZ" -c log_rotation_size=10MB
+exec postgres-entrypoint.sh postgres -c timezone="$TZ" -c log_directory="/config/logs/postgres" -c log_timezone="$TZ" -c log_rotation_size=10MB -c config_file="/etc/postgresql/postgresql.conf"
