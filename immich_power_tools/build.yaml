@@ -1,0 +1,5 @@
+build_from:
+  aarch64: ghcr.io/hassio-addons/base/aarch64:stable
+  amd64: ghcr.io/hassio-addons/base/amd64:stable
+codenotary:
+  signer: info@fabiogaravini.dev
