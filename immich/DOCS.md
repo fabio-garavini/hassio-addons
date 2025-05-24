@@ -22,14 +22,13 @@ This monolithic package includes:
 
 ## 🛠 Installation Guide
 
-1. **Add Repository** (if not in your add-on store)
-2. **Install the Add-on**:
+1. **Install the Add-on**:
    - Navigate to **Home Assistant Supervisor** → **Add-on Store**
-   - Search for "Immich All-in-One" → Click **Install**
-3. **Initial Setup**:
+   - Search for "Immich" → Click **Install**
+1. **Initial Setup**:
    - Start the add-on
    - Click **OPEN WEB UI** and follow first-run wizard
-4. **Configure Libraries** (see Storage section below)
+1. **Configure Libraries** (see Storage section below)
 
 ---
 
