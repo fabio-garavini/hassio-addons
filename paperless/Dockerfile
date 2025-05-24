@@ -226,12 +226,13 @@ COPY --from=apache/tika:3.1.0.0 /tika-server-standard-${TIKA_VERSION}.jar /
 
 COPY rootfs/ /
 
-ARG BUILD_VERSION
-ARG BUILD_DATE
-ARG BUILD_DESCRIPTION
-ARG BUILD_NAME
-ARG BUILD_REF
-ARG BUILD_REPOSITORY
+ARG BUILD_VERSION \
+    BUILD_DATE \
+    BUILD_DESCRIPTION \
+    BUILD_NAME \
+    BUILD_REF \
+    BUILD_REPOSITORY
+
 LABEL \
     io.hass.name="${BUILD_NAME}" \
     io.hass.description="${BUILD_DESCRIPTION}" \

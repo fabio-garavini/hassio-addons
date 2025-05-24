@@ -1,5 +1,5 @@
 name: Paperless
-version: "2.16.1-v0"
+version: "2.16.2-v0"
 slug: paperless
 codenotary: info@fabiogaravini.dev
 description: Document management system that transforms your physical documents into a searchable online archive
