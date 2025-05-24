@@ -21,10 +21,10 @@ A unofficial immich client to provide better tools to organize and manage your i
 |-----------|----------|---------|-------------|
 | `IMMICH_URL`    | Yes       | -     | Immich URL |
 | `EXTERNAL_IMMICH_URL`    | No       | -     | Immich External URL |
-| `IMMICH_API_KEY`    | Yes       | -     | Immich API key [How to obtain the API Key](https://immich.app/docs/features/command-line-interface/#obtain-the-api-key) |
+| `IMMICH_API_KEY`    | No       | -     | Immich API key [How to obtain the API Key](https://immich.app/docs/features/command-line-interface/#obtain-the-api-key) |
 | `JWT_SECRET`    | Yes       | -     | JWT Secret for authentication |
-| `IMMICH_SHARE_LINK_KEY`    | Yes       | -     | Share link key for Immich |
-| `POWER_TOOLS_ENDPOINT_URL`    | Yes       | -     | SURL of the Power Tools endpoint (Used for share links) |
+| `IMMICH_SHARE_LINK_KEY`    | No       | -     | Share link key for Immich |
+| `POWER_TOOLS_ENDPOINT_URL`    | No       | -     | SURL of the Power Tools endpoint (Used for share links) |
 | `GOOGLE_MAPS_API_KEY`    | No       | -     | Google Maps API Key for heatmap |
 | `GEMINI_API_KEY`    | No       | -     | Gemini API Key for parsing search query in "Find" |
 | `TZ`      | Yes      | `Etc/UTC`       | Timezone (e.g., `Europe/London`) |

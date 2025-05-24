@@ -15,7 +15,8 @@ ENV \
   DB_USERNAME=immich \
   DB_PASSWORD=immich \
   DB_PORT=5432 \
-  DB_DATABASE_NAME=immich
+  DB_DATABASE_NAME=immich \
+  SECURE_COOKIE=true
 
 RUN addgroup -g 1000 node \
     && adduser -u 1000 -G node -s /bin/sh -D node \
