@@ -15,93 +15,93 @@ Help me expand the documentation making it as easy as possible for anyone to use
 > [!NOTE]
 > *All-in-one* addons are configured to work completely stand-alone, as they pack everything that they need
 
-### Cloudflared 🌐
+### 🌐 Cloudflared
 
 *All-in-one*
 
 [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks) provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address.
 
-### Frigate ROCm 📹
+### 📹 Frigate ROCm
 
 [Frigate NVR](https://frigate.video) with realtime local object detection for IP cameras (ROCm version)
 
-### Gitea 🍵
+### 🍵 Gitea
 
 *All-in-one*
 
 [Gitea](https://about.gitea.com) is a Git hosting, code review, team collaboration, package registry, and CI/CD.
 
-### Gitlab CE 😺
+### 😺 Gitlab CE
 
 *All-in-one*
 
 [Gitlab Comunity Edition (CE)](https://gitlab.com/rluna-gitlab/gitlab-ce) is an open source end-to-end software development platform with built-in version control, issue tracking, code review, CI/CD, and more
 
-### Karakeep 💾
+### 💾 Karakeep
 
 *All-in-one*
 
 A self-hostable bookmark-everything app with a touch of AI for the data hoarders out there.
 
-### Immich 📷
+### 📷 Immich
 
 *All-in-one*
 
 [Immich](https://github.com/immich-app/immich) is a high performance self-hosted photo and video management solution
 
-### Jellyfin 📷
+### 📷 Jellyfin
 
 [Jellyfin](https://jellyfin.org) is a Free Software Media System that puts you in control of managing and streaming your media.
 
-### Memos 🦜
+### 🦜 Memos
 
 *All-in-one*
 
 An open-source, self-hosted note-taking solution designed for seamless deployment and multi-platform access. Experience effortless plain text writing with pain-free, complemented by robust Markdown syntax support for enhanced formatting.
 
-### Nextcloud ☁️
+### ☁️ Nextcloud
 
 *All-in-one*
 
 [Nextcloud](https://nextcloud.com/) is the most popular open source content collaboration platform for tens of millions of users at thousands of organizations across the globe
 
-### Open Speed Test 🚀
+### 🚀 Open Speed Test
 
 *All-in-one*
 
 SpeedTest by [OpenSpeedTest™](https://openspeedtest.com/) is a Free and Open-Source HTML5 Network Performance Estimation Tool Written in Vanilla Javascript
 
-### Paperless 📄
+### 📄 Paperless
 
 *All-in-one*
 
 [Paperless-ngx](https://docs.paperless-ngx.com) is a community-supported open-source document management system that transforms your physical documents into a searchable online archive so you can keep, well, less paper.
 
-### PocketBase 🗄️
+### 🗄️ PocketBase
 
 *All-in-one*
 
 [Pocketbase](https://pocketbase.io) is an open source backend consisting of embedded database (SQLite) with realtime subscriptions, built-in auth management, convenient dashboard UI and simple REST-ish API. It can be used both as Go framework and as standalone application.
 
-### Postgres 🐘
+### 🐘 Postgres
 
 *All-in-one*
 
 [PostgreSQL 16](https://www.postgresql.org) is a powerful, open source object-relational database system with over 35 years of active development that has earned it a strong reputation for reliability, feature robustness, and performance.
 
-### Prometheus 🔥
+### 🔥 Prometheus
 
 *All-in-one*
 
 [Prometheus](https://prometheus.io) is an open-source monitoring system with a dimensional data model, flexible query language, efficient time series database and modern alerting approach.
 
-### Redis 📝
+### 📝 Redis
 
 *All-in-one*
 
 [Redis](https://redis.io) is the world’s fastest in-memory database with [Redis Insight](https://redis.io/insight) and [Redis Exporter](https://github.com/oliver006/redis_exporter) built in
 
-### Syncthing 🔄
+### 🔄 Syncthing
 
 *All-in-one*
 
