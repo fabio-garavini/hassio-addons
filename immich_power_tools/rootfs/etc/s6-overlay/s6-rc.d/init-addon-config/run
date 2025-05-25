@@ -17,7 +17,7 @@ for KEYS in "${arr[@]}"; do
     line="${KEYS}=${VALUE}"
 
     # text
-    if [[ "${KEYS}" == *"PASS"* || "${KEYS}" == *"SECRET"* ]]; then
+    if [[ "${KEYS}" == *"PASS"* || "${KEYS}" == *"SECRET"* || "${KEYS}" == *"KEY"* ]]; then
         echo "${KEYS}=******"
     else
         echo "$line"

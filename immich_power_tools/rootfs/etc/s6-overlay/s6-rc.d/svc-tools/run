@@ -5,4 +5,4 @@ set -e
 cd /app
 
 # make redis folders
-exec node server.js
+s6-setuidgid nextjs node server.js
