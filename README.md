@@ -49,6 +49,12 @@ A self-hostable bookmark-everything app with a touch of AI for the data hoarders
 
 [Immich](https://github.com/immich-app/immich) is a high performance self-hosted photo and video management solution
 
+### ![Logo](https://github.com/varun-raj/immich-power-tools/raw/main/public/favicon-16x16.png) Immich Power Tools
+
+*Immich extension*
+
+[Immich Power Tools](https://github.com/varun-raj/immich-power-tools) is a unofficial immich client to provide better tools to organize and manage your immich account. Building it to speed up your workflows in Immich to organize your people and albums.
+
 ### 📷 Jellyfin
 
 [Jellyfin](https://jellyfin.org) is a Free Software Media System that puts you in control of managing and streaming your media.

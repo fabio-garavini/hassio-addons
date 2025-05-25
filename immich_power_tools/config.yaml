@@ -1,0 +1,31 @@
+name: Immich Power Tools
+version: "0.16.0-v0"
+slug: immich_power_tools
+codenotary: info@fabiogaravini.dev
+description: A unofficial immich client to provide better tools to organize and manage your immich account
+url: https://github.com/varun-raj/immich-power-tools
+webui: http://[HOST]:[PORT:80]
+arch:
+  - aarch64
+  - amd64
+init: false
+schema:
+  IMMICH_URL: str
+  EXTERNAL_IMMICH_URL: str?
+  IMMICH_API_KEY: password?
+  JWT_SECRET: password
+  IMMICH_SHARE_LINK_KEY: str?
+  POWER_TOOLS_ENDPOINT_URL: str
+  GOOGLE_MAPS_API_KEY: password?
+  GEMINI_API_KEY: password?
+  TZ: str
+  DB_HOST: str
+options:
+  JWT_SECRET: "7bfb671bd71930814be6e97b28a782b12025482ebc16331c822113dd4f235be1d04584f61bfb2ef2590fe1a23f9f924f33f8d20d46529647a11ec5eb89e3941c018fdfed49ab6b4493764cc829469fc99cbb0097168033d283d4c9d116ee120e799268dee78bdc70725905e5ed7f845b3be29f831891b1b51bd6e0d841492735f024250e65f9f97b0c80c13118704f91d08bbce31372deb3b97ded669dcdcf807ee923b83a1fbbb9bdf7b6478e61f9426738bc058d49f07d1ae8ebbd27052da0f27038f919e5ec6f4c641afe87b92600bdb0fb8f121a6c993a2f640e068869e7da97b99ee7b8f786e381a1eff93a6f2db9f67c21ab725d2695c619cb55845e36"
+  TZ: Etc/UTC
+  DB_HOST: 3b88f413-immich
+ports:
+  80/tcp: 8088
+ports_description:
+  80/tcp: Web UI
+image: fabioogaravini/hassio-{arch}-immich-power-tools
