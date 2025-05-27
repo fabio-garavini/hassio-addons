@@ -1,42 +1,52 @@
-# v1.133.1
+# v1.134.0
 
-## Highlights
+Welcome to release `v1.134.0` of Immich. This release focuses on bug fixes and enhancements from the previous release. Please find some of the highlights below:
 
-- Lower disk usage during VectorChord migration
-- Adds move to locked album button to more views on the web
-- Fixes a bug where the missing button for the duplicate detection job is not working
-- Fixes a bug where a hard link does not navigate to the asset location on the timeline
-- Fixes a bug where styling information is missing in some cases
-- Fixes a bug where locked assets show up in local album view if it is presented on the phone
-- Fixes some translation issues
+- Adds a new API endpoint to check the application version status
+- Adds a mechanism to handle startup reindexing after a failed model change
+- Improves pinch-to-zoom action on the mobile app
+- Replaces the administration user edit button with the action button to go straight to the user's detail page
+- Fixes a bug where generated memories include locked assets
+- Fixes a bug where the search filter panel anchors to the top of the page instead of the viewport
+- Fixes a bug where `ctrl/cmd + click` doesn't open the photo on a new page 
+- Fixes various minor issues related to styling and z-index
 
-<!-- Release notes generated using configuration in .github/release.yml at main -->
+
+## Support Immich
+
+<p align=\"center\">
+
+<img src=\"https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbjY2eWc5Y2F0ZW56MmR4aWE0dDhzZXlidXRmYWZyajl1bWZidXZpcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/87CKDqErVfMqY/giphy.gif\" width=\"450\" title=\"SUPPORT THE PROJECT!\"> 
+
+</p>
+
+<!-- Release notes generated using configuration in .github/release.yml at v1.134.0 -->
 
 ## What's Changed
 ### 🌟 Enhancements
-* feat: lower disk usage during migration by @mertalev in https://github.com/immich-app/immich/pull/18440
-* fix: mobile user agent set to immich_platform_version by @zackpollard in https://github.com/immich-app/immich/pull/18478
-* feat(web): add to locked folder in album and search by @wuzihao051119 in https://github.com/immich-app/immich/pull/18488
+* fix(web): enhance face tagging confirmation and fix #18605 by @dvbthien in https://github.com/immich-app/immich/pull/18610
+* feat: version check endpoint by @danieldietzler in https://github.com/immich-app/immich/pull/18572
 ### 🐛 Bug fixes
-* fix(server): missing button for duplicate detection not working by @mertalev in https://github.com/immich-app/immich/pull/18433
-* fix(web): pin code input by @wuzihao051119 in https://github.com/immich-app/immich/pull/18456
-* fix(web): Locked folder by @mmomjian in https://github.com/immich-app/immich/pull/18438
-* fix: translations from background service by @shenlong-tanwen in https://github.com/immich-app/immich/pull/18473
-* fix: more z-index issue by @alextran1502 in https://github.com/immich-app/immich/pull/18493
-* fix(web): multi-select by @wuzihao051119 in https://github.com/immich-app/immich/pull/18485
-* fix: translation vibes by @shenlong-tanwen in https://github.com/immich-app/immich/pull/18490
-* fix(mobile): chinese translation by @alextran1502 in https://github.com/immich-app/immich/pull/18491
-* fix: hard link navigation by @alextran1502 in https://github.com/immich-app/immich/pull/18489
-* fix(mobile): don't show locked asset in local album view by @alextran1502 in https://github.com/immich-app/immich/pull/18536
-* fix: tailwind issues by @danieldietzler in https://github.com/immich-app/immich/pull/18528
-### 📚 Documentation
-* fix(docs): more vchord details by @mmomjian in https://github.com/immich-app/immich/pull/18435
-* fix(docs): mention `DB_VECTOR_EXTENSION` env in pgvector->vchord migration guide by @mertalev in https://github.com/immich-app/immich/pull/18508
+* feat: clean up memory with locked assets by @alextran1502 in https://github.com/immich-app/immich/pull/18532
+* fix: more z-index issue by @alextran1502 in https://github.com/immich-app/immich/pull/18598
+* fix(mobile): pinch to zoom + move acceleration by @toamz in https://github.com/immich-app/immich/pull/18569
+* fix(web): center memory lane buttons by @lukashass in https://github.com/immich-app/immich/pull/18613
+* fix(web): modal anchor by @alextran1502 in https://github.com/immich-app/immich/pull/18621
+* fix: meta+click on thumbnail by @alextran1502 in https://github.com/immich-app/immich/pull/18648
+* fix: use single bulkTagAssets call instead of loop by @bo0tzz in https://github.com/immich-app/immich/pull/18672
+* fix(server): reverse isTrash field by @wuzihao051119 in https://github.com/immich-app/immich/pull/18665
+* fix(web): move support & feedback button to user modal by @bwees in https://github.com/immich-app/immich/pull/18651
+* fix(server): handle period in database name by @mertalev in https://github.com/immich-app/immich/pull/18590
+* fix(web): handle nullable assets duration by @alextran1502 in https://github.com/immich-app/immich/pull/18679
+* fix: replace edit user button with view button for user details screen by @zackpollard in https://github.com/immich-app/immich/pull/18683
+* fix(web): update after permanently delete by @wuzihao051119 in https://github.com/immich-app/immich/pull/18684
+* fix(server): handle startup reindexing after failed model change by @mertalev in https://github.com/immich-app/immich/pull/18688
 ### 🌐 Translations
-* fix: typo in english translation by @cgkantidis in https://github.com/immich-app/immich/pull/18434
-* chore(web): update translations by @weblate in https://github.com/immich-app/immich/pull/18391
+* feat(mobile): add Estonian by @IndrekHaav in https://github.com/immich-app/immich/pull/18666
 
 ## New Contributors
-* @cgkantidis made their first contribution in https://github.com/immich-app/immich/pull/18434
+* @toamz made their first contribution in https://github.com/immich-app/immich/pull/18569
+* @arnonm made their first contribution in https://github.com/immich-app/immich/pull/18285
+* @IndrekHaav made their first contribution in https://github.com/immich-app/immich/pull/18666
 
-**Full Changelog**: https://github.com/immich-app/immich/compare/v1.133.0...
+**Full Changelog**: https://github.com/immich-app/immich/compare/v1.133.1...v1.134.0"
