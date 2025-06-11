@@ -1,0 +1,52 @@
+name: Mealie
+version: "2.8.0-v0"
+slug: mealie
+codenotary: info@fabiogaravini.dev
+description: a place for all your recipes
+url: https://docs.mealie.io/
+webui: http://[HOST]:[PORT:9000]
+arch:
+  - aarch64
+  - amd64
+init: false
+hassio_api: true
+map:
+  - type: addon_config
+    read_only: false
+    path: /app/data
+  - type: ssl
+backup: cold
+backup_exclude:
+  - "**.log*"
+schema:
+  PUID: int(0,)
+  PGID: int(0,)
+  TZ: str?
+  DEFAULT_GROUP: str
+  DEFAULT_HOUSEHOLD: str
+  ALLOW_SIGNUP: bool
+  BASE_URL: str?
+  TLS_CERTIFICATE_PATH: str?
+  TLS_PRIVATE_KEY_PATH: str?
+  OPENAI_BASE_URL: str?
+  OPENAI_API_KEY: password?
+  OPENAI_MODEL: str?
+  SMTP_HOST: str?
+  SMTP_PORT: int(0,)?
+  SMTP_FROM_NAME: str?
+  SMTP_AUTH_STRATEGY: str?
+  SMTP_FROM_EMAIL: str?
+  SMTP_USER: str?
+  SMTP_PASSWORD: password?
+options:
+  PUID: "0"
+  PGID: "0"
+  TZ: Etc/UTC
+  DEFAULT_GROUP: "Home"
+  DEFAULT_HOUSEHOLD: "Family"
+  ALLOW_SIGNUP: false
+ports:
+  9000/tcp: 9000
+ports_description:
+  9000/tcp: Web UI
+image: fabioogaravini/hassio-{arch}-mealie

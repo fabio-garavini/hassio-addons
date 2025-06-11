@@ -59,6 +59,12 @@ A self-hostable bookmark-everything app with a touch of AI for the data hoarders
 
 [Jellyfin](https://jellyfin.org) is a Free Software Media System that puts you in control of managing and streaming your media.
 
+### 🍜 Mealie
+
+*All-in-one*
+
+Mealie is a self hosted recipe manager, meal planner and shopping list. Easily add recipes into your database by providing the URL and Mealie will automatically import the relevant data, or add a family recipe with the UI editor. Mealie also provides an API for interactions from 3rd party applications.
+
 ### 🦜 Memos
 
 *All-in-one*
