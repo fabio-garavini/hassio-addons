@@ -17,8 +17,7 @@ chown -R abc:abc \
 	/config/logs \
 	/var/run/redis
 
-s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost 6379" \
-    s6-setuidgid abc \
+s6-setuidgid abc \
 	redis-server /config/redis/redis.conf \
 	--bind 0.0.0.0 \
 	--port 6379 \
