@@ -1,5 +1,5 @@
 build_from:
-  aarch64: gitea/gitea:1.24.0
-  amd64: gitea/gitea:1.24.0
+  aarch64: gitea/gitea:1.24.2
+  amd64: gitea/gitea:1.24.2
 codenotary:
   signer: info@fabiogaravini.dev
