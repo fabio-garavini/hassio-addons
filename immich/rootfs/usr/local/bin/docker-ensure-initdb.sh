@@ -14,7 +14,7 @@ set -Eeuo pipefail
 #       (error if database is already initialized)
 #
 
-source /usr/local/bin/docker-entrypoint.sh
+source /usr/local/bin/postgres-entrypoint.sh
 
 # arguments to this script are assumed to be arguments to the "postgres" server (same as "docker-entrypoint.sh"), and most "docker-entrypoint.sh" functions assume "postgres" is the first argument (see "_main" over there)
 if [ "$#" -eq 0 ] || [ "$1" != 'postgres' ]; then
@@ -34,6 +34,7 @@ fi
 # only run initialization on an empty data directory
 if [ -z "$DATABASE_ALREADY_EXISTS" ]; then
 	docker_verify_minimum_env
+	docker_error_old_databases
 
 	# check dir permissions to reduce likelihood of half-initialized database
 	ls /docker-entrypoint-initdb.d/ > /dev/null
