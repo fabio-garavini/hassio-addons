@@ -216,13 +216,13 @@ ENV CHROMIUM_BIN_PATH=/usr/bin/chromium \
     EXIFTOOL_BIN_PATH=/usr/bin/exiftool \
     PDFCPU_BIN_PATH=/usr/bin/pdfcpu
 
-ENV TIKA_VERSION=3.1.0
+ENV TIKA_VERSION=3.2.0
 
 RUN \
     groupadd -g 9998 -o tika; \
     useradd -m -u 9998 -g 9998 -o tika
 
-COPY --from=apache/tika:3.1.0.0 /tika-server-standard-${TIKA_VERSION}.jar /
+COPY --from=apache/tika:3.2.0.0 /tika-server-standard-${TIKA_VERSION}.jar /
 
 COPY rootfs/ /
 
