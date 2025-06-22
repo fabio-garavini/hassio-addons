@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
 set -Eeuo pipefail
 
 #
@@ -13,7 +14,7 @@ set -Eeuo pipefail
 #       (error if database is already initialized)
 #
 
-source /usr/local/bin/docker-entrypoint.sh
+source /usr/local/bin/postgres-entrypoint.sh
 
 # arguments to this script are assumed to be arguments to the "postgres" server (same as "docker-entrypoint.sh"), and most "docker-entrypoint.sh" functions assume "postgres" is the first argument (see "_main" over there)
 if [ "$#" -eq 0 ] || [ "$1" != 'postgres' ]; then
@@ -27,12 +28,13 @@ docker_setup_env
 docker_create_db_directories
 if [ "$(id -u)" = '0' ]; then
 	# then restart script as postgres user
-	exec gosu postgres "$BASH_SOURCE" "$@"
+	exec s6-setuidgid postgres "$BASH_SOURCE" "$@"
 fi
 
 # only run initialization on an empty data directory
 if [ -z "$DATABASE_ALREADY_EXISTS" ]; then
 	docker_verify_minimum_env
+	docker_error_old_databases
 
 	# check dir permissions to reduce likelihood of half-initialized database
 	ls /docker-entrypoint-initdb.d/ > /dev/null
