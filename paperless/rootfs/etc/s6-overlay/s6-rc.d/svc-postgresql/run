@@ -1,4 +1,5 @@
 #!/command/with-contenv /usr/bin/bash
+# shellcheck shell=bash
 
 # make db config folder
 mkdir -p "$PGDATA" "/config/logs/postgres"
@@ -8,4 +9,4 @@ chown postgres:postgres -R "$PGDATA" "/config/logs/postgres"
 chmod 700 -R "$PGDATA"
 chmod 755 -R "/config/logs/postgres"
 
-exec s6-setuidgid postgres postgres-entrypoint.sh postgres -c log_directory="/config/logs/postgres" -c log_rotation_size=10MB
+exec postgres-entrypoint.sh postgres -c log_directory="/config/logs/postgres" -c log_rotation_size=10MB

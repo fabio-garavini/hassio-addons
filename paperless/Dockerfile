@@ -22,6 +22,8 @@ ENV PAPERLESS_DATA_DIR="/config/paperless" \
     POSTGRES_PASSWORD=paperless \
     PG_MAJOR=15
 
+RUN mkdir /docker-entrypoint-initdb.d
+
 # Postgres & Redis install
 RUN \
     apt-get update; \
