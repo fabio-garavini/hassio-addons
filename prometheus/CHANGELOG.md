@@ -1,3 +1,3 @@
-# v3.4.1
+# v3.4.2
 
-* [BUGFIX] Parser: Add reproducer for a dangling-reference issue in parsers. #16633
+* [BUGFIX] OTLP receiver: Fix default configuration not being respected if the `otlp`: block is unset in the config file. [#16693](https://github.com/prometheus/prometheus/pull/16693)
