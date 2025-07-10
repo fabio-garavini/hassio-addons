@@ -1,5 +1,5 @@
 build_from:
-  amd64: ghcr.io/linuxserver/nextcloud:31.0.6
-  aarch64: ghcr.io/linuxserver/nextcloud:31.0.6
+  amd64: ghcr.io/linuxserver/nextcloud:31.0.7
+  aarch64: ghcr.io/linuxserver/nextcloud:31.0.7
 codenotary:
   signer: info@fabiogaravini.dev
