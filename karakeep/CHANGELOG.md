@@ -1,72 +1,109 @@
-# 0.25.0
+# 0.26.0
 
-Welcome to the 0.25.0 release of Karakeep! This release addresses a lot of the top most upvoted feature requests. You can now share lists publicly, generate RSS feeds from your lists, reader view & pdf support in the mobile app, bi-directional browser bookmark sync using floccus, maintaining list structure on imports and a lot more. As usual, we have a lot of contributors in this release: @xuatz, @digithree, @thiswillbeyourgithub, @codelove77, @SConaway, @vhsdream, @AdrianAcala, @spasche, @SalGnt, @haappi, @yuikisaito, @jk, @jakeasmith, @Mxrk,  @WilliamAGH, and @SteffoSpieler!
+Welcome to the 0.26.0 release of Karakeep! This release focuses on user management, servers improvements, and lots of fixes. We've a new comprehensive usage stats, reader mode, search history, S3 support, and much more. As always, we have amazing contributors in this release: @xuatz, @Ashok28, @HarryPeach, @Mostafa-Wahied, @adumat, @alexjsp, @apo-mak, @birnam, @deepanshu2711, @hametovbr, @irobot, @kdwils, @lexafaxine, @maelp, @rodsnts, @sheyabernstein, @simplytoast1, @thiswillbeyourgithub, @vhsdream!
 
 > If you enjoy using Karakeep, consider supporting the project [here ☕️](https://buymeacoffee.com/mbassem) or via GitHub [here](https://github.com/sponsors/MohamedBassem).
 
 <a href=\"https://www.buymeacoffee.com/mbassem\" target=\"_blank\"><img src=\"https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png\" alt=\"Buy Me A Coffee\" width=\"auto\" height=\"50\" ></a>
 
+# Managed Karakeep ☁️
+
+I have some news to share! With Pocket shutting down, I've been thinking about how to make Karakeep more accessible to a wider audience. So I've decided to start the journey of offering a managed karakeep instance to serve those who can't selfhost.
+Karakeep wouldn't be where it is today without its amazing self-hosting community, and that will always remain my first priority. This managed offering is just an experiment. If it works, it could help support the development of the project. **We're now starting a private beta, and you can join the waitlist [here](https://tally.so/r/wo8zzx)!**
+
 # New Features 🚀
-- **Public Lists are here:** You can now share your curated lists publicly! (#1511). Example list [here](https://try.karakeep.app/public/lists/f9ot2k3ogai51gvm3v6k0aoq).
-- **RSS Feed Generation:** Create and share RSS feeds directly for your lists (#1507)
-- **Overdue Mobile Improvements**:
-\t- Added reader mode/screenshot/archive views to bookmark previews on mobile (pending app release) (#1509) - @digithree
-\t- View PDFs directly in the mobile app and share them to karakeep from the share sheet as well (#1519, #1494) - @codelove77
-- **Import / Export improvements**:
-\t- Added NETSCAPE file export format support (#1374) - @yuikisaito 
-\t- When importing netscape style bookmarks into karakeep, your lists will be re-created on karakeep. Preserving lists from other sources is planned.
-\t- Preserve archived status when importing from omnivore or pocket (RIP).
-- **AI Auto-Summarization:** Automatic summarization for new bookmarks can be now be enabled with `INFERENCE_ENABLE_AUTO_SUMMARIZATION=true` (#1163)
-- **Floccus Integration:** Karakeep [now supports](https://github.com/floccusaddon/floccus/pull/1953) bi-directional sync with browser bookmarks using [Floccus](https://floccus.org/). This will be available in the next Floccus release within a week or two.
+- **User Management & Authentication:**
+  - Added email verification support for new user registrations
+  - Implemented password reset and forgot password functionality
+  - Added user invitation system
+  - Revamped signin/signup pages with better UX
+  - Added per-user bookmark count / storage quotas
+  - New delete account feature for users who want to remove their data
+- **Search History:** You'll now get search suggestions from your karakeep search history (#1627 by @lexafaxine)
+- **File Upload Support:** Added markdown file upload support (#1672 by @rodsnts)
+- **Usage Statistics:** New user stats page showing tons of stats about your bookmarks and usage of karakeep (#1523)
+- **New Reader Mode:** A new revamped reader mode with customizable font type and size (got jealous of how that of linkwarden looked!)
+- **Proxy Support:** Added proper proxy support for crawler network requests (#1265)
+- **Server Improvements:**
+  - **S3 Storage Support:** Option to store assets in S3-compatible storage (#1703)
+  - **Prometheus Monitoring:** We're now exposing a Prometheus endpoint for monitoring stats about the server (#758)
+  - **Rate Limiting:** Added optional API rate limiting
+  - Large HTML content now stored in asset storage (instead of db) for better performance
+  - Allow enabling WAL mode on the database (opt-in, recommended)
+  - Allow customizing parallelism for workers (#724)
+- **Reddit Crawling:** Reddit posts will now get a more relevant banner image (#1302 by @birnam)
 
 # UX Improvements ✨
-- The user setting page got fully redesigned to look nicer given that we're starting to have more user settings.
-- Tab-based layout for bookmark previews on small screens - @thiswillbeyourgithub 
-- Save pages faster with a dedicated extension shortcut (#1532) - @SConaway
-- Configure the default behavior when clicking on a bookmark. Either go to source, or expand the details.
-- Restored ability to properly sort by creation date for search pages (#1392) - @xuatz
-- You can now decide what you want to do when using the `singlefile` extension on an existing bookmark. Check out how to customize it [here](https://docs.karakeep.app/next/Guides/singlefile#handling-existing-bookmarks).
-- Configure whether you want to see archived bookmarks in lists or tags or not (#1505) - @xuatz
-- Added Algolia-based search to docs
-- Added \"deleted\" webhook event (#1464) - @SalGnt
-- The `Summarize with AI` button no longer shows up if you don't have AI configured
-- You can now disable auto AI tagging if not needed
-- Allow enabling/disabling RSS feeds collection
-- Added US English to folks who can't stand the British English - @WilliamAGH 
-- Improved the positioning of the highlights menu on mobile devices - @Mxrk
-- Moved delete button in bookmark menu in the app for better ergonomics
+- Prioritize crawling user-added links over bulk imports (#1717)
+- Mobile app now has user setting for default bookmark view mode (#1723 by @xuatz)
+- More lenient JSON parsing for LLM responses (#1267)
+- Tweaks to mobile app icon padding with iOS tinted variant (#1620 by @alexjsp)
+- Minor styling changes to the \"All Tags\" page
+- Added icons to bookmark preview selectors
+- Clicking on search tooltip now opens the search language guide (#1540)
+- Added confirmation dialog for user deletion in admin panel (#1649 by @deepanshu2711)
+- Added tag clearing functionality to tag list in the mobile app(#1595 by @Ashok28)
+- Always visible search bar in the mobile app's tags list (#1596 by @Ashok28)
 
-# Fixes 🐛
-- Started using proper tokenizer for content truncation before inference. This should prevent the truncation of the model prompt leading to better accuracy and instruction adherence.
-- Preserve unsaved changes during tag modifications while editing bookmarks (#1515) - @AdrianAcala
-- Fixed tag drag-and-drop issues on Firefox (#1016) - @haappi
-- Added log rotation for linux installations (#1471) - @vhsdream
-- You can now run Karakeep container as a non-root user for better security.
+# Fixes 🔧
+- Fixed OAuth creation failure due to missing UserSettings table (#1583)
+- Fixed webhook not firing on deletion (#1613)
+- Normalized leading hashes in tag names (#1351 by @Mostafa-Wahied)
+- Fixed import/export icons being swapped (#1682 by @HarryPeach)
+- Disabled metascraper readability plugin that was causing worker stuckness
+- Fixed jsdom console logs leaking into worker logs
+- Collapsed long runs of repeated whitespaces before tokenization to speed it up (#1622)
+- Fixed public image signed tokens for better caching
+- Fixed clear parent button in edit list dialog (#1742)
+- Fixed running workers in production without tsx for lower resource usage (#1673)
+- Fixed get-lists MCP tool (#1697 by @hametovbr)
+- Fixed image quality slider in mobile showing excessive decimal places (#1735)
+- Fixed mobile app crash when bookmark doesn't have archive or screenshot (#1584)
+- Migrated from Puppeteer to Playwright (#1296 by @maelp)
+- Video downloader now properly logs yt-dlp errors (#1624 by @irobot)
 
 # For Developers 🛠️
-- Added `?sortOrder` parameter for resource sorting (#1398) - @xuatz  
-- New endpoint for tag creation  
-- PUT operations for bookmarks are now idempotent (e.g. adding to list) (#1427) - @xuatz
-- Added PATCH method support to CORS headers (#1489) - @spasche
-- **Documentation:**  
-  - Added documentation for the asset upload APIs
-  - Fixed JSON examples in MCP documentation (#1400, #1419) - @jk, @jakeasmith
-  - Expanded Meilisearch upgrade guides (#1436) - @thiswillbeyourgithub
+- Added Helm chart support ([link](https://github.com/karakeep-app/helm-charts)). (#1350 by @sheyabernstein)
+- **Build & Deployment:**
+  - A much fancier linux installation script (#1576 by @vhsdream)
+  - Added start-dev.sh script for easier development (#1628 by @xuatz)
+  - Upgraded to pnpm@9.15.9 (#1544 thanks to @xuatz)
+  - Migrated from ESLint to oxlint for faster linting (#1642 by @xuatz)
+  - We now have a `CLAUDE.md` file to help the vibe coders out there.
 
-# Community Projects 💡 
-- **Python-based SDK for Karakeep:** [karakeep-python-api](https://github.com/thiswillbeyourgithub/karakeep_python_api) - @thiswillbeyourgithub
-- **Freshrss Importer:** [freshrss-to-karakeep](https://github.com/thiswillbeyourgithub/freshrss_to_karakeep) - @thiswillbeyourgithub 
+# Community Projects 💡
+
+### [Karakeeper](https://apps.apple.com/us/app/karakeeper-for-karakeep/id6746722790)
+
+3rd Party Safari Extension - *by @simplytoast1*
+
+<img width=\"640\" height=\"874\" alt=\"Screenshot 2025-07-20 at 2  16 48@2x\" src=\"https://github.com/user-attachments/assets/03f8baf1-b8a6-4c92-9248-1127dcb72587\" />
+
+### [Karakeep Homedash](https://github.com/CodeJawn/karakeep-homedash)
+
+*by @CodeJawn*
+
+<img width=\"1918\" height=\"1060\" alt=\"image\" src=\"https://github.com/user-attachments/assets/35e0614e-9d92-4cf1-9d53-c5c3dc1ab4c9\" />
+
 
 # Screenshots 📸
 
-## The Share List Modal
-<img src=\"https://github.com/user-attachments/assets/688d2389-65c1-4e0e-87ba-233d5b0ffaae\" alt=\"Screenshot 2025-06-08 at 10 35 45@2x\" width=\"500\" height=\"auto\">
+## Usage Stats
 
-## Tabbed Layout on smaller screens
-<img src=\"https://github.com/user-attachments/assets/affc1426-fe1f-46df-9567-196c25d13107\" alt=\"Screenshot 2025-06-08 at 10 37 11@2x\" width=\"500\" height=\"auto\">
+<img width=\"2882\" height=\"2812\" alt=\"image\" src=\"https://github.com/user-attachments/assets/2add1f9c-5bf3-4307-b6c7-f9e347f45bc8\" />
 
-## Reader Mode in the app
-<img src=\"https://github.com/user-attachments/assets/14f438ea-d558-40eb-8d05-84d017d46a89\" alt=\"simulator_screenshot_1322546F-62F2-4129-89F7-7D77366179B6\" width=\"300\" height=\"auto\">
+## The new Sign In page
+
+<img width=\"1072\" height=\"1202\" alt=\"Screenshot 2025-07-20 at 1  58 50@2x\" src=\"https://github.com/user-attachments/assets/4e59daeb-04e9-456c-8e17-4ec9bec0763b\" />
+
+## Recent Searches
+
+<img width=\"1502\" height=\"338\" alt=\"Screenshot 2025-07-20 at 1  59 55@2x\" src=\"https://github.com/user-attachments/assets/9bf99d12-e900-44a9-8e1c-c8a1293b5a9b\" />
+
+## Reader Mode
+
+<img width=\"2318\" height=\"1558\" alt=\"Screenshot 2025-07-20 at 2  04 29@2x\" src=\"https://github.com/user-attachments/assets/f35c52e9-4858-4fa6-be60-8c2b3f2e54ab\" />
+
 
 # Upgrading 📦
 
@@ -74,74 +111,103 @@ To upgrade:
 * If you're using KARAKEEP_VERSION=release, run `docker compose pull && docker compose up -d`.
 * If you're pinning it to a specific version, upgrade the version and then run `docker compose pull && docker compose up -d`.
 
+**Note:** This release includes database schema changes. The migration will run automatically on startup.
+
+
 # All Commits
 
-* release(extension): Bump extension version to 1.2.6 - @MohamedBassem in 5b520667
-* release(mobile): Bump mobile version to 1.7.0 - @MohamedBassem in 3c48bb8d
-* ci: Fix manifest formatting - @MohamedBassem in b93f3a4a
-* feat(mobile): Add support for viewing PDFs (#1519) - @codelove77 in 0fde1087
-* fix(mobile): Move the delete button to the end in the bookmark menu - @MohamedBassem in 421e3e86
-* feat(mobile): add reader/screenshot/archive view to bookmark preview (#1509) - @digithree in ec31a971
-* fix(build): karakeep-linux.sh fix use 'append' instead of 'file' for log (#1471) - @vhsdream in 09e5dd65
-* feat(extension): add a keyboard shortcut to save page (#1532) - @SConaway in ee517456
-* feat(ui): Improve the look of the public bookmarks page - @MohamedBassem in 3a0f5fa0
-* fix: Use a new public list metadata endpoint for metadata generation - @MohamedBassem in bc65a738
-* docs: Add asset APIs to the openapi spec - @MohamedBassem in a98f0236
-* fix(web): Smaller card titles in the user info page - @MohamedBassem in 4e481f4b
-* fix: preserve unsaved title changes when modifying bookmark tags in the edit dialog (#1515) - @AdrianAcala in f53ad0a1
-* feat(web): Redesign the user settings page - @MohamedBassem in 090c0d1c
-* readme: Small readme fixes - @MohamedBassem in 39feafe7
-* fix(web): Drop the experimental icon from rss feeds - @MohamedBassem in bf4cbd12
-* feat: Drop corepack dep in prod and allow running as non-root. Fixes #606 - @MohamedBassem in 169e14d3
-* i18n: Sync weblate translations - 22460836
-* Merge remote-tracking branch 'weblate/main' - @MohamedBassem in 7c245aa7
-* feat: Maintain list structure when importing from netscape. Fixes #538 - @MohamedBassem in 1bae66f7
-* feat: Allow specifying the overwrite mode for singlefile archives. Fixes #1125 - @MohamedBassem in e59be245
-* feat: Add support for public lists (#1511) - @MohamedBassem in ea1d0023
-* feat: add user customisable default archive display behaviour (#1505) - @xuatz in 3afe1e21
-* docs: mention the list of example scripts for the community api (#1484) - @thiswillbeyourgithub in 8784c73c
-* feat(mobile): Add PDF support to share extension (#1494) - @codelove77 in 5f473401
-* feat: Generate RSS feeds from lists (#1507) - @MohamedBassem in 9695bba2
-* refactor: Move bookmark utils from shared-react to shared - @MohamedBassem in b218118b
-* docs: Add agolia based search - @MohamedBassem in 3e860b79
-* doc: mention meilisearch in the updating section (#1472) - @thiswillbeyourgithub in 7f04bd13
-* feat: Allow PATCH method in CORS headers (#1489) - @spasche in 915aeb36
-* fix: Fix end icon in smart list input overlapping with text. Fixes #1379 - @MohamedBassem in d903c7f9
-* fix: Show list options menu on list sidebar hover - @MohamedBassem in a1f77075
-* fix: Truncate the RSS feed url - @MohamedBassem in e0ed727c
-* chore: Add localhost labs to README and landing - @MohamedBassem in e13809fb
-* fix(landing): Fix the favicon location for the landing page - @MohamedBassem in 96bce30c
-* feat: Add \"deleted\" webhook event (#1464) - @SalGnt in 8a927e96
-* docs: Update the privacy policy - @MohamedBassem in 37c18b89
-* feat: Allow defaulting to reader mode when clicking on bookmarks. Fixes #662 - @MohamedBassem in 09652176
-* docs: Update database docs (#1451) - @haappi in 5f3fe5d1
-* feat: Read the archive status from omnivore and pocket. Fixes #703 - @MohamedBassem in c6d21afa
-* build: Regen openAPI spec - @MohamedBassem in 6af14e9d
-* feat: Disable the AI summary button if AI is not configured. Fixes #649 - @MohamedBassem in 85929850
-* feat: Add AI auto summarization. Fixes #1163 - @MohamedBassem in 2743d9e3
-* feat(api): Expose the endpoint to create a new tag - @MohamedBassem in a5ae67c2
-* fix(web): Switch to a tab view in small screens for bookmark previews - @thiswillbeyourgithub in 053d1a90
-* build: Fix format error - @MohamedBassem in 0e734b6b
-* fix(web): Fix tag drag and drop merging on firefox .Fixes #1016 (#1309) - @haappi in c2e26f9f
-* refactor: Migrate from NextJs's API routes to Hono based routes for the API (#1432) - @MohamedBassem in 3505cb7d
-* doc: document how to upgrade meilisearch / migrate meilisearch db (#1436) - @thiswillbeyourgithub in 74e74fa6
-* doc: new comunity project: freshrss to karakeep (#1435) - @thiswillbeyourgithub in 3a592931
-* feat(api): enable ?sortOrder= for relevant resources (#1398) - @xuatz in 4e06ea7b
-* fix: Use proper tokenizer when truncating for inference. Fixes #1405 - @MohamedBassem in 70d57209
-* feat: position highlight menu based on device type (#1348) - @Mxrk :) in 523a251b
-* fix(search): add new relevance sort order (#1392) - @xuatz in dbd0fd19
-* fix(api): make PUT bookmark to a list idempotent (#1427) - @xuatz in f338f7b1
-* build(Debian): update yt-dlp on karakeep's update and add a service check function (#1329) - @vhsdream in 4ae5857a
-* doc: Mention karakeep-python-api in community projects (#1424) - @thiswillbeyourgithub in 60f47122
-* docs: minor update to dev setup instructions (#1421) - @thiswillbeyourgithub in 65d7096b
-* fix(landing): Fix the responsiveness of the landing page - @MohamedBassem in d44cd235
-* docs: Update pikapods docs after the rename - @MohamedBassem in 6f6c9872
-* feat: Allow enabling/disabling RSS feeds - @MohamedBassem in 370db082
-* feat: Add karakeep metadata to openai calls - @MohamedBassem in 2a8d4b88
-* doc: Fixed json syntax error in mcp docs (#1419) - @jakeasmith in 2082f87e
-* docs: Fix JSON in MCP documentation (#1400) - @jk in 3ececfcc
-* feat: Add NETSCAPE-Bookmark-file-1 export format support (#1374) - @yuikisaito in c03dcfdb
-* fix(mcp): Correct description for get-lists tool. Fixes #1332 (#1388) - @MohamedBassem in 8b05515b
-* i18n: Add US English as option in User Settings (#1327) - @WilliamAGH in 3d802db4
-* docs: Update the docs about admin password reset to include the salt - @MohamedBassem in 3b246a88
-* fix(docker): Fix build only docker compose file - @MohamedBassem in f4a31563
+* fix(web): Remove horizontal scroll in PWA's header - @MohamedBassem in 202924c9
+* feat(web): Slightly nicer looking tags page - @MohamedBassem in 61a6ac83
+* fix: Run workers in prod without tsx. Fixes #1673 - @MohamedBassem in 2cce45b7
+* deps: bump s6-overlay version (#1750) - @adumat in 4fe541c4
+* fix: Fix edit list modal not clearing parent - @MohamedBassem in b992fadd
+* feat: Add a proper reader mode - @MohamedBassem in 49f38efd
+* fix: Increase crawler max worker count in tests - @MohamedBassem in 4a4ff37b
+* feat: Allow setting browserless crawling per user - @MohamedBassem in 4e9544b0
+* feat: Allow enabling journaling mode on the db - @MohamedBassem in 64a0d918
+* fix(mobile): Fix image quality slider showing lots of decimal places. fixes #1735 - @MohamedBassem in ae1352f3
+* fix: Rename the proxy settings such that they don't interfer with other requests - @MohamedBassem in 1da8b458
+* chore: Move the helm charts to their own repo - @MohamedBassem in f3feb599
+* fix(web): Fix the clear parent button in the edit list dialog. Fixes #1742 - @MohamedBassem in 8bd3b586
+* feat(mobile): Add user setting for default bookmark view mode (#1723) - @xuatz in fe69ca8c
+* fix: Clear search history on logout - @MohamedBassem in a3627569
+* feat: adding search history #1541 (#1627) - @lexafaxine in 39fcda01
+* feat: markdown file upload support (#1647) (#1672) - @rodsnts in ecb13cec
+* Revert \"fix: Fix the types of the bookmark types in the db query\" - @MohamedBassem in 0addc7bc
+* fix: Fix the types of the bookmark types in the db query - @MohamedBassem in 4ba3e804
+* feat: Add stripe based subscriptions - @MohamedBassem in d1d52634
+* feat: Add delete account support - @MohamedBassem in 845ccf1a
+* fix: Drop auth failure logger - @MohamedBassem in f8ae9866
+* feat: Add proper proxy support. fixes #1265 - @MohamedBassem in 360ef9db
+* feat(api): Expose the update user API in the openapi specs - @MohamedBassem in 1105b4a4
+* build: Restrict claude actions invocations - @MohamedBassem in ba7a87fe
+* fix(web): Fix the alignment in the user options page - @MohamedBassem in 49648c4c
+* deps: Upgrade typescript to 5.8 - @MohamedBassem in 6b77736b
+* fix: Add ratelimiting to bookmark recrawl and summarization - @MohamedBassem in 21076b83
+* deps: Upgrade drizzle - @MohamedBassem in f4436e19
+* fix(web): Fix dark mode in auth pages - @MohamedBassem in 92311191
+* fix(tests): Fix missing mock in trpc tests - @MohamedBassem in 8c3bf481
+* fix: Prioritize crawling user added links over bulk imports. fixes #1717 - @MohamedBassem in 9fb3ef6f
+* refactor: Move db interactions into the trpc routes - @MohamedBassem in 8e3013ba
+* feat: Support forget and reset password - @MohamedBassem in 140311d7
+* chore: Add claude code github action - @MohamedBassem in 385f9f0b
+* feat(ui): Revamp the signin/signup page - @MohamedBassem in db9a02b8
+* feat: Add API ratelimits - @MohamedBassem in 613137ff
+* feat: Add invite user support - @MohamedBassem in 333d1610
+* feat: Add support for email verification - @MohamedBassem in 93049e86
+* fix(api): Fix handling for CORS after the trpc move to hono. Fixes #1709 - @MohamedBassem in aae3ef17
+* fix: Drop the need to for the self-call for providers and NEXTAUTH_INTERNAL_URL - @MohamedBassem in f7f577af
+* feat: Add a logout page - @MohamedBassem in bb4a687b
+* fix: Add a dummy bcrypt comparison in validatePassword when the user is not found - @MohamedBassem in 58488e1c
+* build: Add an open-api husky check - @MohamedBassem in 71458166
+* fix(build): Regenerate openapi spec - @MohamedBassem in 0eeefd68
+* fix: Fix search indexing after content split - @MohamedBassem in f5a674c2
+* fix(web): Clicking on search tooltip opens the search language guide. Fixes #1540 - @MohamedBassem in f3b925ad
+* feat: Store large html content in the asset db - @MohamedBassem in dee3a4d4
+* fix(mobile): Fix crash when bookmark doesn't have archive or screenshot. Fixes #1584 - @MohamedBassem in 362be300
+* fix(tests): Fix broken user setting test - @MohamedBassem in 959da9a8
+* chore: Excluded unneeded docker context using dockerignore - @MohamedBassem in 5c8a2b9b
+* feat: Add a new timezone user setting - @MohamedBassem in 0e94ad36
+* feat: Add prometheus monitoring. Fixes #758 - @MohamedBassem in b60ece57
+* fix(build): Regenerate openapi spec - @MohamedBassem in cfa0385b
+* fix: Fix i18n in the new stats page - @MohamedBassem in f96680fc
+* feat: Add per user storage quota - @MohamedBassem in 384432d3
+* feat: Add new user stats page. Fixes #1523 - @MohamedBassem in 47624547
+* feat(workers): Allow custmoizing max parallelism for a bunch of workers. Fixes #724 - @MohamedBassem in 5576361a
+* feat: Add support for S3 as an asset storage layer (#1703) - @MohamedBassem in d66b3b86
+* fix(workers): A more lenient JSON parsing for LLM responses. Fixes #1267 - @MohamedBassem in 53b6b3c2
+* refactor: Move the health endpoint to hono as well - @MohamedBassem in f144f1bc
+* refactor: Move the trpc endpoint to hono - @MohamedBassem in f5e737bf
+* chore: Symlink Gemini.md to CLAUDE.md - @MohamedBassem in 474ca7f2
+* feat: Add per user bookmark count quota - @MohamedBassem in 545cac19
+* chore: Symlink Gemini.md to AGENTS.md - @MohamedBassem in 73a0c951
+* fix(web): Add icons to preview selectors - @MohamedBassem in ad92fa24
+* chore: Add a GEMINI.md file for people using gemini-cli - @MohamedBassem in 4776b4cd
+* fix(mcp): add empty params object (#1697) - @hametovbr in 6cc249d1
+* fix: switch import / export icons (#1682) - @HarryPeach in 7febebe1
+* fix(workers): Disable the metascraper readability as it's causing slowness in worker - @MohamedBassem in 71f8e970
+* fix(workers): Fix jsdom console logs leaking into worker logs - @MohamedBassem in b74377d2
+* feat(workers): adding a local metascraper plugin for Reddit posts (#1302) - @birnam in 7cc4b08a
+* fix(tags): normalise leading hashes in tag names (#1317) (#1351) - @Mostafa-Wahied in 112aa9d9
+* feat(workers): migrate from puppeteer to playwright (#1296) - @maelp in c70d64d4
+* feat(mobile): Add tag clearing functionality to tag list (#1595) - @Ashok28 in 727c7f22
+* fix(mobile): always visible search bar in tags list (#1596) - @Ashok28 in 4134649d
+* fix: minor changes to the tagging prompts (#1474) - @thiswillbeyourgithub in a74afc9d
+* build: Install script v3.0 - Bling version (#1576) - @vhsdream in e310ba9f
+* feat: Add Helm chart (#1350) - @sheyabernstein in 43d3210b
+* chore: More oxlint changes - @MohamedBassem in f7b31938
+* chore: migrate away from eslint to oxlint (#1642) - @xuatz in d5e2973d
+* docs: update meilisearch key generation instruction (#1651) - @kdwils in 91a9d3c1
+* fix: Fix webhook not firing on deletion. Fixes #1613 - @MohamedBassem in 04f93941
+* feat(admin): add confirmation dialog for user deletion (#1648) (#1649) - @deepanshu2711 in 0f4c6162
+* fix: Collapse long runs of repeated whitespaces before tokenization to avoid choking the tokenizer. Fixes #1622 - @MohamedBassem in 426beff1
+* fix: Change public image's signed tokens to be time aligned for better caching - @MohamedBassem in 10d45e8d
+* fix: Fix oauth creation failure due to missing UserSettings table. Fixes #1583 - @MohamedBassem in f1f665f8
+* fix(mobile): tweaks to mobile app icon padding + added iOS tinted variant (#1620) - @alexjsp in 6c0bcca1
+* fix(workers): video downloader should log yt-dlp errors (#1624) - @irobot in a16c5424
+* chore: add start-dev.sh for laziness (#1628) - @xuatz in 88e4ea98
+* i18n: Add Greek translation (#1564) - @apo-mak in 004eb5ad
+* docs: Mention the community safari extension in the quick sharing docs (#1562) - @simplytoast1 in e5307f19
+* release(cli): Bump CLI version to 0.25.0 - @MohamedBassem in bb00699b
+* build: Pin ios github action to macos-15 to comply with apple's requirement for min ios SDK - @MohamedBassem in d7617cc2
+* fix: Fix UI infinite recursion by upgrading radix packages - @MohamedBassem in 675ed5c3
