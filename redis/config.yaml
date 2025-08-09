@@ -1,5 +1,5 @@
 name: Redis DB
-version: 7.4.0-v3
+version: 7.4.0-v6
 slug: redis
 codenotary: info@fabiogaravini.dev
 description: Redis database
