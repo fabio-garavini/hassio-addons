@@ -5,7 +5,7 @@ FROM ghcr.io/varun-raj/immich-power-tools:0.16.0 AS immich_power_tools
 
 FROM ${BUILD_FROM}
 
-ARG VERSION=0.16.0
+ARG VERSION=0.17.0
 
 ENV \
   NODE_ENV=production \
