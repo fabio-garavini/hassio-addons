@@ -45,19 +45,44 @@
                 "panel": "new"
             },
             "problemMatcher": []
+        },
+        {
+            "label": "Hassio Addon: build amd64 image",
+            "type": "shell",
+            "command": "docker run --rm -it --name addon_amd64_builder --privileged -v ./${input:addonName}:/data -v /var/run/docker.sock:/var/run/docker.sock:ro ghcr.io/home-assistant/amd64-builder -t /data --amd64 --test -d local",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Hassio Addon: build arm64 image",
+            "type": "shell",
+            "command": "docker run --rm -it --name addon_amd64_builder --privileged -v ./${input:addonName}:/data -v /var/run/docker.sock:/var/run/docker.sock:ro ghcr.io/home-assistant/amd64-builder -t /data --arm64 --test -d local",
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Hassio Addon: build multi-arch image",
+            "type": "shell",
+            "command": "docker run --rm -it --name addon_amd64_builder --privileged -v ./${input:addonName}:/data -v /var/run/docker.sock:/var/run/docker.sock:ro ghcr.io/home-assistant/amd64-builder -t /data --all --test -d local",
+            "group": "build",
+            "problemMatcher": []
         }
     ],
     "inputs": [
         {
             "id": "addonName",
             "type": "pickString",
-            "description": "Name of addon (to add your addon to this list, please edit .vscode/tasks.json)",
+            "description": "Select the addon",
             "options": [
                 "cloudflared",
                 "frigate_rocm",
                 "gitea",
                 "gitlab",
                 "immich",
+                "immich_power_tools",
                 "jellyfin",
                 "karakeep",
                 "memos",
