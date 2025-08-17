@@ -87,7 +87,7 @@ RUN mkdir /docker-entrypoint-initdb.d
 ENV PATH $PATH:/usr/lib/postgresql/$PG_MAJOR/bin:/usr/lib/bin
 
 # install Postgres & Redis
-RUN set -ex; \
+RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends libnss-wrapper lsb-release; \
     curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc; \
@@ -95,13 +95,13 @@ RUN set -ex; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
         logrotate \
-        postgresql-$PG_MAJOR \
         postgresql-common \
+        postgresql-$PG_MAJOR \
+        postgresql-${PG_MAJOR}-pgvector \
         redis-server; \
 	\
 	postgres --version
 
-# make the sample config easier to munge (and "correct by default")
 RUN set -eux; \
 	dpkg-divert --add --rename --divert "/usr/share/postgresql/postgresql.conf.sample.dpkg" "/usr/share/postgresql/$PG_MAJOR/postgresql.conf.sample"; \
 	cp -v /usr/share/postgresql/postgresql.conf.sample.dpkg /usr/share/postgresql/postgresql.conf.sample; \
@@ -114,22 +114,8 @@ RUN install --verbose --directory --owner postgres --group postgres --mode 3777 
 
 #--------------------------------------------------------- PG Vectors extensions ------------------------------------------------------------------------#
 
-RUN \
+RUN set -eux; \
     apt-get update && \
-	apt-mark hold locales && \
-	apt-get install -y unzip build-essential libpq-dev postgresql-server-dev-$PG_MAJOR git && \
-    cd /tmp && \
-    git clone https://github.com/pgvector/pgvector && \
-	cd /tmp/pgvector && \
-	make clean && \
-	make OPTFLAGS="" && \
-	make install && \
-	mkdir /usr/share/doc/pgvector && \
-	cp LICENSE README.md /usr/share/doc/pgvector && \
-	rm -r /tmp/pgvector && \
-	apt-get remove -y unzip build-essential postgresql-server-dev-$PG_MAJOR git && \
-	apt-get autoremove -y && \
-	apt-mark unhold locales && \
     if [ "$BUILD_ARCH" = "aarch64" ]; then \
         curl -L -s -o /tmp/vchord.deb https://github.com/tensorchord/VectorChord/releases/download/$VECTORCHORD_VERSION/postgresql-${PG_MAJOR%.*}-vchord_${VECTORCHORD_VERSION#"v"}-1_arm64.deb; \
     else \
