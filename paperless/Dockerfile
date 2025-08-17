@@ -51,7 +51,7 @@ ENV PATH=$PATH:/usr/lib/postgresql/$PG_MAJOR/bin
 
 # ---------------GOTENBERG-TIKA--------------------
 
-ARG NOTO_COLOR_EMOJI_VERSION="v2.047"
+ARG NOTO_COLOR_EMOJI_VERSION="v2.048"
 ARG PDFTK_VERSION="v3.3.3"
 ARG TMP_CHOMIUM_VERSION_ARMHF="116.0.5845.180-1~deb12u1"
 
@@ -218,13 +218,13 @@ ENV CHROMIUM_BIN_PATH=/usr/bin/chromium \
     EXIFTOOL_BIN_PATH=/usr/bin/exiftool \
     PDFCPU_BIN_PATH=/usr/bin/pdfcpu
 
-ENV TIKA_VERSION=3.2.0
+ENV TIKA_VERSION=3.2.2
 
 RUN \
     groupadd -g 9998 -o tika; \
     useradd -m -u 9998 -g 9998 -o tika
 
-COPY --from=apache/tika:3.2.0.0 /tika-server-standard-${TIKA_VERSION}.jar /
+COPY --from=apache/tika:3.2.2.0 /tika-server-standard-${TIKA_VERSION}.jar /
 
 COPY rootfs/ /
 
