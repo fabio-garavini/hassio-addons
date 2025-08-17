@@ -13,7 +13,7 @@ This monolithic package includes:
 
 - **Immich Core**: Photo/video management interface
 - **Machine Learning**: Object/scene recognition & facial recognition
-- **PostgreSQL with pgvecto.rs**: Vector-optimized database
+- **PostgreSQL with VectorChord**: Vector-optimized database
 - **Redis**: Real-time notifications and caching
 
 [Official Immich Documentation](https://immich.app/docs)
