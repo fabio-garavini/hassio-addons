@@ -27,6 +27,8 @@ Help me expand the documentation making it as easy as possible for anyone to use
 
 [Frigate NVR](https://frigate.video) with realtime local object detection for IP cameras (ROCm version)
 
+![screenshot](https://private-user-images.githubusercontent.com/569905/337930841-5e713cb9-9db5-41dc-947a-6937c3bc376e.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTU1MjU5MzIsIm5iZiI6MTc1NTUyNTYzMiwicGF0aCI6Ii81Njk5MDUvMzM3OTMwODQxLTVlNzEzY2I5LTlkYjUtNDFkYy05NDdhLTY5MzdjM2JjMzc2ZS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwODE4JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDgxOFQxNDAwMzJaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT05MjNhNTk3NzA1YjFhY2NmNDliNzI5YWQ1NTEzMzlkYjc2OTdiOGUwMzkzYzU5ZDBjMGJjYTdjYjlhNTYxN2ExJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9._N5ExkUUBO9tnJaBkqiVhtWG8R5mhPk2_HdX4w_eb0U)
+
 ### 🍵 Gitea
 
 *All-in-one*
@@ -59,7 +61,11 @@ Help me expand the documentation making it as easy as possible for anyone to use
 
 ### 📷 Jellyfin
 
+*All-in-one*
+
 [Jellyfin](https://jellyfin.org) is a Free Software Media System that puts you in control of managing and streaming your media.
+
+![screenshot](https://jellyfin.org/assets/images/10.8-home-4a73a92bf90d1eeffa5081201ca9c7bb.png)
 
 ### 💾 Karakeep
 
@@ -106,6 +112,8 @@ An open-source, self-hosted note-taking solution designed for seamless deploymen
 *All-in-one*
 
 SpeedTest by [OpenSpeedTest™](https://openspeedtest.com/) is a Free and Open-Source HTML5 Network Performance Estimation Tool Written in Vanilla Javascript
+
+![speed_test](https://github.com/openspeedtest/v2-Test/raw/main/images/10G-S.gif)
 
 ### 📄 Paperless
 
