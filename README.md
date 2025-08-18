@@ -71,6 +71,12 @@ Mealie is a self hosted recipe manager, meal planner and shopping list. Easily a
 
 An open-source, self-hosted note-taking solution designed for seamless deployment and multi-platform access. Experience effortless plain text writing with pain-free, complemented by robust Markdown syntax support for enhanced formatting.
 
+### ✨ n8n
+
+*All-in-one*
+
+**n8n** is a workflow automation platform that gives technical teams the flexibility of code with the speed of no-code. With 400+ integrations, native AI capabilities, and a fair-code license, n8n lets you build powerful automations while maintaining full control over your data and deployments.
+
 ### ☁️ Nextcloud
 
 *All-in-one*

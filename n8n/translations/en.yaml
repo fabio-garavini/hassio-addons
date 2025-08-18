@@ -1,0 +1,34 @@
+configuration:
+  TZ:
+    name: Timezone
+    description: >-
+      The timezone of your n8n instance. This is used to display dates and times correctly.
+      If you don't set this, it defaults to UTC.
+  GENERIC_TIMEZONE:
+    name: Generic Timezone
+    description: >-
+      The default timezone is America/New_York.
+      For instance, the Schedule node uses it to know at what time the workflow should start.
+  tunnel:
+    name: Tunnel service
+    description:
+      >-
+      To use webhooks for trigger nodes of external services like GitHub, n8n has to be reachable from the web. n8n runs a tunnel service that can redirect requests from n8n's servers to your local n8n instance.
+      !Use this for local development and testing. It isn't safe to use it in production!
+  N8N_HOST:
+    name: Host
+    description: >-
+      The host name or IP address of your n8n instance. If you use a reverse proxy, set this to the domain name of your reverse proxy.
+  WEBHOOK_URL:
+    name: Webhook URL
+    description: >-
+      The URL used to access n8n webhooks. If you use a reverse proxy, set this to the domain name of your reverse proxy.
+      If you use a tunnel service, leave this empty.
+  N8N_PROTOCOL:
+    name: Protocol
+    description: >-
+      The protocol used to access n8n. If you use a reverse proxy with a ssl certificate, set this to `https`.
+  N8N_SSL_CERT:
+    name: SSL certificate
+  N8N_SSL_KEY:
+    name: SSL private key

@@ -1,0 +1,39 @@
+name: n8n
+version: "1.106.3-v0"
+slug: n8n
+codenotary: info@fabiogaravini.dev
+description: Flexible AI workflow automation
+url: https://n8n.io
+webui: http://[HOST]:[PORT:5678]
+hassio_api: true
+arch:
+  - aarch64
+  - amd64
+init: false
+map:
+  - type: addon_config
+    read_only: false
+  - type: share
+    read_only: false
+  - type: media
+    read_only: false
+  - type: ssl
+backup: cold
+backup_exclude:
+  - "**/logs"
+schema:
+  tunnel: bool
+  TZ: str?
+  GENERIC_TIMEZONE: str?
+  N8N_HOST: str?
+  N8N_PROTOCOL: list(http|https)?
+  N8N_SSL_CERT: str?
+  N8N_SSL_KEY: str?
+  WEBHOOK_URL: str?
+options:
+  tunnel: false
+ports:
+  5678/tcp: 5678
+ports_description:
+  5678/tcp: Web UI
+image: fabioogaravini/hassio-{arch}-n8n
