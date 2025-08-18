@@ -1,5 +1,5 @@
 name: Syncthing
-version: 2.0.2-v0
+version: 2.0.2-v1
 slug: syncthing
 codenotary: info@fabiogaravini.dev
 description: "Open Source Continuous File Synchronization"
@@ -51,4 +51,4 @@ options:
   PUID: 1000
   PGID: 1000
   TZ: Etc/UTC
-image: fabioogaravini/hassio-{arch}-syncthing
+#image: fabioogaravini/hassio-{arch}-syncthing
