@@ -1,8 +1,8 @@
-name: Frigate ROCm
-version: 0.16.0-rocm
+name: Frigate TensorRT (Nvidia Jetson)
+version: 0.16.0-tensorrt-jp6
 panel_icon: "mdi:cctv"
 panel_title: Frigate
-slug: frigate_rocm
+slug: frigate_tensorrt_jp6
 description: NVR with realtime local object detection for IP cameras
 url: "https://github.com/blakeblackshear/frigate"
 image: ghcr.io/blakeblackshear/frigate
@@ -50,8 +50,6 @@ privileged:
   - PERFMON
 environment:
   CONFIG_FILE: /config/frigate.yml
-#  LIBVA_DRIVER_NAME: radeonsi
-#  HSA_OVERRIDE_GFX_VERSION: "9.0.0"
 schema:
   plus_api_key: password?
 services:

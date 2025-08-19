@@ -1,7 +1,8 @@
-# Home Assistant Add-on: Frigate ROCm (AMD)
+# Home Assistant Add-on: Frigate TensorRT (Nvidia Jetson)
 
 > [!INFO]
-> Frigate build for AMD GPUs
+> RKNN models can run on Rockchip devices with included NPUs
+> Frigate build for SBCs with Rockchip SoC
 
 Please reference the [release notes](https://github.com/blakeblackshear/frigate/releases) for breaking changes.
 

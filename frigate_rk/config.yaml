@@ -1,8 +1,8 @@
-name: Frigate ROCm
-version: 0.16.0-rocm
+name: Frigate RKNN (Rockchip)
+version: 0.16.0-rk
 panel_icon: "mdi:cctv"
 panel_title: Frigate
-slug: frigate_rocm
+slug: frigate_rk
 description: NVR with realtime local object detection for IP cameras
 url: "https://github.com/blakeblackshear/frigate"
 image: ghcr.io/blakeblackshear/frigate
@@ -50,14 +50,11 @@ privileged:
   - PERFMON
 environment:
   CONFIG_FILE: /config/frigate.yml
-#  LIBVA_DRIVER_NAME: radeonsi
-#  HSA_OVERRIDE_GFX_VERSION: "9.0.0"
 schema:
   plus_api_key: password?
 services:
   - "mqtt:want"
 arch:
-  - amd64
   - aarch64
 map:
   - type: media

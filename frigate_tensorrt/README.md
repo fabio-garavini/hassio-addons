@@ -1,7 +1,8 @@
-# Home Assistant Add-on: Frigate ROCm (AMD)
+# Home Assistant Add-on: Frigate TensorRT (Nvidia)
 
 > [!INFO]
-> Frigate build for AMD GPUs
+> Support for Nvidia GPU TensorRT
+> Frigate build specific for amd64 devices running an nvidia GPU
 
 Please reference the [release notes](https://github.com/blakeblackshear/frigate/releases) for breaking changes.
 
