@@ -14,7 +14,7 @@ fi
 tunnel_id=$(find /config -maxdepth 1 -type f -name "*.json" | head -n 1 | xargs -n 1 basename 2>/dev/null)
 
 if [ -z "$tunnel_id" ]; then
-    cloudflared tunnel --origincert /config/cert.pem --credentials-file /config/tunnel.json create HomeAssistant >/dev/null 2>&1
+    cloudflared --no-autoupdate tunnel --origincert /config/cert.pem --credentials-file /config/tunnel.json create HomeAssistant >/dev/null 2>&1
 
     mv /root/.cloudflared/* /config/
 
