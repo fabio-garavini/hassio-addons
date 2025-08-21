@@ -54,7 +54,7 @@ RUN apk upgrade --no-cache --available \
     && adduser -D chrome \
     && chown -R chrome:chrome /usr/src/chrome
 
-COPY --from=getmeili/meilisearch:v1.13.3 /bin/meilisearch /bin/meilitool /bin/
+COPY --from=getmeili/meilisearch:v1.18.0 /bin/meilisearch /bin/meilitool /bin/
 
 COPY rootfs/ /
 
