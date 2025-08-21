@@ -1,11 +1,11 @@
 {
   "baseBranches": ["main"],
   "rebaseWhen": "behind-base-branch",
-  "onboarding": false,
   "dependencyDashboard": false,
   "commitMessagePrefix": "⬆️",
   "commitMessageTopic": "{{depName}}",
   "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
+  "enabledManagers": ["regex"],
   "customManagers": [
     {
       "customType": "regex",
