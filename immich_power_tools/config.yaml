@@ -1,5 +1,5 @@
 name: Immich Power Tools
-version: "0.17.0-v0"
+version: "0.17.0-v1"
 slug: immich_power_tools
 codenotary: info@fabiogaravini.dev
 description: A unofficial immich client to provide better tools to organize and manage your immich account
