@@ -3,6 +3,7 @@
   "extends": ["config:base"],
   "baseBranches": ["main"],
   "rebaseWhen": "behind-base-branch",
+  "dependencyDashboard": false,
   "commitMessagePrefix": "⬆️",
   "commitMessageTopic": "{{depName}}",
   "gitAuthor": "renovate[bot] <bot@renovateapp.com>",
