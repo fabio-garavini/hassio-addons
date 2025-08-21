@@ -1,11 +1,11 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "baseBranches": ["main"],
   "rebaseWhen": "behind-base-branch",
+  "onboarding": false,
   "dependencyDashboard": false,
   "commitMessagePrefix": "⬆️",
   "commitMessageTopic": "{{depName}}",
-  "gitAuthor": "renovate[bot] <bot@renovateapp.com>",
+  "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
   "customManagers": [
     {
       "customType": "regex",
