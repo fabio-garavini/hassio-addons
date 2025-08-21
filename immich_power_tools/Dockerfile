@@ -1,17 +1,16 @@
 ARG BUILD_FROM
+ARG BUILD_VERSION
 
 FROM node:18-alpine AS node
-FROM ghcr.io/varun-raj/immich-power-tools:0.16.0 AS immich_power_tools
+FROM ghcr.io/varun-raj/immich-power-tools:${BUILD_VERSION%-v*} AS immich_power_tools
 
 FROM ${BUILD_FROM}
-
-ARG VERSION=0.17.0
 
 ENV \
   NODE_ENV=production \
   NODE_VERSION=18.20.8 \
   NEXT_TELEMETRY_DISABLED=1 \
-  VERSION=$VERSION \
+  VERSION=${BUILD_VERSION%-v*} \
   PORT=80
 
 ENV \
@@ -41,7 +40,6 @@ COPY rootfs/ /
 EXPOSE 80
 
 ARG BUILD_ARCH \
-    BUILD_VERSION \
     BUILD_DATE \
     BUILD_DESCRIPTION \
     BUILD_NAME \
