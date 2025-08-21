@@ -9,6 +9,17 @@
   "customManagers": [
     {
       "customType": "regex",
+      "fileMatch": ["^cloudflared/(build|config)\\.yaml$"],
+      "matchStrings": [
+        "version:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)",
+        "cloudflare/cloudflared:(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ],
+      "datasourceTemplate": "docker",
+      "depNameTemplate": "cloudflare/cloudflared",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
       "fileMatch": ["^frigate(_[^/]+)?/config\\.yaml$"],
       "matchStrings": [
         "version:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+(?:-[\\w.-]+)?)"
