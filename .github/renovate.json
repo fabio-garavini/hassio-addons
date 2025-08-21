@@ -1,0 +1,30 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base"],
+  "baseBranches": ["main"],
+  "rebaseWhen": "behind-base-branch",
+  "commitMessagePrefix": "⬆️",
+  "commitMessageTopic": "{{depName}}",
+  "commitMessageSuffix": "to {{newVersion}}",
+  "gitAuthor": "renovate[bot] <bot@renovateapp.com>",
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["^frigate(_[^/]+)?/config\\.yaml$"],
+      "matchStrings": [
+        "version:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+(?:-[\\w.-]+)?)"
+      ],
+      "datasourceTemplate": "docker",
+      "depNameTemplate": "ghcr.io/blakeblackshear/frigate",
+      "versioningTemplate": "docker"
+    }
+  ],
+
+  "packageRules": [
+    {
+      "matchDepNames": ["ghcr.io/blakeblackshear/frigate"],
+      "automerge": true,
+      "automergeType": "branch"
+    }
+  ]
+}
