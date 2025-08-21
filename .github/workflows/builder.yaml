@@ -16,6 +16,10 @@ on:
       - "**/apparmor.txt"
       - "**/rootfs/**"
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   init:
     runs-on: ubuntu-latest
@@ -25,20 +29,17 @@ jobs:
       changed: ${{ steps.changed_addons.outputs.changed }}
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v4.3.0
+        uses: actions/checkout@v4
 
       - name: Get changed files
         id: changed_files
-        uses: masesgroup/retrieve-changed-files@v3.0.0
+        uses: masesgroup/retrieve-changed-files@v3
 
       - name: 🔍 Find add-ons
         id: addons
         run: |
-          declare -a addons
-          for addon in $(find ./ -name config.yaml | cut -d "/" -f2 | sort -u); do
-            addons+=("$addon");
-          done
-          echo "addons=${addons[@]}" >> "$GITHUB_OUTPUT"
+          addons=$(find . -name config.yaml -printf '%h\n' | cut -d/ -f2 | sort -u | jq -R -s -c 'split("\n")[:-1]')
+          echo "addons=$addons" >> "$GITHUB_OUTPUT"
 
       - name: Get changed add-ons
         id: changed_addons
@@ -82,7 +83,7 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4.3.0
+        uses: actions/checkout@v4
 
       - name: Get information
         id: info
@@ -105,7 +106,7 @@ jobs:
           fi
 
       - name: Login to DockerHub
-        if: steps.check.outputs.build_arch == 'true'
+        if: steps.check.outputs.build_arch == 'true' && github.ref == 'refs/heads/main'
         uses: docker/login-action@v3.5.0
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
@@ -121,4 +122,5 @@ jobs:
             --image "${{ steps.check.outputs.image }}" \
             --docker-hub "${{ vars.DOCKERHUB_USERNAME }}" \
             --addon \
-            --cosign
+            --cosign \
+            ${{ github.ref != 'refs/heads/main' && '--test' || '' }}
