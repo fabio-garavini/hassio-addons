@@ -1,7 +1,7 @@
 ARG BUILD_FROM
 
 FROM node:18-alpine AS node
-FROM ghcr.io/varun-raj/immich-power-tools:0.16.0 AS immich_power_tools
+FROM ghcr.io/varun-raj/immich-power-tools:0.17.0 AS immich_power_tools
 
 FROM ${BUILD_FROM}
 
