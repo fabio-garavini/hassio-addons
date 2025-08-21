@@ -27,13 +27,5 @@
       "depNameTemplate": "ghcr.io/blakeblackshear/frigate",
       "versioningTemplate": "docker"
     }
-  ],
-
-  "packageRules": [
-    {
-      "matchDepNames": ["ghcr.io/blakeblackshear/frigate", "cloudflare/cloudflared"],
-      "automerge": true,
-      "automergeType": "branch"
-    }
   ]
 }
