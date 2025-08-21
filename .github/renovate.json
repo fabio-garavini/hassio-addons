@@ -9,10 +9,9 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["^cloudflared/(build|config)\\.yaml$"],
+      "fileMatch": ["^cloudflared/config\\.yaml$"],
       "matchStrings": [
-        "version:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)",
-        "cloudflare/cloudflared:(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+        "version:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+(?:-[\\w.-]+)?)"
       ],
       "datasourceTemplate": "docker",
       "depNameTemplate": "cloudflare/cloudflared",
@@ -32,7 +31,7 @@
 
   "packageRules": [
     {
-      "matchDepNames": ["ghcr.io/blakeblackshear/frigate"],
+      "matchDepNames": ["ghcr.io/blakeblackshear/frigate", "cloudflare/cloudflared"],
       "automerge": true,
       "automergeType": "branch"
     }

@@ -1,5 +1,5 @@
 build_from:
-  aarch64: cloudflare/cloudflared:2025.8.0
-  amd64: cloudflare/cloudflared:2025.8.0
+  aarch64: cloudflare/cloudflared
+  amd64: cloudflare/cloudflared
 codenotary:
   signer: info@fabiogaravini.dev
