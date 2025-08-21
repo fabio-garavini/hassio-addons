@@ -5,7 +5,6 @@
   "rebaseWhen": "behind-base-branch",
   "commitMessagePrefix": "⬆️",
   "commitMessageTopic": "{{depName}}",
-  "commitMessageSuffix": "to {{newVersion}}",
   "gitAuthor": "renovate[bot] <bot@renovateapp.com>",
   "customManagers": [
     {
