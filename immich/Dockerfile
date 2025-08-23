@@ -1,4 +1,4 @@
-ARG BUILD_FROM
+ARG BUILD_FROM=ghcr.io/imagegenius/immich:v1.138.1-ig414
 
 FROM ${BUILD_FROM}
 
@@ -71,7 +71,8 @@ RUN set -eux; \
 	echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen; \
 	locale-gen; \
 	locale -a | grep 'en_US.utf8'
-ENV LANG en_US.utf8
+
+ENV LANG=en_US.utf8
 
 RUN set -eux; \
 	apt-get update; \
@@ -84,7 +85,7 @@ RUN set -eux; \
 
 RUN mkdir /docker-entrypoint-initdb.d
 
-ENV PATH $PATH:/usr/lib/postgresql/$PG_MAJOR/bin:/usr/lib/bin
+ENV PATH="$PATH:/usr/lib/postgresql/$PG_MAJOR/bin:/usr/lib/bin"
 
 # install Postgres & Redis
 RUN set -eux; \
@@ -145,12 +146,13 @@ STOPSIGNAL SIGINT
 
 VOLUME /config /data /share /media
 
-ARG BUILD_VERSION
-ARG BUILD_DATE
-ARG BUILD_DESCRIPTION
-ARG BUILD_NAME
-ARG BUILD_REF
-ARG BUILD_REPOSITORY
+ARG BUILD_VERSION \
+    BUILD_DATE \
+    BUILD_DESCRIPTION \
+    BUILD_NAME \
+    BUILD_REF \
+    BUILD_REPOSITORY
+
 LABEL \
     io.hass.name="${BUILD_NAME}" \
     io.hass.description="${BUILD_DESCRIPTION}" \

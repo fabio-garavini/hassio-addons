@@ -1,7 +1,7 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base:18.1.0
-ARG BUILD_VERSION
+ARG BUILD_FROM=ghcr.io/hassio-addons/base:stable
+ARG BUILD_VERSION=1.107.3
 
-FROM docker.n8n.io/n8nio/n8n:${BUILD_VERSION%-v*} as n8n_source
+FROM docker.n8n.io/n8nio/n8n:${BUILD_VERSION%%+*} AS n8n_source
 
 FROM ${BUILD_FROM}
 
@@ -63,7 +63,7 @@ RUN cd /usr/local/lib/node_modules/n8n && \
 
 RUN cd /usr/local/lib/node_modules/n8n/node_modules/pdfjs-dist && npm install @napi-rs/canvas
 
-ARG \
+ARG BUILD_VERSION \
     BUILD_DATE \
     BUILD_DESCRIPTION \
     BUILD_NAME \

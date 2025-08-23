@@ -1,4 +1,4 @@
-ARG BUILD_FROM
+ARG BUILD_FROM=ghcr.io/linuxserver/nextcloud:31.0.8
 
 FROM $BUILD_FROM
 

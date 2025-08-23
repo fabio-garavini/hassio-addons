@@ -1,8 +1,15 @@
-ARG BUILD_FROM
+ARG BUILD_FROM=ghcr.io/paperless-ngx/paperless-ngx:2.18.1
+
+ARG TIKA_VERSION=3.2.2
+
+FROM gotenberg/gotenberg:8.20 AS gotenberg
+
+FROM apache/tika:${TIKA_VERSION}.0 AS tika
 
 FROM $BUILD_FROM
 
 ARG BUILD_ARCH
+ARG TIKA_VERSION
 
 ENV PAPERLESS_DATA_DIR="/config/paperless" \
     PAPERLESS_MEDIA_ROOT="/share/paperless" \
@@ -204,10 +211,10 @@ RUN \
 # Credits:
 # https://github.com/arachnys/athenapdf/issues/69.
 # https://github.com/arachnys/athenapdf/commit/ba25a8d80a25d08d58865519c4cd8756dc9a336d.
-COPY --from=gotenberg/gotenberg:8.20 /etc/fonts/conf.d/100-gotenberg.conf /etc/fonts/conf.d/
+COPY --from=gotenberg /etc/fonts/conf.d/100-gotenberg.conf /etc/fonts/conf.d/
 
 # Copy the pdfcpu binary from the pdfcpu-binary-stage.
-COPY --from=gotenberg/gotenberg:8.20 /usr/bin/pdfcpu /usr/bin/gotenberg /usr/bin/
+COPY --from=gotenberg /usr/bin/pdfcpu /usr/bin/gotenberg /usr/bin/
 
 # Environment variables required by modules or else.
 ENV CHROMIUM_BIN_PATH=/usr/bin/chromium \
@@ -218,13 +225,11 @@ ENV CHROMIUM_BIN_PATH=/usr/bin/chromium \
     EXIFTOOL_BIN_PATH=/usr/bin/exiftool \
     PDFCPU_BIN_PATH=/usr/bin/pdfcpu
 
-ENV TIKA_VERSION=3.2.2
-
 RUN \
     groupadd -g 9998 -o tika; \
     useradd -m -u 9998 -g 9998 -o tika
 
-COPY --from=apache/tika:3.2.2.0 /tika-server-standard-${TIKA_VERSION}.jar /
+COPY --from=tika /tika-server-standard-${TIKA_VERSION}.jar /
 
 COPY rootfs/ /
 

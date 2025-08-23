@@ -1,5 +1,5 @@
 name: n8n
-version: "1.107.3-v0"
+version: 1.107.3
 slug: n8n
 codenotary: info@fabiogaravini.dev
 description: Flexible AI workflow automation

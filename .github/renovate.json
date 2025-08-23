@@ -1,4 +1,6 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base"],
   "baseBranches": ["main"],
   "rebaseWhen": "behind-base-branch",
   "dependencyDashboard": false,
@@ -6,26 +8,29 @@
   "commitMessageTopic": "{{depName}}",
   "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
   "enabledManagers": ["regex"],
+  "prHourlyLimit": 0,
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["^cloudflared/config\\.yaml$"],
+      "fileMatch": ["^[\\w.-]+/addon_info\\.yaml$"],
       "matchStrings": [
-        "version:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+(?:-[\\w.-]+)?)"
+        "source:\\s*type:\\s(?<datasource>.*?)\\s*(repo|image):\\s(?<depName>.*?)\\s*current_version:\\s(?<currentValue>.*?)(?:\\s*version_template:\\s[\"']?(?<versioning>.*?)[\"']?)?\\s"
       ],
-      "datasourceTemplate": "docker",
-      "depNameTemplate": "cloudflare/cloudflared",
-      "versioningTemplate": "semver"
-    },
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{/if}}"
+    }
+  ],
+  "packageRules": [
     {
-      "customType": "regex",
-      "fileMatch": ["^frigate(_[^/]+)?/config\\.yaml$"],
-      "matchStrings": [
-        "version:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+(?:-[\\w.-]+)?)"
-      ],
-      "datasourceTemplate": "docker",
-      "depNameTemplate": "ghcr.io/blakeblackshear/frigate",
-      "versioningTemplate": "docker"
+      "matchFileNames": ["*/addon_info.yaml"],
+      "postUpgradeTasks": {
+        "commands": [
+          "/usr/local/sbin/install-tool node latest",
+          "/usr/local/sbin/install-tool npm latest",
+          "node .github/scripts/addon-update.js {{packageFileDir}}"
+        ],
+        "fileFilters": ["*/config.yaml", "*/build.yaml", "*/CHANGELOG.md", "*/addon_info.yaml", "*/Dockerfile"],
+        "executionMode": "branch"
+      }
     }
   ]
 }

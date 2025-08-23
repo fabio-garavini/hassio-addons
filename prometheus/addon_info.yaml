@@ -1,0 +1,17 @@
+source:
+  type: docker
+  repo: pocketbase/pocketbase
+  current_version: v3.5.0
+  version_template: regex:^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
+config:
+  version_template: "{{major}}.{{minor}}.{{patch}}"
+  patch: 0
+  image: fabioogaravini/hassio-{arch}-prometheus
+build:
+  image: prom/prometheus
+  version_template: v{{major}}.{{minor}}.{{patch}}
+  codenotary: info@fabiogaravini.dev
+changelog:
+  source: github-releases
+  repo: prometheus/prometheus
+  version_template: v{{major}}.{{minor}}.{{patch}}

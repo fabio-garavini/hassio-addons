@@ -1,4 +1,4 @@
-ARG BUILD_FROM
+ARG BUILD_FROM=ghcr.io/immich-app/postgres:16-vectorchord0.3.0-pgvectors0.3.0
 
 FROM $BUILD_FROM
 
@@ -73,12 +73,12 @@ RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 CMD []
 
-ARG BUILD_VERSION
-ARG BUILD_DATE
-ARG BUILD_DESCRIPTION
-ARG BUILD_NAME
-ARG BUILD_REF
-ARG BUILD_REPOSITORY
+ARG BUILD_VERSION \
+    BUILD_DATE \
+    BUILD_DESCRIPTION \
+    BUILD_NAME \
+    BUILD_REF \
+    BUILD_REPOSITORY
 
 LABEL \
     io.hass.name="${BUILD_NAME}" \

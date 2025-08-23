@@ -1,4 +1,4 @@
-ARG BUILD_FROM
+ARG BUILD_FROM=ghcr.io/karakeep-app/karakeep:0.26.0
 
 FROM ${BUILD_FROM}
 
