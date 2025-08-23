@@ -1,7 +1,6 @@
-ARG BUILD_FROM
-ARG BUILD_VERSION
+ARG BUILD_FROM=cloudflare/cloudflared:2025.8.1
 
-FROM ${BUILD_FROM}:${BUILD_VERSION%-v*}
+FROM ${BUILD_FROM}
 
 USER root
 
@@ -12,7 +11,8 @@ COPY rootfs/ /
 ENTRYPOINT ["/bin/sh", "/entrypoint.sh"]
 CMD []
 
-ARG BUILD_ARCH \
+ARG BUILD_VERSION \
+    BUILD_ARCH \
     BUILD_DATE \
     BUILD_DESCRIPTION \
     BUILD_NAME \

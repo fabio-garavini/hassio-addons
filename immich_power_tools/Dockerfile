@@ -1,4 +1,4 @@
-ARG BUILD_FROM
+ARG BUILD_FROM=ghcr.io/hassio-addons/base:stable
 ARG BUILD_VERSION
 
 FROM node:18-alpine AS node
