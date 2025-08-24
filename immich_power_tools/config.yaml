@@ -1,9 +1,9 @@
+---
 name: Immich Power Tools
 version: 0.18.0
 slug: immich_power_tools
 codenotary: info@fabiogaravini.dev
-description: A unofficial immich client to provide better tools to organize and
-  manage your immich account
+description: A unofficial immich client to provide better tools to organize and manage your immich account
 url: https://github.com/varun-raj/immich-power-tools
 webui: http://[HOST]:[PORT:80]
 arch:

@@ -61,16 +61,17 @@ RUN set -eux; \
 
 # make the "en_US.UTF-8" locale so postgres will be utf-8 enabled by default
 RUN set -eux; \
-	if [ -f /etc/dpkg/dpkg.cfg.d/docker ]; then \
-# if this file exists, we're likely in "debian:xxx-slim", and locales are thus being excluded so we need to remove that exclusion (since we need locales)
-		grep -q '/usr/share/locale' /etc/dpkg/dpkg.cfg.d/docker; \
-		sed -ri '/\/usr\/share\/locale/d' /etc/dpkg/dpkg.cfg.d/docker; \
-		! grep -q '/usr/share/locale' /etc/dpkg/dpkg.cfg.d/docker; \
-	fi; \
-	apt-get update; apt-get install -y --no-install-recommends locales; rm -rf /var/lib/apt/lists/*; \
-	echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen; \
-	locale-gen; \
-	locale -a | grep 'en_US.utf8'
+    if [ -f /etc/dpkg/dpkg.cfg.d/docker ]; then \
+        grep -q '/usr/share/locale' /etc/dpkg/dpkg.cfg.d/docker; \
+        sed -ri '/\/usr\/share\/locale/d' /etc/dpkg/dpkg.cfg.d/docker; \
+        grep -q '/usr/share/locale' /etc/dpkg/dpkg.cfg.d/docker && exit 1; \
+    fi; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends locales; \
+    rm -rf /var/lib/apt/lists/*; \
+    echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen; \
+    locale-gen; \
+    locale -a | grep 'en_US.utf8'
 
 ENV LANG=en_US.utf8
 
@@ -100,8 +101,9 @@ RUN set -eux; \
         postgresql-$PG_MAJOR \
         postgresql-${PG_MAJOR}-pgvector \
         redis-server; \
-	\
-	postgres --version
+    rm -rf /var/lib/apt/lists/*; \
+    \
+    postgres --version
 
 RUN set -eux; \
 	dpkg-divert --add --rename --divert "/usr/share/postgresql/postgresql.conf.sample.dpkg" "/usr/share/postgresql/$PG_MAJOR/postgresql.conf.sample"; \
@@ -127,8 +129,8 @@ RUN set -eux; \
     else \
         curl -L -s -o /tmp/pgvectors.deb https://github.com/tensorchord/pgvecto.rs/releases/download/v${PGVECTORS_VERSION}/vectors-pg${PG_MAJOR}_${PGVECTORS_VERSION}_${BUILD_ARCH}_vectors.deb; \
     fi; \
-    apt-get install -y /tmp/pgvectors.deb; \
-    apt-get install -y /tmp/vchord.deb; \
+    apt-get install -y --no-install-recommends /tmp/pgvectors.deb; \
+    apt-get install -y --no-install-recommends /tmp/vchord.deb; \
     apt-get autoremove -y; \
     apt-get autoclean -y; \
     rm -rf \

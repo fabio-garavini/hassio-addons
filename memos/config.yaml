@@ -1,3 +1,4 @@
+---
 name: Memos
 version: 0.25.0
 slug: memos
@@ -18,7 +19,7 @@ map:
   - type: ssl
 backup: cold
 backup_exclude:
-  - "**/logs"
+  - '**/logs'
 ports:
   5230/tcp: 5230
 ports_description:

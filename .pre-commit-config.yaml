@@ -1,5 +1,21 @@
+---
 repos:
   - repo: https://github.com/renovatebot/pre-commit-hooks
     rev: 41.82.1
     hooks:
       - id: renovate-config-validator
+  - repo: https://github.com/hadolint/hadolint
+    rev: v2.12.0
+    hooks:
+      - id: hadolint-docker
+        args: [--config, .github/hadolint.yaml]
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.37.1
+    hooks:
+      - id: yamllint
+        args: ['-c', '.github/yamllint.yaml']
+  - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
+    rev: 0.2.3
+    hooks:
+      - id: yamlfmt
+        args: ['--mapping', '2', '--sequence', '4', '--offset', '2', '--preserve-quotes']

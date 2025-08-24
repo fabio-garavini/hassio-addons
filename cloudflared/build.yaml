@@ -1,3 +1,4 @@
+---
 build_from:
   aarch64: cloudflare/cloudflared
   amd64: cloudflare/cloudflared

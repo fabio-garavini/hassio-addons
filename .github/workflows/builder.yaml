@@ -1,8 +1,9 @@
+---
 name: Builder
 
 env:
-  BUILD_ARGS: "--test"
-  MONITORED_FILES: "apparmor.txt build.yaml config.yaml Dockerfile rootfs"
+  BUILD_ARGS: --test
+  MONITORED_FILES: apparmor.txt build.yaml config.yaml Dockerfile rootfs
 
 on:
   workflow_call:
@@ -11,21 +12,21 @@ on:
       - main
       - dev
     paths:
-      - "**/config.yaml"
-      - "**/build.yaml"
-      - "**/Dockerfile"
-      - "**/apparmor.txt"
-      - "**/rootfs/**"
+      - '**/config.yaml'
+      - '**/build.yaml'
+      - '**/Dockerfile'
+      - '**/apparmor.txt'
+      - '**/rootfs/**'
   push:
     branches:
       - main
       - dev
     paths:
-      - "**/config.yaml"
-      - "**/build.yaml"
-      - "**/Dockerfile"
-      - "**/apparmor.txt"
-      - "**/rootfs/**"
+      - '**/config.yaml'
+      - '**/build.yaml'
+      - '**/Dockerfile'
+      - '**/apparmor.txt'
+      - '**/rootfs/**'
 
 defaults:
   run:
@@ -57,11 +58,11 @@ jobs:
           for addon in ${{ steps.addons.outputs.addons }}; do
             if [[ "${{ steps.changed_files.outputs.all }}" =~ $addon ]]; then
               for file in ${{ env.MONITORED_FILES }}; do
-                  if [[ "${{ steps.changed_files.outputs.all }}" =~ $addon/$file && -f "$addon/Dockerfile" ]]; then
-                    if [[ ! "${changed_addons[@]}" =~ $addon ]]; then
-                      changed_addons+=("\"${addon}\",");
-                    fi
+                if [[ "${{ steps.changed_files.outputs.all }}" =~ $addon/$file && -f "$addon/Dockerfile" ]]; then
+                  if [[ ! "${changed_addons[@]}" =~ $addon ]]; then
+                    changed_addons+=("\"${addon}\",");
                   fi
+                fi
               done
             fi
           done
@@ -77,14 +78,14 @@ jobs:
           fi
 
   build:
-    needs: init
-    runs-on: ubuntu-latest
-    if: needs.init.outputs.changed == 'true'
     name: Build ${{ matrix.arch }} ${{ matrix.addon }} add-on
+    runs-on: ubuntu-latest
+    needs: init
+    if: needs.init.outputs.changed == 'true'
     strategy:
       matrix:
         addon: ${{ fromJson(needs.init.outputs.changed_addons) }}
-        arch: ["aarch64", "amd64", "armhf", "armv7", "i386"]
+        arch: [aarch64, amd64, armhf, armv7, i386]
     permissions:
       contents: read
       packages: write
@@ -98,7 +99,7 @@ jobs:
         id: info
         uses: home-assistant/actions/helpers/info@master
         with:
-          path: "./${{ matrix.addon }}"
+          path: ./${{ matrix.addon }}
 
       - name: Check add-on arch
         id: check

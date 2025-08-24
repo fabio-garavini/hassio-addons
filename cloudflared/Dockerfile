@@ -2,6 +2,7 @@ ARG BUILD_FROM=cloudflare/cloudflared:2025.8.1
 
 FROM ${BUILD_FROM}
 
+# hadolint ignore=DL3002
 USER root
 
 COPY --from=busybox:uclibc /bin/sh /bin/mv /bin/cat /bin/find /bin/head /bin/basename /bin/xargs /bin/

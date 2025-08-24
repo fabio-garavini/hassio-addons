@@ -1,9 +1,9 @@
+---
 name: Paperless
 version: 2.18.2
 slug: paperless
 codenotary: info@fabiogaravini.dev
-description: Document management system that transforms your physical documents
-  into a searchable online archive
+description: Document management system that transforms your physical documents into a searchable online archive
 url: https://docs.paperless-ngx.com
 webui: http://[HOST]:[PORT:8000]
 arch:
@@ -20,7 +20,7 @@ map:
   - type: ssl
 backup: cold
 backup_exclude:
-  - "**/logs"
+  - '**/logs'
 tmpfs: true
 schema:
   USERMAP_UID: int(0,)

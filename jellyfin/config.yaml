@@ -1,3 +1,4 @@
+---
 name: Jellyfin
 version: 10.10.7-v0
 slug: jellyfin
@@ -21,9 +22,9 @@ map:
   - media:rw
   - ssl
 backup_exclude:
-  - "**/cache"
-  - "**/transcodes"
-  - "**/log"
+  - '**/cache'
+  - '**/transcodes'
+  - '**/log'
 video: true
 devices:
   - /dev/dri
@@ -36,7 +37,7 @@ ports:
   8096/tcp: 8096
   8920/tcp: 8920
   7359/udp: 7359
-  1900/udp: null
+  1900/udp:
 ports_description:
   8096/tcp: HTTP (Not required for Ingress)
   8920/tcp: HTTPS (Not required for Ingress)

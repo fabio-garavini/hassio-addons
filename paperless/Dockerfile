@@ -29,6 +29,8 @@ ENV PAPERLESS_DATA_DIR="/config/paperless" \
     POSTGRES_PASSWORD=paperless \
     PG_MAJOR=15
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 RUN mkdir /docker-entrypoint-initdb.d
 
 # Postgres & Redis install
@@ -128,14 +130,7 @@ RUN \
         /var/lib/apt/lists/*
 
 RUN \
-    # Install either Google Chrome stable on amd64 architecture or
-    # Chromium on other architectures.
-    # See https://github.com/gotenberg/gotenberg/issues/328.
-    # FIXME:
-    # armhf is currently not working with the latest version of Chromium.
-    # See: https://github.com/gotenberg/gotenberg/issues/709.
-    /bin/bash -c \
-    'set -e &&\
+    set -e &&\
     if [[ "$BUILD_ARCH" == "amd64" ]]; then \
       curl https://dl.google.com/linux/linux_signing_key.pub | apt-key add - &&\
       echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | tee /etc/apt/sources.list.d/google-chrome.list &&\
@@ -155,7 +150,7 @@ RUN \
       apt-get update -qq &&\
       apt-get upgrade -yqq &&\
       DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends chromium; \
-    fi' &&\
+    fi &&\
     # Verify installation.
     chromium --version &&\
     # Cleanup.
@@ -189,7 +184,7 @@ RUN \
     # See https://github.com/gotenberg/gotenberg/pull/273.
     curl -o /usr/bin/pdftk-all.jar "https://gitlab.com/api/v4/projects/5024297/packages/generic/pdftk-java/$PDFTK_VERSION/pdftk-all.jar" &&\
     chmod a+x /usr/bin/pdftk-all.jar &&\
-    echo '#!/bin/bash\n\nexec java -jar /usr/bin/pdftk-all.jar "$@"' > /usr/bin/pdftk && \
+    printf '#!/bin/bash\n\nexec java -jar /usr/bin/pdftk-all.jar "$@"' > /usr/bin/pdftk && \
     chmod +x /usr/bin/pdftk &&\
     apt-get update -qq &&\
     apt-get upgrade -yqq &&\

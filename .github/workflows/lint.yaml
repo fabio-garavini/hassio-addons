@@ -1,40 +1,104 @@
+---
 name: Lint
 
 on:
+  pull_request:
+    branches:
+      - main
+      - dev
   push:
     branches:
       - main
       - dev
-    paths:
-      - "**/config.yaml"
-      - "**/build.yaml"
+
+env:
+  HADOLINT_VERSION: v1.17.2
+  SHELLCHECK_OPTS: -e SC1008 -s bash
 
 jobs:
+  hadolint:
+    runs-on: ubuntu-latest
+    name: hadolint
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v5.0.0
+
+      - name: Run linter
+        id: changed_files
+        run: |
+          shopt -s globstar
+          for dockerfile in **/Dockerfile; do
+            echo "Linting: $dockerfile"
+            docker run --rm -i \
+              -v $(pwd)/.hadolint.yaml:/.hadolint.yaml:ro \
+              hadolint/hadolint:latest < "$dockerfile"
+          done
+
+  yamllint:
+    runs-on: ubuntu-latest
+    name: YAMLLint
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v5
+
+      - name: Run YAMLLint
+        uses: frenck/action-yamllint@v1.5
+        with:
+          config: ".github/yamllint.yaml"
+
   find:
     name: Find add-ons
     runs-on: ubuntu-latest
     outputs:
-      addons: ${{ steps.addons.outputs.addons_list }}
+      addons: ${{ steps.changed_addons.outputs.addons }}
+      changed: ${{ steps.changed_addons.outputs.changed }}
     steps:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v5
+
+      - name: 📄 Get changed files
+        id: changed_files
+        uses: masesgroup/retrieve-changed-files@v3
 
       - name: 🔍 Find add-ons
         id: addons
         uses: home-assistant/actions/helpers/find-addons@master
 
+      - name: Get changed add-ons
+        id: changed_addons
+        run: |
+          declare -a changed_addons
+          for addon in ${{ steps.addons.outputs.addons }}; do
+            if [[ "${{ steps.changed_files.outputs.all }}" =~ $addon ]]; then
+              if [[ ! "${changed_addons[@]}" =~ $addon ]]; then
+                changed_addons+=("\"${addon}\",");
+              fi
+            fi
+          done
+
+          changed=$(echo ${changed_addons[@]} | rev | cut -c 2- | rev)
+
+          if [[ -n ${changed} ]]; then
+            echo "Changed add-ons: $changed";
+            echo "changed=true" >> $GITHUB_OUTPUT;
+            echo "addons=[$changed]" >> $GITHUB_OUTPUT;
+          else
+            echo "No add-on had any monitored files changed";
+          fi
+
   lint:
     name: Lint add-on ${{ matrix.path }}
     runs-on: ubuntu-latest
     needs: find
+    if: needs.find.outputs.changed == 'true'
     strategy:
       matrix:
         path: ${{ fromJson(needs.find.outputs.addons) }}
     steps:
       - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v4.3.0
+        uses: actions/checkout@v5
 
       - name: 🚀 Run Home Assistant Add-on Lint
-        uses: frenck/action-addon-linter@v2.18
+        uses: frenck/action-addon-linter@v2
         with:
-          path: "./${{ matrix.path }}"
+          path: ./${{ matrix.path }}

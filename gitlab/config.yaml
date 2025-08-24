@@ -1,3 +1,4 @@
+---
 name: Gitlab
 version: 17.10.1-ce.0-v0
 slug: gitlab
@@ -22,11 +23,11 @@ map:
     read_only: false
 backup: cold
 backup_exclude:
-  - "*/cache"
-  - "*/logs"
+  - '*/cache'
+  - '*/logs'
 ports:
   80/tcp: 8088
-  443/tcp: null
+  443/tcp:
   22/tcp: 2222
 ports_description:
   80/tcp: HTTP

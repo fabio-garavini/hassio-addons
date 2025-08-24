@@ -1,3 +1,4 @@
+---
 name: Prometheus
 version: v3.5.0-v0
 slug: prometheus
@@ -5,7 +6,6 @@ codenotary: info@fabiogaravini.dev
 description: Prometheus monitoring system
 url: https://prometheus.io
 startup: initialize
-backup: cold
 arch:
   - aarch64
   - armv7
@@ -20,7 +20,7 @@ map:
     read_only: true
     path: /etc/prometheus
 ports:
-  9090/tcp: null
+  9090/tcp:
 ports_description:
   9090/tcp: Metrics
 image: fabioogaravini/hassio-{arch}-prometheus

@@ -41,11 +41,10 @@ RUN busybox --install \
         echo '/bin/vi "$@"'; \
     } > /usr/local/bin/busybox-editor \
     && chmod +x /usr/local/bin/busybox-editor \
-    && update-alternatives --install /usr/bin/editor editor /usr/local/bin/busybox-editor 1
-
+    && update-alternatives --install /usr/bin/editor editor /usr/local/bin/busybox-editor 1; \
 # Remove MOTD
-RUN rm -rf /etc/update-motd.d /etc/motd /etc/motd.dynamic
-RUN ln -fs /dev/null /run/motd.dynamic
+    rm -rf /etc/update-motd.d /etc/motd /etc/motd.dynamic; \
+    ln -fs /dev/null /run/motd.dynamic
 
 # Legacy code to be removed on 17.0.  See: https://gitlab.com/gitlab-org/omnibus-gitlab/-/merge_requests/7035
 ENV GITLAB_ALLOW_SHA1_RSA=false
@@ -53,8 +52,8 @@ ENV GITLAB_ALLOW_SHA1_RSA=false
 ARG TARGETARCH
 
 RUN { \
-    echo 'RELEASE_PACKAGE=gitlab-ce'; \
-    echo 'RELEASE_VERSION=${GITLAB_VERSION}'; \
+    echo "RELEASE_PACKAGE=gitlab-ce"; \
+    echo "RELEASE_VERSION=${GITLAB_VERSION}"; \
 } > /RELEASE
 
 RUN \

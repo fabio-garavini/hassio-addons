@@ -1,5 +1,6 @@
+---
 name: Mealie
-version: "3.1.1-v0"
+version: 3.1.1-v0
 slug: mealie
 codenotary: info@fabiogaravini.dev
 description: a place for all your recipes
@@ -17,7 +18,7 @@ map:
   - type: ssl
 backup: cold
 backup_exclude:
-  - "**.log*"
+  - '**.log*'
 schema:
   PUID: int(0,)
   PGID: int(0,)
@@ -39,11 +40,11 @@ schema:
   SMTP_USER: str?
   SMTP_PASSWORD: password?
 options:
-  PUID: "0"
-  PGID: "0"
+  PUID: '0'
+  PGID: '0'
   TZ: Etc/UTC
-  DEFAULT_GROUP: "Home"
-  DEFAULT_HOUSEHOLD: "Family"
+  DEFAULT_GROUP: Home
+  DEFAULT_HOUSEHOLD: Family
   ALLOW_SIGNUP: false
 ports:
   9000/tcp: 9000

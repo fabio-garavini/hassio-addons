@@ -1,5 +1,6 @@
+---
 name: Karakeep
-version: "0.26.0-v0"
+version: 0.26.0-v0
 slug: karakeep
 codenotary: info@fabiogaravini.dev
 description: bookmark-everything app with a touch of AI for the data hoarders out there
@@ -16,7 +17,7 @@ map:
   - type: ssl
 backup: cold
 backup_exclude:
-  - "**/logs"
+  - '**/logs'
 schema:
   TZ: str?
   DISABLE_SIGNUPS: bool
@@ -47,7 +48,7 @@ schema:
 options:
   TZ: Etc/UTC
   DISABLE_SIGNUPS: false
-  NEXTAUTH_SECRET: "jnE2An0WyIKZvO+WgKJrn8WPW+c3DzV+c9ntBp8CdobTOmpJ"
+  NEXTAUTH_SECRET: jnE2An0WyIKZvO+WgKJrn8WPW+c3DzV+c9ntBp8CdobTOmpJ
   MAX_ASSET_SIZE_MB: 4
   CRAWLER_DOWNLOAD_BANNER_IMAGE: true
   CRAWLER_STORE_SCREENSHOT: false

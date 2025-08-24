@@ -1,3 +1,4 @@
+---
 name: Immich
 version: 1.138.1
 slug: immich
@@ -19,8 +20,8 @@ map:
   - type: ssl
 backup: cold
 backup_exclude:
-  - "**/machine-learning"
-  - "**/logs"
+  - '**/machine-learning'
+  - '**/logs'
 tmpfs: true
 video: true
 devices:
@@ -49,8 +50,8 @@ options:
   IMMICH_METRICS: false
 ports:
   8080/tcp: 8080
-  5432/tcp: null
-  6379/tcp: null
+  5432/tcp:
+  6379/tcp:
 ports_description:
   8080/tcp: Web UI
   5432/tcp: Postgresql DB

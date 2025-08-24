@@ -1,10 +1,11 @@
+---
 name: Frigate RKNN (Rockchip)
 version: 0.16.0-rk
-panel_icon: "mdi:cctv"
+panel_icon: mdi:cctv
 panel_title: Frigate
 slug: frigate_rk
 description: NVR with realtime local object detection for IP cameras
-url: "https://github.com/blakeblackshear/frigate"
+url: https://github.com/blakeblackshear/frigate
 image: ghcr.io/blakeblackshear/frigate
 init: false
 ingress: true
@@ -16,11 +17,11 @@ hassio_api: true
 ports:
   8555/tcp: 8555
   8555/udp: 8555
-  8554/tcp: null
-  8971/tcp: null
-  5000/tcp: null
-  1984/tcp: null
-  1935/tcp: null
+  8554/tcp:
+  8971/tcp:
+  5000/tcp:
+  1984/tcp:
+  1935/tcp:
 ports_description:
   8555/tcp: WebRTC over tcp
   8555/udp: WebRTC over udp
@@ -53,7 +54,7 @@ environment:
 schema:
   plus_api_key: password?
 services:
-  - "mqtt:want"
+  - mqtt:want
 arch:
   - aarch64
 map:
