@@ -1,5 +1,5 @@
 ARG BUILD_FROM=ghcr.io/hassio-addons/base:stable
-ARG BUILD_VERSION=0.29.2
+ARG BUILD_VERSION=0.29.3
 
 FROM $BUILD_FROM
 
