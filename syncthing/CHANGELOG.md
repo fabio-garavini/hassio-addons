@@ -1,5 +1,3 @@
-# v2.0.2
-
 ## Major changes in 2.0
 
 - Database backend switched from LevelDB to SQLite. There is a migration on
@@ -32,7 +30,7 @@
   effectively never helped. Instead, scanning and syncing is faster and more
   efficient without it.
 
-- A \"default folder\" is no longer created on first startup.
+- A "default folder" is no longer created on first startup.
 
 - Multiple connections are now used by default between v2 devices. The new
   default value is to use three connections: one for index metadata and two
@@ -57,13 +55,17 @@ This release is also available as:
 
 * APT repository: https://apt.syncthing.net/
 
-* Docker image: `docker.io/syncthing/syncthing:2.0.2` or `ghcr.io/syncthing/syncthing:2.0.2`
+* Docker image: `docker.io/syncthing/syncthing:2.0.3` or `ghcr.io/syncthing/syncthing:2.0.3`
   (`{docker,ghcr}.io/syncthing/syncthing:2` to follow just the major version)
 
 ## What's Changed
+### Fixes
+* fix(cmd): restore --version flag for compatibility by @acolomb in https://github.com/syncthing/syncthing/pull/10269
+* fix(cmd): make database migration more robust to write errors by @calmh in https://github.com/syncthing/syncthing/pull/10278
+* fix(cmd): provide temporary GUI/API server during database migration by @calmh in https://github.com/syncthing/syncthing/pull/10279
+* fix(db): clean files for dropped folders at startup by @calmh in https://github.com/syncthing/syncthing/pull/10280
 ### Other
-* build: remove netgo and osusergo build tags (fixes #10251) by @calmh in https://github.com/syncthing/syncthing/pull/10256
-* build: bump required language level to 1.24, compiler to 1.25 by @calmh in https://github.com/syncthing/syncthing/pull/10248
-* build: set netgo & osusergo tags for Linux build by @calmh in https://github.com/syncthing/syncthing/pull/10261
+* chore(slog): re-enable LOGGER_DISCARD (fixes #10262) by @rasa in https://github.com/syncthing/syncthing/pull/10267
+* build: downgrade gopsutil (fixes #10276) by @calmh in https://github.com/syncthing/syncthing/pull/10277
 
-**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.1...v2.0.2
+**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.2...v2.0.3
