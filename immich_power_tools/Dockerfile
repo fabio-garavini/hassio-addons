@@ -2,7 +2,7 @@ ARG BUILD_FROM=ghcr.io/hassio-addons/base:stable
 ARG BUILD_VERSION
 
 FROM node:18-alpine AS node
-FROM ghcr.io/varun-raj/immich-power-tools:${BUILD_VERSION%-v*} AS immich_power_tools
+FROM ghcr.io/varun-raj/immich-power-tools:${BUILD_VERSION%%+*} AS immich_power_tools
 
 FROM ${BUILD_FROM}
 
