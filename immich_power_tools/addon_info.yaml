@@ -1,7 +1,7 @@
 source:
   type: docker
   repo: ghcr.io/varun-raj/immich-power-tools
-  current_version: 0.17.0
+  current_version: 0.18.0
   version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
