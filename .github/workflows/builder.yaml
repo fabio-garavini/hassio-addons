@@ -1,10 +1,21 @@
 name: Builder
 
 env:
+  BUILD_ARGS: "--test"
   MONITORED_FILES: "apparmor.txt build.yaml config.yaml Dockerfile rootfs"
 
 on:
   workflow_call:
+  pull_request:
+    branches:
+      - main
+      - dev
+    paths:
+      - "**/config.yaml"
+      - "**/build.yaml"
+      - "**/Dockerfile"
+      - "**/apparmor.txt"
+      - "**/rootfs/**"
   push:
     branches:
       - main
@@ -103,8 +114,15 @@ jobs:
             echo "build_arch=false" >> $GITHUB_OUTPUT;
           fi
 
-      - name: Login to DockerHub
+      - name: Set build arguments
         if: steps.check.outputs.build_arch == 'true' && github.ref == 'refs/heads/main'
+        run: |
+          if [[ -z "${{ github.head_ref }}" ]] && [[ "${{ github.event_name }}" == "push" ]]; then
+              echo "BUILD_ARGS=--docker-hub-check" >> $GITHUB_ENV;
+          fi
+
+      - name: Login to DockerHub
+        if: steps.check.outputs.build_arch == 'true' && env.BUILD_ARGS == '--docker-hub-check'
         uses: docker/login-action@v3.5.0
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
@@ -112,13 +130,13 @@ jobs:
 
       - name: Build ${{ matrix.addon }} add-on
         if: steps.check.outputs.build_arch == 'true'
-        uses: home-assistant/builder@2024.08.2
+        uses: home-assistant/builder@2025.03.0
         with:
           args: |
+            ${{ env.BUILD_ARGS }} \
             --${{ matrix.arch }} \
             --target /data/${{ matrix.addon }} \
             --image "${{ steps.check.outputs.image }}" \
             --docker-hub "${{ vars.DOCKERHUB_USERNAME }}" \
             --addon \
-            --cosign \
-            ${{ github.ref != 'refs/heads/main' && '--test' || '' }}
+            --cosign
