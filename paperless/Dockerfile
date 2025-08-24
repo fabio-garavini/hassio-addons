@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/paperless-ngx/paperless-ngx:2.18.1
+ARG BUILD_FROM=ghcr.io/paperless-ngx/paperless-ngx:2.18.2
 
 ARG TIKA_VERSION=3.2.2
 
