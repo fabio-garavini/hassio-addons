@@ -1,7 +1,7 @@
 source:
   type: github-releases
   repo: linuxserver/docker-syncthing
-  current_version: v2.0.2-ls191
+  current_version: v2.0.3-ls193
   version_template: regex:^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)-ls(?<build>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
@@ -9,7 +9,7 @@ config:
   image: fabioogaravini/hassio-{arch}-syncthing
 build:
   image: ghcr.io/linuxserver/syncthing
-  version_template: "v{{major}}.{{minor}}.{{patch}}-ls{{build}}"
+  version_template: v{{major}}.{{minor}}.{{patch}}-ls{{build}}
   codenotary: info@fabiogaravini.dev
 changelog:
   source: github-releases
