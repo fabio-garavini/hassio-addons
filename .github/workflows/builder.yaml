@@ -31,15 +31,13 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v4
 
-      - name: Get changed files
+      - name: 📄 Get changed files
         id: changed_files
         uses: masesgroup/retrieve-changed-files@v3
 
       - name: 🔍 Find add-ons
         id: addons
-        run: |
-          addons=$(find . -name config.yaml -printf '%h\n' | cut -d/ -f2 | sort -u | jq -R -s -c 'split("\n")[:-1]')
-          echo "addons=$addons" >> "$GITHUB_OUTPUT"
+        uses: home-assistant/actions/helpers/find-addons@master
 
       - name: Get changed add-ons
         id: changed_addons
