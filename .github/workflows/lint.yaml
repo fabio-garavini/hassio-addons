@@ -30,7 +30,7 @@ jobs:
           for dockerfile in **/Dockerfile; do
             echo "Linting: $dockerfile"
             docker run --rm -i \
-              -v $(pwd)/.hadolint.yaml:/.hadolint.yaml:ro \
+              -v $(pwd)/.github/hadolint.yaml:/.hadolint.yaml:ro \
               hadolint/hadolint:latest < "$dockerfile"
           done
 
