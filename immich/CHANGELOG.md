@@ -1,18 +1,14 @@
-# v1.139.3
+# v1.139.4
 
 ## What's Changed
 ### 🐛 Bug fixes
-* fix(web): add to multiple albums translation doesn't have plural formatting by @DevServs in https://github.com/immich-app/immich/pull/21087
-* fix: shared album asset count query by @alextran1502 in https://github.com/immich-app/immich/pull/21157
-* fix: parse correct metadata to userDto for SQlite store implmentation by @alextran1502 in https://github.com/immich-app/immich/pull/21154
-* fix: sync flow block oAuth login page navigation by @alextran1502 in https://github.com/immich-app/immich/pull/21187
-* fix: local offset hours by @jrasm91 in https://github.com/immich-app/immich/pull/21147
-* fix: prefer local video if available by @shenlong-tanwen in https://github.com/immich-app/immich/pull/21119
-### 📚 Documentation
-* docs: update oauth.md - Authentik link leads to Page Not Found error by @pojlFDlxCOvZ4Kg8y1l4 in https://github.com/immich-app/immich/pull/21186
+* fix: cannot load thumbnail from unknown content length by @alextran1502 in https://github.com/immich-app/immich/pull/21192
+* fix: border around dark theme button on onboarding page by @NicholasFlamy in https://github.com/immich-app/immich/pull/20846
+* fix(web): handle edge cases in timeToSeconds function to prevent crashes by @baldarn in https://github.com/immich-app/immich/pull/21019
+* fix: use composite cache key in user circle avatar by @shenlong-tanwen in https://github.com/immich-app/immich/pull/21220
+* fix: wait for watched files to finish being written (#17100) by @TapuCosmo in https://github.com/immich-app/immich/pull/21180
 
 ## New Contributors
-* @DevServs made their first contribution in https://github.com/immich-app/immich/pull/21087
-* @pojlFDlxCOvZ4Kg8y1l4 made their first contribution in https://github.com/immich-app/immich/pull/21186
+* @baldarn made their first contribution in https://github.com/immich-app/immich/pull/21019
 
-**Full Changelog**: https://github.com/immich-app/immich/compare/v1.139.2...
+**Full Changelog**: https://github.com/immich-app/immich/compare/v1.139.3...
