@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/imagegenius/immich:v1.139.3-ig415
+ARG BUILD_FROM=ghcr.io/imagegenius/immich:v1.139.4-ig416
 
 FROM ${BUILD_FROM}
 
