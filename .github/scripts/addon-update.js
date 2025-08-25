@@ -5,6 +5,7 @@ execSync("npm install yaml");
 
 const fs = require('fs');
 const yaml = require('yaml');
+var https = require('https');
 
 const args = process.argv.slice(2);
 const addonSlug = args[0];
@@ -40,14 +41,48 @@ config.version = configVersion;
 if(info.config?.image != null) config.image = info.config.image;
 
 if(info.changelog?.enabled??true) {
+  const changelogFile = `${addonSlug}/CHANGELOG.md`;
+  let changelog = fs.readFileSync(changelogFile, 'utf8');
+
   const changelogVersion = normalizeString(match, info.changelog.version_template);
+
+  changelog = `# ${changelogVersion}`;
+
   switch (info.changelog?.source??info.source?.type??'none') {
     case 'github-releases': {
-      execSync(`curl "https://api.github.com/repos/${info.changelog?.repo??info.source?.repo}/releases/tags/${info.changelog?.source != null ? changelogVersion : currentVersion}" | jq -r .body > ${addonSlug}/CHANGELOG.md`);
+      https.get(
+        `https://api.github.com/repos/${info.changelog?.repo??info.source?.repo}/releases/tags/${info.changelog?.source != null ? changelogVersion : currentVersion}`,
+        {
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.RENOVATE_TOKEN}`
+          }
+        },
+        (res) => {
+          if(res.statusCode !== 200) {
+            console.error(`Changelog fetch error: ${res.statusCode}`);
+            return;
+          }
+          res.setEncoding('utf8');
+          let rawData = '';
+          res.on('data', (chunk) => { rawData += chunk; });
+          res.on('end', () => {
+            try {
+              const parsedData = JSON.parse(rawData);
+              console.log(parsedData.body);
+              changelog = parsedData.body;
+            } catch (e) {
+              console.error(e.message);
+            }
+            fs.writeFileSync(changelogFile, changelog, 'utf8');
+          });
+        }
+      );
       break;
     }
     default: {
-      execSync(`echo "# ${changelogVersion}" > ${addonSlug}/CHANGELOG.md`);
+      fs.writeFileSync(changelogFile, changelog, 'utf8');
       break;
     }
   }

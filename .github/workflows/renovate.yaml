@@ -21,3 +21,4 @@ jobs:
         env:
           RENOVATE_REPOSITORIES: ${{ github.repository }}
           RENOVATE_ALLOWED_COMMANDS: .*
+          LOG_LEVEL: ${{ (secrets.ACTIONS_STEP_DEBUG == 'true') && 'debug' || 'info' }}
