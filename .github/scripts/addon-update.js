@@ -31,7 +31,7 @@ let configVersion = normalizeString(match, configVersionTemplate);
 
 if (config.version.replace(/(-v|\+).*$/, '') == configVersion && fs.existsSync(`${addonSlug}/Dockerfile`)) {
   info.config.patch += 1;
-  configVersion += `+${info.config.patch}`;
+  configVersion += `-v${info.config.patch}`;
 } else {
   info.config.patch = 0;
 }
