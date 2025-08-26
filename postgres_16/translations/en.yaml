@@ -1,0 +1,19 @@
+---
+configuration:
+  POSTGRES_DB:
+    name: database
+    description: default database name
+  POSTGRES_HOST_AUTH_METHOD:
+    name: host auth method
+  POSTGRES_USER:
+    name: user
+    description: create the specified user with superuser power
+  POSTGRES_PASSWORD:
+    name: password
+    description: set the superuser password
+  POSTGRES_INITDB_ARGS:
+    name: initdb args
+    description: This optional environment variable can be used to send arguments to postgres initdb. The value is a space separated string of arguments as postgres initdb would expect them
+  DB_STORAGE_TYPE:
+    name: storage type
+    description: Type of storage HA is running on
