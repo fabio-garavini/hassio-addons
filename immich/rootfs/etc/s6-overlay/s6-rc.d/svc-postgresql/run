@@ -23,4 +23,4 @@ esac
 chown postgres:postgres -R "/config/logs/postgres"
 chmod 750 -R "/config/logs/postgres"
 
-exec postgres-entrypoint.sh postgres -c timezone="$TZ" -c log_directory="/config/logs/postgres" -c log_timezone="$TZ" -c log_rotation_size=10MB -c config_file="/etc/postgresql/postgresql.conf"
+s6-notifyoncheck -s 10000 -n 300 -w 1000 -c "pg_isready -U $POSTGRES_USER" postgres-entrypoint.sh postgres -c timezone="$TZ" -c log_directory="/config/logs/postgres" -c log_timezone="$TZ" -c log_rotation_size=10MB -c config_file="/etc/postgresql/postgresql.conf"
