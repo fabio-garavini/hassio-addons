@@ -1,6 +1,5 @@
----
 name: Nextcloud
-version: 31.0.8-v0
+version: 31.0.8
 slug: nextcloud
 codenotary: info@fabiogaravini.dev
 description: Nextcloud all-in-one
@@ -22,7 +21,7 @@ map:
   - type: ssl
 backup: cold
 backup_exclude:
-  - '**/log'
+  - "**/log"
 tmpfs: true
 video: true
 devices:
@@ -51,10 +50,10 @@ options:
   PUID: 1000
   PGID: 1000
 ports:
-  80/tcp:
+  80/tcp: null
   443/tcp: 8443
-  6379/tcp:
-  3306/tcp:
+  6379/tcp: null
+  3306/tcp: null
 ports_description:
   80/tcp: HTTP
   443/tcp: HTTPS
