@@ -1,6 +1,5 @@
----
 name: n8n
-version: 1.107.4
+version: 1.108.2
 slug: n8n
 codenotary: info@fabiogaravini.dev
 description: Flexible AI workflow automation
@@ -21,7 +20,7 @@ map:
   - type: ssl
 backup: cold
 backup_exclude:
-  - '**/logs'
+  - "**/logs"
 schema:
   tunnel: bool
   TZ: str?

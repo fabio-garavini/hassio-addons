@@ -1,5 +1,5 @@
 ARG BUILD_FROM=ghcr.io/hassio-addons/base:stable
-ARG BUILD_VERSION=1.107.4
+ARG BUILD_VERSION=1.108.2
 
 FROM docker.n8n.io/n8nio/n8n:${BUILD_VERSION%-v*} AS n8n_source
 
