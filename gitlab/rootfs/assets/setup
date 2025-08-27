@@ -5,27 +5,20 @@ set -e
 source /etc/lsb-release
 source /RELEASE
 
-# Remove sensitive content from RELEASE file. We can't remove the file because
-# we are using it in assets/wrapper.
-
-unset DOWNLOAD_URL_amd64
-unset DOWNLOAD_URL_arm64
-unset DOWNLOAD_URL
-
 # Create sshd daemon
-mkdir -p /opt/gitlab/sv/sshd/supervise /opt/gitlab/sv/sshd/log/supervise
+mkdir -p /opt/gitlab/sv/sshd/supervise /opt/gitlab/sv/sshd/log/supervise /opt/gitlab/etc/sshd/env
 mkfifo /opt/gitlab/sv/sshd/supervise/ok /opt/gitlab/sv/sshd/log/supervise/ok
-printf "#!/bin/sh\nexec 2>&1\numask 077\nexec /usr/sbin/sshd -D -f /assets/sshd_config -e" > /opt/gitlab/sv/sshd/run
+printf "#!/bin/sh\nexec 2>&1\numask 077\nexec chpst -P -u root:root -U root:root -e /opt/gitlab/etc/sshd/env /usr/sbin/sshd -D -f /assets/sshd_config -e" > /opt/gitlab/sv/sshd/run
 printf "#!/bin/sh\nexec svlogd -tt /var/log/gitlab/sshd" > /opt/gitlab/sv/sshd/log/run
 chmod a+x /opt/gitlab/sv/sshd/run /opt/gitlab/sv/sshd/log/run
 
 # Remove current gitlab.rb file
-rm -f /var/opt/gitlab/gitlab.rb
+rm -f /etc/gitlab/gitlab.rb
 
 # Patch omnibus package
 sed -i "s/external_url 'GENERATED_EXTERNAL_URL'/# external_url 'GENERATED_EXTERNAL_URL'/" /opt/gitlab/etc/gitlab.rb.template
-sed -i "s/\/var\/opt\/gitlab\/gitlab.rb/\/assets\/gitlab.rb/" /opt/gitlab/embedded/cookbooks/gitlab/recipes/show_config.rb
-sed -i "s/\/var\/opt\/gitlab\/gitlab.rb/\/assets\/gitlab.rb/" /opt/gitlab/embedded/cookbooks/gitlab/recipes/config.rb
+sed -i "s#/etc/gitlab/gitlab.rb#/assets/gitlab.rb#g" /opt/gitlab/embedded/cookbooks/gitlab/recipes/show_config.rb
+sed -i "s#/etc/gitlab/gitlab.rb#/assets/gitlab.rb#g" /opt/gitlab/embedded/cookbooks/gitlab/recipes/config.rb
 
 # Set install type to docker
 echo 'gitlab-docker' > /opt/gitlab/embedded/service/gitlab-rails/INSTALLATION_TYPE

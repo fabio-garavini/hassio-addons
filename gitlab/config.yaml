@@ -1,6 +1,6 @@
 ---
 name: Gitlab
-version: 17.10.1-ce.0-v0
+version: 17.11.7-ce.0
 slug: gitlab
 codenotary: info@fabiogaravini.dev
 description: Gitlab Comunity Edition
@@ -8,6 +8,8 @@ url: https://gitlab.com/rluna-gitlab/gitlab-ce
 webui: http://[HOST]:[PORT:80]
 panel_icon: mdi:gitlab
 panel_admin: false
+hassio_api: true
+homeassistant_api: true
 arch:
   - aarch64
   - amd64
