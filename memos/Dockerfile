@@ -1,7 +1,7 @@
 ARG BUILD_FROM=ghcr.io/hassio-addons/base:stable
 ARG BUILD_VERSION=0.25.0
 
-FROM ghcr.io/neosmemo/memos:${BUILD_VERSION%%+*} AS memos
+FROM ghcr.io/neosmemo/memos:${BUILD_VERSION%-v*} AS memos
 
 FROM ${BUILD_FROM}
 

@@ -16,40 +16,9 @@
             "problemMatcher": []
         },
         {
-            "label": "Start Addon",
-            "type": "shell",
-            "command": "ha addons stop \"local_${input:addonName}\"; ha addons start \"local_${input:addonName}\"; docker logs --follow \"addon_local_${input:addonName}\"",
-            "group": {
-                "kind": "test",
-                "isDefault": false
-            },
-            "presentation": {
-                "reveal": "always",
-                "panel": "new"
-            },
-            "problemMatcher": [],
-            "runOptions": {
-                "reevaluateOnRerun": false
-            }
-        },
-        {
-            "label": "Rebuild and Start Addon",
-            "type": "shell",
-            "command": "ha addons rebuild \"local_${input:addonName}\"; ha addons start \"local_${input:addonName}\"; docker logs --follow \"addon_local_${input:addonName}\"",
-            "group": {
-                "kind": "test",
-                "isDefault": false
-            },
-            "presentation": {
-                "reveal": "always",
-                "panel": "new"
-            },
-            "problemMatcher": []
-        },
-        {
             "label": "Hassio Addon: build amd64 image",
             "type": "shell",
-            "command": "docker run --rm -it --name addon_amd64_builder --privileged -v ./${input:addonName}:/data -v /var/run/docker.sock:/var/run/docker.sock:ro ghcr.io/home-assistant/amd64-builder -t /data --amd64 --test -d local",
+            "command": "docker run --rm -it --privileged -v ./${input:addonName}:/data -v /var/run/docker.sock:/var/run/docker.sock:ro ghcr.io/home-assistant/amd64-builder -t /data --amd64 --test",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -59,14 +28,14 @@
         {
             "label": "Hassio Addon: build arm64 image",
             "type": "shell",
-            "command": "docker run --rm -it --name addon_amd64_builder --privileged -v ./${input:addonName}:/data -v /var/run/docker.sock:/var/run/docker.sock:ro ghcr.io/home-assistant/amd64-builder -t /data --arm64 --test -d local",
+            "command": "docker run --rm -it --privileged -v ./${input:addonName}:/data -v /var/run/docker.sock:/var/run/docker.sock:ro ghcr.io/home-assistant/amd64-builder -t /data --arm64 --test",
             "group": "build",
             "problemMatcher": []
         },
         {
             "label": "Hassio Addon: build multi-arch image",
             "type": "shell",
-            "command": "docker run --rm -it --name addon_amd64_builder --privileged -v ./${input:addonName}:/data -v /var/run/docker.sock:/var/run/docker.sock:ro ghcr.io/home-assistant/amd64-builder -t /data --all --test -d local",
+            "command": "docker run --rm -it --privileged -v ./${input:addonName}:/data -v /var/run/docker.sock:/var/run/docker.sock:ro ghcr.io/home-assistant/amd64-builder -t /data --all --test",
             "group": "build",
             "problemMatcher": []
         }

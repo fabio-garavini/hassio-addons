@@ -29,10 +29,15 @@ package['detect_init'] = false
 # Explicitly disable attempt to update kernel parameters
 package['modify_kernel_parameters'] = false
 
+gitlab_rails['initial_root_password'] = "change_this_insecure_password"
+gitlab_rails['store_initial_root_password'] = true
+
+gitlab_rails['trusted_proxies'] = ['192.168.0.0/16', '172.30.32.0/23', '127.0.0.1']
+
 # Load custom config from environment variable: GITLAB_OMNIBUS_CONFIG
 # Disabling the cop since rubocop considers using eval to be security risk but
 # we don't have an easy way out, atleast yet.
 eval ENV["GITLAB_OMNIBUS_CONFIG"].to_s # rubocop:disable Security/Eval
 
 # Load configuration stored in /var/opt/gitlab/gitlab.rb
-from_file("/var/opt/gitlab/gitlab.rb")
+from_file("/var/opt/gitlab/gitlab.rb") if File.exist?('/var/opt/gitlab/gitlab.rb')

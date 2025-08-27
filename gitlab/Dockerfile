@@ -1,17 +1,13 @@
-ARG BUILD_FROM
+ARG BUILD_FROM=ghcr.io/hassio-addons/ubuntu-base:stable
 
 FROM $BUILD_FROM
-
-ARG GITLAB_VERSION=17.10.1-ce.0
-ARG BUILD_ARCH
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ENV LANG=C.UTF-8 \
     TERM="xterm-256color"
 
-# Copy assets
-COPY rootfs/ /
+COPY rootfs/etc/locale.gen /etc/locale.gen
 
 RUN apt-get update -q \
     && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
@@ -21,12 +17,9 @@ RUN apt-get update -q \
       openssh-server \
       tzdata \
       wget \
-      curl \
-      gnupg \
       perl \
-      libperl5.34 \
+      libperl5.38 \
       libatomic1 \
-      postfix \
     && locale-gen \
     && cp -a /usr/lib/locale/locale-archive /tmp/locale-archive \
     && DEBIAN_FRONTEND=noninteractive apt-get purge -yq locales \
@@ -51,47 +44,51 @@ ENV GITLAB_ALLOW_SHA1_RSA=false
 
 ARG TARGETARCH
 
+ARG BUILD_VERSION
+ARG GITLAB_VERSION=${BUILD_VERSION%-v*}
+ARG BUILD_ARCH
+
 RUN { \
     echo "RELEASE_PACKAGE=gitlab-ce"; \
     echo "RELEASE_VERSION=${GITLAB_VERSION}"; \
 } > /RELEASE
 
-RUN \
+RUN set -eux \
+    export GITLAB_ROOT_PASSWORD=qo98w7eoyq987y0o98q7y498q7y498; \
     if [[ "${BUILD_ARCH}" == "aarch64" ]]; then \
         export DOWNLOAD_ARCH="arm64"; \
     else \
         export DOWNLOAD_ARCH=${BUILD_ARCH}; \
     fi; \
-    wget --quiet "https://packages.gitlab.com/gitlab/gitlab-ce/packages/ubuntu/jammy/gitlab-ce_${GITLAB_VERSION}_${DOWNLOAD_ARCH}.deb/download.deb" -O /tmp/gitlab.deb; \
+    wget --quiet "https://packages.gitlab.com/gitlab/gitlab-ce/packages/ubuntu/noble/gitlab-ce_${GITLAB_VERSION}_${DOWNLOAD_ARCH}.deb/download.deb" -O /tmp/gitlab.deb; \
     dpkg -i /tmp/gitlab.deb; \
     rm -rf /tmp/gitlab.deb /var/lib/apt/lists/*
 
-# as gitlab-ci checks out with mode 666 we need to set permissions of the files we copied into the
-# container to a secure value. Issue #5956
-RUN chmod -R og-w /assets RELEASE && chmod +x -R /assets \
-    && /assets/setup
+# Copy assets
+COPY rootfs/ /
 
-# Allow to access embedded tools
+RUN chmod -R og-w /assets RELEASE; \
+    chmod +x -R /assets; \
+    /assets/setup
+
 ENV PATH=/opt/gitlab/embedded/bin:/opt/gitlab/bin:/assets:$PATH
 
 # Expose web & ssh
 EXPOSE 443 80 22
 
 # Define data volumes
-VOLUME ["/etc/gitlab", "/var/opt/gitlab", "/var/log/gitlab"]
+VOLUME ["/etc/gitlab", "/var/opt/gitlab"]
 
-# Wrapper to handle signal, trigger runit and reconfigure GitLab
-CMD ["/assets/wrapper"]
+CMD ["/assets/init-container"]
 
 HEALTHCHECK --interval=60s --timeout=30s --retries=5 \
 CMD /opt/gitlab/bin/gitlab-healthcheck --fail --max-time 10
 
-ARG BUILD_VERSION
-ARG BUILD_DATE
-ARG BUILD_DESCRIPTION
-ARG BUILD_NAME
-ARG BUILD_REF
-ARG BUILD_REPOSITORY
+ARG BUILD_DATE \
+    BUILD_DESCRIPTION \
+    BUILD_NAME \
+    BUILD_REF \
+    BUILD_REPOSITORY
 
 LABEL \
     io.hass.name="${BUILD_NAME}" \

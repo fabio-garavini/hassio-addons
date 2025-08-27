@@ -47,15 +47,25 @@ function detect_unclean_start() {
 trap "sigterm_handler; exit" TERM
 
 source /RELEASE
-echo "Thank you for using GitLab Docker Image!"
 echo "Current version: $RELEASE_PACKAGE=$RELEASE_VERSION"
 echo ""
-if [[ "$PACKAGECLOUD_REPO" == "unstable" ]]; then
-	echo "You are using UNSTABLE version of $RELEASE_PACKAGE!"
-	echo ""
+echo "Configure GitLab for your system by editing /config/gitlab.rb file"
+echo "And restart this addon to reload settings."
+echo
+sleep 3s
+
+set +e
+
+update-permissions
+
+#! Remove it in next release
+if [[ ! -e /var/opt/gitlab/gitlab.rb.bkp ]]; then
+  mv /var/opt/gitlab/gitlab.rb /var/opt/gitlab/gitlab.rb.bkp
+	cp /opt/gitlab/etc/gitlab.rb.template /var/opt/gitlab/gitlab.rb
+	chmod 0600 /var/opt/gitlab/gitlab.rb
 fi
 
-/assets/update-permissions
+set -e
 
 # Run unclean start detection & cleanup
 detect_unclean_start
@@ -65,6 +75,10 @@ detect_unclean_start
 # through the proper deprecation process.
 if [ "${GITLAB_ALLOW_SHA1_RSA}" == 'true' ]; then
   printf '\n# Enabled/Disabled via GITLAB_ALLOW_SHA1_RSA=[true/false]\nHostKeyAlgorithms +ssh-rsa\nPubkeyAcceptedKeyTypes +ssh-rsa' >> /assets/sshd_config
+fi
+
+if [[ -n "${OPENSSL_FORCE_FIPS_MODE}" ]]; then
+  echo "${OPENSSL_FORCE_FIPS_MODE}" > /opt/gitlab/etc/sshd/env/OPENSSL_FORCE_FIPS_MODE
 fi
 
 # Check if this is a valid upgrade path
@@ -79,7 +93,7 @@ fi
 # Copy gitlab.rb for the first time
 if [[ ! -e /var/opt/gitlab/gitlab.rb ]]; then
 	echo "Installing gitlab.rb config..."
-	cp /defaults/gitlab.rb.template /var/opt/gitlab/gitlab.rb
+	cp /opt/gitlab/etc/gitlab.rb.template /var/opt/gitlab/gitlab.rb
 	chmod 0600 /var/opt/gitlab/gitlab.rb
 fi
 

@@ -29,7 +29,7 @@ if (!match) {
 const configVersionTemplate = info.config.version_template;
 let configVersion = normalizeString(match, configVersionTemplate);
 
-if (config.version.replace(/(-v|\+).*$/, '') == configVersion && fs.existsSync(`${addonSlug}/Dockerfile`)) {
+if (config.version.replace(/-v\\d+$/, '') == configVersion && fs.existsSync(`${addonSlug}/Dockerfile`)) {
   info.config.patch += 1;
   configVersion += `-v${info.config.patch}`;
 } else {

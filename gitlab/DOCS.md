@@ -4,15 +4,15 @@
 
 ## Installation
 
-The installation of this add-on is pretty straightforward and not different in
-comparison to installing any other Home Assistant add-on.
-
 1. Click the "Install" button to install the add-on.
 1. Start the add-on.
-1. Click the "OPEN WEB UI" button and follow the setup instructions.
+1. Click the "Open web UI" button.
+1. Log-in with default admin credentials
+  - user: `root`
+  - password: `changeme`
 1. Ready to go!
 
 ## Advanced Configuration
 
 For any configuration follow the [official documentation](https://docs.gitlab.com/ee/install/next_steps.html)
-You can set all your configs inside the `gitlab.rb` file which you can find under the `addon_configs` folder of Gitlab
+You can set all your configs inside the `gitlab.rb` file which you can find under the `addon_configs` folder of your Gitlab addon
