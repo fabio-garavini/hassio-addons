@@ -49,4 +49,4 @@ ports:
   9000/tcp: 9000
 ports_description:
   9000/tcp: Web UI
-image: fabioogaravini/hassio-{arch}-mealie
+image: fabioogaravini/hassio-mealie

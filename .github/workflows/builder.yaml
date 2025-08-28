@@ -2,7 +2,6 @@
 name: Builder
 
 env:
-  BUILD_ARGS: --test
   MONITORED_FILES: apparmor.txt build.yaml config.yaml Dockerfile rootfs
 
 on:
@@ -35,12 +34,12 @@ defaults:
 jobs:
   init:
     runs-on: ubuntu-latest
-    name: Initialize builds
+    name: ℹ️ Gather add-ons information
     outputs:
       changed_addons: ${{ steps.changed_addons.outputs.addons }}
       changed: ${{ steps.changed_addons.outputs.changed }}
     steps:
-      - name: Check out the repository
+      - name: ⤵️ Check out the repository
         uses: actions/checkout@v5
 
       - name: 📄 Get changed files
@@ -51,7 +50,7 @@ jobs:
         id: addons
         uses: home-assistant/actions/helpers/find-addons@master
 
-      - name: Get changed add-ons
+      - name: ✏️ Get changed add-ons
         id: changed_addons
         run: |
           declare -a changed_addons
@@ -77,9 +76,9 @@ jobs:
             echo "No add-on had any monitored files changed (${{ env.MONITORED_FILES }})";
           fi
 
-  build:
-    name: Build ${{ matrix.arch }} ${{ matrix.addon }} add-on
-    runs-on: ubuntu-latest
+  deploy:
+    name: 👷 Build ${{ matrix.addon }} ${{ matrix.arch }}
+    runs-on:  ${{ contains(fromJson('["armhf", "armv7", "aarch64"]'), matrix.arch) && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
     needs: init
     if: needs.init.outputs.changed == 'true'
     strategy:
@@ -92,16 +91,16 @@ jobs:
       id-token: write
 
     steps:
-      - name: Check out repository
+      - name: ⤵️ Check out repository
         uses: actions/checkout@v4
 
-      - name: Get information
+      - name: 🚀 Get add-on information
         id: info
-        uses: home-assistant/actions/helpers/info@master
+        uses: frenck/action-addon-information@v1.4.2
         with:
-          path: ./${{ matrix.addon }}
+          path: "./${{ matrix.addon }}"
 
-      - name: Check add-on arch
+      - name: 🔍 Check add-on arch
         id: check
         run: |
           if [[ "${{ steps.info.outputs.image }}" == "null" ]]; then
@@ -109,35 +108,156 @@ jobs:
             echo "build_arch=false" >> $GITHUB_OUTPUT;
           elif [[ "${{ steps.info.outputs.architectures }}" =~ ${{ matrix.arch }} ]]; then
             echo "build_arch=true" >> $GITHUB_OUTPUT;
-            echo "image=$(echo ${{ steps.info.outputs.image }} | cut -d'/' -f2)" >> $GITHUB_OUTPUT;
           else
             echo "${{ matrix.arch }} is not a valid arch for ${{ matrix.addon }}, skipping build";
             echo "build_arch=false" >> $GITHUB_OUTPUT;
           fi
 
-      - name: Set build arguments
-        if: steps.check.outputs.build_arch == 'true' && github.ref == 'refs/heads/main'
+      - name: 🏗 Set up build cache
+        if: steps.check.outputs.build_arch == 'true'
+        id: cache
+        uses: actions/cache@v4.2.4
+        with:
+          path: /tmp/.docker-cache
+          key: docker-${{ matrix.addon }}-${{ matrix.arch }}-${{ github.sha }}
+          restore-keys: |
+            docker-${{ matrix.addon }}-${{ matrix.arch }}
+
+      - name: 🏗 Set up QEMU
+        if: steps.check.outputs.build_arch == 'true'
+        uses: docker/setup-qemu-action@v3.6.0
+
+      - name: 🏗 Set up Docker Buildx
+        if: steps.check.outputs.build_arch == 'true'
+        uses: docker/setup-buildx-action@v3.11.1
+
+      - name: ℹ️ Compose build flags
+        if: steps.check.outputs.build_arch == 'true'
+        id: flags
         run: |
-          if [[ -z "${{ github.head_ref }}" ]] && [[ "${{ github.event_name }}" == "push" ]]; then
-              echo "BUILD_ARGS=--docker-hub-check" >> $GITHUB_ENV;
+          echo "date=$(date +"%Y-%m-%dT%H:%M:%SZ")" >> "$GITHUB_OUTPUT"
+          from=$(yq --no-colors eval ".build_from.${{ matrix.arch }}" "${{ steps.info.outputs.build }}")
+          echo "from=${from}" >> "$GITHUB_OUTPUT"
+
+          if [[ "${{ matrix.arch}}" = "amd64" ]]; then
+            echo "platform=linux/amd64" >> "$GITHUB_OUTPUT"
+          elif [[ "${{ matrix.arch }}" = "i386" ]]; then
+            echo "platform=linux/386" >> "$GITHUB_OUTPUT"
+          elif [[ "${{ matrix.arch }}" = "armhf" ]]; then
+            echo "platform=linux/arm/v6" >> "$GITHUB_OUTPUT"
+          elif [[ "${{ matrix.arch }}" = "armv7" ]]; then
+            echo "platform=linux/arm/v7" >> "$GITHUB_OUTPUT"
+          elif [[ "${{ matrix.arch }}" = "aarch64" ]]; then
+            echo "platform=linux/arm64/v8" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error ::Could not determine platform for architecture ${{ matrix.arch }}"
+            exit 1
           fi
 
-      - name: Login to DockerHub
-        if: steps.check.outputs.build_arch == 'true' && env.BUILD_ARGS == '--docker-hub-check'
+      - name: 🔑 Login to DockerHub
+        if: steps.check.outputs.build_arch == 'true' && github.ref == 'refs/heads/main'
         uses: docker/login-action@v3.5.0
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build ${{ matrix.addon }} add-on
+      - name: ⤵️ Download base image
+        if: steps.check.outputs.build_arch == 'true' && steps.flags.outputs.from != 'null'
+        run: docker pull "${{ steps.flags.outputs.from }}"
+
+      - name: 🚀 Build
         if: steps.check.outputs.build_arch == 'true'
-        uses: home-assistant/builder@2025.03.0
+        uses: docker/build-push-action@v6.18.0
         with:
-          args: |
-            ${{ env.BUILD_ARGS }} \
-            --${{ matrix.arch }} \
-            --target /data/${{ matrix.addon }} \
-            --image "${{ steps.check.outputs.image }}" \
-            --docker-hub "${{ vars.DOCKERHUB_USERNAME }}" \
-            --addon \
-            --cosign
+          load: true
+          # yamllint disable rule:line-length
+          tags: |
+            ${{ steps.info.outputs.image }}:latest
+            ${{ steps.info.outputs.image }}:${{ steps.info.outputs.version }}
+          # yamllint enable rule:line-length
+          context: ${{ steps.info.outputs.target }}
+          file: ${{ steps.info.outputs.target }}/Dockerfile
+          cache-from: |
+            type=local,src=/tmp/.docker-cache
+          cache-to: type=local,mode=max,dest=/tmp/.docker-cache-new
+          platforms: ${{ steps.flags.outputs.platform }}
+          build-args: |
+            BUILD_ARCH=${{ matrix.arch }}
+            BUILD_DATE=${{ steps.flags.outputs.date }}
+            BUILD_DESCRIPTION=${{ steps.info.outputs.description }}
+            BUILD_FROM=${{ steps.flags.outputs.from }}
+            BUILD_NAME=${{ steps.info.outputs.name }}
+            BUILD_REF=${{ github.sha }}
+            BUILD_REPOSITORY=${{ github.repository }}
+            BUILD_VERSION=${{ steps.info.outputs.version }}
+
+      - name: 🚚 Swap build cache
+        if: steps.check.outputs.build_arch == 'true'
+        run: |
+          rm -rf /tmp/.docker-cache
+          mv /tmp/.docker-cache-new /tmp/.docker-cache
+
+      - name: 🚀 Push
+        if: steps.check.outputs.build_arch == 'true' && github.ref == 'refs/heads/main'
+        # yamllint disable rule:line-length
+        run: |
+          docker push \
+            ${{ steps.info.outputs.image }}:latest-${{ matrix.arch }}
+          docker push \
+            ${{ steps.info.outputs.image }}:${{ steps.info.outputs.version }}-${{ matrix.arch }}
+
+  manifest:
+    name: 🚀 Deploy ${{ matrix.addon }} Multi Arch Manifest
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - init
+      - deploy
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        addon: ${{ fromJson(needs.init.outputs.changed_addons) }}
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v5
+
+      - name: 🚀 Run add-on information action
+        id: info
+        uses: frenck/action-addon-information@v1.4.2
+        with:
+          path: "./${{ matrix.addon }}"
+
+      - name: 🏗 Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3.11.1
+
+      - name: 🚀 Create manifest
+        shell: bash
+        # yamllint disable rule:line-length
+        run: |
+          declare -a images
+
+          for architecture in $(echo '${{ steps.info.outputs.architectures }}' | jq --raw-output '.[]'); do
+            images+=("${{ steps.info.outputs.image }}:${{ steps.info.outputs.version }}-${architecture}")
+          done
+
+          docker manifest create \
+             "${{ steps.info.outputs.image }}:latest" \
+             "${images[@]}"
+
+          docker manifest create \
+             "${{ steps.info.outputs.image }}:${{ steps.info.outputs.version }}" \
+             "${images[@]}"
+
+      - name: 🏗  Login to GitHub Container Registry
+        uses: docker/login-action@v3.5.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🚀 Push
+        # yamllint disable rule:line-length
+        run: |
+          docker manifest push \
+            "${{ steps.info.outputs.image }}:latest"
+          docker manifest push \
+            "${{ steps.info.outputs.image }}:${{ steps.info.outputs.version }}"
