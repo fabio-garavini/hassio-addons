@@ -172,7 +172,7 @@ jobs:
           load: true
           # yamllint disable rule:line-length
           tags: |
-            ${{ steps.info.outputs.image }}:latest
+            ${{ steps.info.outputs.image }}:latest-${{ matrix.arch }}
             ${{ steps.info.outputs.image }}:${{ steps.info.outputs.version }}
           # yamllint enable rule:line-length
           context: ${{ steps.info.outputs.target }}
