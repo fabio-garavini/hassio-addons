@@ -172,8 +172,8 @@ jobs:
           load: true
           # yamllint disable rule:line-length
           tags: |
-            ${{ steps.info.outputs.image }}:latest
-            ${{ steps.info.outputs.image }}:${{ steps.info.outputs.version }}
+            ${{ steps.info.outputs.image }}:latest-${{ matrix.arch }}
+            ${{ steps.info.outputs.image }}:${{ steps.info.outputs.version }}-${{ matrix.arch }}
           # yamllint enable rule:line-length
           context: ${{ steps.info.outputs.target }}
           file: ${{ steps.info.outputs.target }}/Dockerfile
