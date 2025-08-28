@@ -119,9 +119,7 @@ jobs:
         uses: actions/cache@v4.2.4
         with:
           path: /tmp/.docker-cache
-          key: docker-${{ matrix.addon }}-${{ matrix.arch }}-${{ github.sha }}
-          restore-keys: |
-            docker-${{ matrix.addon }}-${{ matrix.arch }}
+          key: docker-${{ matrix.addon }}-${{ matrix.arch }}
 
       - name: 🏗 Set up QEMU
         if: steps.check.outputs.build_arch == 'true'
