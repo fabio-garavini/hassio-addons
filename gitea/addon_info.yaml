@@ -7,7 +7,7 @@ source:
 config:
   version_template: '{{major}}.{{minor}}.{{patch}}'
   patch: 0
-  image: fabioogaravini/hassio-gitea
+  image: fabioogaravini/hassio-{arch}-gitea
 build:
   image: gitea/gitea
   version_template: '{{major}}.{{minor}}.{{patch}}'

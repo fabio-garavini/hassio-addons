@@ -7,7 +7,7 @@ source:
 config:
   version_template: '{{major}}.{{minor}}.{{patch}}'
   patch: 0
-  image: fabioogaravini/hassio-cloudflared
+  image: fabioogaravini/hassio-{arch}-cloudflared
 build:
   image: cloudflare/cloudflared
   version_template: '{{major}}.{{minor}}.{{patch}}'

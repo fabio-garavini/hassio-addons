@@ -43,4 +43,4 @@ ports:
 ports_description:
   3000/tcp: Web UI
   22/tcp: SSH
-image: fabioogaravini/hassio-gitea
+image: fabioogaravini/hassio-{arch}-gitea

@@ -7,7 +7,7 @@ source:
 config:
   version_template: '{{major}}.{{minor}}.{{patch}}'
   patch: 0
-  image: fabioogaravini/hassio-syncthing
+  image: fabioogaravini/hassio-{arch}-syncthing
 build:
   image: ghcr.io/linuxserver/syncthing
   version_template: v{{major}}.{{minor}}.{{patch}}-ls{{build}}

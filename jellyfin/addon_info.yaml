@@ -7,7 +7,7 @@ source:
 config:
   version_template: '{{major}}.{{minor}}.{{patch}}'
   patch: 0
-  image: fabioogaravini/hassio-jellyfin
+  image: fabioogaravini/hassio-{arch}-jellyfin
 build:
   image: jellyfin/jellyfin
   version_template: '{{major}}.{{minor}}.{{patch}}'

@@ -6,7 +6,7 @@ source:
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
   patch: 0
-  image: fabioogaravini/hassio-n8n
+  image: fabioogaravini/hassio-{arch}-n8n
 build:
   image: ghcr.io/hassio-addons/base
   version_template: stable

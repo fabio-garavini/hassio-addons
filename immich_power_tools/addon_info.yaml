@@ -7,7 +7,7 @@ source:
 config:
   version_template: '{{major}}.{{minor}}.{{patch}}'
   patch: 0
-  image: fabioogaravini/hassio-immich-power-tools
+  image: fabioogaravini/hassio-{arch}-immich-power-tools
 build:
   image: ghcr.io/hassio-addons/base
   version_template: stable

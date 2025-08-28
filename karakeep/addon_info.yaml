@@ -7,7 +7,7 @@ source:
 config:
   version_template: '{{major}}.{{minor}}.{{patch}}'
   patch: 0
-  image: fabioogaravini/hassio-karakeep
+  image: fabioogaravini/hassio-{arch}-karakeep
 build:
   image: ghcr.io/karakeep-app/karakeep
   version_template: '{{major}}.{{minor}}.{{patch}}'

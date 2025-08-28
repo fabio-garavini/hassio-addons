@@ -23,4 +23,4 @@ ports:
   9090/tcp:
 ports_description:
   9090/tcp: Metrics
-image: fabioogaravini/hassio-prometheus
+image: fabioogaravini/hassio-{arch}-prometheus

@@ -6,7 +6,7 @@ source:
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
   patch: 1
-  image: fabioogaravini/hassio-immich
+  image: fabioogaravini/hassio-{arch}-immich
 build:
   image: ghcr.io/imagegenius/immich
   version_template: v{{major}}.{{minor}}.{{patch}}-ig{{build}}

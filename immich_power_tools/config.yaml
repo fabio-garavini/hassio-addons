@@ -29,4 +29,4 @@ ports:
   80/tcp: 8088
 ports_description:
   80/tcp: Web UI
-image: fabioogaravini/hassio-immich-power-tools
+image: fabioogaravini/hassio-{arch}-immich-power-tools

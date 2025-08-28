@@ -35,4 +35,4 @@ ports_description:
   80/tcp: HTTP
   443/tcp: HTTPS
   22/tcp: SSH
-image: fabioogaravini/hassio-gitlab
+image: fabioogaravini/hassio-{arch}-gitlab

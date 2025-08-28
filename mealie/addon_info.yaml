@@ -6,7 +6,7 @@ source:
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
   patch: 0
-  image: fabioogaravini/hassio-mealie
+  image: fabioogaravini/hassio-{arch}-mealie
 build:
   image: ghcr.io/mealie-recipes/mealie
   version_template: v{{major}}.{{minor}}.{{patch}}
