@@ -11,4 +11,4 @@ init: false
 map:
   - type: addon_config
     read_only: false
-image: fabioogaravini/hassio-{arch}-cloudflared
+image: fabioogaravini/hassio-cloudflared

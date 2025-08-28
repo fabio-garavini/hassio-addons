@@ -54,4 +54,4 @@ options:
   require_https: false
   certfile: fullchain.pem
   keyfile: privkey.pem
-image: fabioogaravini/hassio-{arch}-jellyfin
+image: fabioogaravini/hassio-jellyfin
