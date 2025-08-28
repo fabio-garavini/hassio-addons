@@ -30,4 +30,4 @@ schema:
   POSTGRES_PASSWORD: password
   POSTGRES_INITDB_ARGS: str?
   DB_STORAGE_TYPE: list(SSD|HDD)
-image: fabioogaravini/hassio-{arch}-postgres-16-pgvectors
+image: fabioogaravini/hassio-postgres-16-pgvectors
