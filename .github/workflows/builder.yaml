@@ -77,7 +77,7 @@ jobs:
           fi
 
   deploy:
-    name: 👷 Build & Deploy ${{ matrix.arch }} ${{ matrix.addon }}
+    name: 👷 Build ${{ matrix.addon }} ${{ matrix.arch }}
     runs-on:  ${{ contains(fromJson('["armhf", "armv7", "aarch64"]'), matrix.arch) && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
     needs: init
     if: needs.init.outputs.changed == 'true'
@@ -207,7 +207,7 @@ jobs:
             ${{ steps.info.outputs.image }}:${{ steps.info.outputs.version }}-${{ matrix.arch }}
 
   manifest:
-    name: 👷 Deploy Multi Arch ${{ matrix.addon }} Manifest
+    name: 🚀 Deploy ${{ matrix.addon }} Multi Arch Manifest
     if: github.ref == 'refs/heads/main'
     needs:
       - init
