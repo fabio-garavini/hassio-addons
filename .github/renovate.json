@@ -7,7 +7,7 @@
   "commitMessagePrefix": "⬆️",
   "commitMessageTopic": "{{depName}}",
   "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
-  "enabledManagers": ["regex"],
+  "enabledManagers": ["regex", "github-actions"],
   "prHourlyLimit": 0,
   "customManagers": [
     {
