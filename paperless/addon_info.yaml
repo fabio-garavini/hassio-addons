@@ -7,7 +7,7 @@ source:
 config:
   version_template: '{{major}}.{{minor}}.{{patch}}'
   patch: 0
-  image: fabioogaravini/hassio-{arch}-paperless
+  image: fabioogaravini/hassio-paperless
 build:
   image: ghcr.io/paperless-ngx/paperless-ngx
   version_template: '{{major}}.{{minor}}.{{patch}}'

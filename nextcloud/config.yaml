@@ -59,4 +59,4 @@ ports_description:
   443/tcp: HTTPS
   6379/tcp: Redis DB
   3306/tcp: MariaDB
-image: fabioogaravini/hassio-{arch}-nextcloud
+image: fabioogaravini/hassio-nextcloud

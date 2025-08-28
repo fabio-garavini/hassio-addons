@@ -22,4 +22,4 @@ ports_description:
   6379/tcp: Database
   8001/tcp: Redis Insight
   9121/tcp: Redis Exporter
-image: fabioogaravini/hassio-{arch}-redis-stack
+image: fabioogaravini/hassio-redis-stack

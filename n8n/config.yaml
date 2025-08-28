@@ -36,4 +36,4 @@ ports:
   5678/tcp: 5678
 ports_description:
   5678/tcp: Web UI
-image: fabioogaravini/hassio-{arch}-n8n
+image: fabioogaravini/hassio-n8n

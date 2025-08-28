@@ -24,4 +24,4 @@ ports:
   5230/tcp: 5230
 ports_description:
   5230/tcp: Web UI
-image: fabioogaravini/hassio-{arch}-memos
+image: fabioogaravini/hassio-memos
