@@ -11,8 +11,8 @@ server {
     {{ if .ssl }}
     include /etc/nginx/includes/ssl_params.conf;
 
-    ssl_certificate /ssl/{{ .certfile }};
-    ssl_certificate_key /ssl/{{ .keyfile }};
+    ssl_certificate {{ .certfile }};
+    ssl_certificate_key {{ .keyfile }};
     {{ end }}
 
     location / {
