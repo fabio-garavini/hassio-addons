@@ -1,7 +1,7 @@
 # v1.139.4
 
 ## Hassio addon
-* add support for ssl certificate
+* add support for ssl certificate and https enabled by default
 * improved documentation
 
 ## What's Changed

@@ -1,0 +1,1 @@
+0 1 * * * /usr/local/bin/check-ssl.sh

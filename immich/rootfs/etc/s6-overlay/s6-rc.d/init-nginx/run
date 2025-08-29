@@ -1,8 +1,12 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+set -e
+
 declare immich_port=$SERVER_PORT
 declare immich_protocol=http
+declare certfile="/ssl/$(bashio::config 'certfile')"
+declare keyfile="/ssl/$(bashio::config 'keyfile')"
 
 # Generate upstream configuration
 bashio::var.json \
@@ -13,16 +17,31 @@ bashio::var.json \
 
 # Generate direct access configuration, if enabled.
 if bashio::var.has_value "$(bashio::addon.port 8080)"; then
-    bashio::config.require.ssl
+    # Require certfile and keyfile if ssl is true
+    #bashio::config.require.ssl
 
     if bashio::config.true 'ssl'; then
-        bashio::config.require 'certfile'
-        bashio::config.require 'keyfile'
+        # Require certfile and keyfile
+        #bashio::config.require 'certfile'
+        #bashio::config.require 'keyfile'
+
+        # If certfile or keyfile does not exist, generate self-signed cert
+        if ! bashio::fs.file_exists "$certfile" || ! bashio::fs.file_exists "$keyfile"; then
+            bashio::log.warning "SSL is enabled, but certfile or keyfile is missing. Using self-signed certificate..."
+
+            certfile="/data/ssl/fullchain.pem"
+            keyfile="/data/ssl/privkey.pem"
+
+            /usr/local/bin/selfsigned-ssl-gen.sh "$certfile" "$keyfile"
+        fi
+
+        echo "$certfile" > /var/run/s6/container_environment/SSL_CERTFILE
+        echo "$keyfile" > /var/run/s6/container_environment/SSL_KEYFILE
     fi
 
     bashio::var.json \
-        certfile "$(bashio::config 'certfile')" \
-        keyfile "$(bashio::config 'keyfile')" \
+        certfile "$certfile" \
+        keyfile "$keyfile" \
         port "^$(bashio::addon.port 8080)" \
         protocol "${immich_protocol}" \
         ssl "^$(bashio::config 'ssl')" \
@@ -30,3 +49,5 @@ if bashio::var.has_value "$(bashio::addon.port 8080)"; then
             -template /etc/nginx/templates/direct.gtpl \
             -out /etc/nginx/servers/direct.conf
 fi
+
+exec cron &

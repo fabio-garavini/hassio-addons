@@ -1,0 +1,39 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+
+set -e
+
+if bashio::config.false 'ssl'; then
+    exit 0
+fi
+
+bashio::log.debug "SSL Certificate update check"
+
+declare renew_days=30
+
+declare certfile="/ssl/$(bashio::config 'certfile')"
+declare keyfile="/ssl/$(bashio::config 'keyfile')"
+declare selfsigned=false
+
+if [[ $certfile != $SSL_CERTFILE ]] || [[ $keyfile != $SSL_KEYFILE ]]; then
+    certfile=$SSL_CERTFILE
+    keyfile=$SSL_KEYFILE
+    selfsigned=true
+fi
+
+if [[ "$selfsigned" == true ]]; then
+    enddate=$(openssl x509 -enddate -noout -in "$certfile" 2>/dev/null || true)
+    if [ -n "$enddate" ]; then
+        expiry_date=$(echo "$enddate" | cut -d= -f2)
+        expiry_ts=$(date -d "$expiry_date" +%s)
+        now_ts=$(date +%s)
+        days_left=$(( (expiry_ts - now_ts) / 86400 ))
+
+        if [ "$days_left" -le "$renew_days" ]; then
+            bashio::log.info "Self-signed cert expiring in $days_left days, regenerating..."
+            /usr/local/bin/selfsigned-ssl-gen.sh $certfile $keyfile
+        fi
+    fi
+fi
+
+nginx -s reload

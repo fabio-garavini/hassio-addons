@@ -24,7 +24,7 @@ configuration:
   ssl:
     name: SSL
     description: >-
-      Enable SSL for HTTPS. Requires a valid SSL certificate and private key.
+      Enable HTTPS connections. If `SSL Certfile` and `SSL Private Key` files exist they are used to encrypt the connection, otherwise it'll generate a self-signed certificate
   certfile:
     name: SSL Certificate File
     description: >-
