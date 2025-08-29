@@ -1,5 +1,17 @@
 # v1.140.0
 
+> \[!WARNING] 
+ > **BREAKING CHANGES**: from this release HTTPS is enabled by default!  
+ > 
+ > If you already have a `/ssl/certfile.pem` and `/ssl/privkey.pem` setup, it will use that certificate. 
+ > Otherwise it will generate a self signed certificate.  
+ > 
+ > You can always change this in the `Configuration` tab
+
+## Hassio addon 
+ * add support for ssl certificate 
+ * improved documentation
+
 ## Highlights
 
 Welcome to the release `v1.140.0` of Immich, one more release, and one more day closer to 🐴 Stable-Day 🐴. This release continues the ramp-up effort to bring the beta timeline up to the same feature parity as the old one, while also addressing as many bugs as possible. Thanks to our active contributors, some cool features also made their way into this release. We encourage all Immich users to switch to the beta timeline and use it to help us identify and resolve issues. Let’s dive into the highlights of this release.
