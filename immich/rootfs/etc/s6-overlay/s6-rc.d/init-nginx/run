@@ -16,8 +16,8 @@ if bashio::var.has_value "$(bashio::addon.port 8080)"; then
     bashio::config.require.ssl
 
     if bashio::config.true 'ssl'; then
-        bashio::config.require.certfile
-        bashio::config.require.keyfile
+        bashio::config.require 'certfile'
+        bashio::config.require 'keyfile'
     fi
 
     bashio::var.json \

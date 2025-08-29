@@ -5,6 +5,7 @@ codenotary: info@fabiogaravini.dev
 description: High performance self-hosted photo and video management solution
 url: https://immich.app
 webui: http://[HOST]:[PORT:8080]
+hassio_api: true
 arch:
   - aarch64
   - amd64
