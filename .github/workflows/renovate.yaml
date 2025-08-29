@@ -14,13 +14,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v5
 
-      - name: 🏗 Set up cache
-        uses: actions/cache@v4
-        id: cache
-        with:
-          path: /tmp/renovate/cache
-          key: renovate
-
       - name: Run Renovate
         uses: renovatebot/github-action@v43.0.9
         with:
