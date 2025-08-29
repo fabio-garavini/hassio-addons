@@ -33,25 +33,17 @@ ENV \
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Install base system
-ARG \
-    BASHIO_VERSION="v0.16.2" \
-    S6_OVERLAY_VERSION="3.2.0.0" \
-    TEMPIO_VERSION="2021.09.0"
-
+ARG BASHIO_VERSION="v0.17.1"
+ARG TEMPIO_VERSION="2024.11.2"
 RUN \
     apt-get update \
     \
     && apt-get install -y --no-install-recommends \
-        bash \
         ca-certificates \
         curl \
-        wget \
         jq \
         tzdata \
         xz-utils \
-    \
-    && c_rehash \
     && curl -J -L -o /tmp/bashio.tar.gz \
         "https://github.com/hassio-addons/bashio/archive/${BASHIO_VERSION}.tar.gz" \
     && mkdir /tmp/bashio \
@@ -75,8 +67,6 @@ RUN \
         /var/lib/apt/lists/*
 
 COPY root/ /
-
-RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 
