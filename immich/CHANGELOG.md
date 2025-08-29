@@ -1,7 +1,15 @@
 # v1.139.4
 
+> [!WARNING]
+> **BREAKING CHANGES**: from this release HTTPS is enabled by default! 
+>
+> If you already have a `/ssl/certfile.pem` and `/ssl/privkey.pem` setup, it will use that certificate.
+> Otherwise it will generate a selfsigned certificate. 
+>
+> You can always change this in the `Configuration` tab
+
 ## Hassio addon
-* add support for ssl certificate and https enabled by default
+* add support for ssl certificate
 * improved documentation
 
 ## What's Changed
