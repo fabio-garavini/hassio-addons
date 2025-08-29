@@ -1,5 +1,5 @@
 name: Immich
-version: 1.139.4-v1
+version: 1.139.4-v2
 slug: immich
 codenotary: info@fabiogaravini.dev
 description: High performance self-hosted photo and video management solution
@@ -30,29 +30,39 @@ devices:
   - /dev/video0
   - /dev/video10
 schema:
+  TZ: str?
+  IMMICH_LOG_LEVEL: list(verbose|debug|log|warn|error)
+  ssl: bool
+  certfile: str?
+  keyfile: str?
+  DB_STORAGE_TYPE: list(SSD|HDD)
+  MACHINE_LEARNING_MODEL_TTL: int(0,)
+  MACHINE_LEARNING_WORKER_TIMEOUT: int(0,)
+  MACHINE_LEARNING_PRELOAD__CLIP__TEXTUAL: str?
+  MACHINE_LEARNING_PRELOAD__CLIP__VISUAL: str?
+  MACHINE_LEARNING_PRELOAD__FACIAL_RECOGNITION__RECOGNITION: str?
+  MACHINE_LEARNING_PRELOAD__FACIAL_RECOGNITION__DETECTION: str?
+  IMMICH_TRUSTED_PROXIES: str?
   PUID: int(0,)
   PGID: int(0,)
-  TZ: str?
-  DB_STORAGE_TYPE: list(SSD|HDD)
-  MACHINE_LEARNING_WORKER_TIMEOUT: int(0,)
-  MACHINE_LEARNING_PRELOAD__FACIAL_RECOGNITION: str?
-  MACHINE_LEARNING_PRELOAD__CLIP: str?
-  IMMICH_TRUSTED_PROXIES: str?
-  IMMICH_METRICS: bool
 options:
-  PUID: 0
-  PGID: 0
   TZ: Etc/UTC
+  IMMICH_LOG_LEVEL: log
+  ssl: false
+  certfile: fullchain.pem
+  keyfile: privkey.pem
   DB_STORAGE_TYPE: HDD
+  MACHINE_LEARNING_MODEL_TTL: 300
   MACHINE_LEARNING_WORKER_TIMEOUT: 300
   IMMICH_TRUSTED_PROXIES: 172.30.32.0/23
-  IMMICH_METRICS: false
+  PUID: 0
+  PGID: 0
 ports:
   8080/tcp: 8080
   5432/tcp: null
   6379/tcp: null
 ports_description:
-  8080/tcp: Web UI
+  8080/tcp: Immich
   5432/tcp: Postgresql DB
   6379/tcp: Redis DB
 image: fabioogaravini/hassio-immich

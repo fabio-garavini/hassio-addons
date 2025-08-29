@@ -1,5 +1,9 @@
 # v1.139.4
 
+## Hassio addon
+* add support for ssl certificate
+* improved documentation
+
 ## What's Changed
 ### 🐛 Bug fixes
 * fix: cannot load thumbnail from unknown content length by @alextran1502 in https://github.com/immich-app/immich/pull/21192

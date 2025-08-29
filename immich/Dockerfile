@@ -2,7 +2,7 @@ ARG BUILD_FROM=ghcr.io/imagegenius/immich:v1.139.4-ig416
 
 FROM ${BUILD_FROM}
 
-ARG BUILD_ARCH
+ARG BUILD_ARCH=amd64
 
 # Container Environment variables
 ENV \
@@ -21,17 +21,18 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Immich environment variables
 ENV \
-  DB_HOSTNAME="localhost" \
-  DB_PORT=5432 \
-  DB_DATABASE_NAME="immich" \
-  DB_USERNAME="immich" \
-  DB_PASSWORD="immich" \
-  REDIS_HOSTNAME="localhost" \
-  IMMICH_MACHINE_LEARNING_URL="http://127.0.0.1:3003" \
-  IMMICH_MEDIA_LOCATION="/media/immich" \
-  IMMICH_REVERSE_GEOCODING_ROOT="/config/reverse-geocoding" \
-  TRANSFORMERS_CACHE="/config/machine-learning" \
-  MACHINE_LEARNING_CACHE_FOLDER="/config/machine-learning"
+    SERVER_PORT=2283 \
+    DB_HOSTNAME="localhost" \
+    DB_PORT=5432 \
+    DB_DATABASE_NAME="immich" \
+    DB_USERNAME="immich" \
+    DB_PASSWORD="immich" \
+    REDIS_HOSTNAME="localhost" \
+    IMMICH_MACHINE_LEARNING_URL="http://127.0.0.1:3003" \
+    IMMICH_MEDIA_LOCATION="/media/immich" \
+    IMMICH_REVERSE_GEOCODING_ROOT="/config/reverse-geocoding" \
+    TRANSFORMERS_CACHE="/config/machine-learning" \
+    MACHINE_LEARNING_CACHE_FOLDER="/config/machine-learning"
 
 # Postgres environment variables
 ENV PGDATA="/config/postgres" \
@@ -39,6 +40,39 @@ ENV PGDATA="/config/postgres" \
     POSTGRES_DB="immich" \
     POSTGRES_USER="immich" \
     POSTGRES_PASSWORD="immich"
+
+ARG BASHIO_VERSION="v0.17.1"
+ARG TEMPIO_VERSION="2024.11.2"
+RUN \
+    apt-get update \
+    \
+    && apt-get install -y --no-install-recommends \
+        ca-certificates \
+        curl \
+        jq \
+        tzdata \
+        xz-utils \
+    && curl -J -L -o /tmp/bashio.tar.gz \
+        "https://github.com/hassio-addons/bashio/archive/${BASHIO_VERSION}.tar.gz" \
+    && mkdir /tmp/bashio \
+    && tar zxvf \
+        /tmp/bashio.tar.gz \
+        --strip 1 -C /tmp/bashio \
+    \
+    && mv /tmp/bashio/lib /usr/lib/bashio \
+    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
+    \
+    && curl -L -s -o /usr/bin/tempio \
+        "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" \
+    && chmod a+x /usr/bin/tempio \
+    \
+    && apt-get purge -y --auto-remove \
+        xz-utils \
+    && apt-get clean \
+    && rm -fr \
+        /tmp/* \
+        /var/{cache,log}/* \
+        /var/lib/apt/lists/*
 
 # Postgres and VectorChord version
 # pgvecto.rs is deprecated
@@ -100,8 +134,9 @@ RUN set -eux; \
         postgresql-common \
         postgresql-$PG_MAJOR \
         postgresql-${PG_MAJOR}-pgvector \
-        redis-server; \
-    rm -rf /var/lib/apt/lists/*; \
+        redis-server \
+        nginx; \
+    rm -rf /var/lib/apt/lists/* /etc/nginx; \
     \
     postgres --version
 

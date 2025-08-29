@@ -1,0 +1,101 @@
+---
+configuration:
+  PUID:
+    name: PUID
+    description: >-
+      User ID used to run Immich. (Default: `0` → `root`)
+
+      If you're not sure, leave it as default.
+  PGID:
+    name: PGID
+    description: >-
+      Group ID used to run Immich. (Default: `0` → `root`)
+
+      If you're not sure, leave it as default.
+  TZ:
+    name: Timezone
+    description: >-
+      Timezone used for displaying dates and times. (Default: `Etc/UTC`)
+
+      You can find your timezone identifier here: 
+      https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  IMMICH_LOG_LEVEL:
+    name: Log Level
+  ssl:
+    name: SSL
+    description: >-
+      Enable SSL for HTTPS. Requires a valid SSL certificate and private key.
+  certfile:
+    name: SSL Certificate File
+    description: >-
+      Name of the SSL certificate file located under the `/ssl/` directory.
+  keyfile:
+    name: SSL Private Key File
+    description: >-
+      Name of the SSL private key file located under the `/ssl/` directory.
+  DB_STORAGE_TYPE:
+    name: Storage Type
+    description: >-
+      Type of storage used by Home Assistant.
+  MACHINE_LEARNING_MODEL_TTL:
+    name: Machine Learning Model TTL
+    description: >-
+      Time (in seconds) a model stays in memory after inactivity. 
+      Set to `0` to never unload models.
+  MACHINE_LEARNING_WORKER_TIMEOUT:
+    name: Machine Learning Worker Timeout
+    description: >-
+      Maximum time (in seconds) a machine learning worker can be unresponsive before it's terminated.
+  MACHINE_LEARNING_PRELOAD__CLIP__TEXTUAL:
+    name: Preload CLIP Textual Models
+    description: >-
+      Comma-separated list of textual CLIP model(s) to preload and cache.
+
+      These models are used for Smart Search when searching through your library.
+
+      Available models: https://huggingface.co/immich-app/collections
+
+      Additional machine learning settings can be configured via the admin UI.
+  MACHINE_LEARNING_PRELOAD__CLIP__VISUAL:
+    name: Preload CLIP Visual Models
+    description: >-
+      Comma-separated list of visual CLIP model(s) to preload and cache.
+
+      These models are used for Smart Search when processing images and videos.
+
+      Available models: https://huggingface.co/immich-app/collections
+
+      Additional machine learning settings can be configured via the admin UI.
+  MACHINE_LEARNING_PRELOAD__FACIAL_RECOGNITION__RECOGNITION:
+    name: Face Recognition Models
+    description: >-
+      Comma-separated list of facial recognition model(s) to preload and cache (for recognition purposes).
+
+      These models are used to match and identify faces.
+
+      Preloading ensures they’re always ready, but this can significantly increase RAM usage.
+
+      Available models: https://huggingface.co/collections/immich-app/facial-recognition-654eb881c0e106160e2e9c95
+
+      Additional machine learning settings can be configured via the admin UI.
+  MACHINE_LEARNING_PRELOAD__FACIAL_RECOGNITION__DETECTION:
+    name: Face Detection Models
+    description: >-
+      Comma-separated list of facial recognition model(s) to preload and cache (for detection purposes).
+
+      These models are used to detect faces in images and videos.
+
+      Preloading ensures they’re always ready, but this can significantly increase RAM usage.
+
+      Available models: https://huggingface.co/collections/immich-app/facial-recognition-654eb881c0e106160e2e9c95
+
+      Additional machine learning settings can be configured via the admin UI.
+  IMMICH_TRUSTED_PROXIES:
+    name: Trusted Proxies
+    description: >-
+      Comma-separated list of IP addresses that should be treated as trusted proxies. 
+      Needed if Immich is running behind a reverse proxy such as NGINX.
+network:
+  8080/tcp: Immich
+  5432/tcp: PostgreSQL DB
+  6379/tcp: Redis DB
