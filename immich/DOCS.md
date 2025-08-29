@@ -40,21 +40,21 @@ Below are all the configuration settings you can customize. Most users can leave
 
 | Parameter                                                   | Required | Default   | Description                                                                                                                       |
 | ----------------------------------------------------------- | -------- | --------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `PUID`                                                      | No       | `0`       | **User ID** used to run Immich. If you don’t know what this is, leave at default.                                                 |
-| `PGID`                                                      | No       | `0`       | **Group ID** used to run Immich. Same as above—leave default if unsure.                                                           |
+| `PUID`                                                      | Yes      | `0`       | **User ID** used to run Immich. If you don’t know what this is, leave at default.                                                 |
+| `PGID`                                                      | Yes      | `0`       | **Group ID** used to run Immich. Same as above—leave default if unsure.                                                           |
 | `TZ`                                                        | Yes      | `Etc/UTC` | **Timezone** for correct photo/video timestamps. Example: `Europe/London`.                                                        |
-| `Log Level`                                          | No       | `info`    | Sets how detailed Immich logs are (e.g., `verbose`, `debug`, `log`, `warn`, `error`). Useful for troubleshooting.                           |
-| `ssl`                                                       | No       | `false`   | Enable HTTPS if you want encrypted connections. Requires SSL certificate + key.                                                   |
+| `Log Level`                                                 | No       | `info`    | Sets how detailed Immich logs are (e.g., `verbose`, `debug`, `log`, `warn`, `error`). Useful for troubleshooting.                 |
+| `ssl`                                                       | Yes      | `true`    | Enable HTTPS for secure connections. If `certfile` and `keyfile` are not specified, a self-signed certificate will be generated automatically. |
 | `certfile`                                                  | No       | -         | Name of SSL certificate file stored in `/ssl/`. Example: `fullchain.pem`.                                                         |
 | `keyfile`                                                   | No       | -         | Name of SSL private key file stored in `/ssl/`. Example: `privkey.pem`.                                                           |
-| `Storage type`                                           | No       | `HDD`    | Type of storage Immich uses (`SSD` or `HDD`).                                                                              |
-| `Machine Learning Model TTL`                                | No       | `300`     | How long (in seconds) a machine learning model stays loaded in memory after not being used. `0` = always keep loaded.             |
-| `Machine Learning Worker Timeout`                           | No       | `300`     | If a machine learning worker doesn’t respond in this time (seconds), it will be restarted.                                        |
-| `Preload CLIP Textual Models`                   | No       | -         | Preload text-based AI models for **Smart Search** (searching photos/videos by description). Use only if you want faster searches. |
-| `Preload CLIP Visual Models`                    | No       | -         | Preload image-based AI models for **Smart Search**. This helps Immich understand image content faster.                            |
-| `Face Recognition Models` | No       | -         | Preload face **recognition** models (used to match faces to known people). Preloading = faster results but uses more RAM.         |
-| `Face Detection Models`   | No       | -         | Preload face **detection** models (used to find faces in images/videos). Same note about RAM applies.                             |
-| `Trusted Proxies`                                    | No       | -         | List of proxy IP addresses Immich should trust (e.g., if using NGINX or another reverse proxy).                                   |
+| `Storage type`                                              | Yes      | `HDD`     | Type of storage Immich uses (`SSD` or `HDD`).                                                                                     |
+| `Machine Learning Model TTL`                                | Yes      | `300`     | How long (in seconds) a machine learning model stays loaded in memory after not being used. `0` = always keep loaded.             |
+| `Machine Learning Worker Timeout`                           | Yes      | `300`     | If a machine learning worker doesn’t respond in this time (seconds), it will be restarted.                                        |
+| `Preload CLIP Textual Models`                               | No       | -         | Preload text-based AI models for **Smart Search** (searching photos/videos by description). Use only if you want faster searches. |
+| `Preload CLIP Visual Models`                                | No       | -         | Preload image-based AI models for **Smart Search**. This helps Immich understand image content faster.                            |
+| `Face Recognition Models`                                   | No       | -         | Preload face **recognition** models (used to match faces to known people). Preloading = faster results but uses more RAM.         |
+| `Face Detection Models`                                     | No       | -         | Preload face **detection** models (used to find faces in images/videos). Same note about RAM applies.                             |
+| `Trusted Proxies`                                           | No       | -         | List of proxy IP addresses Immich should trust (e.g., if using NGINX or another reverse proxy).                                   |
 
 ### 🔌 Network Ports
 
@@ -104,34 +104,29 @@ To store your photo library on a NAS (recommended for large libraries):
 
 ## 🔒 Enabling HTTPS/SSL
 
-You can enable HTTPS to secure connections between your browser/app and Immich.
+HTTPS is enabled **by default** (`ssl: true`).  
 
-1. **Get SSL Certificates**
+1. **Default (Self-Signed Certificate)**  
+   * If you don’t specify `certfile` and `keyfile`, Immich will automatically generate and use a self-signed SSL certificate.  
+   * You may see a browser warning the first time you connect—this is expected with self-signed certificates.  
 
+2. **Using Trusted Certificates (Recommended)**  
    * If using Home Assistant’s **Let’s Encrypt add-on**, certificates will be stored in `/ssl/`.
    * You should see two files:
-
      * `fullchain.pem` (certificate)
      * `privkey.pem` (private key)
 
-2. **Configure Add-on Settings**
-   In the Immich add-on configuration:
+   Example configuration:
 
    ```yaml
    ssl: true
    certfile: fullchain.pem
    keyfile: privkey.pem
-   ```
+````
 
 3. **Restart Immich**
 
-   * After saving changes, restart the add-on.
-
-4. **Access Immich**
-
-   * Use `https://<your-homeassistant-address>:8080` instead of `http://`
-
-⚠️ If you misconfigure SSL, the web UI may fail to load. In that case, disable `ssl` and restart to revert back to HTTP.
+4. **Open Web UI**
 
 ---
 
@@ -151,6 +146,7 @@ You can enable HTTPS to secure connections between your browser/app and Immich.
 * **Web UI Not Loading**
 
   * If using HTTPS, confirm your SSL certificate and key files are valid
+  * If using the self-signed default certificate, accept the browser warning
 
 ---
 

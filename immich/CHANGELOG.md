@@ -1,10 +1,10 @@
 # v1.139.4
 
-> [!WARNING]
+> \[!WARNING]
 > **BREAKING CHANGES**: from this release HTTPS is enabled by default! 
 >
 > If you already have a `/ssl/certfile.pem` and `/ssl/privkey.pem` setup, it will use that certificate.
-> Otherwise it will generate a selfsigned certificate. 
+> Otherwise it will generate a self signed certificate. 
 >
 > You can always change this in the `Configuration` tab
 
