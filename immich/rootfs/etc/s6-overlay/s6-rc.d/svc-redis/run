@@ -17,7 +17,7 @@ chown -R abc:abc \
 	/config/logs \
 	/var/run/redis
 
-s6-notifyoncheck -s 1000 -n 300 -w 1000 -c "redis-cli PING | grep PONG" \
+s6-notifyoncheck -s 1000 -n 300 -w 1000 -c "redis-cli PING" \
   s6-setuidgid abc \
 		redis-server /config/redis/redis.conf \
 		--bind 0.0.0.0 \
