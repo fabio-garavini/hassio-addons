@@ -25,24 +25,18 @@ ENV \
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Install base system
 ARG BUILD_ARCH
 ARG BASHIO_VERSION="v0.17.1"
 ARG TEMPIO_VERSION="2024.11.2"
-
 RUN \
     apt-get update \
     \
     && apt-get install -y --no-install-recommends \
-        bash \
         ca-certificates \
         curl \
-        wget \
         jq \
         tzdata \
         xz-utils \
-    \
-    && c_rehash \
     && curl -J -L -o /tmp/bashio.tar.gz \
         "https://github.com/hassio-addons/bashio/archive/${BASHIO_VERSION}.tar.gz" \
     && mkdir /tmp/bashio \
