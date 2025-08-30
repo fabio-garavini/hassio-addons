@@ -122,7 +122,7 @@ HTTPS is enabled **by default** (`ssl: true`).
    ssl: true
    certfile: fullchain.pem
    keyfile: privkey.pem
-````
+   ```
 
 3. **Restart Immich**
 
