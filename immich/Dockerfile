@@ -30,8 +30,7 @@ ENV \
     REDIS_HOSTNAME="localhost" \
     IMMICH_MACHINE_LEARNING_URL="http://127.0.0.1:3003" \
     IMMICH_REVERSE_GEOCODING_ROOT="/config/reverse-geocoding" \
-    TRANSFORMERS_CACHE="/config/machine-learning" \
-    MACHINE_LEARNING_CACHE_FOLDER="/config/machine-learning"
+    MACHINE_LEARNING_CACHE_FOLDER="/data/cache"
 
 # Postgres environment variables
 ENV PGDATA="/config/postgres" \

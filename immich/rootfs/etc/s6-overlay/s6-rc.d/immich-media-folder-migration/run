@@ -23,7 +23,7 @@ if ! $valid; then
   bashio::addon.stop
 fi
 
-CONFIG_FILE="/data/immich.json"
+CONFIG_FILE="/config/immich.json"
 
 if [ ! -f "$CONFIG_FILE" ]; then
   echo '{}' > "$CONFIG_FILE"
