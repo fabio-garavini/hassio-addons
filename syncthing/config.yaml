@@ -1,6 +1,5 @@
----
 name: Syncthing
-version: 2.0.3
+version: 2.0.3-v1
 slug: syncthing
 codenotary: info@fabiogaravini.dev
 description: Open Source Continuous File Synchronization
@@ -35,7 +34,7 @@ map:
   - type: ssl
 host_network: true
 ports:
-  8384/tcp:
+  8384/tcp: null
   22000/tcp: 22000
   22000/udp: 22000
   21027/udp: 21027
