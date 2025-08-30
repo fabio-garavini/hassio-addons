@@ -16,7 +16,7 @@ done
 
 if ! $valid; then
   bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
-  bashio::log.error "[$IMMICH_MEDIA_LOCATION] is not a valid persistent folder! ($valid_paths)"
+  bashio::log.error "[$IMMICH_MEDIA_LOCATION] is not a valid persistent folder! ['/media/', '/share/']"
   bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
   bashio::log.error "Read the DOCUMENTATION page for more information on how to migrate the Immich Media folder"
   bashio::log.error "Ask for help: https://github.com/fabio-garavini/hassio-addons/issues"
