@@ -29,7 +29,6 @@ ENV \
     DB_PASSWORD="immich" \
     REDIS_HOSTNAME="localhost" \
     IMMICH_MACHINE_LEARNING_URL="http://127.0.0.1:3003" \
-    IMMICH_MEDIA_LOCATION="/media/immich" \
     IMMICH_REVERSE_GEOCODING_ROOT="/config/reverse-geocoding" \
     TRANSFORMERS_CACHE="/config/machine-learning" \
     MACHINE_LEARNING_CACHE_FOLDER="/config/machine-learning"
@@ -51,6 +50,7 @@ RUN \
         curl \
         jq \
         tzdata \
+        rsync \
         xz-utils \
     && curl -J -L -o /tmp/bashio.tar.gz \
         "https://github.com/hassio-addons/bashio/archive/${BASHIO_VERSION}.tar.gz" \

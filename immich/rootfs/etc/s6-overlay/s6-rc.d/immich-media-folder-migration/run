@@ -1,0 +1,168 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+
+set -e
+
+valid_paths=("/media/" "/share/")
+
+# Check if the IMMICH_MEDIA_LOCATION starts with a valid path
+valid=false
+for path in "${valid_paths[@]}"; do
+  if [[ "$IMMICH_MEDIA_LOCATION" == "$path"* ]]; then
+    valid=true
+    break
+  fi
+done
+
+if ! $valid; then
+  bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+  bashio::log.error "[$IMMICH_MEDIA_LOCATION] is not a valid persistent folder! ($valid_paths)"
+  bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+  bashio::log.error "Read the DOCUMENTATION page for more information on how to migrate the Immich Media folder"
+  bashio::log.error "Ask for help: https://github.com/fabio-garavini/hassio-addons/issues"
+  bashio::addon.stop
+fi
+
+CONFIG_FILE="/data/immich.json"
+
+if [ ! -f "$CONFIG_FILE" ]; then
+  echo '{}' > "$CONFIG_FILE"
+fi
+
+current_media_dir=$(jq -r ".media_location // empty" "${CONFIG_FILE}")
+
+if [ -z "$current_media_dir" ]; then
+  jq --arg path "$IMMICH_MEDIA_LOCATION" '.media_location = $path' "$CONFIG_FILE" > "${CONFIG_FILE}.tmp" && mv "${CONFIG_FILE}.tmp" "$CONFIG_FILE"
+  exit 0
+fi
+
+if [ "$current_media_dir" = "$IMMICH_MEDIA_LOCATION" ]; then
+  # No migration needed
+  bashio::log.debug "Skipping media library migration"
+  exit 0
+fi
+
+# Function to check available disk space
+check_disk_space() {
+  local source_dir="$1"
+  local dest_dir="$2"
+  
+  # Get source directory size in KB
+  local source_size=$(du -sk "$source_dir" | cut -f1)
+  
+  # Get available space in destination in KB
+  local dest_available=$(df -k "$dest_dir" | tail -1 | awk '{print $4}')
+  
+  # Add 10% buffer for safety
+  local required_space=$((source_size + source_size / 10))
+  
+  bashio::log.info "Source size: $(numfmt --to=iec-i --suffix=B $((source_size * 1024)))"
+  bashio::log.info "Available space: $(numfmt --to=iec-i --suffix=B $((dest_available * 1024)))"
+  bashio::log.info "Required space (with buffer): $(numfmt --to=iec-i --suffix=B $((required_space * 1024)))"
+  
+  if [ "$required_space" -gt "$dest_available" ]; then
+    bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+    bashio::log.error "Insufficient disk space for migration!"
+    bashio::log.error "Required: $(numfmt --to=iec-i --suffix=B $((required_space * 1024)))"
+    bashio::log.error "Available: $(numfmt --to=iec-i --suffix=B $((dest_available * 1024)))"
+    bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+    return 1
+  fi
+  
+  return 0
+}
+
+# Function to perform safe rsync migration
+perform_migration() {
+  local source_dir="$1"
+  local dest_dir="$2"
+  
+  bashio::log.info "Starting migration from $source_dir to $dest_dir"
+  
+  # Create destination directory
+  mkdir -p "$dest_dir"
+  
+  # First, do a dry run to check for potential issues
+  if ! rsync -av --dry-run --remove-source-files "$source_dir/" "$dest_dir/" > /dev/null; then
+    bashio::log.error "Migration test failed. Aborting migration."
+    return 1
+  fi
+  
+  # Perform actual migration with progress and error handling
+  if rsync -a --progress --remove-source-files "$source_dir/" "$dest_dir/"; then
+    bashio::log.info "File migration completed successfully"
+    
+    # Clean up empty directories from source
+    bashio::log.info "Cleaning up empty directories..."
+    find "$source_dir/" -type d -empty -delete 2>/dev/null || true
+    
+    # Verify migration by comparing file counts and total size
+    local source_files=$(find "$source_dir" -type f 2>/dev/null | wc -l)
+    local dest_files=$(find "$dest_dir" -type f 2>/dev/null | wc -l)
+    
+    if [ "$source_files" -eq 0 ]; then
+      bashio::log.info "Migration verification successful - no files left in source"
+      return 0
+    else
+      bashio::log.warning "Migration may be incomplete - $source_files files remain in source"
+      return 1
+    fi
+  else
+    bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+    bashio::log.error "Migration failed! rsync returned an error."
+    bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+    bashio::log.error "The migration has been aborted. Your original files remain in $source_dir"
+    bashio::log.error "Please check disk space, permissions, and try again."
+    bashio::log.error "Ask for help: https://github.com/fabio-garavini/hassio-addons/issues"
+    return 1
+  fi
+}
+
+bashio::log.info "Start Immich Media Library migration..."
+
+# Check if current_media_dir exists and is not empty
+if [ -d "$current_media_dir" ] && [ "$(ls -A "$current_media_dir")" ]; then
+  if [ ! -d "$IMMICH_MEDIA_LOCATION" ] || [ -z "$(ls -A "$IMMICH_MEDIA_LOCATION")" ]; then
+    
+    # Check disk space before attempting migration
+    if ! check_disk_space "$current_media_dir" "$IMMICH_MEDIA_LOCATION"; then
+      bashio::log.error "Ask for help: https://github.com/fabio-garavini/hassio-addons/issues"
+      bashio::addon.stop
+    fi
+    
+    # Attempt migration
+    if perform_migration "$current_media_dir" "$IMMICH_MEDIA_LOCATION"; then
+      bashio::log.info "Migration completed successfully"
+    else
+      bashio::log.error "Migration failed"
+      bashio::addon.stop
+    fi
+    
+  else
+    bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+    bashio::log.error "Both current media dir ($current_media_dir) and destination ($IMMICH_MEDIA_LOCATION) contain files. Aborting migration."
+    bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+    bashio::log.error "This is expected if you manually copied the Immich Media folder to the new location. Rename the old folder or remove the new one to let Immich do the migration"
+    bashio::log.error "Read the DOCUMENTATION page for more information on how to migrate the Immich Media folder"
+    bashio::log.error "Ask for help: https://github.com/fabio-garavini/hassio-addons/issues"
+    bashio::addon.stop
+  fi
+else
+  if [ ! -d "$IMMICH_MEDIA_LOCATION" ] || [ -z "$(ls -A "$IMMICH_MEDIA_LOCATION")" ]; then
+    bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+    bashio::log.error "Current media dir ($current_media_dir) and destination ($IMMICH_MEDIA_LOCATION) are both empty. Unknown media location"
+    bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+    bashio::log.error "This is expected if you manually moved the Immich Media folder."
+    bashio::log.error "Read the DOCUMENTATION page for more information on how to migrate the Immich Media folder"
+    bashio::log.error "Ask for help: https://github.com/fabio-garavini/hassio-addons/issues"
+    bashio::addon.stop
+  else
+    bashio::log.warning "Detected existing files in $IMMICH_MEDIA_LOCATION"
+    bashio::log.warning "Skipping migration. "
+  fi
+fi
+
+# Only update config if we reach this point (migration was successful or skipped)
+jq --arg path "$IMMICH_MEDIA_LOCATION" '.media_location = $path' "$CONFIG_FILE" > "${CONFIG_FILE}.tmp" && mv "${CONFIG_FILE}.tmp" "$CONFIG_FILE"
+
+bashio::log.info "Media Location migration complete"
