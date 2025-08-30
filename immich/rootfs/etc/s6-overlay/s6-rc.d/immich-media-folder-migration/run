@@ -83,13 +83,13 @@ perform_migration() {
   mkdir -p "$dest_dir"
   
   # First, do a dry run to check for potential issues
-  if ! rsync -av --dry-run --remove-source-files "$source_dir/" "$dest_dir/" > /dev/null; then
+  if ! rsync -ah --dry-run --remove-source-files "$source_dir/" "$dest_dir/" > /dev/null; then
     bashio::log.error "Migration test failed. Aborting migration."
     return 1
   fi
   
   # Perform actual migration with progress and error handling
-  if rsync -a --progress --remove-source-files "$source_dir/" "$dest_dir/"; then
+  if rsync -ah --progress --remove-source-files "$source_dir/" "$dest_dir/"; then
     bashio::log.info "File migration completed successfully"
     
     # Clean up empty directories from source
