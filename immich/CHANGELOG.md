@@ -1,16 +1,22 @@
 # v1.140.0
 
-> \[!WARNING] 
- > **BREAKING CHANGES**: from this release HTTPS is enabled by default!  
- > 
- > If you already have a `/ssl/certfile.pem` and `/ssl/privkey.pem` setup, it will use that certificate. 
- > Otherwise it will generate a self signed certificate.  
- > 
- > You can always change this in the `Configuration` tab
+> \[!WARNING\] 
+> **BREAKING CHANGES**: from this release HTTPS is enabled by default!  
+> 
+> If you already have a `/ssl/certfile.pem` and `/ssl/privkey.pem` setup, it will use that certificate. 
+> Otherwise it will generate a self signed certificate.  
+> 
+> You can always change this in the `Configuration` tab
 
-## Hassio addon 
- * add support for ssl certificate 
- * improved documentation
+## Hassio addon
+
+### 🎉 Storage Migration 🎉
+
+Moving your media library has never been easier, check the documentation
+
+### 🔓 HTTPS by default 🔓
+ * add support for ssl certificate
+ * self signed certificate enabled by default
 
 ## Highlights
 

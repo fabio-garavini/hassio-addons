@@ -95,6 +95,10 @@ configuration:
     description: >-
       Comma-separated list of IP addresses that should be treated as trusted proxies. 
       Needed if Immich is running behind a reverse proxy such as NGINX.
+  IMMICH_MEDIA_LOCATION:
+    name: Media Location
+    description: >-
+      Location of the Immich Media folder must be a path under '/media/' or `/share/` (default `/media/immich`). READ THE DOCUMENTATION before messing with your media library
 network:
   8080/tcp: Immich
   5432/tcp: PostgreSQL DB

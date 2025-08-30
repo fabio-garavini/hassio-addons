@@ -43,5 +43,3 @@ bashio::var.json \
     | tempio \
         -template /etc/nginx/templates/direct.gtpl \
         -out /etc/nginx/servers/direct.conf
-
-exec cron &

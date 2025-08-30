@@ -1,0 +1,47 @@
+#!/usr/bin/expect
+
+set OLD_LOCATION [lindex $argv 0]
+set NEW_LOCATION [lindex $argv 1]
+
+set timeout 30
+
+puts "Starting with OLD_LOCATION: $OLD_LOCATION"
+puts "Starting with NEW_LOCATION: $NEW_LOCATION"
+
+spawn immich-admin change-media-location
+
+expect {
+    -re ".*Enter the previous value.*:\s*" {
+        puts "Found first prompt, sending: $OLD_LOCATION"
+        send -- "$OLD_LOCATION\r"
+    }
+    timeout {
+        puts "Timeout waiting for first prompt"
+        exit 1
+    }
+}
+
+expect {
+    -re ".*Enter the new value.*:\s*" {
+        puts "Found second prompt, sending: $NEW_LOCATION"
+        send -- "$NEW_LOCATION\r"
+    }
+    timeout {
+        puts "Timeout waiting for second prompt"
+        exit 1
+    }
+}
+
+expect {
+    -re ".*proceed.*" {
+        puts "Found proceed prompt, sending: y"
+        send -- "y\r"
+    }
+    timeout {
+        puts "Timeout waiting for proceed prompt"
+        exit 1
+    }
+}
+
+expect eof
+puts "Script completed"

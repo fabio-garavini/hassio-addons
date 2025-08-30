@@ -1,0 +1,32 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+
+CONFIG_FILE="/data/immich.json"
+DEFAULT_MEDIA_DIR="/media/immich"
+
+initialize_config() {
+  local media_dir="$1"
+  bashio::log.info "Found media location. Initializing config file"
+  jq -n --arg loc "$media_dir" '{media_location: $loc}' > "$CONFIG_FILE"
+  exit 0
+}
+
+# Exit if config already exists
+if [ -f "$CONFIG_FILE" ]; then
+  bashio::log.info "Config file exists"
+  exit 0
+fi
+
+# Check default media dir
+if [ -d "$DEFAULT_MEDIA_DIR" ] && [ "$(ls -A "$DEFAULT_MEDIA_DIR")" ]; then
+  initialize_config "$DEFAULT_MEDIA_DIR"
+fi
+
+# Check IMMICH_MEDIA_LOCATION if it's set and different from default
+if [ -n "$IMMICH_MEDIA_LOCATION" ] && \
+   [ "$IMMICH_MEDIA_LOCATION" != "$DEFAULT_MEDIA_DIR" ] && \
+   [ -d "$IMMICH_MEDIA_LOCATION" ] && \
+   [ "$(ls -A "$IMMICH_MEDIA_LOCATION")" ]; then
+
+  initialize_config "$IMMICH_MEDIA_LOCATION"
+fi

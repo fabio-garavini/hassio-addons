@@ -26,11 +26,13 @@ This monolithic package includes:
 
    * Navigate to **Home Assistant Supervisor** → **Add-on Store**
    * Search for "Immich" → Click **Install**
-2. **Initial Setup**:
+1. **Initial Setup**:
 
+   * (Optional) Edit the Configuration
    * Start the add-on
-   * Click **OPEN WEB UI** and follow first-run wizard
-3. **Configure Libraries** (see Storage section below)
+   * Click **OPEN WEB UI**
+   * follow first-run wizard
+1. **Checkout** the [post installation guide](https://immich.app/docs/install/post-install) (optional)
 
 ---
 
@@ -38,23 +40,24 @@ This monolithic package includes:
 
 Below are all the configuration settings you can customize. Most users can leave defaults, but advanced users may fine-tune.
 
-| Parameter                                                   | Required | Default   | Description                                                                                                                       |
-| ----------------------------------------------------------- | -------- | --------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `PUID`                                                      | Yes      | `0`       | **User ID** used to run Immich. If you don’t know what this is, leave at default.                                                 |
-| `PGID`                                                      | Yes      | `0`       | **Group ID** used to run Immich. Same as above—leave default if unsure.                                                           |
-| `TZ`                                                        | Yes      | `Etc/UTC` | **Timezone** for correct photo/video timestamps. Example: `Europe/London`.                                                        |
-| `Log Level`                                                 | No       | `info`    | Sets how detailed Immich logs are (e.g., `verbose`, `debug`, `log`, `warn`, `error`). Useful for troubleshooting.                 |
-| `ssl`                                                       | Yes      | `true`    | Enable HTTPS for secure connections. If `certfile` and `keyfile` are not specified, a self-signed certificate will be generated automatically. |
-| `certfile`                                                  | No       | -         | Name of SSL certificate file stored in `/ssl/`. Example: `fullchain.pem`.                                                         |
-| `keyfile`                                                   | No       | -         | Name of SSL private key file stored in `/ssl/`. Example: `privkey.pem`.                                                           |
-| `Storage type`                                              | Yes      | `HDD`     | Type of storage Immich uses (`SSD` or `HDD`).                                                                                     |
-| `Machine Learning Model TTL`                                | Yes      | `300`     | How long (in seconds) a machine learning model stays loaded in memory after not being used. `0` = always keep loaded.             |
-| `Machine Learning Worker Timeout`                           | Yes      | `300`     | If a machine learning worker doesn’t respond in this time (seconds), it will be restarted.                                        |
-| `Preload CLIP Textual Models`                               | No       | -         | Preload text-based AI models for **Smart Search** (searching photos/videos by description). Use only if you want faster searches. |
-| `Preload CLIP Visual Models`                                | No       | -         | Preload image-based AI models for **Smart Search**. This helps Immich understand image content faster.                            |
-| `Face Recognition Models`                                   | No       | -         | Preload face **recognition** models (used to match faces to known people). Preloading = faster results but uses more RAM.         |
-| `Face Detection Models`                                     | No       | -         | Preload face **detection** models (used to find faces in images/videos). Same note about RAM applies.                             |
-| `Trusted Proxies`                                           | No       | -         | List of proxy IP addresses Immich should trust (e.g., if using NGINX or another reverse proxy).                                   |
+| Parameter                                                   | Required | Default         | Description                                                                                                                       |
+| ----------------------------------------------------------- | -------- | --------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `PUID`                                                      | Yes      | `0`             | **User ID** used to run Immich. If you don’t know what this is, leave at default.                                                 |
+| `PGID`                                                      | Yes      | `0`             | **Group ID** used to run Immich. Same as above—leave default if unsure.                                                           |
+| `TZ`                                                        | Yes      | `Etc/UTC`       | **Timezone** for correct photo/video timestamps. Example: `Europe/London`.                                                        |
+| `Log Level`                                                 | No       | `info`          | Sets how detailed Immich logs are (e.g., `verbose`, `debug`, `log`, `warn`, `error`). Useful for troubleshooting.                 |
+| `ssl`                                                       | Yes      | `true`          | Enable HTTPS for secure connections. If `certfile` and `keyfile` are not specified, a self-signed certificate will be generated automatically. |
+| `certfile`                                                  | No       | -               | Name of SSL certificate file stored in `/ssl/`. Example: `fullchain.pem`.                                                         |
+| `keyfile`                                                   | No       | -               | Name of SSL private key file stored in `/ssl/`. Example: `privkey.pem`.                                                           |
+| `Storage type`                                              | Yes      | `HDD`           | Type of storage Immich uses (`SSD` or `HDD`).                                                                                     |
+| `Media Location`                                            | Yes      | `/media/immich` | Path where Immich stores photos and videos. Must be a subfolder of `/media/` or `/share/` (the only persistent folders accessible inside the add-on). |
+| `Machine Learning Model TTL`                                | Yes      | `300`           | How long (in seconds) a machine learning model stays loaded in memory after not being used. `0` = always keep loaded.             |
+| `Machine Learning Worker Timeout`                           | Yes      | `300`           | If a machine learning worker doesn’t respond in this time (seconds), it will be restarted.                                        |
+| `Preload CLIP Textual Models`                               | No       | -               | Preload text-based AI models for **Smart Search** (searching photos/videos by description). Use only if you want faster searches. |
+| `Preload CLIP Visual Models`                                | No       | -               | Preload image-based AI models for **Smart Search**. This helps Immich understand image content faster.                            |
+| `Face Recognition Models`                                   | No       | -               | Preload face **recognition** models (used to match faces to known people). Preloading = faster results but uses more RAM.         |
+| `Face Detection Models`                                     | No       | -               | Preload face **detection** models (used to find faces in images/videos). Same note about RAM applies.                             |
+| `Trusted Proxies`                                           | No       | -               | List of proxy IP addresses Immich should trust (e.g., if using NGINX or another reverse proxy).                                   |
 
 ### 🔌 Network Ports
 
@@ -66,6 +69,11 @@ Below are all the configuration settings you can customize. Most users can leave
 
 ## 📚 Storage Management
 
+### Immich Library
+
+* By default, Immich stores everything inside `/media/immich` (set by `Media Location`).
+* ⚠️ **Don't** manually move or change files inside this folder—always manage via Immich UI.
+
 ### External Libraries
 
 * You can store photos/videos on external folders mounted under:
@@ -73,32 +81,44 @@ Below are all the configuration settings you can customize. Most users can leave
   * `/media`
   * `/share`
 
-### Immich Library
-
-* By default, Immich stores everything inside `/media/immich`.
-* ⚠️ Do **not** manually move or change files inside this folder—always manage via Immich UI.
-
 ---
 
 ## 💾 NAS Storage Setup
 
-To store your photo library on a NAS (recommended for large libraries):
+To use a NAS for photo/video storage, you must first mount the smb or nfs share in Home Assistant:
 
-1. **Existing Users**:
+1. **Stop Immich**
+1. Navigate to **Supervisor** → **System** → **Storage**.
+1. Add a new network storage: ( ⚠️ don't mount the share on your `Media Location` path default: `/media/immich`)
+   * **Name**: `immich` (name of the folder to mount share on)
+   * **Usage**: `Share` (you can choose `Media` or `Share`)
+   * **Protocol**: SMB or NFS (enter login credentials if required).  
+1. Update your addon `Media Location` configuration with `/<usage>/<name>` (for the example above `/share/immich`)
+1. **Start Immich**
+1. **Check logs** and wait for the migration to complete
 
-   * Stop Immich
-   * Move the contents of `/media/immich` to your NAS folder
-2. **Mount Share Folder**:
+Check also `Media Library Migration` section to know more ⤵️
 
-   * Go to **Supervisor** → **System** → **Storage**
-   * Add a new network storage:
+---
 
-     * **Name**: `immich`
-     * **Usage**: `Media`
-     * **Protocol**: SMB/NFS (enter NAS login info if needed)
-3. **Restart Immich**
+## 📦 Media Library Migration
 
-⚠️ **Important**: If you don’t set this up before first start, Immich will default to local storage. Changing later requires moving files manually.
+If you want Immich to move your media library to a new folder:
+
+1. **Prepare the New Folder**  
+   * Ensure the new folder is either **empty** or **does not exist** (Immich will create it).  
+
+2. **Update Configuration**  
+   * Open the **Immich Add-on Configuration Page**.  
+   * Change the `Media Location` to the new folder (e.g., `/share/immich`).  
+
+3. **Start Immich**  
+   * Immich will automatically perform checks and migrate all media from the old location to the new one.  
+
+⚠️ **Important Notes**:  
+* Only subfolders of `/media/` or `/share/` are supported for `Media Location`.  
+* Migration may take time depending on your library size.  
+* Once complete, all new uploads will be stored in the new location.  
 
 ---
 
@@ -111,12 +131,12 @@ HTTPS is enabled **by default** (`ssl: true`).
    * You may see a browser warning the first time you connect—this is expected with self-signed certificates.  
 
 2. **Using Trusted Certificates (Recommended)**  
-   * If using Home Assistant’s **Let’s Encrypt add-on**, certificates will be stored in `/ssl/`.
-   * You should see two files:
-     * `fullchain.pem` (certificate)
-     * `privkey.pem` (private key)
+   * If using Home Assistant’s **Let’s Encrypt add-on**, certificates will be stored in `/ssl/`.  
+   * You should see two files:  
+     * `fullchain.pem` (certificate)  
+     * `privkey.pem` (private key)  
 
-   Example configuration:
+   Example configuration:  
 
    ```yaml
    ssl: true
