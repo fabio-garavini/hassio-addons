@@ -10,6 +10,10 @@
 
 ## Hassio addon
 
+### 🚄 Faster then ever 🚄
+
+* Now connections from Immich to Postgres and Redis use Unix sockets, which **reduce overhead and improve performance**
+
 ### 🎉 Storage Migration 🎉
 
 Moving your media library has never been easier, check the documentation

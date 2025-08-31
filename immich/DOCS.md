@@ -16,6 +16,8 @@ This monolithic package includes:
 * **PostgreSQL with VectorChord**: Vector-optimized database
 * **Redis**: Real-time notifications and caching
 
+Connections from Immich to Postgres and Redis use Unix sockets, which **reduce overhead and improve performance**
+
 [Official Immich Documentation](https://immich.app/docs)
 
 ---

@@ -23,18 +23,14 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Immich environment variables
 ENV \
     SERVER_PORT=2283 \
-    DB_HOSTNAME="localhost" \
-    DB_PORT=5432 \
-    DB_DATABASE_NAME="immich" \
-    DB_USERNAME="immich" \
-    DB_PASSWORD="immich" \
-    REDIS_HOSTNAME="localhost" \
-    IMMICH_MACHINE_LEARNING_URL="http://127.0.0.1:3003" \
-    IMMICH_REVERSE_GEOCODING_ROOT="/config/reverse-geocoding" \
-    MACHINE_LEARNING_CACHE_FOLDER="/data/cache"
+    DB_URL="postgresql://immich:immich@/immich?host=/var/run/postgresql" \
+    REDIS_SOCKET="/var/run/redis/redis.sock" \
+    MACHINE_LEARNING_CACHE_FOLDER="/data/cache" \
+    TRANSFORMERS_CACHE="/data/cache"
 
 # Postgres environment variables
-ENV PGDATA="/config/postgres" \
+ENV \
+    PGDATA="/config/postgres" \
     POSTGRES_INITDB_ARGS="--data-checksum" \
     POSTGRES_DB="immich" \
     POSTGRES_USER="immich" \

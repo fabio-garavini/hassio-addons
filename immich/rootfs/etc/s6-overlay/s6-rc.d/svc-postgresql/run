@@ -24,9 +24,9 @@ chown postgres:postgres -R "/data/logs/postgres"
 chmod 750 -R "/data/logs/postgres"
 
 s6-notifyoncheck -s 10000 -n 300 -w 1000 -c "pg_isready -U $POSTGRES_USER" \
-postgres-entrypoint.sh postgres \
-  -c timezone="$TZ" \
-  -c log_directory="/data/logs/postgres" \
-  -c log_timezone="$TZ" \
-  -c log_rotation_size=10MB \
-  -c config_file="/etc/postgresql/postgresql.conf"
+  postgres-entrypoint.sh postgres \
+    -c timezone="$TZ" \
+    -c log_directory="/data/logs/postgres" \
+    -c log_timezone="$TZ" \
+    -c log_rotation_size=10MB \
+    -c config_file="/etc/postgresql/postgresql.conf"
