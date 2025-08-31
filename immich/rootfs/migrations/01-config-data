@@ -9,6 +9,6 @@ if [ -d "/config/machine-learning" ]; then
   rm -rf /config/machine-learning
 fi
 
-if [ -d "/data/immich.json" ]; then
-  rm -rf /config/immich.json
+if [ -f "/data/immich.json" ]; then
+  mv /data/immich.json /config/immich.json
 fi
