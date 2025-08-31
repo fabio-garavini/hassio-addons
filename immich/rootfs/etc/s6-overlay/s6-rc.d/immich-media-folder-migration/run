@@ -175,6 +175,9 @@ if [ -d "$current_media_dir" ] && [ "$(ls -A "$current_media_dir")" ]; then
     if ! check_subfolder_conflict "$current_media_dir" "$IMMICH_MEDIA_LOCATION"; then
       bashio::addon.stop
     fi
+
+    # Ensure destination directory exists for disk check
+    mkdir -p "$IMMICH_MEDIA_LOCATION"
     
     # Check disk space before attempting migration
     if ! check_disk_space "$current_media_dir" "$IMMICH_MEDIA_LOCATION"; then
