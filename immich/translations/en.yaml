@@ -37,6 +37,10 @@ configuration:
     name: Storage Type
     description: >-
       Type of storage used by Home Assistant.
+  MACHINE_LEARNING_WORKERS:
+    name: Machine Learning Workers
+    description: >-
+      Number of machine learning worker processes to spawn (Default `1`)
   MACHINE_LEARNING_MODEL_TTL:
     name: Machine Learning Model TTL
     description: >-
