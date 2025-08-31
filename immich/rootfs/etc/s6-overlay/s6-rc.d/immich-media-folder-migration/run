@@ -9,9 +9,9 @@ check_subfolder_conflict() {
   local dest_dir=$(realpath -m "$2")
   
   # Check if destination starts with source path (is a subfolder)
-  if [[ "$abs_dest" == "$abs_source"* ]]; then
+  if [[ "$dest_dir" == "$source_dir"* ]]; then
     bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
-    bashio::log.error "INVALID MIGRATION: Destination [$abs_dest] is a subfolder of source [$abs_source]"
+    bashio::log.error "INVALID MIGRATION: Destination [$dest_dir] is a subfolder of source [$source_dir]"
     bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
     bashio::log.error "Moving media to a subfolder of the current location would cause data loss and corruption."
     bashio::log.error "Please choose a destination that is not within the current media directory."
@@ -20,9 +20,9 @@ check_subfolder_conflict() {
   fi
   
   # Also check the reverse case (source is subfolder of destination)
-  if [[ "$source_dir" == "$abs_dest"* ]]; then
+  if [[ "$source_dir" == "$dest_dir"* ]]; then
     bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
-    bashio::log.error "INVALID MIGRATION: Source [$abs_source] appears to be a subfolder of destination [$dest_dir]"
+    bashio::log.error "INVALID MIGRATION: Source [$source_dir] appears to be a subfolder of destination [$dest_dir]"
     bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
     bashio::log.error "Moving media to a parent folder of the current location would cause data loss and corruption."
     bashio::log.error "Please choose a destination that doesn't contain the current media directory."
