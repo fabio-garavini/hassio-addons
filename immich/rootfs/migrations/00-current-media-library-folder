@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-CONFIG_FILE="/data/immich.json"
+CONFIG_FILE="/config/immich.json"
 DEFAULT_MEDIA_DIR="/media/immich"
 
 initialize_config() {

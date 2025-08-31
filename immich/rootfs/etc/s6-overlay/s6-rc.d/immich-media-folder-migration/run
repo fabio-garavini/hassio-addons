@@ -3,44 +3,34 @@
 
 set -e
 
-valid_paths=("/media/" "/share/")
-
-# Check if the IMMICH_MEDIA_LOCATION starts with a valid path
-valid=false
-for path in "${valid_paths[@]}"; do
-  if [[ "$IMMICH_MEDIA_LOCATION" == "$path"* ]]; then
-    valid=true
-    break
+# Function to check if destination is a subfolder of source
+check_subfolder_conflict() {
+  local source_dir=$(realpath -m "$1")
+  local dest_dir=$(realpath -m "$2")
+  
+  # Check if destination starts with source path (is a subfolder)
+  if [[ "$dest_dir" == "$source_dir"* ]]; then
+    bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+    bashio::log.error "INVALID MIGRATION: Destination [$dest_dir] is a subfolder of source [$source_dir]"
+    bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+    bashio::log.error "Moving media to a subfolder of the current location would cause data loss and corruption."
+    bashio::log.error "Please choose a destination that is not within the current media directory."
+    bashio::log.error "Ask for help: https://github.com/fabio-garavini/hassio-addons/issues"
+    return 1
   fi
-done
-
-if ! $valid; then
-  bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
-  bashio::log.error "[$IMMICH_MEDIA_LOCATION] is not a valid persistent folder! ['/media/', '/share/']"
-  bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
-  bashio::log.error "Read the DOCUMENTATION page for more information on how to migrate the Immich Media folder"
-  bashio::log.error "Ask for help: https://github.com/fabio-garavini/hassio-addons/issues"
-  bashio::addon.stop
-fi
-
-CONFIG_FILE="/data/immich.json"
-
-if [ ! -f "$CONFIG_FILE" ]; then
-  echo '{}' > "$CONFIG_FILE"
-fi
-
-current_media_dir=$(jq -r ".media_location // empty" "${CONFIG_FILE}")
-
-if [ -z "$current_media_dir" ]; then
-  jq --arg path "$IMMICH_MEDIA_LOCATION" '.media_location = $path' "$CONFIG_FILE" > "${CONFIG_FILE}.tmp" && mv "${CONFIG_FILE}.tmp" "$CONFIG_FILE"
-  exit 0
-fi
-
-if [ "$current_media_dir" = "$IMMICH_MEDIA_LOCATION" ]; then
-  # No migration needed
-  bashio::log.debug "Skipping media library migration"
-  exit 0
-fi
+  
+  # Also check the reverse case (source is subfolder of destination)
+  if [[ "$source_dir" == "$dest_dir"* ]]; then
+    bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+    bashio::log.error "INVALID MIGRATION: Source [$source_dir] appears to be a subfolder of destination [$dest_dir]"
+    bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+    bashio::log.error "Moving media to a parent folder of the current location would cause data loss and corruption."
+    bashio::log.error "Please choose a destination that doesn't contain the current media directory."
+    bashio::log.error "Ask for help: https://github.com/fabio-garavini/hassio-addons/issues"
+  fi
+  
+  return 0
+}
 
 # Function to check available disk space
 check_disk_space() {
@@ -83,13 +73,13 @@ perform_migration() {
   mkdir -p "$dest_dir"
   
   # First, do a dry run to check for potential issues
-  if ! rsync -av --dry-run --remove-source-files "$source_dir/" "$dest_dir/" > /dev/null; then
+  if ! rsync -ah --dry-run --remove-source-files "$source_dir/" "$dest_dir/" > /dev/null; then
     bashio::log.error "Migration test failed. Aborting migration."
     return 1
   fi
   
   # Perform actual migration with progress and error handling
-  if rsync -a --progress --remove-source-files "$source_dir/" "$dest_dir/"; then
+  if rsync -ah --progress --remove-source-files "$source_dir/" "$dest_dir/"; then
     bashio::log.info "File migration completed successfully"
     
     # Clean up empty directories from source
@@ -118,11 +108,73 @@ perform_migration() {
   fi
 }
 
+if ! realpath -m "$IMMICH_MEDIA_LOCATION" >/dev/null 2>&1; then
+  bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+  bashio::log.error "[$IMMICH_MEDIA_LOCATION] is not a valid path. Please remove any special character or spaces"
+  bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+  bashio::log.error "Read the DOCUMENTATION page for more information on how to migrate the Immich Media folder"
+  bashio::log.error "Ask for help: https://github.com/fabio-garavini/hassio-addons/issues"
+  bashio::addon.stop
+fi
+
+valid_paths=("/media/" "/share/" "/config/library")
+
+# Check if the IMMICH_MEDIA_LOCATION starts with a valid path
+valid=false
+for path in "${valid_paths[@]}"; do
+  if [[ "$path" == */ ]]; then
+    # Match only subdirectories (not equal)
+    if [[ "$IMMICH_MEDIA_LOCATION" == "$path"* ]] && [[ "$IMMICH_MEDIA_LOCATION" != "$path" ]]; then
+      valid=true
+      break
+    fi
+  else
+    # Exact match only
+    if [[ "$IMMICH_MEDIA_LOCATION" == "$path" ]]; then
+      valid=true
+      break
+    fi
+  fi
+done
+
+if ! $valid; then
+  bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+  bashio::log.error "[$IMMICH_MEDIA_LOCATION] is not a valid media folder path! It must be under one of these paths [${valid_paths[@]}]"
+  bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+  bashio::log.error "Read the DOCUMENTATION page for more information on how to migrate the Immich Media folder"
+  bashio::log.error "Ask for help: https://github.com/fabio-garavini/hassio-addons/issues"
+  bashio::addon.stop
+fi
+
+CONFIG_FILE="/config/immich.json"
+
+if [ ! -f "$CONFIG_FILE" ]; then
+  echo '{}' > "$CONFIG_FILE"
+fi
+
+current_media_dir=$(jq -r ".media_location // empty" "${CONFIG_FILE}")
+
+if [ -z "$current_media_dir" ]; then
+  jq --arg path "$IMMICH_MEDIA_LOCATION" '.media_location = $path' "$CONFIG_FILE" > "${CONFIG_FILE}.tmp" && mv "${CONFIG_FILE}.tmp" "$CONFIG_FILE"
+  exit 0
+fi
+
+if [[ "$(realpath -m "$current_media_dir")" == "$(realpath -m "$IMMICH_MEDIA_LOCATION")" ]]; then
+  # No migration needed
+  bashio::log.debug "Skipping media library migration"
+  exit 0
+fi
+
 bashio::log.info "Start Immich Media Library migration..."
 
 # Check if current_media_dir exists and is not empty
 if [ -d "$current_media_dir" ] && [ "$(ls -A "$current_media_dir")" ]; then
   if [ ! -d "$IMMICH_MEDIA_LOCATION" ] || [ -z "$(ls -A "$IMMICH_MEDIA_LOCATION")" ]; then
+    
+    # Check for subfolder conflict before proceeding
+    if ! check_subfolder_conflict "$current_media_dir" "$IMMICH_MEDIA_LOCATION"; then
+      bashio::addon.stop
+    fi
     
     # Check disk space before attempting migration
     if ! check_disk_space "$current_media_dir" "$IMMICH_MEDIA_LOCATION"; then

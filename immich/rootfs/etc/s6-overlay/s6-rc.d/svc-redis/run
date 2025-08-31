@@ -4,21 +4,21 @@
 # make redis folders
 mkdir -p \
 	/config/redis \
-	/config/logs \
+	/data/logs \
 	/var/run/redis
 
 # copy redis defaults
-[[ ! -f /config/redis/redis.conf ]] &&
+[[ ! -f "/config/redis/redis.conf" ]] &&
 	cp /defaults/redis.conf /config/redis/redis.conf
 
 # permissions
 chown -R abc:abc \
 	/config/redis \
-	/config/logs \
+	/data/logs \
 	/var/run/redis
 
 s6-notifyoncheck -s 1000 -n 300 -w 1000 -c "redis-cli PING" \
-  s6-setuidgid abc \
+	s6-setuidgid abc \
 		redis-server /config/redis/redis.conf \
 		--bind 0.0.0.0 \
 		--port 6379 \
@@ -26,4 +26,6 @@ s6-notifyoncheck -s 1000 -n 300 -w 1000 -c "redis-cli PING" \
 		--always-show-logo no \
 		--dir /config/redis \
 		--daemonize no \
-		--logfile /config/logs/redis.log
+		--logfile /data/logs/redis.log \
+		--unixsocket /var/run/redis/redis.sock \
+		--unixsocketperm 777

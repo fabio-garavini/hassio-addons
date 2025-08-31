@@ -3,7 +3,7 @@
 
 # make db config folder
 #mkdir -p "$PGDATA" "/config/logs/postgres"
-mkdir -p "/config/logs/postgres"
+mkdir -p "/data/logs/postgres"
 
 # load postgres config file
 case "${DB_STORAGE_TYPE^^}" in
@@ -20,13 +20,13 @@ esac
 # permissions
 #chown postgres:postgres -R "$PGDATA" "/config/logs/postgres"
 #chmod 750 -R "$PGDATA" "/config/logs/postgres"
-chown postgres:postgres -R "/config/logs/postgres"
-chmod 750 -R "/config/logs/postgres"
+chown postgres:postgres -R "/data/logs/postgres"
+chmod 750 -R "/data/logs/postgres"
 
 s6-notifyoncheck -s 10000 -n 300 -w 1000 -c "pg_isready -U $POSTGRES_USER" \
-postgres-entrypoint.sh postgres \
-  -c timezone="$TZ" \
-  -c log_directory="/config/logs/postgres" \
-  -c log_timezone="$TZ" \
-  -c log_rotation_size=10MB \
-  -c config_file="/etc/postgresql/postgresql.conf"
+  postgres-entrypoint.sh postgres \
+    -c timezone="$TZ" \
+    -c log_directory="/data/logs/postgres" \
+    -c log_timezone="$TZ" \
+    -c log_rotation_size=10MB \
+    -c config_file="/etc/postgresql/postgresql.conf"

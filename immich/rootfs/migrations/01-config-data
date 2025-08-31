@@ -1,0 +1,14 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+
+if [ -d "/config/logs" ]; then
+  rm -rf /config/logs
+fi
+
+if [ -d "/config/machine-learning" ]; then
+  rm -rf /config/machine-learning
+fi
+
+if [ -f "/data/immich.json" ]; then
+  mv /data/immich.json /config/immich.json
+fi

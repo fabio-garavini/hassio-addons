@@ -26,4 +26,6 @@ This addon bundles:
 - **PostgreSQL**: Relational database (with pgvecto.rs extension)
 - **Redis**: In-memory database
 
+Connections from Immich to Postgres and Redis use Unix sockets, which **reduce overhead and improve performance**
+
 [Official Immich Documentation](https://immich.app/docs)
