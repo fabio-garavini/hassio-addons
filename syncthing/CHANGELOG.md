@@ -55,17 +55,14 @@ This release is also available as:
 
 * APT repository: https://apt.syncthing.net/
 
-* Docker image: `docker.io/syncthing/syncthing:2.0.3` or `ghcr.io/syncthing/syncthing:2.0.3`
+* Docker image: `docker.io/syncthing/syncthing:2.0.5` or `ghcr.io/syncthing/syncthing:2.0.5`
   (`{docker,ghcr}.io/syncthing/syncthing:2` to follow just the major version)
 
 ## What's Changed
 ### Fixes
-* fix(cmd): restore --version flag for compatibility by @acolomb in https://github.com/syncthing/syncthing/pull/10269
-* fix(cmd): make database migration more robust to write errors by @calmh in https://github.com/syncthing/syncthing/pull/10278
-* fix(cmd): provide temporary GUI/API server during database migration by @calmh in https://github.com/syncthing/syncthing/pull/10279
-* fix(db): clean files for dropped folders at startup by @calmh in https://github.com/syncthing/syncthing/pull/10280
+* fix(db): only vacuum database on startup when a migration script was actually run by @pixelspark in https://github.com/syncthing/syncthing/pull/10339
 ### Other
-* chore(slog): re-enable LOGGER_DISCARD (fixes #10262) by @rasa in https://github.com/syncthing/syncthing/pull/10267
-* build: downgrade gopsutil (fixes #10276) by @calmh in https://github.com/syncthing/syncthing/pull/10277
+* docs: add DCO requirement to contribution guidelines by @calmh in https://github.com/syncthing/syncthing/pull/10333
+* docs: update contribution guidelines from the docs site by @calmh in https://github.com/syncthing/syncthing/pull/10336
 
-**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.2...v2.0.3
+**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.4...v2.0.5
