@@ -53,6 +53,7 @@ Below are all the configuration settings you can customize. Most users can leave
 | `keyfile`                                                   | No       | -               | Name of SSL private key file stored in `/ssl/`. Example: `privkey.pem`                                                           |
 | `Storage type`                                              | Yes      | `HDD`           | Type of storage Immich uses (`SSD` or `HDD`)                                                                                     |
 | `Media Location`                                            | Yes      | `/media/immich` | Path where Immich stores photos and videos. Must be a subfolder of `/media/` or `/share/` (the only persistent folders accessible inside the add-on) |
+| `Thumbnail processes invalid images`                                | No      | -           | When true, generate thumbnails for invalid images             |
 | `Machine Learning Model TTL`                                | Yes      | `300`           | How long (in seconds) a machine learning model stays loaded in memory after not being used. `0` = always keep loaded             |
 | `Machine Learning Workers`                           | No      | `1`           | Number of machine learning worker processes to spawn                                        |
 | `Machine Learning Worker Timeout`                           | No      | `300`           | If a machine learning worker doesn’t respond in this time (seconds), it will be restarted                                        |
@@ -61,6 +62,7 @@ Below are all the configuration settings you can customize. Most users can leave
 | `Face Recognition Models`                                   | No       | -               | Preload face **recognition** models (used to match faces to known people). Preloading = faster results but uses more RAM         |
 | `Face Detection Models`                                     | No       | -               | Preload face **detection** models (used to find faces in images/videos). Same note about RAM applies                             |
 | `Trusted Proxies`                                           | No       | -               | List of proxy IP addresses Immich should trust (e.g., if using NGINX or another reverse proxy)                                   |
+| `Storage Mounts`                                           | No       | -               | List of external storage mounts to be mounted inside the addon check the `External Storage Mounts` section below                                   |
 
 ### 🔌 Network Ports
 
@@ -90,19 +92,113 @@ Below are all the configuration settings you can customize. Most users can leave
 
 ---
 
+## 📦 Storage Mounts
+
+You can also store your Immich library on an external storage device (like a usb hard disk or NAS)
+
+You can specify as many "storage mounts" as you want in the addon config
+
+I strongly recommend storing your library on a NAS, which is usually more reliable. You can find how in the `NAS Storage Setup`
+
+### Mount Hard Disk
+
+I will guide you through how to format the disk 
+
+1. connect the hard disk to Home Assistant server
+1. start Immich and check the logs
+   
+   identify your hard disk, it should look something like this (maybe with a different device name)
+   if you're not shure, you can always double check with the drive serial printed on the disk
+   ```
+   ════════════════════════════════════════════════════════════════════
+                        LOCAL STORAGE DEVICES                        
+   ════════════════════════════════════════════════════════════════════
+   DEVICE   SIZE     MODEL                          PT TABLE   PARTITIONS SERIAL
+   ────────────────────────────────────────────────────────────────────
+   sda      20G      QEMU HARDDISK                  none       0          QM00001
+   ────────────────────────────────────────────────────────────────────
+   ```
+
+1. **Erase and create a primary partition on your disk**
+
+   add to your `Storage Mounts` config this to let Immich know to format the disk
+
+   ```yaml
+   - type: local
+     mount: sda         # your disk device name
+     path: storage      # name of the folder which will be mounted under /mnt/ (in this case /mnt/storage)
+     auto_format: true  # makes the primary partition ext4
+     erase: true
+   ```
+
+1. Start Immich and wait for the disk to be initialized
+
+   Then you should see in the logs something like this
+   ```
+   Disk partition created. Please update your storage_mounts config with:
+   - type: local
+     mount: disk/by-uuid/11c83a29-04e7-453d-8fd4-f3022ea3b0ca
+     path: storage
+   ```
+
+1. Copy it and replace your device storage mount config
+
+   ⚠️ replace also `auto_format: true` and `erase: true`
+
+1. (Optional) Move your Immich library to the external disk
+
+   you can now set `Media Location` to your `/mnt/<path>` (for this example `/mnt/storage`)
+
+1. Start Immich and check the logs to make shure everything is working fine
+
+---
+
 ## 💾 NAS Storage Setup
 
-To use a NAS for photo/video storage, you must first mount the smb or nfs share in Home Assistant:
+There are two ways of connecting Immich to a NAS
+
+### Home Assistant Storage mount
 
 1. **Stop Immich**
 1. Navigate to **Supervisor** → **System** → **Storage**.
-1. Add a new network storage: ( ⚠️ don't mount the share on your `Media Location` path default: `/media/immich`)
+1. Add a new network storage: ( ⚠️ don't mount the share on your `Media Location` path, default: `/media/immich`)
    * **Name**: `immich` (name of the folder to mount share on)
    * **Usage**: `Share` (you can choose `Media` or `Share`)
    * **Protocol**: SMB or NFS (enter login credentials if required).  
 1. Update your addon `Media Location` configuration with `/<usage>/<name>` (for the example above `/share/immich`)
 1. **Start Immich**
 1. **Check logs** and wait for the migration to complete
+
+Check also `Media Library Migration` section to know more ⤵️
+
+### Addon config
+
+1. add to your addon `storage mounts` config
+
+   ```yaml
+   - type: smb
+     mount: //192.168.1.242/test # your smb server and shared folder
+     path: immich-test           # name of the folder which will be mounted under /mnt/
+     username: user              # optional default to guest
+     password: password          # optional
+     domain: WORKGROUP           # optional
+     #options: <you can add additional smb options here>
+   ```
+
+   or
+
+   ```yaml
+   - type: nfs
+     mount: 192.168.1.242:/storage/test   # your nfs server and path
+     path: nfs-test                       # name of the folder which will be mounted under /mnt/
+     #options: <you can add additional nfs options here>
+   ```
+1. update your `Media Location` (if you want to transfer your library to the external storage)
+
+   ```
+   /mnt/immich-test # or /mnt/nfs-test
+   ```
+1. restart Immich
 
 Check also `Media Library Migration` section to know more ⤵️
 

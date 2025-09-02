@@ -1,0 +1,29 @@
+#!/usr/bin/with-contenv bash
+
+usermod -o -u "${PUID:-911}" abc &>/dev/null
+groupmod -o -g "${PGID:-911}" abc &>/dev/null
+
+echo '
+╔═════════════════════════════════════════════╗
+
+  ██ ███    ███ ███    ███ ██  ██████ ██   ██ 
+  ██ ████  ████ ████  ████ ██ ██      ██   ██ 
+  ██ ██ ████ ██ ██ ████ ██ ██ ██      ███████ 
+  ██ ██  ██  ██ ██  ██  ██ ██ ██      ██   ██ 
+  ██ ██      ██ ██      ██ ██  ██████ ██   ██ 
+
+  Home Assistant Add-on from Fabio Garavini
+  Immich & Machine Learning from Image Genius
+  Baseimage from linuxserver.io'
+
+echo "╠═════════════════════════════════════════════╣
+  User/Group ID:
+  User UID: $(id -u abc)
+  User GID: $(id -g abc)"
+
+echo '╚═════════════════════════════════════════════╝'
+
+chown abc:abc \
+    /data \
+    /config \
+    /defaults

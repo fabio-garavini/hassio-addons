@@ -1,0 +1,546 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+
+set -e
+
+
+# ================================================================================
+# Configuration
+# ================================================================================
+readonly MOUNT_BASE_DIR="/mnt"
+readonly MOUNT_TIMEOUT="${MOUNT_TIMEOUT:-30}"
+readonly MAX_RETRY_ATTEMPTS="${MAX_RETRY_ATTEMPTS:-3}"
+readonly RETRY_DELAY="${RETRY_DELAY:-5}"
+
+# ================================================================================
+# System Information Functions
+# ================================================================================
+scan_local_partitions() {
+
+    bashio::log.info "Scanning system for available storage devices..."
+
+    bashio::log.blue "════════════════════════════════════════════════════════════════════"
+    bashio::log.blue "                       LOCAL STORAGE DEVICES                        "
+    bashio::log.blue "════════════════════════════════════════════════════════════════════"
+    bashio::log.blue "$(printf '%-8s %-8s %-30s %-10s %-10s %s' "DEVICE" "SIZE" "MODEL" "PT TABLE" "PARTITIONS" "SERIAL")"
+    bashio::log.blue "────────────────────────────────────────────────────────────────────"
+
+    lsblk -J -o NAME,MODEL,SIZE,PTTYPE,LABEL,SERIAL | jq -c '.blockdevices[] | select(.name | startswith("zram") | not) | select((.children // []) | all(.label != "hassos-boot"))' | while read -r disk_json; do
+        name=$(jq -r '.name' <<< "$disk_json")
+        model=$(jq -r '.model // "n/a"' <<< "$disk_json")
+        pttype=$(jq -r '.pttype // "none"' <<< "$disk_json")
+        size=$(jq -r '.size' <<< "$disk_json")
+        serial=$(jq -r '.serial // "n/a"' <<< "$disk_json")
+
+        partitions=$(jq -e '(.children // []) | length' <<< "$disk_json")
+
+        bashio::log.blue "$(printf '%-8s %-8s %-30s %-10s %-10s %s' "$name" "$size" "$model" "$pttype" "$partitions" "$serial")"
+    done
+
+    bashio::log.blue "────────────────────────────────────────────────────────────────────"
+
+
+    bashio::log.blue "════════════════════════════════════════════════════════════════════"
+    bashio::log.blue "                      LIST DISKS PARTITIONS                         "
+    bashio::log.blue "════════════════════════════════════════════════════════════════════"
+    bashio::log.blue "$(printf "%-15s %-7s %-11s %-8s %-20s %s\n" "DEVICE" "SIZE" "FILESYSTEM" "MOUNTED" "LABEL" "UUID")"
+    bashio::log.blue "────────────────────────────────────────────────────────────────────"
+
+    lsblk -J -o NAME,SIZE,fstype,MOUNTPOINT,LABEL,UUID,PTTYPE | jq -c '.blockdevices[] | select(.name | startswith("zram") | not) | select((.children // []) | all(.label != "hassos-boot"))' | while read -r disk_json; do
+        name=$(jq -r '.name' <<< "$disk_json")
+        size=$(jq -r '.size' <<< "$disk_json")
+        fstype=$(jq -r '.fstype // "unknown"' <<< "$disk_json")
+        mountpoint=$(jq -r '.model // empty' <<< "$disk_json")
+        label=$(jq -r '.label // "n/a"' <<< "$disk_json")
+        uuid=$(jq -r '.uuid // "n/a"' <<< "$disk_json")
+        pttype=$(jq -r '.pttype // "none"' <<< "$disk_json")
+
+        if [[ -n "$mountpoint" ]]; then
+          mounted=true
+        else
+          mounted=false
+        fi
+
+        bashio::log.blue "$(printf '%-15s %-7s' "$name" "$size")"
+
+        # Check if the disk has partitions
+        mapfile -t partitions < <(jq -c '.children // [] | .[]' <<< "$disk_json")
+
+        # If there is at least one partition, check the first partition's label
+        for partition in "${partitions[@]}"; do
+            name=$(jq -r '.name' <<< "$partition")
+            size=$(jq -r '.size' <<< "$partition")
+            fstype=$(jq -r '.fstype // "unknown"' <<< "$partition")
+            mountpoint=$(jq -r '.model // empty' <<< "$partition")
+            label=$(jq -r '.label // "n/a"' <<< "$partition")
+            uuid=$(jq -r '.uuid // "n/a"' <<< "$partition")
+
+            if [[ -n "$mountpoint" ]]; then
+                mounted=true
+            else
+                mounted=false
+            fi
+
+            bashio::log.blue "$(printf " ├─  %-10s %-7s %-11s %-8s %-20s %s\n" "$name" "$size" "$fstype" "$mounted" "$label" "$uuid")"
+        done
+    done
+
+    bashio::log.blue "────────────────────────────────────────────────────────────────────"
+}
+
+# ================================================================================
+# Filesystem Functions
+# ================================================================================
+format_partition() {
+    local device="$1"
+    local fstype="${2:-ext4}"
+    local label="${3:-addon-storage}"
+    
+    # Safety checks
+    if [[ ! -b "/dev/$device" ]]; then
+        bashio::log.error "Device $device is not a block device"
+        return 1
+    fi
+    
+    if mountpoint -q "/dev/$device" 2>/dev/null || grep -q "^/dev/$device " /proc/mounts; then
+        bashio::log.error "Device $device is currently mounted. Cannot format."
+        return 1
+    fi
+    
+    # Check if formatting tool is available
+    local mkfs_cmd="mkfs.$fstype"
+    if ! command -v "$mkfs_cmd" >/dev/null 2>&1; then
+        bashio::log.error "Formatting tool $mkfs_cmd not available"
+        return 1
+    fi
+    
+    bashio::log.warning "Formatting device $device as $fstype..."
+    
+    # Format with appropriate options based on filesystem type
+    case "$fstype" in
+        "ext4"|"xfs"|"btrfs")
+            $mkfs_cmd -F -L "$label" "/dev/$device" >/dev/null 2>&1
+            ;;
+        *)
+            $mkfs_cmd -F -L "$label" "/dev/$device" >/dev/null 2>&1
+            ;;
+    esac
+    
+    if [[ $? -eq 0 ]]; then
+        bashio::log.info "Successfully formatted $device as $fstype"
+        return 0
+    else
+        bashio::log.error "Failed to format $device as $fstype"
+        return 1
+    fi
+}
+
+initialize_disk() {
+    local device="$1"
+    local pttype="${2:-gpt}"
+    local fstype="${3:-ext4}"
+
+    bashio::log.warning "Creating $pttype partition table on $device..."
+    
+    # Create partition table
+    case "$pttype" in
+        "mbr"|"gpt")
+            parted "/dev/$device" --script mklabel "$pttype" mkpart primary $fstype 0% 100% 2>&1
+            ;;
+        *)
+            bashio::log.error "Unkown $pttype partition table"
+            return 1
+            ;;
+    esac
+    
+    if [[ $? -eq 0 ]]; then
+        bashio::log.info "Successfully created $pttype partition table on $device"
+        return 0
+    else
+        bashio::log.error "Failed to created $pttype partition table on $device"
+        return 1
+    fi
+}
+
+# ================================================================================
+# Mount Functions
+# ================================================================================
+mount_local() {
+    local device="$1"
+    local mount_point="$2"
+    local auto_format="${3:-false}"
+    local erase="${4:-false}"
+    local fstype="${5:-auto}"
+    local mount_options="${6:-defaults,noatime}"
+    
+    bashio::log.info "Attempting to mount local device $device to $mount_point"
+    
+    # Validate device
+    if [[ ! -b "/dev/$device" ]]; then
+        bashio::log.error "Block device $device does not exist"
+        return 1
+    fi
+
+    device_info=$(lsblk --json --output NAME,TYPE,PTTYPE,FSTYPE "/dev/$device" | jq -c '.blockdevices[]')
+
+    device_type=$(jq -r '.type' <<< "$device_info")
+
+    if [[ "$device_type" == "disk" ]]; then
+        if [[ "$auto_format" == "true" ]] && [[ "$erase" == "true" ]]; then
+            if ! initialize_disk "$device" "gpt" "ext4"; then
+                return 1
+            fi
+
+            #parted "/dev/$device" --script mkpart primary ext4 0% 100%
+            partprobe "/dev/$device"
+            udevadm settle
+
+            partition=$(lsblk --json -o name "/dev/$device" | jq -r '.blockdevices[0].children[0].name')
+            if ! format_partition "$partition" "ext4" "$(basename "${mount_point%/}")"; then
+                return 1
+            fi
+
+            partprobe "/dev/$partition"
+            udevadm settle
+
+            uuid=$(lsblk --json -o uuid "/dev/$partition" | jq -r '.blockdevices[0].uuid')
+
+            bashio::log.info "Disk partition created. Please update your storage_mounts config with:"
+            bashio::log.blue "- type: local"
+            bashio::log.blue "  mount: disk/by-uuid/$uuid"
+            bashio::log.blue "  path: ${mount_point#/mnt/}"
+            bashio::addon.stop
+        elif [[ -z "$(jq -r '.pttype // empty' <<< "$device_info")" ]] || jq -e '(.children // []) | length == 0' <<< "$device_info" > /dev/null; then
+            bashio::log.error "The disk $device that you want to mount doesn't have any partition"
+            bashio::log.error "To initialize it add 'auto_format: true' and 'erase: true' to its mount config"
+            bashio::log.error "!This will erase your disk!"
+            return 1
+        else
+            bashio::log.error "The disk $device that you want to mount have data"
+            bashio::log.error "You need to specify a partition instead of the whole disk"
+            bashio::log.error "Or to ERASE it add 'auto_format: true' and 'erase: true' to its mount config"
+            bashio::log.error "Please read the Documentation page on how to mount external storage"
+            return 1
+        fi
+    fi
+
+    if [[ "$device_type" == "part" ]]; then
+        if [[ "$auto_format" == "true" ]] && [[ "$erase" == "true" ]]; then
+            if ! format_partition "$device" "ext4" "$(basename "${mount_point%/}")"; then
+                return 1
+            fi
+
+            partprobe "/dev/$device"
+            udevadm settle
+
+            uuid=$(lsblk --json -o uuid "/dev/$device" | jq -r '.blockdevices[0].uuid')
+
+            bashio::log.info "Disk partition created. Please update your storage_mounts config with:"
+            bashio::log.blue "- type: local"
+            bashio::log.blue "  mount: disk/by-uuid/$uuid"
+            bashio::log.blue "  path: ${mount_point#/mnt/}"
+            bashio::addon.stop
+        fi
+    fi
+
+    local detected_fs=$(jq -r '.fstype' <<< "$device_info")
+    
+    # Create mount point
+    if [[ ! -d "$mount_point" ]]; then
+        mkdir -p "$mount_point"
+        # This is to ensure that if the mount fails or gets disconnected we don't have data corruption
+        chmod 000 "$mount_point"
+    fi
+    
+    # Prepare mount command
+    mount_cmd="mount"
+    [[ "$detected_fs" != "auto" ]] && mount_cmd="$mount_cmd -t $detected_fs"
+    mount_cmd="$mount_cmd -o $mount_options"
+    
+    # Attempt mount with retry logic
+    retry_count=0
+    while [[ $retry_count -lt "$MAX_RETRY_ATTEMPTS" ]]; do
+        if $mount_cmd "/dev/$device" "$mount_point" 2>/dev/null; then
+            bashio::log.info "Successfully mounted $device to $mount_point (filesystem: $detected_fs)"
+            return 0
+        fi
+        
+        ((retry_count++))
+        bashio::log.warning "Mount attempt $retry_count/$MAX_RETRY_ATTEMPTS failed for $device. Retrying in ${RETRY_DELAY}s..."
+        sleep "$RETRY_DELAY"
+    done
+    
+    bashio::log.error "Failed to mount $device after $MAX_RETRY_ATTEMPTS attempts"
+    return 1
+}
+
+mount_smb() {
+    local server_path="$1"
+    local mount_point="$2"
+    local username="${3:-}"
+    local password="${4:-}"
+    local domain="${5:-WORKGROUP}"
+    local options="${6:-}"
+    
+    bashio::log.info "Attempting to mount SMB share $server_path to $mount_point"
+    
+    # Check for mount.cifs
+    if ! command -v mount.cifs >/dev/null 2>&1; then
+        bashio::log.error "mount.cifs not available"
+        return 1
+    fi
+    
+    # Create mount point
+    if [[ ! -d "$mount_point" ]]; then
+        mkdir -p "$mount_point"
+        # This is to ensure that if the mount fails or gets disconnected we don't have data corruption
+        chmod 000 "$mount_point"
+    fi
+
+    uid=$(bashio::config "PUID" "1000")
+    gid=$(bashio::config "PGID" "1000")
+    
+    # Build mount options
+    local mount_opts="uid=$uid,gid=$gid,dir_mode=0755,file_mode=0644"
+    
+    # Add custom options if provided
+    [[ -n "$options" ]] && mount_opts="$mount_opts,$options"
+    
+    # Handle authentication
+    if [[ -n "$username" ]]; then
+        mount_opts="$mount_opts,username=$username,password=$password,domain=$domain"
+    else
+        mount_opts="$mount_opts,guest,noperm"
+    fi
+    
+    # Attempt mount with retry logic
+    local retry_count=0
+    local mount_success=false
+    
+    while [[ $retry_count -lt "$MAX_RETRY_ATTEMPTS" ]]; do
+        if timeout "$MOUNT_TIMEOUT" mount.cifs -o "$mount_opts" "$server_path" "$mount_point" 2>/dev/null; then
+            bashio::log.info "Successfully mounted SMB share $server_path to $mount_point"
+            mount_success=true
+            break
+        fi
+        
+        ((retry_count++))
+        bashio::log.warning "SMB mount attempt $retry_count failed. Retrying in ${RETRY_DELAY}s..."
+        sleep "$RETRY_DELAY"
+    done
+    
+    if [[ "$mount_success" == "true" ]]; then
+        return 0
+    else
+        bashio::log.error "Failed to mount SMB share after $MAX_RETRY_ATTEMPTS attempts"
+        return 1
+    fi
+}
+
+mount_nfs() {
+    local server_path="$1"
+    local mount_point="$2"
+    local options="${3:-}"
+    
+    bashio::log.info "Attempting to mount NFS share $server_path to $mount_point"
+    
+    # Check for mount.nfs
+    if ! command -v mount.nfs >/dev/null 2>&1; then
+        bashio::log.error "mount.nfs not available. Install nfs-common package."
+        return 1
+    fi
+    
+    # Create mount point
+    if [[ ! -d "$mount_point" ]]; then
+        mkdir -p "$mount_point"
+        # This is to ensure that if the mount fails or gets disconnected we don't have data corruption
+        chmod 000 "$mount_point"
+    fi
+    
+    # Build mount options
+    local mount_opts="rw,sync,hard,intr,timeo=100,retrans=3,_netdev"
+    
+    # Add custom options if provided
+    [[ -n "$options" ]] && mount_opts="$mount_opts,$options"
+    
+    # Attempt mount with retry logic
+    local retry_count=0
+    while [[ $retry_count -lt "$MAX_RETRY_ATTEMPTS" ]]; do
+        if timeout "$MOUNT_TIMEOUT" mount.nfs -o "$mount_opts" "$server_path" "$mount_point" 2>/dev/null; then
+            bashio::log.info "Successfully mounted NFS share $server_path to $mount_point"
+            return 0
+        fi
+        
+        ((retry_count++))
+        bashio::log.warning "NFS mount attempt $retry_count failed. Retrying in ${RETRY_DELAY}s..."
+        sleep "$RETRY_DELAY"
+    done
+    
+    bashio::log.error "Failed to mount NFS share after $MAX_RETRY_ATTEMPTS attempts"
+    return 1
+}
+
+# ================================================================================
+# Configuration Processing
+# ================================================================================
+validate_mount_config() {
+    local index="$1"
+    
+    # Check required fields
+    bashio::config.require "storage_mounts[${index}].mount"
+    bashio::config.require "storage_mounts[${index}].path"
+    
+    local mount_type
+    mount_type=$(bashio::config "storage_mounts[${index}].type" "local")
+    
+    # Validate type-specific requirements
+    case "$mount_type" in
+        "local")
+            local device
+            device=$(bashio::config "storage_mounts[${index}].mount")
+            if [[ ! -b "/dev/$device" ]] && [[ ! -e "/dev/$device" ]]; then
+                bashio::log.error "Device $device does not exist"
+                return 1
+            fi
+            ;;
+        "smb"|"cifs")
+            local server_path
+            server_path=$(bashio::config "storage_mounts[${index}].mount")
+            if [[ ! "$server_path" =~ ^//[^/]+/.+ ]]; then
+                bashio::log.error "Invalid SMB path format: $server_path. Expected: //server/share"
+                return 1
+            fi
+            ;;
+        "nfs")
+            local server_path
+            server_path=$(bashio::config "storage_mounts[${index}].mount")
+            if [[ ! "$server_path" =~ ^[^:]+:.+ ]]; then
+                bashio::log.error "Invalid NFS path format: $server_path. Expected: server:/path"
+                return 1
+            fi
+            ;;
+        *)
+            bashio::log.error "Unsupported mount type: $mount_type"
+            return 1
+            ;;
+    esac
+    
+    return 0
+}
+
+process_mount() {
+    local index="$1"
+    
+    # Validate configuration first
+    if ! validate_mount_config "$index"; then
+        return 1
+    fi
+    
+    # Extract configuration
+    local mount_type mount_source mount_path mount_point
+    mount_type=$(bashio::config "storage_mounts[${index}].type" "local")
+    mount_source=$(bashio::config "storage_mounts[${index}].mount")
+    mount_path=$(bashio::config "storage_mounts[${index}].path")
+    mount_point="$MOUNT_BASE_DIR/$mount_path"
+    
+    # Ensure mount path doesn't contain dangerous characters
+    if [[ "$mount_path" =~ \.\. ]] || [[ "$mount_path" =~ ^/ ]]; then
+        bashio::log.error "Invalid mount path: $mount_path"
+        bashio::log.error "Path should only contain the folder name to mount under /mnt/ (example 'immich-library' )"
+        bashio::log.error "For example path: 'immich-library' will be mounted on '/mnt/immich-library'"
+        return 1
+    fi
+    
+    bashio::log.info "Processing mount configuration: type=$mount_type, source=$mount_source"
+    
+    # Check if already mounted
+    if mountpoint -q "/dev/$device" 2>/dev/null || grep -q "^/dev/$device " /proc/mounts; then
+        bashio::log.error "Mount point $mount_path ($mount_point) is already mounted"
+        bashio::log.error "Choose another path"
+        return 1
+    fi
+    
+    # Process based on type
+    case "$mount_type" in
+        "local")
+            local auto_format erase fstype options
+            auto_format=$(bashio::config "storage_mounts[${index}].auto_format" "false")
+            erase=$(bashio::config "storage_mounts[${index}].erase" "false")
+            fstype=$(bashio::config "storage_mounts[${index}].fstype" "ext4")
+            options=$(bashio::config "storage_mounts[${index}].options" "defaults,noatime")
+            mount_local "$mount_source" "$mount_point" "$auto_format" "$erase" "$fstype" "$options"
+            ;;
+            
+        "smb"|"cifs")
+            local username password domain options
+            username=$(bashio::config "storage_mounts[${index}].username" "")
+            [[ -n "$username" ]] && [[ "$username" == "null" ]] && username=
+            password=$(bashio::config "storage_mounts[${index}].password" "")
+            [[ -n "$password" ]] && [[ "$password" == "null" ]] && password=
+            domain=$(bashio::config "storage_mounts[${index}].domain" "WORKGROUP")
+            options=$(bashio::config "storage_mounts[${index}].options" "vers=3.0,_netdev,noserverino,rw")
+            mount_smb "$mount_source" "$mount_point" "$username" "$password" "$domain" "$options"
+            ;;
+            
+        "nfs")
+            local options
+            options=$(bashio::config "storage_mounts[${index}].options" "vers=4")
+            mount_nfs "$mount_source" "$mount_point" "$options"
+            ;;
+            
+        *)
+            bashio::log.error "Unknown mount type: $mount_type"
+            return 1
+            ;;
+    esac
+    
+    return $?
+}
+
+# ================================================================================
+# Main Function
+# ================================================================================
+main() {
+    # Create base mount directory
+    mkdir -p "$MOUNT_BASE_DIR"
+    chmod 755 "$MOUNT_BASE_DIR"
+
+    # Display system information
+    scan_local_partitions
+
+    # Check for mount configurations
+    if ! bashio::config.exists 'storage_mounts' || [ -z "$(bashio::config 'storage_mounts|keys')" ]; then
+        bashio::log.info "No storage mounts configured"
+        exit 0
+    fi
+    
+    # Process mount configurations
+    mount_count=0
+    success_count=0
+    
+    for index in $(bashio::config 'storage_mounts|keys'); do
+        mount_count=$((mount_count + 1))
+        device=$(bashio::config "storage_mounts[${index}].mount")
+        
+        bashio::log.info "Processing mount $device configuration..."
+
+        if process_mount "$index"; then
+            success_count=$((success_count + 1))
+            bashio::log.info "Mount configuration $device processed successfully"
+        else
+            bashio::log.error "Failed to process mount configuration $device"
+        fi
+    done
+    
+    bashio::log.debug "Mount processing complete: $success_count/$mount_count successful"
+    
+    # Fail if no mounts succeeded
+    if [[ $success_count -lt $mount_count ]]; then
+        bashio::log.error "One or more mount attempts failed. Exiting."
+        bashio::addon.stop
+    else
+        bashio::log.info "Mounting external storage completed"
+    fi
+}
+
+main "$@"

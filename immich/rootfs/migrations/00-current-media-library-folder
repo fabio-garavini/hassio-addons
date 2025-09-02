@@ -18,15 +18,14 @@ if [ -f "$CONFIG_FILE" ]; then
 fi
 
 # Check default media dir
-if [ -d "$DEFAULT_MEDIA_DIR" ] && [ "$(ls -A "$DEFAULT_MEDIA_DIR")" ]; then
+if [ -d "$DEFAULT_MEDIA_DIR" ] && [ -f "$DEFAULT_MEDIA_DIR/library/.immich" ]; then
   initialize_config "$DEFAULT_MEDIA_DIR"
 fi
 
 # Check IMMICH_MEDIA_LOCATION if it's set and different from default
 if [ -n "$IMMICH_MEDIA_LOCATION" ] && \
-   [ "$IMMICH_MEDIA_LOCATION" != "$DEFAULT_MEDIA_DIR" ] && \
    [ -d "$IMMICH_MEDIA_LOCATION" ] && \
-   [ "$(ls -A "$IMMICH_MEDIA_LOCATION")" ]; then
+   [ -f "$IMMICH_MEDIA_LOCATION/library/.immich" ]; then
 
   initialize_config "$IMMICH_MEDIA_LOCATION"
 fi

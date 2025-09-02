@@ -1,5 +1,5 @@
 name: Immich
-version: 1.140.1-v1
+version: 1.140.1-v2
 slug: immich
 codenotary: info@fabiogaravini.dev
 description: High performance self-hosted photo and video management solution
@@ -23,12 +23,111 @@ backup_exclude:
   - "**/logs"
 tmpfs: true
 video: true
+usb: true
+udev: true
+privileged:
+  - SYS_ADMIN
+  - DAC_READ_SEARCH
 devices:
+  - /dev/ttyUSB0
+  # GPU
   - /dev/kfd
   - /dev/dri
+  - /dev/dxg
+  - /dev/dri/renderD128
   - /dev/vchiq
   - /dev/video0
+  - /dev/video1
   - /dev/video10
+  # Storage
+  - /dev/mmcblk
+  - /dev/fuse
+  - /dev/nvme
+  - /dev/nvme0
+  - /dev/nvme0n1
+  - /dev/nvme0n1p1
+  - /dev/nvme0n1p2
+  - /dev/nvme0n1p3
+  - /dev/nvme1
+  - /dev/nvme1n1
+  - /dev/nvme1n1p1
+  - /dev/nvme1n1p2
+  - /dev/nvme1n1p3
+  - /dev/nvme2
+  - /dev/nvme2n1
+  - /dev/nvme2n1p1
+  - /dev/nvme2n1p2
+  - /dev/nvme2n3p3
+  - /dev/nvme3
+  - /dev/nvme3n1
+  - /dev/nvme3n1p1
+  - /dev/nvme3n1p2
+  - /dev/nvme3n3p3
+  - /dev/nvme4
+  - /dev/nvme4n1
+  - /dev/nvme4n1p1
+  - /dev/nvme4n1p2
+  - /dev/nvme4n3p3
+  - /dev/sda
+  - /dev/sda1
+  - /dev/sda2
+  - /dev/sda3
+  - /dev/sda4
+  - /dev/sdb
+  - /dev/sdb1
+  - /dev/sdb2
+  - /dev/sdb3
+  - /dev/sdb4
+  - /dev/sdc
+  - /dev/sdc1
+  - /dev/sdc2
+  - /dev/sdc3
+  - /dev/sdc4
+  - /dev/sdd
+  - /dev/sdd1
+  - /dev/sdd2
+  - /dev/sdd3
+  - /dev/sdd4
+  - /dev/sde
+  - /dev/sde1
+  - /dev/sde2
+  - /dev/sde3
+  - /dev/sde4
+  - /dev/sdf
+  - /dev/sdf1
+  - /dev/sdf2
+  - /dev/sdf3
+  - /dev/sdf4
+  - /dev/vda
+  - /dev/vda1
+  - /dev/vda2
+  - /dev/vda3
+  - /dev/vda4
+  - /dev/vdb
+  - /dev/vdb1
+  - /dev/vdb2
+  - /dev/vdb3
+  - /dev/vdb4
+  - /dev/vdc
+  - /dev/vdc1
+  - /dev/vdc2
+  - /dev/vdc3
+  - /dev/vdc4
+  - /dev/vdd
+  - /dev/vdd1
+  - /dev/vdd2
+  - /dev/vdd3
+  - /dev/vdd4
+  - /dev/vde
+  - /dev/vde1
+  - /dev/vde2
+  - /dev/vde3
+  - /dev/vde4
+  - /dev/vdf
+  - /dev/vdf1
+  - /dev/vdf2
+  - /dev/vdf3
+  - /dev/vdf4
 schema:
   TZ: str?
   IMMICH_LOG_LEVEL: list(verbose|debug|log|warn|error)
@@ -44,7 +143,17 @@ schema:
   MACHINE_LEARNING_PRELOAD__FACIAL_RECOGNITION__RECOGNITION: str?
   MACHINE_LEARNING_PRELOAD__FACIAL_RECOGNITION__DETECTION: str?
   IMMICH_TRUSTED_PROXIES: str?
-  IMMICH_MEDIA_LOCATION: match(^/config/library$|^/(media|share)/[^/]+$)
+  IMMICH_PROCESS_INVALID_IMAGES: bool?
+  storage_mounts:
+    - type: list(local|smb|cifs|nfs)
+      mount: str
+      path: str
+      options: str?
+      auto_format: bool?
+      erase: bool?
+      username: str?
+      password: password?
+  IMMICH_MEDIA_LOCATION: match(^/config/library$|^/(media|share|mnt)(/.*)?$)
   PUID: int(0,)
   PGID: int(0,)
 options:
@@ -57,6 +166,7 @@ options:
   MACHINE_LEARNING_MODEL_TTL: 300
   MACHINE_LEARNING_WORKER_TIMEOUT: 300
   IMMICH_TRUSTED_PROXIES: 172.30.32.0/23
+  storage_mounts: []
   IMMICH_MEDIA_LOCATION: /media/immich
   PUID: 0
   PGID: 0

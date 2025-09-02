@@ -103,6 +103,14 @@ configuration:
     name: Media Location
     description: >-
       Location of the Immich Media folder must be a path under '/media/' or `/share/` (default `/media/immich`). READ THE DOCUMENTATION before messing with your media library
+  IMMICH_PROCESS_INVALID_IMAGES:
+    name: Thumbnail processes invalid images
+    description: >-
+      When true, generate thumbnails for invalid images
+  storage_mounts:
+    name: Storage Mounts
+    description: >-
+      List of local, smb and nfs storgae to be mounted inside the addon. Checkout the documentation
 network:
   8080/tcp: Immich
   5432/tcp: PostgreSQL DB

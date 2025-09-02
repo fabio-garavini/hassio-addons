@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 set -e
 
-echo "Loading env variables:"
+echo "  Loading configuration:"
 
 OPTIONS_SOURCE=/data/options.json
 
@@ -18,9 +18,9 @@ for KEYS in "${arr[@]}"; do
 
     # text
     if [[ "${KEYS}" == *"PASS"* ]]; then
-        echo "${KEYS}=******"
+        echo "    ${KEYS}=******"
     else
-        echo "$line"
+        echo "    $line"
     fi
 
     export "$line"

@@ -3,34 +3,26 @@
 
 set -e
 
-# Function to check if destination is a subfolder of source
-check_subfolder_conflict() {
-  local source_dir=$(realpath -m "$1")
-  local dest_dir=$(realpath -m "$2")
-  
-  # Check if destination starts with source path (is a subfolder)
-  if [[ "$dest_dir" == "$source_dir"* ]]; then
-    bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
-    bashio::log.error "INVALID MIGRATION: Destination [$dest_dir] is a subfolder of source [$source_dir]"
-    bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
-    bashio::log.error "Moving media to a subfolder of the current location would cause data loss and corruption."
-    bashio::log.error "Please choose a destination that is not within the current media directory."
-    bashio::log.error "Ask for help: https://github.com/fabio-garavini/hassio-addons/issues"
-    return 1
-  fi
-  
-  # Also check the reverse case (source is subfolder of destination)
-  if [[ "$source_dir" == "$dest_dir"* ]]; then
-    bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
-    bashio::log.error "INVALID MIGRATION: Source [$source_dir] appears to be a subfolder of destination [$dest_dir]"
-    bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
-    bashio::log.error "Moving media to a parent folder of the current location would cause data loss and corruption."
-    bashio::log.error "Please choose a destination that doesn't contain the current media directory."
-    bashio::log.error "Ask for help: https://github.com/fabio-garavini/hassio-addons/issues"
-  fi
-  
-  return 0
-}
+# Exclude common system folders
+EXCLUDES=(
+    "lost+found"
+    ".Trash*"
+    ".zfs"
+    ".cache"
+    ".DS_Store"
+    "System Volume Information"
+    "\$RECYCLE.BIN"
+)
+
+# Build --exclude options
+exclude_rsync=()
+exclude_find=()
+for item in "${EXCLUDES[@]}"; do
+    exclude_rsync+=("--exclude=$item")
+    exclude_find+=(-o -name "$item")
+done
+
+exclude_find=("${exclude_find[@]:1}")
 
 # Function to check available disk space
 check_disk_space() {
@@ -69,17 +61,14 @@ perform_migration() {
   
   bashio::log.info "Starting migration from $source_dir to $dest_dir"
   
-  # Create destination directory
-  mkdir -p "$dest_dir"
-  
   # First, do a dry run to check for potential issues
-  if ! rsync -ah --dry-run --remove-source-files "$source_dir/" "$dest_dir/" > /dev/null; then
+  if ! rsync -ah --dry-run --remove-source-files --partial --partial-dir=.rsync-partial "${exclude_rsync[@]}" "$source_dir/" "$dest_dir/" > /dev/null; then
     bashio::log.error "Migration test failed. Aborting migration."
     return 1
   fi
   
   # Perform actual migration with progress and error handling
-  if rsync -ah --progress --remove-source-files "$source_dir/" "$dest_dir/"; then
+  if rsync -ah --progress --remove-source-files --partial --partial-dir=.rsync-partial "${exclude_rsync[@]}" "$source_dir/" "$dest_dir/"; then
     bashio::log.info "File migration completed successfully"
     
     # Clean up empty directories from source
@@ -87,8 +76,8 @@ perform_migration() {
     find "$source_dir/" -type d -empty -delete 2>/dev/null || true
     
     # Verify migration by comparing file counts and total size
-    local source_files=$(find "$source_dir" -type f 2>/dev/null | wc -l)
-    local dest_files=$(find "$dest_dir" -type f 2>/dev/null | wc -l)
+    local source_files=$(find "$source_dir" -type f ! \( "${exclude_expr[@]}" -o -path "$dest_dir/*" \) 2>/dev/null | wc -l)
+    local dest_files=$(find "$dest_dir" -type f ! \( "${exclude_expr[@]}" -o -path "$source_dir/*" \) 2>/dev/null | wc -l)
     
     if [ "$source_files" -eq 0 ]; then
       bashio::log.info "Migration verification successful - no files left in source"
@@ -99,7 +88,7 @@ perform_migration() {
     fi
   else
     bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
-    bashio::log.error "Migration failed! rsync returned an error."
+    bashio::log.error "Migration failed!"
     bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
     bashio::log.error "The migration has been aborted. Your original files remain in $source_dir"
     bashio::log.error "Please check disk space, permissions, and try again."
@@ -108,13 +97,23 @@ perform_migration() {
   fi
 }
 
-if ! realpath -m "$IMMICH_MEDIA_LOCATION" >/dev/null 2>&1; then
+RESOLVED_PATH=$(realpath -m "$IMMICH_MEDIA_LOCATION" 2>/dev/null)
+
+# Check if the path resolution failed
+if [[ -z "$RESOLVED_PATH" ]]; then
   bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
   bashio::log.error "[$IMMICH_MEDIA_LOCATION] is not a valid path. Please remove any special character or spaces"
   bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
   bashio::log.error "Read the DOCUMENTATION page for more information on how to migrate the Immich Media folder"
   bashio::log.error "Ask for help: https://github.com/fabio-garavini/hassio-addons/issues"
   bashio::addon.stop
+fi
+
+# If the resolved path differs, update the environment
+if [[ "$IMMICH_MEDIA_LOCATION" != "$RESOLVED_PATH" ]]; then
+  echo "$RESOLVED_PATH" > /var/run/s6/container_environment/IMMICH_MEDIA_LOCATION
+  IMMICH_MEDIA_LOCATION="$RESOLVED_PATH"
+  export IMMICH_MEDIA_LOCATION
 fi
 
 valid_paths=("/media/" "/share/" "/config/library")
@@ -136,6 +135,15 @@ for path in "${valid_paths[@]}"; do
     fi
   fi
 done
+
+while read -r _ mountpoint _; do
+  [[ "$mountpoint" != /mnt/* ]] && continue
+
+  if [[ "$IMMICH_MEDIA_LOCATION" == "$mountpoint" ]] || [[ "$IMMICH_MEDIA_LOCATION" == "$mountpoint/"* ]]; then
+    valid=true
+    break
+  fi
+done < /proc/mounts
 
 if ! $valid; then
   bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
@@ -159,7 +167,7 @@ if [ -z "$current_media_dir" ]; then
   exit 0
 fi
 
-if [[ "$(realpath -m "$current_media_dir")" == "$(realpath -m "$IMMICH_MEDIA_LOCATION")" ]]; then
+if [[ "$current_media_dir" == "$IMMICH_MEDIA_LOCATION" ]]; then
   # No migration needed
   bashio::log.debug "Skipping media library migration"
   exit 0
@@ -167,17 +175,19 @@ fi
 
 bashio::log.info "Start Immich Media Library migration..."
 
-# Check if current_media_dir exists and is not empty
-if [ -d "$current_media_dir" ] && [ "$(ls -A "$current_media_dir")" ]; then
-  if [ ! -d "$IMMICH_MEDIA_LOCATION" ] || [ -z "$(ls -A "$IMMICH_MEDIA_LOCATION")" ]; then
-    
-    # Check for subfolder conflict before proceeding
-    if ! check_subfolder_conflict "$current_media_dir" "$IMMICH_MEDIA_LOCATION"; then
-      bashio::addon.stop
-    fi
+if [ -d "$current_media_dir/.rsync-partial" ]; then
+  bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+  bashio::log.error "Current media dir $current_media_dir is corrupted! Contains partial transfers of a interrupted previous migration"
+  bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+  bashio::log.error "Ask for help: https://github.com/fabio-garavini/hassio-addons/issues"
+fi
+
+# Check if current_media_dir exists and is a Immich library
+if [ -d "$current_media_dir" ] && [ -f "$current_media_dir/library/.immich" ]; then
+  if [ ! -d "$IMMICH_MEDIA_LOCATION" ] || [ -z "$(find "$IMMICH_MEDIA_LOCATION" -mindepth 1 -maxdepth 1 ! \( "${exclude_expr[@]}" -o -path "$current_media_dir/*" \) 2>/dev/null)" ] || [ -d "$IMMICH_MEDIA_LOCATION/.rsync-partial" ]; then
 
     # Ensure destination directory exists for disk check
-    mkdir -p "$IMMICH_MEDIA_LOCATION"
+    [[ ! -d "$IMMICH_MEDIA_LOCATION" ]] && mkdir -p "$IMMICH_MEDIA_LOCATION"
     
     # Check disk space before attempting migration
     if ! check_disk_space "$current_media_dir" "$IMMICH_MEDIA_LOCATION"; then
@@ -194,26 +204,42 @@ if [ -d "$current_media_dir" ] && [ "$(ls -A "$current_media_dir")" ]; then
     fi
     
   else
-    bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
-    bashio::log.error "Both current media dir ($current_media_dir) and destination ($IMMICH_MEDIA_LOCATION) contain files. Aborting migration."
-    bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
-    bashio::log.error "This is expected if you manually copied the Immich Media folder to the new location. Rename the old folder or remove the new one to let Immich do the migration"
-    bashio::log.error "Read the DOCUMENTATION page for more information on how to migrate the Immich Media folder"
-    bashio::log.error "Ask for help: https://github.com/fabio-garavini/hassio-addons/issues"
-    bashio::addon.stop
+    bashio::log.warning "-----------------------------------------------------------------------------------------------------------------------"
+    bashio::log.warning "Destination ($IMMICH_MEDIA_LOCATION) contain files. Checking content before migration."
+    bashio::log.warning "-----------------------------------------------------------------------------------------------------------------------"
+    bashio::log.warning "Comparing source $current_media_dir with destination $IMMICH_MEDIA_LOCATION :"
+
+    diff=$(rsync -avc --dry-run --delete "${exclude_rsync[@]}" "$DIR1/" "$DIR2/")
+
+    if [[ -n "$diff" ]]; then
+      echo "$diff"
+
+      bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+      bashio::log.error "Destination ($IMMICH_MEDIA_LOCATION) contain files. Aborting migration."
+      bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+      bashio::log.error "This is expected if you manually copied the Immich Media folder to the new location"
+      bashio::log.error "If you want to keep a copy of the media folder make a backup of $current_media_dir and delete $IMMICH_MEDIA_LOCATION to procede"
+      bashio::log.error "If you want to keep a copy of the media folder make a backup of $current_media_dir and delete $IMMICH_MEDIA_LOCATION to procede"
+      bashio::log.error "Read the DOCUMENTATION page for more information on how to migrate the Immich Media folder"
+      bashio::log.error "Ask for help: https://github.com/fabio-garavini/hassio-addons/issues"
+      bashio::addon.stop
+    else
+      bashio::log.info "Folders are identical, skipping file migration"
+    fi
   fi
 else
-  if [ ! -d "$IMMICH_MEDIA_LOCATION" ] || [ -z "$(ls -A "$IMMICH_MEDIA_LOCATION")" ]; then
+  if [ ! -d "$IMMICH_MEDIA_LOCATION" ] || [ ! -f "$IMMICH_MEDIA_LOCATION/library/.immich" ]; then
     bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
-    bashio::log.error "Current media dir ($current_media_dir) and destination ($IMMICH_MEDIA_LOCATION) are both empty. Unknown media location"
+    bashio::log.error "Unable to find a media library in source ($current_media_dir) and destination ($IMMICH_MEDIA_LOCATION). Unknown media location"
     bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
-    bashio::log.error "This is expected if you manually moved the Immich Media folder."
+    bashio::log.error "This is expected if you manually moved the Immich Media folder somewhere else"
+    bashio::log.error "Make shure that 'Media Library' config point to your folder"
     bashio::log.error "Read the DOCUMENTATION page for more information on how to migrate the Immich Media folder"
     bashio::log.error "Ask for help: https://github.com/fabio-garavini/hassio-addons/issues"
     bashio::addon.stop
   else
-    bashio::log.warning "Detected existing files in $IMMICH_MEDIA_LOCATION"
-    bashio::log.warning "Skipping migration. "
+    bashio::log.warning "Detected existing Media library in $IMMICH_MEDIA_LOCATION"
+    bashio::log.warning "Skipping file migration"
   fi
 fi
 

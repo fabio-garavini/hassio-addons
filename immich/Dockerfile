@@ -15,7 +15,8 @@ ENV \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0 \
-    TERM="xterm-256color"
+    TERM="xterm-256color" \
+    XDG_CACHE_HOME="/data/cache"
 
 # Shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -47,6 +48,11 @@ RUN \
         jq \
         tzdata \
         rsync \
+        e2fsprogs \
+        cifs-utils \
+        nfs-common \
+        parted \
+        udev \
         xz-utils \
     && curl -J -L -o /tmp/bashio.tar.gz \
         "https://github.com/hassio-addons/bashio/archive/${BASHIO_VERSION}.tar.gz" \

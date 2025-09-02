@@ -10,13 +10,19 @@
 
 ## Hassio addon
 
+### 📦 More storage please 📦
+
+* added support to mount external hard drives inside the Immich addon
+* added support for internal SMB and NFS shares mount
+
+
 ### 🚄 Faster then ever 🚄
 
 * Now connections from Immich to Postgres and Redis use Unix sockets, which **reduce overhead and improve performance**
 
 ### 🎉 Storage Migration 🎉
 
-Moving your media library has never been easier, check the documentation
+Moving your media library has never been easier, just change the Media Library path
 
 ### 🔓 HTTPS by default 🔓
  * add support for ssl certificate
