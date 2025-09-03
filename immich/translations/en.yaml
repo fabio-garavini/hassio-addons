@@ -115,6 +115,10 @@ configuration:
     name: Clean Redis cache
     description: >-
       This will always start Redis with a clean new db.Use only if you are facing problems that needs cleaning Redis
+  APPLY_PERMISSIONS:
+    name: Apply permissions
+    description: >-
+      Apply permissions to the Immich Media location during boot, it can increase boot times
 network:
   8080/tcp: Immich
   5432/tcp: PostgreSQL DB
