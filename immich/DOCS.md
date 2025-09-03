@@ -64,6 +64,7 @@ Below are all the configuration settings you can customize. Most users can leave
 | `Trusted Proxies`                                           | No       | -               | List of proxy IP addresses Immich should trust (e.g., if using NGINX or another reverse proxy)                                    |
 | `Storage Mounts`                                            | No       | -               | List of external storage mounts to be mounted inside the addon check the `External Storage Mounts` section below                  |
 | `Clean Redis Cache`                                         | No       | `false`         | This will always start Redis with a clean new db.Use only if you are facing problems that needs cleaning Redis                    |
+| `Apply permissions`                                         | No       | `false`         | Apply permissions to all files inside the Immich Media location during boot, it can increase boot times                           |
 
 ### 🔌 Network Ports
 
