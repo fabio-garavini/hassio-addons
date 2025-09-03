@@ -55,14 +55,11 @@ This release is also available as:
 
 * APT repository: https://apt.syncthing.net/
 
-* Docker image: `docker.io/syncthing/syncthing:2.0.5` or `ghcr.io/syncthing/syncthing:2.0.5`
+* Docker image: `docker.io/syncthing/syncthing:2.0.6` or `ghcr.io/syncthing/syncthing:2.0.6`
   (`{docker,ghcr}.io/syncthing/syncthing:2` to follow just the major version)
 
 ## What's Changed
 ### Fixes
-* fix(db): only vacuum database on startup when a migration script was actually run by @pixelspark in https://github.com/syncthing/syncthing/pull/10339
-### Other
-* docs: add DCO requirement to contribution guidelines by @calmh in https://github.com/syncthing/syncthing/pull/10333
-* docs: update contribution guidelines from the docs site by @calmh in https://github.com/syncthing/syncthing/pull/10336
+* fix(db): remove temp_store = MEMORY pragmas by @calmh in https://github.com/syncthing/syncthing/pull/10343
 
-**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.4...v2.0.5
+**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.5...v2.0.6
