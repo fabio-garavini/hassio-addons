@@ -1,5 +1,16 @@
 #!/bin/bash
 
+set -e
+
+OPTIONS_SOURCE=/data/options.json
+
+token=$(jq -r '.token // empty' "$OPTIONS_SOURCE")
+
+if [[ -n "$TOKEN" ]]; then
+    cloudflared tunnel --no-autoupdate run --token eyJhIjoiZjZiN2ExNzM4NmE3YzhhMGEwZDkyNTBkYWJjMjRjYjkiLCJ0IjoiZmRmNzU0ZjAtMWYzYy00YTIzLWI3OTAtZWIzMDlhZDFlODMxIiwicyI6Ik9UTTNORFkxWVdJdE9USTJaaTAwTUdRekxUa3pNMk10TXpNNU1UazJOREV5WkRnMyJ9
+    exit 0
+fi
+
 if [ ! -f /config/cert.pem ]; then
     cloudflared --no-autoupdate tunnel login
 

@@ -1,9 +1,15 @@
 ARG BUILD_FROM=cloudflare/cloudflared:2025.8.1
 
+FROM debian AS builder
+
+RUN apt-get update && apt-get install -y --no-install-recommends jq
+
 FROM ${BUILD_FROM}
 
 # hadolint ignore=DL3002
 USER root
+
+COPY --from=builder /usr/bin/jq /usr/bin/jq
 
 COPY --from=busybox:uclibc /bin/sh /bin/mv /bin/cat /bin/find /bin/head /bin/basename /bin/xargs /bin/
 

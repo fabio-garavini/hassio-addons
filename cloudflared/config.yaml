@@ -1,6 +1,6 @@
 ---
 name: Cloudflared
-version: 2025.8.1
+version: 2025.8.1-v1
 slug: cloudflared
 codenotary: info@fabiogaravini.dev
 description: Cloudflare tunneling and Zero Trust service
@@ -11,4 +11,6 @@ init: false
 map:
   - type: addon_config
     read_only: false
+schema:
+  token: password?
 image: fabioogaravini/hassio-cloudflared
