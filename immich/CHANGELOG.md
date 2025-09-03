@@ -10,6 +10,8 @@
 
 ## Hassio addon
 
+* clean Redis cache
+
 ### 📦 More storage please 📦
 
 * added support to mount external hard drives inside the Immich addon

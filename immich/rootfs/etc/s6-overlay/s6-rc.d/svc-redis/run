@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
 # make redis folders
@@ -16,6 +16,10 @@ chown -R abc:abc \
 	/config/redis \
 	/data/logs \
 	/var/run/redis
+
+if bashio::config.has_value "clean_redis" && bashio::config.true "clean_redis"; then
+	rm -f /config/redis/dump.rdd
+fi
 
 s6-notifyoncheck -s 1000 -n 300 -w 1000 -c "redis-cli PING" \
 	s6-setuidgid abc \
