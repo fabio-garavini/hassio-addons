@@ -1,0 +1,32 @@
+---
+configuration:
+  USER_UID:
+    name: User ID
+    description: >-
+      User ID used to run Gitea
+  USER_GID:
+    name: Group ID
+    description: >-
+      Group ID used to run Gitea
+  TZ:
+    name: Timezone
+    description: >-
+      Timezone used for displaying dates and times. (Default: `Etc/UTC`)
+
+      You can find your timezone identifier here: 
+      https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  DISABLE_REGISTRATION:
+    name: Disable registration
+    description: >-
+      Disable registration, if enabled only admin can create accounts for users
+  LFS_START_SERVER:
+    name: Git LFS support
+  DISABLE_SSH:
+    name: Disable SSH
+  SECRET_KEY:
+    name: Global secret key
+    description: >-
+      This key is VERY IMPORTANT, if you lost it, the data encrypted by it (like 2FA secret) can't be decrypted anymore
+network:
+  3000/tcp: Gitea
+  22/tcp: SSH

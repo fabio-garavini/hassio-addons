@@ -1,3 +1,4 @@
+# check=skip=SecretsUsedInArgOrEnv
 ARG BUILD_FROM=gitea/gitea:1.24.5
 
 FROM $BUILD_FROM

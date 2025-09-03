@@ -19,25 +19,13 @@
 
 | Option | Type | Required | Description | Default |
 |--------|------|----------|-------------|---------|
-| `USER_UID` | integer | Yes | User ID for the Gitea process (≥1000) | `1000` |
-| `USER_GID` | integer | Yes | Group ID for the Gitea process (≥1000) | `1000` |
+| `User ID` | integer | Yes | User ID for the Gitea process (≥1000) | `1000` |
+| `Group ID` | integer | Yes | Group ID for the Gitea process (≥1000) | `1000` |
 | `TZ` | string | No | Timezone (e.g., "America/New_York") | System default |
-| `DISABLE_REGISTRATION` | boolean | No | Disable new user registration | `false` |
-| `LFS_START_SERVER` | boolean | No | Enable Git LFS support | `true` |
-| `DISABLE_SSH` | boolean | No | Disable built-in SSH server | `false` |
-| `SECRET_KEY` | string | No | Secret key for secure operations (recommended to change) | Randomly generated |
-
-### Example Configuration
-
-```yaml
-USER_UID: 1000
-USER_GID: 1000
-TZ: "Europe/Berlin"
-DISABLE_REGISTRATION: false
-LFS_START_SERVER: true
-DISABLE_SSH: false
-SECRET_KEY: "your-strong-secret-key-here"
-```
+| `Disable registration` | boolean | No | Disable new user registration | `false` |
+| `Git LFS support` | boolean | No | Enable Git LFS support | `true` |
+| `Disable SSH` | boolean | No | Disable built-in SSH server | `false` |
+| `Global secret key` | string | No | Secret key for secure operations (recommended to change) | Randomly generated |
 
 ---
 
@@ -81,9 +69,9 @@ SECRET_KEY: "your-strong-secret-key-here"
 
 ### Security Recommendations
 
-- Set `DISABLE_REGISTRATION` to `true` after initial setup
-- Use a strong custom `SECRET_KEY`
-- Disable SSH (`DISABLE_SSH: true`) if not needed
+- Set `Disable registration` to `true` after initial setup
+- Use a strong custom `Global secret key`
+- Disable SSH (`Disable SSH: true`) if not needed
 
 ### Troubleshooting Permission Issues
 
