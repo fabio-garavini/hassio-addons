@@ -1,4 +1,7 @@
+# check=skip=SecretsUsedInArgOrEnv
 ARG BUILD_FROM=ghcr.io/karakeep-app/karakeep:0.26.0
+
+FROM getmeili/meilisearch:v1.13.3 AS meilisearch
 
 FROM ${BUILD_FROM}
 
@@ -15,7 +18,8 @@ ENV \
     BROWSER_WEB_URL="http://127.0.0.1:9222" \
     MEILI_ADDR="http://127.0.0.1:7700" \
     MEILI_MASTER_KEY="0uIHQXWthY2L2yqCWGVGu2axN+l4qcDEc+Of/7e8X7bEyZ8k" \
-    MEILI_NO_ANALYTICS=true
+    MEILI_NO_ANALYTICS=true \
+    XDG_CACHE_HOME="/data/cache"
 
 ENV \
     CHROME_BIN=/usr/bin/chromium-browser \
@@ -47,14 +51,12 @@ RUN apk upgrade --no-cache --available \
       chromium-swiftshader \
       ttf-freefont \
       font-noto-emoji \
-    && apk add --no-cache \
-      --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community \
       font-wqy-zenhei \
     && mkdir -p /usr/src/chrome \
     && adduser -D chrome \
     && chown -R chrome:chrome /usr/src/chrome
 
-COPY --from=getmeili/meilisearch:v1.13.3 /bin/meilisearch /bin/meilitool /bin/
+COPY --from=meilisearch /bin/meilisearch /bin/meilitool /bin/
 
 COPY rootfs/ /
 

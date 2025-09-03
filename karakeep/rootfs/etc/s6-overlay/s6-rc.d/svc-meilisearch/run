@@ -1,8 +1,10 @@
-#!/command/with-contenv bash
+#!/command/with-contenv sh
 # shellcheck shell=bash
+
+set -e
 
 mkdir -p "$MEILI_DIR"
 
-cd "$MEILI_DIR" || exit
+cd "$MEILI_DIR"
 
 exec /bin/meilisearch --no-analytics
