@@ -2,26 +2,26 @@
 # Start Backend API
 set -e
 
-echo "Loading env variables:"
+echo "  Loading env variables:"
 
 OPTIONS_SOURCE=/data/options.json
 
-mapfile -t arr < <(jq -r 'keys[]' "${OPTIONS_SOURCE}")
-
-for KEYS in "${arr[@]}"; do
+jq -r 'keys[]' "${OPTIONS_SOURCE}" | while read -r KEY; do
     # export key
-    VALUE=$(jq ."$KEYS" "${OPTIONS_SOURCE}")
+    value=$(jq -r --arg key "$KEY" '.[$key]' "${OPTIONS_SOURCE}")
 
     # Continue for single values
-    VALUE="${VALUE//[\"\']/}"
-    line="${KEYS}=${VALUE}"
+    line="${KEY}=${value}"
 
-    # text
-    if [[ "${KEYS}" == *"PASS"* ]]; then
-        echo "${KEYS}=******"
-    else
-        echo "$line"
-    fi
+    # log redacted config
+    case "$KEY" in
+        *PASS*|*SECRET*|*KEY*)
+            echo "    ${KEY}=******"
+            ;;
+        *)
+            echo "    $line"
+            ;;
+    esac
 
     export "$line"
 
@@ -32,14 +32,17 @@ for KEYS in "${arr[@]}"; do
     echo "$line" >> /etc/environment
 
     # For s6
-    if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
-    echo "export ${KEYS}=${VALUE}" >> ~/.bashrc
+    if [ -d /var/run/s6/container_environment ]; then
+        printf "%s" "$value" > /var/run/s6/container_environment/"${KEY}"
+    fi
+    echo "export $line" >> ~/.bashrc
 done
 
 if [ -n "$TZ" ] && [ -f /etc/localtime ]; then
     if [ -f /usr/share/zoneinfo/"$TZ" ]; then
         echo "Timezone set from $(cat /etc/timezone) to $TZ"
-        ln -snf /usr/share/zoneinfo/"$TZ" /etc/localtime && echo "$TZ" >/etc/timezone
+        ln -snf /usr/share/zoneinfo/"$TZ" /etc/localtime
+        echo "$TZ" >/etc/timezone
     fi
 fi
 

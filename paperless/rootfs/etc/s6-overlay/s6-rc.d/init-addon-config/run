@@ -1,28 +1,26 @@
 #!/command/with-contenv /usr/bin/bash
 set -e
 
-declare -r log_prefix="[init-addon-config]"
-
-echo "${log_prefix} Loading env variables:"
+echo "  Loading env variables:"
 
 OPTIONS_SOURCE=/data/options.json
 
-mapfile -t arr < <(jq -r 'keys[]' "${OPTIONS_SOURCE}")
-
-for KEYS in "${arr[@]}"; do
+jq -r 'keys[]' "${OPTIONS_SOURCE}" | while read -r KEY; do
     # export key
-    VALUE=$(jq ."$KEYS" "${OPTIONS_SOURCE}")
-    
-    # Continue for single values
-    VALUE="${VALUE//[\"\']/}"
-    line="${KEYS}=${VALUE}"
+    value=$(jq -r --arg key "$KEY" '.[$key]' "${OPTIONS_SOURCE}")
 
-    # text
-    if [[ "${KEYS}" == *"PASS"* ]] || [[ "${KEYS}" == *"SECRET"* ]]; then
-        echo "${log_prefix} ${KEYS}=******"
-    else
-        echo "${log_prefix} $line"
-    fi
+    # Continue for single values
+    line="${KEY}=${value}"
+
+    # log redacted config
+    case "$KEY" in
+        *PASS*|*SECRET*|*KEY*)
+            echo "    ${KEY}=******"
+            ;;
+        *)
+            echo "    $line"
+            ;;
+    esac
 
     export "$line"
 
@@ -33,13 +31,16 @@ for KEYS in "${arr[@]}"; do
     echo "$line" >> /etc/environment
 
     # For s6
-    if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
-    echo "export ${KEYS}=${VALUE}" >> ~/.bashrc
+    if [ -d /var/run/s6/container_environment ]; then
+        printf "%s" "$value" > /var/run/s6/container_environment/"${KEY}"
+    fi
+    echo "export $line" >> ~/.bashrc
 done
 
 if [ -n "$PAPERLESS_TIME_ZONE" ] && [ -f /etc/localtime ]; then
     if [ -f /usr/share/zoneinfo/"$PAPERLESS_TIME_ZONE" ]; then
-        echo "${log_prefix} Timezone set from $(cat /etc/timezone) to $PAPERLESS_TIME_ZONE"
-        ln -snf /usr/share/zoneinfo/"$PAPERLESS_TIME_ZONE" /etc/localtime && echo "$PAPERLESS_TIME_ZONE" >/etc/timezone
+        echo "Timezone set from $(cat /etc/timezone) to $PAPERLESS_TIME_ZONE"
+        ln -snf /usr/share/zoneinfo/"$PAPERLESS_TIME_ZONE" /etc/localtime
+        echo "$PAPERLESS_TIME_ZONE" >/etc/timezone
     fi
 fi

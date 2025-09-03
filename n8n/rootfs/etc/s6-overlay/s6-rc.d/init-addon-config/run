@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+
 set -e
 
 echo "  Loading env variables:"
@@ -45,17 +47,10 @@ if [ -n "$TZ" ] && [ -f /etc/localtime ]; then
     fi
 fi
 
-groupmod -o -g $USER_GID $USER
-usermod -o -u $USER_UID $USER
+if [ -n "$N8N_SSL_CERT" ]; then
+    export N8N_SSL_CERT="/ssl/$N8N_SSL_CERT"
+fi
 
-for FOLDER in /data/logs /share/gitea /data/ssh; do
-    mkdir -p ${FOLDER}
-done
-
-chown $USER_UID:$USER_GID -R /data /config /share/gitea
-
-if [ $# -gt 0 ]; then
-    exec "$@"
-else
-    exec /bin/s6-svscan /etc/s6
+if [ -n "$N8N_SSL_KEY" ]; then
+    export N8N_SSL_KEY="/ssl/$N8N_SSL_KEY"
 fi
