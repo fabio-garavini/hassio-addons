@@ -4,8 +4,6 @@ set -e
 
 OPTIONS_SOURCE=/data/options.json
 
-token=$(jq -r '.token // empty' "$OPTIONS_SOURCE")
-
 if [[ -f "$OPTIONS_SOURCE" ]]; then
     token=$(jq -r '.token // empty' "$OPTIONS_SOURCE")
 
