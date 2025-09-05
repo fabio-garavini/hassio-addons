@@ -31,6 +31,7 @@ ENV \
 
 # Postgres environment variables
 ENV \
+    PG_MAJOR=16 \
     PGDATA="/config/postgres" \
     POSTGRES_INITDB_ARGS="--data-checksum" \
     POSTGRES_DB="immich" \
@@ -78,7 +79,7 @@ RUN \
 
 # Postgres and VectorChord version
 # pgvecto.rs is deprecated
-ARG PG_MAJOR=16 \
+ARG \
     PGVECTORS_VERSION=0.3.0 \
     VECTORCHORD_VERSION=0.3.0
 
