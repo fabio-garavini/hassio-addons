@@ -10,6 +10,7 @@
 
 ## Hassio addon
 
+* workaround for no thumbnail generation on aarch64
 * clean Redis cache
 
 ### 📦 More storage please 📦

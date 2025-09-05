@@ -5,7 +5,7 @@ source:
   version_template: regex:^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)-ig(?<build>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
-  patch: 5
+  patch: 6
   image: fabioogaravini/hassio-immich
 build:
   image: ghcr.io/imagegenius/immich
