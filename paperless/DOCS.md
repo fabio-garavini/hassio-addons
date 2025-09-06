@@ -23,9 +23,7 @@ Follow these steps to install Paperless-ngx in Home Assistant:
 3. **Configure Settings**:
    - Open the **Configuration** tab
    - Define a admin username and password.
-4. **Start the Add-on**:
-   - Click **Start** and wait for the addon to stop
-   - **Start it again**
+4. **Start** the Add-on
 5. **Open Web UI**
 
 ---
