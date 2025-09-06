@@ -1,27 +1,28 @@
-#!/command/with-contenv /usr/bin/bash
+#!/command/with-contenv bashio
+# shellcheck shell=bash
 
 # make redis folders
 mkdir -p \
-	${REDIS_DATADIR} \
-	/config/logs \
+	"$REDIS_DATADIR" \
+	/data/logs \
 	/var/run/redis
 
 # copy redis defaults
-[[ ! -f ${REDIS_DATADIR}/redis.conf ]] &&
-	cp /defaults/redis.conf ${REDIS_DATADIR}/redis.conf
+[[ ! -f "$REDIS_DATADIR/redis.conf" ]] &&
+	cp /defaults/redis.conf "$REDIS_DATADIR/redis.conf"
 
-# permissions
-chown -R paperless:paperless \
-	${REDIS_DATADIR} \
-	/config/logs \
-	/var/run/redis
+if bashio::config.has_value "clean_redis" && bashio::config.true "clean_redis"; then
+	rm -f "$REDIS_DATADIR/dump.rdd"
+fi
 
-s6-setuidgid paperless \
-	redis-server ${REDIS_DATADIR}/redis.conf \
-	--bind 0.0.0.0 \
-	--port 6379 \
-	--pidfile /var/run/redis/redis.pid \
-	--always-show-logo no \
-	--dir ${REDIS_DATADIR} \
-	--daemonize no \
-	--logfile /config/logs/redis.log
+s6-notifyoncheck -s 1000 -n 300 -w 1000 -c "redis-cli PING" \
+	redis-server "$REDIS_DATADIR/redis.conf" \
+		--bind 0.0.0.0 \
+		--port 6379 \
+		--pidfile /var/run/redis/redis.pid \
+		--always-show-logo no \
+		--dir "$REDIS_DATADIR" \
+		--daemonize no \
+		--logfile /data/logs/redis.log \
+		--unixsocket /var/run/redis/redis.sock \
+		--unixsocketperm 777

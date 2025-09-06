@@ -1,4 +1,4 @@
-#!/command/with-contenv /usr/bin/bash
+#!/command/with-contenv bash
 # shellcheck shell=bash
 set -Eeuo pipefail
 

@@ -1,3 +1,4 @@
-#!/command/with-contenv /usr/bin/bash
+#!/command/with-contenv bashio
+# shellcheck shell=bash
 
-s6-setuidgid tika exec java -cp "/tika-server-standard-${TIKA_VERSION}.jar:/tika-extras/*" org.apache.tika.server.core.TikaServerCli -h 0.0.0.0 $0 $@
+s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost 9998" s6-setuidgid tika java -cp "/tika-server-standard-${TIKA_VERSION}.jar:/tika-extras/*" org.apache.tika.server.core.TikaServerCli -h 0.0.0.0 $0 $@

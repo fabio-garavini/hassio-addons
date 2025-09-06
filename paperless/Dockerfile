@@ -1,82 +1,165 @@
+# check=skip=SecretsUsedInArgOrEnv
 ARG BUILD_FROM=ghcr.io/paperless-ngx/paperless-ngx:2.18.3
 
 ARG TIKA_VERSION=3.2.2
+ARG GOTENBERG_VERSION=8.23
 
-FROM gotenberg/gotenberg:8.20 AS gotenberg
+FROM gotenberg/gotenberg:${GOTENBERG_VERSION} AS gotenberg
 
 FROM apache/tika:${TIKA_VERSION}.0 AS tika
 
 FROM $BUILD_FROM
 
+ARG TIKA_VERSION=3.2.2
 ARG BUILD_ARCH
-ARG TIKA_VERSION
 
-ENV PAPERLESS_DATA_DIR="/config/paperless" \
+ENV PAPERLESS_PORT=8080 \
+    PAPERLESS_USE_X_FORWARD_HOST=true \
+    PAPERLESS_USE_X_FORWARD_PORT=true \
+    PAPERLESS_ENABLE_UPDATE_CHECK=false \
+    PAPERLESS_PROXY_SSL_HEADER='["HTTP_X_FORWARDED_PROTO", "https"]' \
+    PAPERLESS_CONSUMPTION_DIR="/share/paperless/consume" \
+    PAPERLESS_DATA_DIR="/config/paperless" \
+    PAPERLESS_EMPTY_TRASH_DIR="/share/paperless/.trash" \
     PAPERLESS_MEDIA_ROOT="/share/paperless" \
     PAPERLESS_EXPORT_DIR="/share/paperless/export" \
-    PAPERLESS_CONSUMPTION_DIR="/share/paperless/consume" \
-    PAPERLESS_EMPTY_TRASH_DIR="/share/paperless/.trash" \
-    PAPERLESS_LOGGING_DIR="/config/logs/paperless" \
+    PAPERLESS_LOGGING_DIR="/data/logs/paperless" \
+    PAPERLESS_SCRATCH_DIR="/data/tmp" \
     PAPERLESS_REDIS="redis://localhost:6379" \
     PAPERLESS_DBHOST=localhost \
     PAPERLESS_TIKA_ENABLED=1 \
     PAPERLESS_TIKA_GOTENBERG_ENDPOINT="http://localhost:3000" \
-    PAPERLESS_TIKA_ENDPOINT="http://localhost:9998" \
+    PAPERLESS_TIKA_ENDPOINT="http://localhost:9998"
+
+ENV \
     REDIS_DATADIR="/config/redis" \
+    PG_MAJOR=15 \
     PGDATA="/config/postgres" \
-    POSTGRES_DB=paperless \
-    POSTGRES_USER=paperless \
-    POSTGRES_PASSWORD=paperless \
-    PG_MAJOR=15
+    POSTGRES_INITDB_ARGS="--data-checksum" \
+    POSTGRES_DB="paperless" \
+    POSTGRES_USER="paperless" \
+    POSTGRES_PASSWORD="paperless"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-RUN mkdir /docker-entrypoint-initdb.d
+#---------------------------------------------- bashio & tempio ------------------------------------------------------------#
 
-# Postgres & Redis install
+ARG BASHIO_VERSION="v0.17.1"
+ARG TEMPIO_VERSION="2024.11.2"
 RUN \
-    apt-get update; \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends \
-        jq \
-        logrotate \
-        netcat-traditional \
-        lsb-release \
+    apt-get update \
+    \
+    && apt-get install -y --no-install-recommends \
+        ca-certificates \
         curl \
-        gpg \
-        postgresql-client-$PG_MAJOR \
-        postgresql-$PG_MAJOR \
-        redis-server; \
-    apt-get autoclean -y; \
-    rm -rf \
+        jq \
+        tzdata \
+        xz-utils \
+    \
+    && curl -J -L -o /tmp/bashio.tar.gz \
+        "https://github.com/hassio-addons/bashio/archive/${BASHIO_VERSION}.tar.gz" \
+    && mkdir /tmp/bashio \
+    && tar zxvf \
+        /tmp/bashio.tar.gz \
+        --strip 1 -C /tmp/bashio \
+    \
+    && mv /tmp/bashio/lib /usr/lib/bashio \
+    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
+    \
+    && curl -L -s -o /usr/bin/tempio \
+        "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" \
+    && chmod a+x /usr/bin/tempio \
+    \
+    && apt-get purge -y --auto-remove \
+        xz-utils \
+    && apt-get clean \
+    && rm -fr \
         /tmp/* \
-        /var/{cache,log,tmp}/* \
-        /var/lib/apt/lists/*; \
-#    groupadd -r -g 900 postgres; \
-#    useradd -r -u 900 -g postgres --home-dir=/var/lib/postgresql --shell=/bin/bash postgres; \
-	install --verbose --directory --owner postgres --group postgres --mode 1777 /var/lib/postgresql; \
-    install --verbose --directory --owner postgres --group postgres --mode 3777 /var/run/postgresql
-
-ENV PATH=$PATH:/usr/lib/postgresql/$PG_MAJOR/bin
-
-# ---------------GOTENBERG-TIKA--------------------
-
-ARG NOTO_COLOR_EMOJI_VERSION="v2.048"
-ARG PDFTK_VERSION="v3.3.3"
-ARG TMP_CHOMIUM_VERSION_ARMHF="116.0.5845.180-1~deb12u1"
-
-RUN \
-    mkdir /etc/gotenberg &&\
-    apt-get update -qq &&\
-    apt-get upgrade -yqq &&\
-    DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends curl gnupg tini default-jre-headless ca-certificates &&\
-    python3 -m pip install --upgrade setuptools &&\
-    apt-get autoclean -y; \
-    rm -rf \
-        /tmp/* \
-        /var/{cache,log,tmp}/* \
+        /var/{cache,log}/* \
         /var/lib/apt/lists/*
 
+#---------------------------------------------- Postgres, Redis & NGINX ------------------------------------------------------------#
+
+# Create Postgres user
+RUN set -eux; \
+	groupadd -r postgres --gid=900; \
+	useradd -r -g postgres --uid=900 --home-dir=/var/lib/postgresql --shell=/bin/bash postgres; \
+	install --verbose --directory --owner postgres --group postgres --mode 3777 /var/lib/postgresql; \
+    install --verbose --directory --owner postgres --group postgres --mode 1777 "$PGDATA"
+
+RUN mkdir /docker-entrypoint-initdb.d
+
+ENV PATH="$PATH:/usr/lib/postgresql/$PG_MAJOR/bin:/usr/lib/bin"
+
+# install Postgres & Redis
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends libnss-wrapper lsb-release curl ca-certificates; \
+    install -d /usr/share/postgresql-common/pgdg; \
+    curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc; \
+    sh -c "echo 'deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main' > /etc/apt/sources.list.d/pgdg.list"; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+        logrotate \
+        postgresql-common \
+        postgresql-$PG_MAJOR \
+        redis-server \
+        nginx; \
+    rm -rf /var/lib/apt/lists/* /etc/nginx; \
+    postgres --version
+
+#--------------------------------------------------- Tika ------------------------------------------------------------#
+
+ENV TIKA_VERSION=$TIKA_VERSION
+
+RUN set -eux; \
+#    echo "deb http://deb.debian.org/debian trixie-backports main" > /etc/apt/sources.list.d/backports.list; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends openjdk-17-jre-headless netcat-traditional; \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+    java --version; \
+    groupadd -g 9998 -o tika; \
+    useradd -m -u 9998 -g 9998 -o tika
+
+COPY --from=tika /tika-server-standard-${TIKA_VERSION}.jar /
+
+#--------------------------------------------------- Gotenberg ------------------------------------------------------------#
+
+# from https://github.com/gotenberg/gotenberg/blob/main/build/Dockerfile
+
+ARG GOTENBERG_VERSION=8.20
+ARG GOTENBERG_USER_GID=991
+ARG GOTENBERG_USER_UID=991
+# See https://github.com/googlefonts/noto-emoji/releases.
+ARG NOTO_COLOR_EMOJI_VERSION=v2.048
+# See https://gitlab.com/pdftk-java/pdftk/-/releases - Binary package.
+ARG PDFTK_VERSION=v3.3.3
+
 RUN \
+    # Create a non-root user.
+    # All processes in the Docker container will run with this dedicated user.
+    groupadd --gid "$GOTENBERG_USER_GID" gotenberg &&\
+    useradd --uid "$GOTENBERG_USER_UID" --gid gotenberg --shell /bin/bash --home /home/gotenberg --no-create-home gotenberg &&\
+    mkdir /home/gotenberg &&\
+    chown gotenberg: /home/gotenberg
+
+RUN \
+    # Install system dependencies required for the next instructions or debugging.
+    # Note: tini is a helper for reaping zombie processes.
+    apt-get update -qq &&\
+    apt-get upgrade -yqq &&\
+    DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends curl gnupg tini python3 python3-distutils-extra &&\
+    # Cleanup.
+    # Note: the Debian image does automatically a clean after each install thanks to a hook.
+    # Therefore, there is no need for apt-get clean.
+    # See https://stackoverflow.com/a/24417119/3248473.
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN \
+    # Install fonts.
+    # Credits:
+    # https://github.com/arachnys/athenapdf/blob/master/cli/Dockerfile.
+    # https://help.accusoft.com/PrizmDoc/v12.1/HTML/Installing_Asian_Fonts_on_Ubuntu_and_Debian.html.
     curl -o ./ttf-mscorefonts-installer_3.8.1_all.deb http://httpredir.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.8.1_all.deb &&\
     apt-get update -qq &&\
     apt-get upgrade -yqq &&\
@@ -106,7 +189,6 @@ RUN \
     fonts-crosextra-caladea \
     fonts-crosextra-carlito \
     fonts-dejavu \
-    fonts-dejavu-extra \
     fonts-liberation \
     fonts-liberation2 \
     fonts-linuxlibertine \
@@ -123,42 +205,24 @@ RUN \
     # https://github.com/googlefonts/noto-emoji.
     curl -Ls "https://github.com/googlefonts/noto-emoji/raw/$NOTO_COLOR_EMOJI_VERSION/fonts/NotoColorEmoji.ttf" -o /usr/local/share/fonts/NotoColorEmoji.ttf &&\
     # Cleanup.
-    apt-get autoclean -y; \
-    rm -rf \
-        /tmp/* \
-        /var/{cache,log,tmp}/* \
-        /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN \
-    set -e &&\
-    if [[ "$BUILD_ARCH" == "amd64" ]]; then \
-      curl https://dl.google.com/linux/linux_signing_key.pub | apt-key add - &&\
-      echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | tee /etc/apt/sources.list.d/google-chrome.list &&\
-      apt-get update -qq &&\
-      apt-get upgrade -yqq &&\
-      DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends --allow-unauthenticated google-chrome-stable &&\
-      mv /usr/bin/google-chrome-stable /usr/bin/chromium; \
-    elif [[ "$BUILD_ARCH" == "armhf" ]]; then \
-      apt-get update -qq &&\
-      DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends devscripts &&\
-      debsnap chromium-common "$TMP_CHOMIUM_VERSION_ARMHF" -v --force --binary --architecture armhf &&\
-      debsnap chromium "$TMP_CHOMIUM_VERSION_ARMHF" -v --force --binary --architecture armhf &&\
-      DEBIAN_FRONTEND=noninteractive apt-get install --fix-broken -y -qq --no-install-recommends "./binary-chromium-common/chromium-common_${TMP_CHOMIUM_VERSION_ARMHF}_armhf.deb" "./binary-chromium/chromium_${TMP_CHOMIUM_VERSION_ARMHF}_armhf.deb" &&\
-      DEBIAN_FRONTEND=noninteractive apt-get purge -y -qq devscripts &&\
-      rm -rf ./binary-chromium-common/* ./binary-chromium/*; \
-    else \
-      apt-get update -qq &&\
-      apt-get upgrade -yqq &&\
-      DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends chromium; \
-    fi &&\
+    # Install Chromium.
+    apt-get update -qq &&\
+    apt-get upgrade -yqq &&\
+    DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends chromium &&\
     # Verify installation.
     chromium --version &&\
     # Cleanup.
-    apt-get autoclean -y; \
-    rm -rf \
-        /tmp/* \
-        /var/{cache,log,tmp}/* \
-        /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Set default characterset encoding to UTF-8.
+# See:
+# https://github.com/gotenberg/gotenberg/issues/104
+# https://github.com/gotenberg/gotenberg/issues/730
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
 
 RUN \
     # Install LibreOffice & unoconverter.
@@ -166,18 +230,16 @@ RUN \
     apt-get update -qq &&\
     apt-get upgrade -yqq &&\
     DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends -t bookworm-backports python3 python3-setuptools python3-uno libreoffice &&\
-    curl -Ls https://raw.githubusercontent.com/gotenberg/unoconverter/v0.0.1/unoconv -o /usr/bin/unoconverter &&\
-    sed -i "s|/usr/bin/env python|/usr/bin/python3|" /usr/bin/unoconverter &&\
+    curl -Ls https://raw.githubusercontent.com/gotenberg/unoconverter/v0.1.1/unoconv -o /usr/bin/unoconverter &&\
     chmod +x /usr/bin/unoconverter &&\
+    # unoconverter will look for the Python binary, which has to be at version 3.
+    ln -s /usr/bin/python3 /usr/bin/python &&\
     # Verify installations.
     libreoffice --version &&\
     unoconverter --version &&\
     # Cleanup.
     apt-get autoclean -y; \
-    rm -rf \
-        /tmp/* \
-        /var/{cache,log,tmp}/* \
-        /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN \
     # Install PDFtk, QPDF & ExifTool (PDF engines).
@@ -196,11 +258,16 @@ RUN \
     qpdf --version &&\
     exiftool --version &&\
     # Cleanup.
-    apt-get autoclean -y; \
-    rm -rf \
-        /tmp/* \
-        /var/{cache,log,tmp}/* \
-        /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Support for arbitrary user IDs (OpenShift).
+# See:
+# https://github.com/gotenberg/gotenberg/issues/1049.
+# https://docs.redhat.com/en/documentation/openshift_container_platform/4.15/html/images/creating-images#use-uid_create-images.
+RUN \
+    usermod -aG root gotenberg &&\
+    chgrp -R 0 /home/gotenberg &&\
+    chmod -R g=u /home/gotenberg
 
 # Improve fonts subpixel hinting and smoothing.
 # Credits:
@@ -208,23 +275,21 @@ RUN \
 # https://github.com/arachnys/athenapdf/commit/ba25a8d80a25d08d58865519c4cd8756dc9a336d.
 COPY --from=gotenberg /etc/fonts/conf.d/100-gotenberg.conf /etc/fonts/conf.d/
 
-# Copy the pdfcpu binary from the pdfcpu-binary-stage.
+# Copy dictionnaries so that hypens work on Chromium.
+# See https://github.com/gotenberg/gotenberg/issues/1293.
+COPY --chown=gotenberg:gotenberg --from=gotenberg /opt/gotenberg/chromium-hyphen-data /opt/gotenberg/chromium-hyphen-data
+
 COPY --from=gotenberg /usr/bin/pdfcpu /usr/bin/gotenberg /usr/bin/
 
 # Environment variables required by modules or else.
 ENV CHROMIUM_BIN_PATH=/usr/bin/chromium \
+    CHROMIUM_HYPHEN_DATA_DIR_PATH=/opt/gotenberg/chromium-hyphen-data \
     LIBREOFFICE_BIN_PATH=/usr/lib/libreoffice/program/soffice.bin \
     UNOCONVERTER_BIN_PATH=/usr/bin/unoconverter \
     PDFTK_BIN_PATH=/usr/bin/pdftk \
     QPDF_BIN_PATH=/usr/bin/qpdf \
     EXIFTOOL_BIN_PATH=/usr/bin/exiftool \
     PDFCPU_BIN_PATH=/usr/bin/pdfcpu
-
-RUN \
-    groupadd -g 9998 -o tika; \
-    useradd -m -u 9998 -g 9998 -o tika
-
-COPY --from=tika /tika-server-standard-${TIKA_VERSION}.jar /
 
 COPY rootfs/ /
 

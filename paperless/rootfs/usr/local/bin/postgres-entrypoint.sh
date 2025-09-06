@@ -1,4 +1,4 @@
-#!/command/with-contenv /usr/bin/bash
+#!/command/with-contenv bash
 # shellcheck shell=bash
 set -Eeo pipefail
 # TODO swap to -Eeuo pipefail above (after handling all potentially-unset variables)

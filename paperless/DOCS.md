@@ -21,12 +21,12 @@ Follow these steps to install Paperless-ngx in Home Assistant:
    - Navigate to **Home Assistant Supervisor** → **Add-on Store**.
    - Search for "Paperless" and click **Install**.
 3. **Configure Settings**:
-   - Open the **Configuration** tab and adjust required settings (see below).
-   - Ensure all required fields (`PAPERLESS_TIME_ZONE`, admin credentials) are filled.
+   - Open the **Configuration** tab
+   - Define a admin username and password.
 4. **Start the Add-on**:
-   - Click **Start** and monitor logs for initialization.
-5. **Access Paperless**:
-   - After startup, access via the configured `PAPERLESS_URL` or `http://[HA_IP]:8000` by default.
+   - Click **Start** and wait for the addon to stop
+   - **Start it again**
+5. **Open Web UI**
 
 ---
 
@@ -34,13 +34,13 @@ Follow these steps to install Paperless-ngx in Home Assistant:
 
 | Parameter                     | Required | Default | Description                                                                 |
 |-------------------------------|----------|---------|-----------------------------------------------------------------------------|
-| `PAPERLESS_TIME_ZONE`         | Yes      | -       | TZ database name (e.g., `America/New_York`). Use `timedatectl list-timezones` for options. |
-| `PAPERLESS_ADMIN_USER`        | Yes      | -       | Admin username (e.g., `admin`).                                             |
-| `PAPERLESS_ADMIN_PASSWORD`    | Yes      | -       | Strong password for admin account.                                          |
-| `PAPERLESS_OCR_LANGUAGE`      | No       | `eng`   | OCR language code (e.g., `deu` for German, `fra` for French).               |
-| `PAPERLESS_URL`               | No       | -       | Full URL (e.g., `http://paperless.example.com:8000`). Required for reverse proxies. |
-| `PAPERLESS_SECRET_KEY`        | No       | Auto-generated | Secret key for session security. **Change this if exposed to the internet!** Generate via `openssl rand -hex 32`. |
-| `PAPERLESS_CONSUMER_POLLING`    | No      | -       | If paperless won't find documents added to your consume folder, it might not be able to automatically detect filesystem changes. In that case, specify a polling interval in seconds here, which will then cause paperless to periodically check your consumption directory for changes.                                          |
+| `Time Zone`         | Yes      | -       | TZ database name (e.g., `America/New_York`). Use `timedatectl list-timezones` for options. |
+| `Admin user`        | Yes      | -       | Admin username (e.g., `admin`).                                             |
+| `Admin password`    | Yes      | -       | Strong password for admin account.                                          |
+| `OCR language`      | No       | `eng`   | OCR language code (e.g., `deu` for German, `fra` for French).               |
+| `Paperless URL`               | No       | -       | Full URL (e.g., `http://paperless.example.com:8000`). Required for reverse proxies. |
+| `Secret key`        | No       | Auto-generated | Secret key for session security. **Change this if exposed to the internet!** Generate via `openssl rand -hex 32`. |
+| `Consumer file polling`    | No      | -       | If paperless won't find documents added to your consume folder, it might not be able to automatically detect filesystem changes. In that case, specify a polling interval in seconds here, which will then cause paperless to periodically check your consumption directory for changes.                                          |
 
 ---
 

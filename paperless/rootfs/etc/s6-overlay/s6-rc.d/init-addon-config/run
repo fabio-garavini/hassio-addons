@@ -1,6 +1,8 @@
 #!/command/with-contenv /usr/bin/bash
 set -e
 
+[[ -d "/config/logs" ]] && mv /config/logs /data/logs
+
 echo "  Loading env variables:"
 
 OPTIONS_SOURCE=/data/options.json

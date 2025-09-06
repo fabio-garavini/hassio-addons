@@ -1,0 +1,12 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+
+mkdir -p "/data/logs/postgres"
+
+# permissions
+chown postgres:postgres -R "/data/logs/postgres"
+chmod 750 -R "/data/logs/postgres"
+
+exec /usr/local/bin/docker-ensure-initdb.sh postgres \
+    -c timezone="$TZ" \
+    -c log_timezone="$TZ" &> /dev/null

@@ -1,5 +1,4 @@
-#!/command/with-contenv /usr/bin/bash
+#!/command/with-contenv bashio
+# shellcheck shell=bash
 
-cd /etc/gotenberg
-
-exec /usr/bin/tini -- gotenberg --chromium-disable-javascript=true --chromium-allow-list=file:///tmp/.*
+s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost 3000" s6-setuidgid gotenberg gotenberg --chromium-disable-javascript=true --chromium-allow-list="file:///tmp/.*"

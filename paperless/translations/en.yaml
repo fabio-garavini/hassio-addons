@@ -1,0 +1,78 @@
+---
+configuration:
+  PAPERLESS_URL:
+    name: Paperless URL
+  ssl:
+    name: SSL
+    description: >-
+      Enable HTTPS connections. If `SSL Certfile` and `SSL Private Key` files exist they are used to encrypt the connection, otherwise it'll generate a self-signed certificate
+  certfile:
+    name: SSL Certificate File
+    description: >-
+      Name of the SSL certificate file located under the `/ssl/` directory.
+  keyfile:
+    name: SSL Private Key File
+    description: >-
+      Name of the SSL private key file located under the `/ssl/` directory.
+  USERMAP_UID:
+    name: User ID
+    description: >-
+      User ID used to run Paperless. (Default: `0` → `root`)
+
+      If you're not sure, leave it as default.
+  USERMAP_GID:
+    name: Group ID
+    description: >-
+      Group ID used to run Paperless. (Default: `0` → `root`)
+
+      If you're not sure, leave it as default.
+  PAPERLESS_TIME_ZONE:
+    name: Timezone
+    description: >-
+      Timezone used for displaying dates and times. (Default: `Etc/UTC`)
+
+      You can find your timezone identifier here: 
+      https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  PAPERLESS_ACCOUNT_ALLOW_SIGNUPS:
+    name: Allow users to signup
+    description: >-
+      Allow users to signup for a new Paperless-ngx account.
+  PAPERLESS_ADMIN_USER:
+    name: Admin User
+    description: >-
+      Admin account username
+  PAPERLESS_ADMIN_MAIL:
+    name: Admin email
+    description: >-
+      Admin account email
+  PAPERLESS_ADMIN_PASSWORD:
+    name: Admin password
+    description: >-
+      Admin account password
+  PAPERLESS_OCR_LANGUAGE:
+    name: OCR language
+    description: >-
+      Customize the language that paperless will attempt to use when parsing documents.
+
+      It should be a 3-letter code, see the list of languages Tesseract supports (https://tesseract-ocr.github.io/tessdoc/Data-Files-in-different-versions.html)
+
+      Set this to the language most of your documents are written in
+  PAPERLESS_OCR_LANGUAGES:
+    name: Additional OCR languages
+    description: >-
+      Space-separated list of additional OCR languages to install
+  PAPERLESS_SECRET_KEY:
+    name: Secret key
+    description: >-
+      Paperless uses this to make session tokens. If you expose paperless on the internet, you need to change this, since the default secret is well known
+  PAPERLESS_CONSUMER_POLLING:
+    name: Consumer file polling
+    description: >-
+      If paperless won't find documents added to your consume folder, it might not be able to automatically detect filesystem changes. In that case, specify a polling interval in seconds here, which will then cause paperless to periodically check your consumption directory for changes. This will also disable listening for file system changes with inotify
+  PAPERLESS_TRUSTED_PROXIES:
+    name: Trusted proxies
+    description: >-
+      Comma-separated list of IP addresses that should be treated as trusted proxies. 
+      Needed if Paperless is running behind a reverse proxy such as NGINX
+network:
+  8000/tcp: Paperless
