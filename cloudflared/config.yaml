@@ -1,12 +1,13 @@
 ---
 name: Cloudflared
-version: 2025.8.1-v3
+version: 2025.8.1-v4
 slug: cloudflared
 codenotary: info@fabiogaravini.dev
 description: Cloudflare tunneling and Zero Trust service
 arch:
   - aarch64
   - amd64
+  - armv7
 init: false
 map:
   - type: addon_config

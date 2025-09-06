@@ -1,26 +1,23 @@
-ARG BUILD_FROM=cloudflare/cloudflared:2025.8.1
-
-FROM debian AS builder
-
-RUN apt-get update && apt-get install -y --no-install-recommends jq
+ARG BUILD_FROM=ghcr.io/hassio-addons/base:stable
 
 FROM ${BUILD_FROM}
 
-# hadolint ignore=DL3002
-USER root
+ARG BUILD_VERSION \
+    BUILD_ARCH
 
-COPY --from=builder /usr/bin/jq /usr/bin/jq
-
-COPY --from=busybox:uclibc /bin/sh /bin/mv /bin/cat /bin/find /bin/head /bin/basename /bin/xargs /bin/
+RUN case "$BUILD_ARCH" in \
+      aarch64) REMOTE_ARCH="arm64" ;; \
+      armv7)   REMOTE_ARCH="arm" ;; \
+      amd64)   REMOTE_ARCH="amd64" ;; \
+      *) echo "Unsupported architecture: $BUILD_ARCH" >&2; exit 1 ;; \
+    esac && \
+    wget -nv "https://github.com/cloudflare/cloudflared/releases/download/${BUILD_VERSION%-v*}/cloudflared-linux-${REMOTE_ARCH}" -O /usr/bin/cloudflared; \
+    chmod +x /usr/bin/cloudflared; \
+    cloudflared -v
 
 COPY rootfs/ /
 
-ENTRYPOINT ["/bin/sh", "/entrypoint.sh"]
-CMD []
-
-ARG BUILD_VERSION \
-    BUILD_ARCH \
-    BUILD_DATE \
+ARG BUILD_DATE \
     BUILD_DESCRIPTION \
     BUILD_NAME \
     BUILD_REF \

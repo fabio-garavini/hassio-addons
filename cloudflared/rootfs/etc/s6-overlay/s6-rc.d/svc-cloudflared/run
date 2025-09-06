@@ -1,16 +1,11 @@
-#!/bin/bash
+#!/command/with-contenv bashio
+# shellcheck shell=bash
 
 set -e
 
-OPTIONS_SOURCE=/data/options.json
-
-if [[ -f "$OPTIONS_SOURCE" ]]; then
-    token=$(jq -r '.token // empty' "$OPTIONS_SOURCE")
-
-    if [[ -n "$TOKEN" ]]; then
-        cloudflared tunnel --no-autoupdate run --token $token
-        exit 0
-    fi
+if bashio::config.has_value "token"; then
+    cloudflared tunnel --no-autoupdate run --token $(bashio::config "token")
+    exit 0
 fi
 
 if [ ! -f /config/cert.pem ]; then
