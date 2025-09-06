@@ -41,7 +41,7 @@
   cross compilation with SQLite:
 
   - dragonfly/amd64
-  - illumos/amd64 and solaris/amd64
+  - solaris/amd64
   - linux/ppc64
   - netbsd/*
   - openbsd/386 and openbsd/arm
@@ -55,11 +55,22 @@ This release is also available as:
 
 * APT repository: https://apt.syncthing.net/
 
-* Docker image: `docker.io/syncthing/syncthing:2.0.6` or `ghcr.io/syncthing/syncthing:2.0.6`
+* Docker image: `docker.io/syncthing/syncthing:2.0.7` or `ghcr.io/syncthing/syncthing:2.0.7`
   (`{docker,ghcr}.io/syncthing/syncthing:2` to follow just the major version)
 
 ## What's Changed
 ### Fixes
-* fix(db): remove temp_store = MEMORY pragmas by @calmh in https://github.com/syncthing/syncthing/pull/10343
+* fix(model): earlier free-space check (fixes #10347) by @calmh in https://github.com/syncthing/syncthing/pull/10348
+* fix(api): redact device encryption passwords in support bundle config by @pixelspark in https://github.com/syncthing/syncthing/pull/10359
+* fix(sqlite): revert to default page cache size by @calmh in https://github.com/syncthing/syncthing/pull/10362
+* fix(tlsutil): support HTTP/2 on GUI/API connections by @calmh in https://github.com/syncthing/syncthing/pull/10366
+* fix(sqlite): avoid rowid on kv table by @calmh in https://github.com/syncthing/syncthing/pull/10367
+### Other
+* chore(model): adjust folder state logging (fixes #10350) by @calmh in https://github.com/syncthing/syncthing/pull/10353
+* build: package for illumos using vmactions/omnios-vm by @trisk in https://github.com/syncthing/syncthing/pull/10328
+* chore(slogutil): add configurable logging format (fixes #10352) by @calmh in https://github.com/syncthing/syncthing/pull/10354
 
-**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.5...v2.0.6
+## New Contributors
+* @trisk made their first contribution in https://github.com/syncthing/syncthing/pull/10328
+
+**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.6...v2.0.7
