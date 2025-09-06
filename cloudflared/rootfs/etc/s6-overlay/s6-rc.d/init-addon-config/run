@@ -16,7 +16,7 @@ jq -r 'keys[]' "${OPTIONS_SOURCE}" | while read -r KEY; do
 
     # log redacted config
     case "$KEY" in
-        *PASS*|*SECRET*|*KEY*)
+        *PASS*|*SECRET*|*KEY*|*TOKEN*)
             echo "    ${KEY}=******"
             ;;
         *)
