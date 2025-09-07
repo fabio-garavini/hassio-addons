@@ -46,3 +46,5 @@ if [ -n "$TZ" ] && [ -f /etc/localtime ]; then
         echo "$TZ" >/etc/timezone
     fi
 fi
+
+mkdir -p "$DATA_DIR"
