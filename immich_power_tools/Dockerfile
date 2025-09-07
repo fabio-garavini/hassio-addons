@@ -1,16 +1,19 @@
+# check=skip=SecretsUsedInArgOrEnv
 ARG BUILD_FROM=ghcr.io/hassio-addons/base:stable
-ARG BUILD_VERSION
+ARG BUILD_VERSION=0.18.0-v1
 
-FROM node:18-alpine AS node
 FROM ghcr.io/varun-raj/immich-power-tools:${BUILD_VERSION%-v*} AS immich_power_tools
 
 FROM ${BUILD_FROM}
+
+ARG BUILD_VERSION
 
 ENV \
   NODE_ENV=production \
   NODE_VERSION=18.20.8 \
   NEXT_TELEMETRY_DISABLED=1 \
   VERSION=${BUILD_VERSION%-v*} \
+  HOSTNAME='0.0.0.0' \
   PORT=80
 
 ENV \
@@ -20,11 +23,13 @@ ENV \
   DB_DATABASE_NAME=immich \
   SECURE_COOKIE=true
 
-COPY --from=node /usr/lib /usr/lib
-COPY --from=node /usr/local/share /usr/local/share
-COPY --from=node /usr/local/lib /usr/local/lib
-COPY --from=node /usr/local/include /usr/local/include
-COPY --from=node /usr/local/bin /usr/local/bin
+RUN \
+    apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.18/main \
+        nodejs \
+        npm \
+        nginx \
+        openssl; \
+    rm -fr /tmp/* /etc/nginx
 
 RUN addgroup -g 1000 node \
   && adduser -u 1000 -G node -s /bin/sh -D node \
@@ -36,8 +41,6 @@ RUN addgroup -g 1000 node \
 COPY --from=immich_power_tools /app /app
 
 COPY rootfs/ /
-
-EXPOSE 80
 
 ARG BUILD_ARCH \
     BUILD_DATE \
