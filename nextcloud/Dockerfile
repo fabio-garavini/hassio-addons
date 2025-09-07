@@ -1,26 +1,27 @@
+# check=skip=SecretsUsedInArgOrEnv
 ARG BUILD_FROM=ghcr.io/linuxserver/nextcloud:31.0.8-ls393
 
 FROM $BUILD_FROM
 
 RUN \
-  apk add --no-cache \
-    ffmpeg \
-    imagemagick \
-    imagemagick-pdf \
-    imagemagick-jpeg \
-    imagemagick-raw \
-    imagemagick-tiff \
-    imagemagick-heic \
-    imagemagick-webp \
-    imagemagick-svg \
-    python3-dev \
-    perl \
-    redis \
-    gnupg \
-    mariadb \
-    mariadb-client \
-    mariadb-server-utils && \
-  rm -rf /tmp/*
+    apk add --no-cache \
+        ffmpeg \
+        imagemagick \
+        imagemagick-pdf \
+        imagemagick-jpeg \
+        imagemagick-raw \
+        imagemagick-tiff \
+        imagemagick-heic \
+        imagemagick-webp \
+        imagemagick-svg \
+        python3-dev \
+        perl \
+        redis \
+        gnupg \
+        mariadb \
+        mariadb-client \
+        mariadb-server-utils; \
+    rm -rf /tmp/*
 
 ENV REDIS_HOST=localhost \
     REDIS_HOST_PORT=6379
@@ -43,7 +44,8 @@ EXPOSE 80 443
 
 VOLUME /config /data /share /media /ssl
 
-ARG BUILD_VERSION \
+ARG BUILD_ARCH \
+    BUILD_VERSION \
     BUILD_DATE \
     BUILD_DESCRIPTION \
     BUILD_NAME \

@@ -1,0 +1,40 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+
+PUID=${PUID:-911}
+PGID=${PGID:-911}
+
+if [[ -z ${LSIO_READ_ONLY_FS} ]] && [[ -z ${LSIO_NON_ROOT_USER} ]]; then
+    USERHOME=$(grep abc /etc/passwd | cut -d ":" -f6)
+    usermod -d "/root" abc
+
+    groupmod -o -g "${PGID}" abc
+    usermod -o -u "${PUID}" abc
+
+    usermod -d "${USERHOME}" abc
+fi
+
+echo "
+╔══════════════════════════════════════════════════════════════╗
+
+░███    ░██                          ░██               ░██                              ░██ 
+░████   ░██                          ░██               ░██                              ░██ 
+░██░██  ░██  ░███████  ░██    ░██ ░████████  ░███████  ░██  ░███████  ░██    ░██  ░████████ 
+░██ ░██ ░██ ░██    ░██  ░██  ░██     ░██    ░██    ░██ ░██ ░██    ░██ ░██    ░██ ░██    ░██ 
+░██  ░██░██ ░█████████   ░█████      ░██    ░██        ░██ ░██    ░██ ░██    ░██ ░██    ░██ 
+░██   ░████ ░██         ░██  ░██     ░██    ░██    ░██ ░██ ░██    ░██ ░██   ░███ ░██   ░███ 
+░██    ░███  ░███████  ░██    ░██     ░████  ░███████  ░██  ░███████   ░█████░██  ░█████░██ 
+
+  Home Assistant Add-on by Fabio Garavini
+  Base image from linuxserver.io
+╠══════════════════════════════════════════════════════════════╣
+  User/Group ID:
+  User UID: $(id -u abc)
+  User GID: $(id -g abc)
+╚══════════════════════════════════════════════════════════════╝"
+
+if [[ -z ${LSIO_READ_ONLY_FS} ]] && [[ -z ${LSIO_NON_ROOT_USER} ]]; then
+    lsiown abc:abc /app
+    lsiown abc:abc /config
+    lsiown abc:abc /defaults
+fi

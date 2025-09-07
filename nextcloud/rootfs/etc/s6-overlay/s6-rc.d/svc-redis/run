@@ -7,7 +7,7 @@ mkdir -p \
 	/var/run/redis
 
 # copy redis defaults
-[[ ! -f ${REDIS_DATADIR}/redis.conf ]] &&
+[[ ! -f "${REDIS_DATADIR}/redis.conf" ]] &&
 	cp /defaults/redis.conf ${REDIS_DATADIR}/redis.conf
 
 # permissions

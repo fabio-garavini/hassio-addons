@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bash
+# shellcheck shell=bash
 
 export NEXTCLOUD_URL="https://localhost"
 export ALLOW_SELF_SIGNED=true
