@@ -1,0 +1,15 @@
+name: Collabora CODE
+version: 25.04.5.1.1
+slug: collabora_code
+codenotary: info@fabiogaravini.dev
+description: Online Office suite image suitable for home use
+url: https://www.collaboraoffice.com
+arch:
+  - aarch64
+  - amd64
+init: false
+ports:
+  9980/tcp: 9980
+ports_description:
+  9980/tcp: HTTP
+image: collabora/code
