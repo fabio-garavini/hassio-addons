@@ -29,18 +29,34 @@ ENV \
     MEILI_SERVER_PROVIDER=docker \
     MEILI_ENV=production
 
+ARG BASHIO_VERSION="v0.17.1"
+ARG TEMPIO_VERSION="2024.11.2"
 RUN \
-    set -x \
-    && apk add --no-cache \
-        bash \
+    apk add --no-cache \
         bind-tools \
         ca-certificates \
+        libstdc++ \
+        libcrypto3 \
+        libssl3 \
+        musl-utils \
+        musl \
+        bash \
         curl \
         jq \
-        libstdc++ \
         tzdata \
+        nginx \
+        openssl \
         xz \
-        libgcc
+        tar; \
+    \
+    curl -J -L -o /tmp/bashio.tar.gz "https://github.com/hassio-addons/bashio/archive/${BASHIO_VERSION}.tar.gz"; \
+    mkdir /tmp/bashio; \
+    tar zxvf /tmp/bashio.tar.gz --strip 1 -C /tmp/bashio; \
+    mv /tmp/bashio/lib /usr/lib/bashio; \
+    ln -s /usr/lib/bashio/bashio /usr/bin/bashio; \
+    curl -L -s -o /usr/bin/tempio "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}"; \
+    chmod a+x /usr/bin/tempio; \
+    rm -f -r /tmp/* /etc/nginx
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
