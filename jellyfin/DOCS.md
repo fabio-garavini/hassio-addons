@@ -5,7 +5,6 @@ A user-friendly **Jellyfin Media Server** integration for Home Assistant, design
 ## Installation 💻
 
 1. Install Jellyfin addon.
-1. (Optional) Configure the add-on, see [Configuration](#configuration).
 1. Start Jellyfin
 
 ---
@@ -19,11 +18,7 @@ Below are the available settings:
 
 | Option                     | Type    | Default       | Description                                                                 |
 |----------------------------|---------|---------------|-----------------------------------------------------------------------------|
-| `ssl`                      | bool    | `false`       | Enable HTTPS encryption (requires SSL certificates).                        |
-| `require_https`            | bool    | `false`       | Force HTTPS connections (only if `ssl` is enabled).                         |
-| `certfile`                 | string  | `fullchain.pem` | Path to your SSL certificate file (e.g., Let’s Encrypt).                    |
-| `keyfile`                  | string  | `privkey.pem`  | Path to your SSL private key.                                               |
-| `JELLYFIN_PublishedServerUrl` | string | (ha ip address)       | Custom URL for Jellyfin clients to discover the server (e.g., `https://jellyfin.example.com`). |
+| `Jellyfin URL` | string | (ha ip address)       | Custom URL for Jellyfin clients to discover the server (e.g., `https://jellyfin.example.com`). |
 
 ### Ports
 

@@ -1,4 +1,5 @@
-#!/bin/bash bashio
+#!/usr/bin/bashio
+
 set -e
 
 if bashio::supervisor.ping; then
@@ -43,37 +44,12 @@ bashio::log.info "Starting..."
 bashio::log.info "Timezone set to $TZ"
 ln -snf /usr/share/zoneinfo/"$TZ" /etc/localtime && echo "$TZ" > /etc/timezone
 
-CONFIG_PATH=/data/options.json
-
-if bashio::config.true 'ssl'; then
-    bashio::config.require.ssl
-
-    export PROTO='https'
-    export PORT=$JELLYFIN_InternalHttpsPort
-
-    export JELLYFIN_CertificatePath="/jellyfin.p12"
-    export JELLYFIN_EnableHttps=true
-    export JELLYFIN_RequireHttps=$(bashio::config 'require_https')
-
-    rm -f $JELLYFIN_CertificatePath
-
-    openssl pkcs12 -export -out $JELLYFIN_CertificatePath -inkey /ssl/$(bashio::config 'keyfile') -in /ssl/$(bashio::config 'certfile') -passin pass: -passout pass:
-
-else
-    export PROTO='http'
-    export PORT=$JELLYFIN_InternalHttpPort
-    export JELLYFIN_EnableHttps=false
-    export JELLYFIN_RequireHttps=false
-fi
-
 if bashio::config.has_value 'JELLYFIN_PublishedServerUrl'; then
     export JELLYFIN_PublishedServerUrl=$(bashio::config 'JELLYFIN_PublishedServerUrl')
 else
     ha_address=$(bashio::network.ipv4_address)
 
-    export JELLYFIN_PublishedServerUrl="$PROTO://${ha_address%%/*}:$(bashio::addon.port $PORT)"
+    export JELLYFIN_PublishedServerUrl="http://${ha_address%%/*}:$(bashio::addon.port 8096)"
 fi
-
-bashio::log.info "JELLYFIN_PublishedServerUrl: $JELLYFIN_PublishedServerUrl"
 
 exec /jellyfin/jellyfin

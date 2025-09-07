@@ -1,0 +1,11 @@
+---
+configuration:
+  JELLYFIN_PublishedServerUrl:
+    name: Jellyfin URL
+    description: >-
+      Url from which Jellyfin is reachable
+network:
+  8096/tcp: HTTP (Not required for Ingress)
+  8920/tcp: HTTPS (Not required for Ingress)
+  7359/udp: Client Discovery
+  1900/udp: DLNA (optional)

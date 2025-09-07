@@ -1,6 +1,6 @@
 ---
 name: Jellyfin
-version: 10.10.7-v1
+version: 10.10.7-v2
 slug: jellyfin
 codenotary: info@fabiogaravini.dev
 description: Jellyfin is the volunteer-built media solution that puts you in control of your media
@@ -35,9 +35,9 @@ devices:
   - /dev/video12
 ports:
   8096/tcp: 8096
-  8920/tcp: 8920
+  8920/tcp: null
   7359/udp: 7359
-  1900/udp:
+  1900/udp: null
 ports_description:
   8096/tcp: HTTP (Not required for Ingress)
   8920/tcp: HTTPS (Not required for Ingress)
@@ -45,13 +45,4 @@ ports_description:
   1900/udp: DLNA (optional)
 schema:
   JELLYFIN_PublishedServerUrl: str?
-  ssl: bool
-  require_https: bool
-  certfile: str?
-  keyfile: str?
-options:
-  ssl: false
-  require_https: false
-  certfile: fullchain.pem
-  keyfile: privkey.pem
 image: fabioogaravini/hassio-jellyfin
