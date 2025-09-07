@@ -5,3 +5,5 @@
 ## About
 
 Just one click install full-stack Gitlab Comunity Edition
+
+Manual file editing is required for changing any default configuration, so it's recommended only for advanced users
