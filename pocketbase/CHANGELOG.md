@@ -1,15 +1,15 @@
 > _To update the prebuilt executable you can run `./pocketbase update`._
 
-- Try to forward Apple OAuth2 POST redirect user's name so that it can be returned (and eventually assigned) with the success response of the all-in-one auth call ([#7090](https://github.com/pocketbase/pocketbase/issues/7090)).
+- Eagerly escape the S3 request path following the same rules as in the S3 signing header ([#7153](https://github.com/pocketbase/pocketbase/issues/7153)).
 
-- Fixed `RateLimitRule.Audience` code comment ([#7098](https://github.com/pocketbase/pocketbase/pull/7098); thanks @iustin05).
+- Added Lark OAuth2 provider ([#7130](https://github.com/pocketbase/pocketbase/pull/7130); thanks @mashizora).
 
-- Mocked `syscall.Exec` when building for WASM ([#7116](https://github.com/pocketbase/pocketbase/pull/7116); thanks @joas8211).
-    _Note that WASM is not officially supported PocketBase build target and many things may not work as expected._
+- Increased test tokens `exp` claim to minimize eventual issues with reproducible builds ([#7123](https://github.com/pocketbase/pocketbase/issues/7123)).
 
-- Registered missing `$filesystem`, `$mails`, `$template` and `__hooks` bindings in the JSVM migrations ([#7125](https://github.com/pocketbase/pocketbase/issues/7125)).
+- Added `os.Root` bindings to the JSVM ([`$os.openRoot`](https://pocketbase.io/jsvm/functions/_os.openRoot.html), [`$os.openInRoot`](https://pocketbase.io/jsvm/functions/_os.openInRoot.html)).
 
-- Regenerated JSVM types to include methods from structs with single generic parameter.
+- Added `osutils.IsProbablyGoRun()` helper to loosely check if the program was started using `go run`.
 
-- Updated Go dependencies.
+- Various minor UI improvements (updated collections indexes UI, enabled seconds in the datepicker, updated helper texts, etc.).
 
+- ⚠️ Updated the minimum package Go version to 1.24.0 and bumped Go dependencies.
