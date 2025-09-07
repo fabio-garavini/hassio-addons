@@ -1,5 +1,5 @@
 name: Mealie
-version: 3.1.2
+version: 3.1.2-v1
 slug: mealie
 codenotary: info@fabiogaravini.dev
 description: a place for all your recipes
@@ -19,15 +19,11 @@ backup: cold
 backup_exclude:
   - "**.log*"
 schema:
-  PUID: int(0,)
-  PGID: int(0,)
   TZ: str?
   DEFAULT_GROUP: str
   DEFAULT_HOUSEHOLD: str
   ALLOW_SIGNUP: bool
   BASE_URL: str?
-  TLS_CERTIFICATE_PATH: str?
-  TLS_PRIVATE_KEY_PATH: str?
   OPENAI_BASE_URL: str?
   OPENAI_API_KEY: password?
   OPENAI_MODEL: str?
@@ -39,8 +35,6 @@ schema:
   SMTP_USER: str?
   SMTP_PASSWORD: password?
 options:
-  PUID: "0"
-  PGID: "0"
   TZ: Etc/UTC
   DEFAULT_GROUP: Home
   DEFAULT_HOUSEHOLD: Family
