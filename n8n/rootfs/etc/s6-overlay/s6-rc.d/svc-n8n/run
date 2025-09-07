@@ -4,7 +4,7 @@
 set -e
 
 if bashio::config.true 'tunnel'; then
-    exec n8n --tunnel
+    exec n8n start --tunnel
 else
-    exec n8n
+    exec n8n start
 fi

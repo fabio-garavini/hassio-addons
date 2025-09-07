@@ -10,7 +10,9 @@ ENV \
     NODE_ENV=production \
     N8N_EDITION="community" \
     N8N_USER_FOLDER="/config" \
+    DB_SQLITE_POOL_SIZE=2 \
     N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true \
+    N8N_BLOCK_ENV_ACCESS_IN_NODE=false \
     N8N_DIAGNOSTICS_ENABLED=false \
     N8N_VERSION_NOTIFICATIONS_ENABLED=false \
     N8N_RUNNERS_ENABLED=true \
@@ -24,10 +26,8 @@ RUN \
     apk add --no-cache \
         nodejs \
         npm \
-        nginx; \
-    rm -fr \
-        /tmp/*
-    #    /etc/nginx
+        openssl; \
+    rm -fr /tmp/*
 
 RUN \
     apk --no-cache add --virtual .build-deps-fonts msttcorefonts-installer fontconfig && \

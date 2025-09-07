@@ -1,10 +1,10 @@
 name: n8n
-version: 1.109.2
+version: 1.109.2-v1
 slug: n8n
 codenotary: info@fabiogaravini.dev
 description: Flexible AI workflow automation
 url: https://n8n.io
-webui: http://[HOST]:[PORT:5678]
+webui: "[PROTO:ssl]://[HOST]:[PORT:5678]"
 hassio_api: true
 arch:
   - aarch64
@@ -25,13 +25,17 @@ schema:
   tunnel: bool
   TZ: str?
   GENERIC_TIMEZONE: str?
+  ssl: bool
+  certfile: str?
+  keyfile: str?
   N8N_HOST: str?
-  N8N_PROTOCOL: list(http|https)?
-  N8N_SSL_CERT: str?
-  N8N_SSL_KEY: str?
+  N8N_PATH: str?
   WEBHOOK_URL: str?
 options:
   tunnel: false
+  ssl: true
+  certfile: fullchain.pem
+  keyfile: privkey.pem
 ports:
   5678/tcp: 5678
 ports_description:

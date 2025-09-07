@@ -13,13 +13,9 @@ configuration:
   N8N_HOST:
     name: Host
     description: The host name or IP address of your n8n instance. If you use a reverse proxy, set this to the domain name of your reverse proxy.
-  WEBHOOK_URL:
-    name: Webhook URL
-    description: The URL used to access n8n webhooks. If you use a reverse proxy, set this to the domain name of your reverse proxy. If you use a tunnel
-      service, leave this empty.
-  N8N_PROTOCOL:
-    name: Protocol
-    description: The protocol used to access n8n. If you use a reverse proxy with a ssl certificate, set this to `https`.
+  N8N_PATH:
+    name: Url path
+    description: The path n8n deploys to (default '/')
   N8N_SSL_CERT:
     name: SSL certificate
   N8N_SSL_KEY:

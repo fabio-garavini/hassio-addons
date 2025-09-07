@@ -47,10 +47,40 @@ if [ -n "$TZ" ] && [ -f /etc/localtime ]; then
     fi
 fi
 
-if [ -n "$N8N_SSL_CERT" ]; then
-    export N8N_SSL_CERT="/ssl/$N8N_SSL_CERT"
+ha_address=$(bashio::network.ipv4_address)
+ha_address=${ha_address%%/*}
+
+declare protocol="http"
+declare certfile="/ssl/$(bashio::config 'certfile')"
+declare keyfile="/ssl/$(bashio::config 'keyfile')"
+
+if bashio::config.true 'ssl'; then
+    # Require certfile and keyfile
+    #bashio::config.require 'certfile'
+    #bashio::config.require 'keyfile'
+
+    protocol="https"
+
+    # If certfile or keyfile does not exist, generate self-signed cert
+    if ! bashio::fs.file_exists "$certfile" || ! bashio::fs.file_exists "$keyfile"; then
+        bashio::log.warning "SSL is enabled, but certfile or keyfile is missing. Using self-signed certificate..."
+
+        certfile="/data/ssl/fullchain.pem"
+        keyfile="/data/ssl/privkey.pem"
+
+        /usr/local/bin/selfsigned-ssl-gen.sh "$certfile" "$keyfile"
+    fi
+
+    printf "%s" "$keyfile" > /var/run/s6/container_environment/N8N_SSL_KEY
+    printf "%s" "$certfile" > /var/run/s6/container_environment/N8N_SSL_CERT
+
+    printf "%s" "$protocol" > /var/run/s6/container_environment/N8N_PROTOCOL
 fi
 
-if [ -n "$N8N_SSL_KEY" ]; then
-    export N8N_SSL_KEY="/ssl/$N8N_SSL_KEY"
+if ! bashio::config.has_value "N8N_HOST"; then
+    printf "%s" "$ha_address" > /var/run/s6/container_environment/N8N_HOST
+fi
+
+if ! bashio::config.has_value "WEBHOOK_URL"; then
+    printf "%s" "${protocol}://${ha_address}:$(bashio::addon.port 5678)" > /var/run/s6/container_environment/WEBHOOK_URL
 fi
