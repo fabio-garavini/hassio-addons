@@ -1,4 +1,5 @@
 #!/command/with-contenv bash
+# shellcheck shell=bash
 set -Eeo pipefail
 # TODO swap to -Eeuo pipefail above (after handling all potentially-unset variables)
 
@@ -104,7 +105,7 @@ docker_init_database_dir() {
 # assumes database is not set up, ie: [ -z "$DATABASE_ALREADY_EXISTS" ]
 docker_verify_minimum_env() {
 	case "${PG_MAJOR:-}" in
-		12 | 13) # https://github.com/postgres/postgres/commit/67a472d71c98c3d2fa322a1b4013080b20720b98
+		13) # https://github.com/postgres/postgres/commit/67a472d71c98c3d2fa322a1b4013080b20720b98
 			# check password first so we can output the warning before postgres
 			# messes it up
 			if [ "${#POSTGRES_PASSWORD}" -ge 100 ]; then
@@ -154,6 +155,61 @@ docker_verify_minimum_env() {
 		EOWARN
 	fi
 }
+# similar to the above, but errors if there are any "old" databases detected (usually due to upgrades without pg_upgrade)
+docker_error_old_databases() {
+	if [ -n "${OLD_DATABASES[0]:-}" ]; then
+		cat >&2 <<-EOE
+			Error: in 18+, these Docker images are configured to store database data in a
+			       format which is compatible with "pg_ctlcluster" (specifically, using
+			       major-version-specific directory names).  This better reflects how
+			       PostgreSQL itself works, and how upgrades are to be performed.
+
+			       See also https://github.com/docker-library/postgres/pull/1259
+
+			       Counter to that, there appears to be PostgreSQL data in:
+			         ${OLD_DATABASES[*]}
+
+			       This is usually the result of upgrading the Docker image without upgrading
+			       the underlying database using "pg_upgrade" (which requires both versions).
+
+			       See https://github.com/docker-library/postgres/issues/37 for a (long)
+			       discussion around this process, and suggestions for how to do so.
+		EOE
+		exit 1
+	fi
+}
+
+# usage: docker_process_init_files [file [file [...]]]
+#    ie: docker_process_init_files /always-initdb.d/*
+# process initializer files, based on file extensions and permissions
+docker_process_init_files() {
+	# psql here for backwards compatibility "${psql[@]}"
+	psql=( docker_process_sql )
+
+	printf '\n'
+	local f
+	for f; do
+		case "$f" in
+			*.sh)
+				# https://github.com/docker-library/postgres/issues/450#issuecomment-393167936
+				# https://github.com/docker-library/postgres/pull/452
+				if [ -x "$f" ]; then
+					printf '%s: running %s\n' "$0" "$f"
+					"$f"
+				else
+					printf '%s: sourcing %s\n' "$0" "$f"
+					. "$f"
+				fi
+				;;
+			*.sql)     printf '%s: running %s\n' "$0" "$f"; docker_process_sql -f "$f"; printf '\n' ;;
+			*.sql.gz)  printf '%s: running %s\n' "$0" "$f"; gunzip -c "$f" | docker_process_sql; printf '\n' ;;
+			*.sql.xz)  printf '%s: running %s\n' "$0" "$f"; xzcat "$f" | docker_process_sql; printf '\n' ;;
+			*.sql.zst) printf '%s: running %s\n' "$0" "$f"; zstd -dc "$f" | docker_process_sql; printf '\n' ;;
+			*)         printf '%s: ignoring %s\n' "$0" "$f" ;;
+		esac
+		printf '\n'
+	done
+}
 
 # Execute sql script, passed via stdin (or -f flag of pqsl)
 # usage: docker_process_sql [psql-cli-args]
@@ -198,9 +254,17 @@ docker_setup_env() {
 
 	declare -g DATABASE_ALREADY_EXISTS
 	: "${DATABASE_ALREADY_EXISTS:=}"
+	declare -ag OLD_DATABASES=()
 	# look specifically for PG_VERSION, as it is expected in the DB dir
 	if [ -s "$PGDATA/PG_VERSION" ]; then
 		DATABASE_ALREADY_EXISTS='true'
+	elif [ "$PGDATA" = "/var/lib/postgresql/$PG_MAJOR/docker" ]; then
+		# https://github.com/docker-library/postgres/pull/1259
+		for d in /var/lib/postgresql /var/lib/postgresql/data /var/lib/postgresql/*/docker; do
+			if [ -s "$d/PG_VERSION" ]; then
+				OLD_DATABASES+=( "$d" )
+			fi
+		done
 	fi
 }
 
@@ -220,7 +284,7 @@ pg_setup_hba_conf() {
 		printf '\n'
 		if [ 'trust' = "$POSTGRES_HOST_AUTH_METHOD" ]; then
 			printf '# warning trust is enabled for all connections\n'
-			printf '# see https://www.postgresql.org/docs/12/auth-trust.html\n'
+			printf '# see https://www.postgresql.org/docs/17/auth-trust.html\n'
 		fi
 		printf 'host all all all %s\n' "$POSTGRES_HOST_AUTH_METHOD"
 	} >> "$PGDATA/pg_hba.conf"
@@ -237,6 +301,9 @@ docker_temp_server_start() {
 	# does not listen on external TCP/IP and waits until start finishes
 	set -- "$@" -c listen_addresses='' -p "${PGPORT:-5432}"
 
+	# unset NOTIFY_SOCKET so the temporary server doesn't prematurely notify
+	# any process supervisor.
+	NOTIFY_SOCKET= \
 	PGUSER="${PGUSER:-$POSTGRES_USER}" \
 	pg_ctl -D "$PGDATA" \
 		-o "$(printf '%q ' "$@")" \
@@ -278,12 +345,16 @@ _main() {
 		docker_create_db_directories
 		if [ "$(id -u)" = '0' ]; then
 			# then restart script as postgres user
-			exec gosu postgres "$BASH_SOURCE" "$@"
+			exec s6-setuidgid postgres "$BASH_SOURCE" "$@"
 		fi
 
 		# only run initialization on an empty data directory
 		if [ -z "$DATABASE_ALREADY_EXISTS" ]; then
 			docker_verify_minimum_env
+			docker_error_old_databases
+
+			# check dir permissions to reduce likelihood of half-initialized database
+			ls /docker-entrypoint-initdb.d/ > /dev/null
 
 			docker_init_database_dir
 			pg_setup_hba_conf "$@"
@@ -294,6 +365,7 @@ _main() {
 			docker_temp_server_start "$@"
 
 			docker_setup_db
+			docker_process_init_files /docker-entrypoint-initdb.d/*
 
 			docker_temp_server_stop
 			unset PGPASSWORD

@@ -3,10 +3,6 @@
 
 mkdir -p "$MEMOS_DATA"
 
-until su postgres -c 'pg_isready' &> /dev/null; do
-  sleep 5
-done
-
 bashio::log.info "Starting Memos"
 
 exec /usr/local/memos/memos

@@ -1,0 +1,21 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+
+set -Eeo pipefail
+
+# Source the PostgreSQL entrypoint functions
+source /usr/local/bin/postgres-entrypoint.sh
+
+# Set up environment and check if initialization is needed
+docker_setup_env
+docker_create_db_directories
+
+mkdir -p "/data/logs/postgres"
+
+# permissions
+chown postgres:postgres -R "/data/logs/postgres"
+chmod 750 -R "/data/logs/postgres"
+
+exec /usr/local/bin/docker-ensure-initdb.sh postgres \
+    -c timezone="$TZ" \
+    -c log_timezone="$TZ" &> /dev/null

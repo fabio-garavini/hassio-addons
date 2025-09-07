@@ -1,12 +1,12 @@
 ARG BUILD_FROM=ghcr.io/hassio-addons/base:stable
-ARG BUILD_VERSION=0.25.0
+ARG BUILD_VERSION=0.25.0-v1
 
-FROM ghcr.io/neosmemo/memos:${BUILD_VERSION%-v*} AS memos
+FROM ghcr.io/usememos/memos:${BUILD_VERSION%-v*} AS memos
 
 FROM ${BUILD_FROM}
 
 ENV MEMOS_MODE="prod" \
-    MEMOS_PORT="5230" \
+    MEMOS_PORT="80" \
     MEMOS_DATA="/share/memos" \
     MEMOS_DRIVER="postgres" \
     PGDATA="/config/postgres" \
@@ -16,13 +16,20 @@ ENV MEMOS_MODE="prod" \
     POSTGRES_DB="memos" \
     PG_MAJOR=16
 
+ENV PATH="$PATH:/usr/lib/postgresql/$PG_MAJOR/bin:/usr/lib/bin"
+
 RUN apk add --no-cache bash logrotate postgresql$PG_MAJOR postgresql$PG_MAJOR-client; \
 #    groupadd -r -g 900 postgres; \
 #    useradd -r -u 900 -g postgres --home-dir=/var/lib/postgresql --shell=/bin/bash postgres; \
 	install --verbose --directory --owner postgres --group postgres --mode 1777 /var/lib/postgresql; \
-    install --verbose --directory --owner postgres --group postgres --mode 3777 /var/run/postgresql
+    install --verbose --directory --owner postgres --group postgres --mode 3777 /var/run/postgresql; \
+    mkdir /docker-entrypoint-initdb.d; \
+    postgres --version
 
-COPY --from=neosmemo/memos:0.24.3 /usr/local/memos/memos /usr/local/memos/
+RUN apk add --no-cache nginx openssl; \
+    rm -rf /etc/nginx
+
+COPY --from=memos /usr/local/memos/memos /usr/local/memos/
 
 COPY rootfs/ /
 
