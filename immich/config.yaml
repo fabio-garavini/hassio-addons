@@ -1,5 +1,5 @@
 name: Immich
-version: 1.140.1-v6
+version: 1.141.1
 slug: immich
 codenotary: info@fabiogaravini.dev
 description: High performance self-hosted photo and video management solution
@@ -30,7 +30,6 @@ privileged:
   - DAC_READ_SEARCH
 devices:
   - /dev/ttyUSB0
-  # GPU
   - /dev/kfd
   - /dev/dri
   - /dev/dxg
@@ -39,7 +38,6 @@ devices:
   - /dev/video0
   - /dev/video1
   - /dev/video10
-  # Storage
   - /dev/mmcblk
   - /dev/fuse
   - /dev/nvme
