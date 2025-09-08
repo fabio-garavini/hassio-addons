@@ -55,22 +55,19 @@ This release is also available as:
 
 * APT repository: https://apt.syncthing.net/
 
-* Docker image: `docker.io/syncthing/syncthing:2.0.7` or `ghcr.io/syncthing/syncthing:2.0.7`
+* Docker image: `docker.io/syncthing/syncthing:2.0.8` or `ghcr.io/syncthing/syncthing:2.0.8`
   (`{docker,ghcr}.io/syncthing/syncthing:2` to follow just the major version)
 
 ## What's Changed
 ### Fixes
-* fix(model): earlier free-space check (fixes #10347) by @calmh in https://github.com/syncthing/syncthing/pull/10348
-* fix(api): redact device encryption passwords in support bundle config by @pixelspark in https://github.com/syncthing/syncthing/pull/10359
-* fix(sqlite): revert to default page cache size by @calmh in https://github.com/syncthing/syncthing/pull/10362
-* fix(tlsutil): support HTTP/2 on GUI/API connections by @calmh in https://github.com/syncthing/syncthing/pull/10366
-* fix(sqlite): avoid rowid on kv table by @calmh in https://github.com/syncthing/syncthing/pull/10367
+* fix(sqlite): less impactful periodic garbage collection by @calmh in https://github.com/syncthing/syncthing/pull/10374
+* fix(sqlite): explicitly set temporary directory location (fixes #10368) by @calmh in https://github.com/syncthing/syncthing/pull/10376
 ### Other
-* chore(model): adjust folder state logging (fixes #10350) by @calmh in https://github.com/syncthing/syncthing/pull/10353
-* build: package for illumos using vmactions/omnios-vm by @trisk in https://github.com/syncthing/syncthing/pull/10328
-* chore(slogutil): add configurable logging format (fixes #10352) by @calmh in https://github.com/syncthing/syncthing/pull/10354
+* build: trigger nightly build only on syncthing repo by @aminvakil in https://github.com/syncthing/syncthing/pull/10375
+* chore(scanner): always return values to the pools when hashing blocks by @imsodin in https://github.com/syncthing/syncthing/pull/10377
+* chore(sqlite): skip database GC entirely when it's provably unnecessary by @calmh in https://github.com/syncthing/syncthing/pull/10379
 
 ## New Contributors
-* @trisk made their first contribution in https://github.com/syncthing/syncthing/pull/10328
+* @aminvakil made their first contribution in https://github.com/syncthing/syncthing/pull/10375
 
-**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.6...v2.0.7
+**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.7...v2.0.8
