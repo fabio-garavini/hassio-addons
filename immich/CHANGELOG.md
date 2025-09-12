@@ -1,44 +1,28 @@
-# v1.141.1
-## Highlight
-Welcome to the release `v1.141.1` of Immich, as hot as this summer gets, the beta timeline is ready to be taken out of the kitchen, now with more features and bug fixes. Let’s dive right in while it’s still hot
+# v1.142.0
 
+## Highlights
 
-* \[beta\] Auto-add uploaded assets to albums
-* View similar photos
-* DigitalOcean 1-click deployment
-* Notable fix - thumbnail generation for 200MP HEIC images
+Welcome to release `v1.142.0` of Immich. Starting with this version, the beta timeline is now the default version for the app. When you first open the app after updating, it will check and run the on-device migration steps for those that are on the old timeline, after that you can close and relaunch the app to start with a better app experience. We want to express our sincere gratitude again for the users who have been using the new version to help us polish it, and for those who work closely with us to tackle weird bugs. As always, this version comes with many bug fixes for the server, web and the mobile app. Let’s dive into some of the highlights below.
 
+* Resume all paused jobs
+* Geolocation utility improvements
+* Read-only mode toggle on the mobile app has changed to a long-press behavior instead of a double-tap
+* Notable fix: Raspberry Pi 4 crashes when generating thumbnails
+  * If you were affected by this bug and set the environmental variable `VIPS_NOVECTOR=1`, you should remove this variable when upgrading to this Immich release or above
 
-### \[beta\] Auto-add uploaded assets to albums.
+### Resume all paused jobs
 
-This feature has made its way back to the beta timeline. You can enable this feature on the `Backup Options` page. The current selected albums for backup will be linked with the album of the same name on the server, or a new album will be created if those albums don’t exist. Assets uploaded will be placed in the respective linked album.
+The job administration page now comes with a resume all button. This is especially helpful for users who are importing their libraries to Immich via [immich-go](https://github.com/simulot/immich-go), which pauses all jobs during upload, including background jobs not visible in the UI. If the process fails mid-way, the jobs stay paused until the admin either recreates the Redis container or manually resumes them. If you’ve been having problems with the trash not clearing or memories not generating, make sure to check this button.
 
-<p align="center">
-<img width="300" alt="image" src="https://github.com/user-attachments/assets/06aee5e9-c228-47af-8f66-1e42954e4964" />
-</p>
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/a55362b7-21bc-48d1-acbc-47a7fdf395db" />
 
-### View similar photos
+### Geolocation utility improvements
 
-On the web, you can now look for similar photos or videos when viewing an asset by clicking on the `context menu > Find similar photos`. Powered by CLIP search to quickly identify photos with similar scenery and context
+The geolocation utility has been converted to a timeline view, so you can easily scroll through your entire library while investigating  
 
-<p align="center">
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/88e92f5d-28a3-44c6-8a35-7205ec901b1b" />
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/bd9ce189-652c-490b-8e3b-f07c981aaa1a" />
-</p>
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/e38c7b39-1b0d-4552-94b2-444579f2e137" />
 
-### Digital Ocean 1-Click Deployment
-
-To help users who are interested in trying out the application without setting it up on their infrastructure, or who do not have the infrastructure available yet. We now have the option to deploy Immich directly on DigitalOcean.
-
-The default configuration is the smallest pod size that can run Immich comfortably. The new instance is set up with a default reverse proxy that handles TLS. For more information, you can read [here](https://marketplace.digitalocean.com/apps/immich).
-
-You can give it a try by clicking the button below
-
-<p align="center">
-<a href="https://cloud.digitalocean.com/droplets/new?onboarding_origin=marketplace&appId=198842662&image=futo-immich&activation_redirect=%2Fdroplets%2Fnew%3FappId%3D198842662%26image%3Dfuto-immich">
- <img width="252"  alt="image" src="https://github.com/user-attachments/assets/096b2035-9a3f-4288-9302-13cbd1d720b9" />
-</a>
-</p>
+You can now browse the timeline, and at the same time, fill in the missing coordinates for your assets. Thanks @Johannbr for your continued work on this.
 
 ## Support Immich
 
@@ -51,54 +35,68 @@ You can give it a try by clicking the button below
 
 If you find the project helpful, you can support Immich by purchasing a product key at https://buy.immich.app or our merchandise at https://immich.store
 
-<!-- Release notes generated using configuration in .github/release.yml at v1.141.1 -->
-
 ## What's Changed
+
+### 🫥 Deprecated Changes
+
+* feat: add partner create endpoint by @jrasm91 in <https://github.com/immich-app/immich/pull/21625>
+* chore: deprecate `replaceAsset` by @jrasm91 in <https://github.com/immich-app/immich/pull/21791>
+
 ### 🚀 Features
-* feat: view similar photos by @normana10 in https://github.com/immich-app/immich/pull/21108
-* feat: album info sync by @alextran1502 in https://github.com/immich-app/immich/pull/21103
+
+* feat: workflow for automated translations merge by @bo0tzz in <https://github.com/immich-app/immich/pull/21639>
+* chore: make beta timeline the default by @alextran1502 in <https://github.com/immich-app/immich/pull/21751>
+
 ### 🌟 Enhancements
-* fix(web): wait for image to load before playing memories. by @dagstuan in https://github.com/immich-app/immich/pull/19757
-* feat(mobile): copy file name by long-press by @YarosMallorca in https://github.com/immich-app/immich/pull/21469
-* feat(mobile): add to albums from existing albums by @pedrosimao in https://github.com/immich-app/immich/pull/21554
-* feat(mobile): scrubber haptics (beta timeline) by @YarosMallorca in https://github.com/immich-app/immich/pull/21351
+
+* feat: add button to unpause all queues by @bo0tzz in <https://github.com/immich-app/immich/pull/21685>
+* feat(web): use timeline in geolocation manager by @Johannbr in <https://github.com/immich-app/immich/pull/21492>
+
 ### 🐛 Bug fixes
-* fix(mobile): readonly mode disable tabs when in landscape mode by @bwees in https://github.com/immich-app/immich/pull/21475
-* fix(web): Show full date when hovering over photos date groups by @Snowknight26 in https://github.com/immich-app/immich/pull/21462
-* fix(mobile): increase thumbnail resolution by @mertalev in https://github.com/immich-app/immich/pull/21502
-* fix: show TabShellRoute when cold starting from deeplink by @bwees in https://github.com/immich-app/immich/pull/21376
-* fix: filter null duplicate assets by @ItzDerock in https://github.com/immich-app/immich/pull/21507
-* fix(mobile): decoding at higher resolution than necessary by @mertalev in https://github.com/immich-app/immich/pull/21503
-* fix(mobile): ensure current asset is set in asset viewer by @mertalev in https://github.com/immich-app/immich/pull/21504
-* fix: handle datetime outside the valid range supported by dart by @shenlong-tanwen in https://github.com/immich-app/immich/pull/21526
-* fix: set specific AssetUpload permission on checkBulkUpload endpoint by @bo0tzz in https://github.com/immich-app/immich/pull/21470
-* fix: iOS portrait photo saved as jpg extension by @alextran1502 in https://github.com/immich-app/immich/pull/21388
-* fix: local sync task never runs on iOS by @shenlong-tanwen in https://github.com/immich-app/immich/pull/21491
-* fix: keyboard not dismissed in places page by @shenlong-tanwen in https://github.com/immich-app/immich/pull/21583
-* fix(mobile): pause image loading on inactive state by @mertalev in https://github.com/immich-app/immich/pull/21543
-* fix(mobile): readonly mode fixes by @Sud-Puth in https://github.com/immich-app/immich/pull/21545
-* fix(mobile): Hide system UI when entering immersive mode in asset viewer by @goalie2002 in https://github.com/immich-app/immich/pull/21539
-* fix(web): Make Manage location utility header responsive by @Snowknight26 in https://github.com/immich-app/immich/pull/21480
-* fix(mobile): pinch + move scale by @waclaw66 in https://github.com/immich-app/immich/pull/21332
-* fix: retain filter and sort options when pulling to refresh by @bwees in https://github.com/immich-app/immich/pull/21452
-* fix: sidecar check job by @jrasm91 in https://github.com/immich-app/immich/pull/21312
-* fix: use lock to synchronise foreground and background backup by @shenlong-tanwen in https://github.com/immich-app/immich/pull/21522
-* fix: asset upload metadata validation by @jrasm91 in https://github.com/immich-app/immich/pull/21594
-* chore(deps): bump sharp to 0.34.3 by @mertalev in https://github.com/immich-app/immich/pull/21596
-* fix(mobile): Correction of image creation date by using mtime instead… by @StarGest in https://github.com/immich-app/immich/pull/21508
-* fix(mobile): location button map beta timeline by @YarosMallorca in https://github.com/immich-app/immich/pull/21590
-* fix(server): consider asset creation date when EXIF is missing by @riccardoruspoli in https://github.com/immich-app/immich/pull/21586
-* fix: memory not getting refreshed on new day by @alextran1502 in https://github.com/immich-app/immich/pull/21623
-* chore: robust isolation tasks coordination by @alextran1502 in https://github.com/immich-app/immich/pull/21605
+
+* fix(server): remove pcm from default accepted codecs by @mertalev in <https://github.com/immich-app/immich/pull/21655>
+* fix(server): valid backups with `DB_URL` env variable config by @peterbuga in <https://github.com/immich-app/immich/pull/21669>
+* feat: sync AuthUserV1 by @shenlong-tanwen in <https://github.com/immich-app/immich/pull/21565>
+* fix: prevent isolate deadlock by @alextran1502 in <https://github.com/immich-app/immich/pull/21692>
+* fix: use relative path in [start.sh](http://start.sh) by @dvdkon in <https://github.com/immich-app/immich/pull/20434>
+* fix: prefer Creation Date over Create Date by @jrasm91 in <https://github.com/immich-app/immich/pull/21756>
+* fix(web): cancel uploads on logout by @jrasm91 in <https://github.com/immich-app/immich/pull/21760>
+* fix(web): transparent background color by @jrasm91 in <https://github.com/immich-app/immich/pull/21747>
+* fix(web): website frozen after modal closes by @jrasm91 in <https://github.com/immich-app/immich/pull/21752>
+* fix(web): map popup accessibility by @jrasm91 in <https://github.com/immich-app/immich/pull/21759>
+* fix(server): correct immich-cli symlink in Immich docker image by @skatsubo in <https://github.com/immich-app/immich/pull/21318>
+* fix: welcome email password by @jrasm91 in <https://github.com/immich-app/immich/pull/21732>
+* fix(mobile): Change read-only mode activation method to remove double click lag by @goalie2002 in <https://github.com/immich-app/immich/pull/21743>
+* fix(web): memory viewer arrow navigation by @YarosMallorca in <https://github.com/immich-app/immich/pull/19400>
+* chore(deps): update base image to trixie by @mertalev in <https://github.com/immich-app/immich/pull/21786>
+* fix(web): asset refresh by @jrasm91 in <https://github.com/immich-app/immich/pull/21788>
+* fix(web): map in album shared link by @jrasm91 in <https://github.com/immich-app/immich/pull/21793>
+* fix(server): validate token permission by @jrasm91 in <https://github.com/immich-app/immich/pull/21802>
+* fix: android background backups by @shenlong-tanwen in <https://github.com/immich-app/immich/pull/21795>
+* fix: concurrency issue by @alextran1502 in <https://github.com/immich-app/immich/pull/21830>
+* fix: always use en locale for parsing timeline datetime by @shenlong-tanwen in <https://github.com/immich-app/immich/pull/21796>
+* fix(web): handle buckets before year 1000 by @jrasm91 in <https://github.com/immich-app/immich/pull/21832>
+
+### 📚 Documentation
+
+* docs: be explicit about which container exposes metrics by @per-review in <https://github.com/immich-app/immich/pull/20424>
+* docs: add community immich drop uploader project by @papuass in <https://github.com/immich-app/immich/pull/21775>
+* fix(docs): fix the SQL query for finding assets with missing thumbnails by @skatsubo in <https://github.com/immich-app/immich/pull/21770>
+* docs: improve and clarify XMP sidecar behavior by @trommegutten in <https://github.com/immich-app/immich/pull/20334>
+* docs: update tag details by @jrasm91 in <https://github.com/immich-app/immich/pull/21815>
+
 ### 🌐 Translations
-* chore(web): update translations by @weblate in https://github.com/immich-app/immich/pull/21130
-* chore(web): update translations by @weblate in https://github.com/immich-app/immich/pull/21464
+
+* chore: update README by @zvirja in <https://github.com/immich-app/immich/pull/21718>
+* chore(web): update translations by @weblate in <https://github.com/immich-app/immich/pull/21624>
+* chore(web): update translations by @weblate in <https://github.com/immich-app/immich/pull/21814>
 
 ## New Contributors
-* @ItzDerock made their first contribution in https://github.com/immich-app/immich/pull/21507
-* @pedrosimao made their first contribution in https://github.com/immich-app/immich/pull/21554
-* @goalie2002 made their first contribution in https://github.com/immich-app/immich/pull/21539
-* @StarGest made their first contribution in https://github.com/immich-app/immich/pull/21508
-* @riccardoruspoli made their first contribution in https://github.com/immich-app/immich/pull/21586
 
-**Full Changelog**: https://github.com/immich-app/immich/compare/v1.140.1...v1.141.1
+* @peterbuga made their first contribution in <https://github.com/immich-app/immich/pull/21669>
+* @per-review made their first contribution in <https://github.com/immich-app/immich/pull/20424>
+* @papuass made their first contribution in <https://github.com/immich-app/immich/pull/21775>
+* @zvirja made their first contribution in <https://github.com/immich-app/immich/pull/21718>
+* @trommegutten made their first contribution in <https://github.com/immich-app/immich/pull/20334>
+
+**Full Changelog**: <https://github.com/immich-app/immich/compare/v1.141.1...v1.142.0>
