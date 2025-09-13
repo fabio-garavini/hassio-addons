@@ -55,19 +55,17 @@ This release is also available as:
 
 * APT repository: https://apt.syncthing.net/
 
-* Docker image: `docker.io/syncthing/syncthing:2.0.8` or `ghcr.io/syncthing/syncthing:2.0.8`
+* Docker image: `docker.io/syncthing/syncthing:2.0.9` or `ghcr.io/syncthing/syncthing:2.0.9`
   (`{docker,ghcr}.io/syncthing/syncthing:2` to follow just the major version)
 
 ## What's Changed
 ### Fixes
-* fix(sqlite): less impactful periodic garbage collection by @calmh in https://github.com/syncthing/syncthing/pull/10374
-* fix(sqlite): explicitly set temporary directory location (fixes #10368) by @calmh in https://github.com/syncthing/syncthing/pull/10376
+* fix(sqlite): add _txlock=immediate to modernc implementation by @calmh in https://github.com/syncthing/syncthing/pull/10384
+* fix(api): limit size of allowed authentication request by @calmh in https://github.com/syncthing/syncthing/pull/10386
 ### Other
-* build: trigger nightly build only on syncthing repo by @aminvakil in https://github.com/syncthing/syncthing/pull/10375
-* chore(scanner): always return values to the pools when hashing blocks by @imsodin in https://github.com/syncthing/syncthing/pull/10377
-* chore(sqlite): skip database GC entirely when it's provably unnecessary by @calmh in https://github.com/syncthing/syncthing/pull/10379
+* chore(ursrv): update regex patterns for Syncthing-Fork entries by @Catfriend1 in https://github.com/syncthing/syncthing/pull/10380
+* chore: clean up migrated database by @calmh in https://github.com/syncthing/syncthing/pull/10381
+* chore(sqlite): use normalised tables for file names and versions by @calmh in https://github.com/syncthing/syncthing/pull/10383
+* chore(model): slightly deflake TestRecvOnlyRevertOwnID by @calmh in https://github.com/syncthing/syncthing/pull/10390
 
-## New Contributors
-* @aminvakil made their first contribution in https://github.com/syncthing/syncthing/pull/10375
-
-**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.7...v2.0.8
+**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.8...v2.0.9
