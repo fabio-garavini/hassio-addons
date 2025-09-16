@@ -1,6 +1,5 @@
----
 name: Memos
-version: 0.25.0-v1
+version: 0.25.1
 slug: memos
 codenotary: info@fabiogaravini.dev
 description: note-taking solution designed for seamless deployment and multi-platform access
@@ -19,7 +18,7 @@ map:
   - type: ssl
 backup: cold
 backup_exclude:
-  - '**/logs'
+  - "**/logs"
 schema:
   ssl: bool
   certfile: str?
