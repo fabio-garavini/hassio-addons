@@ -1,5 +1,5 @@
 ARG BUILD_FROM=ghcr.io/hassio-addons/base:stable
-ARG BUILD_VERSION=0.25.0-v1
+ARG BUILD_VERSION=0.25.1
 
 FROM ghcr.io/usememos/memos:${BUILD_VERSION%-v*} AS memos
 
