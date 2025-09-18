@@ -1,12 +1,11 @@
----
 source:
   type: docker
   repo: cloudflare/cloudflared
-  current_version: 2025.8.1
+  current_version: 2025.9.0
   version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 config:
-  version_template: '{{major}}.{{minor}}.{{patch}}'
-  patch: 4
+  version_template: "{{major}}.{{minor}}.{{patch}}"
+  patch: 0
   image: fabioogaravini/hassio-cloudflared
 build:
   image: ghcr.io/hassio-addons/base
@@ -14,4 +13,4 @@ build:
   codenotary: info@fabiogaravini.dev
 changelog:
   source: none
-  version_template: '{{major}}.{{minor}}.{{patch}}'
+  version_template: "{{major}}.{{minor}}.{{patch}}"
