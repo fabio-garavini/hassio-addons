@@ -34,7 +34,8 @@ Connections from Immich to Postgres and Redis use Unix sockets, which **reduce o
    * Start the add-on
    * Click **OPEN WEB UI**
    * follow first-run wizard
-1. **Checkout** the [post installation guide](https://immich.app/docs/install/post-install) (optional)
+1.  (optional) If you're already using the Home Assistant backup system, you can disable *Database Dumps*
+1.  (optional) **Checkout** the [post installation guide](https://immich.app/docs/install/post-install)
 
 ---
 
@@ -79,7 +80,7 @@ Below are all the configuration settings you can customize. Most users can leave
 ### Immich Library
 
 * By default, Immich stores everything inside `/media/immich` (set by `Media Location`)
-  
+
    If you want it to be included in the Addon backup and not in the Media folder, you can change it to `config/library`. Depending on your library size **this will increase the addon backup size by a lot!**
 
 * ⚠️ **Don't** manually move or change files inside this folder, always manage them via Immich UI.
@@ -104,16 +105,16 @@ I strongly recommend storing your library on a NAS, which is usually more reliab
 
 ### Mount Hard Disk
 
-I will guide you through how to format the disk 
+I will guide you through how to format the disk
 
 1. connect the hard disk to Home Assistant server
 1. start Immich and check the logs
-   
+
    identify your hard disk, it should look something like this (maybe with a different device name)
    if you're not shure, you can always double check with the drive serial printed on the disk
    ```
    ════════════════════════════════════════════════════════════════════
-                        LOCAL STORAGE DEVICES                        
+                        LOCAL STORAGE DEVICES
    ════════════════════════════════════════════════════════════════════
    DEVICE   SIZE     MODEL                          PT TABLE   PARTITIONS SERIAL
    ────────────────────────────────────────────────────────────────────
@@ -166,7 +167,7 @@ There are two ways of connecting Immich to a NAS
 1. Add a new network storage: ( ⚠️ don't mount the share on your `Media Location` path, default: `/media/immich`)
    * **Name**: `immich` (name of the folder to mount share on)
    * **Usage**: `Share` (you can choose `Media` or `Share`)
-   * **Protocol**: SMB or NFS (enter login credentials if required).  
+   * **Protocol**: SMB or NFS (enter login credentials if required).
 1. Update your addon `Media Location` configuration with `/<usage>/<name>` (for the example above `/share/immich`)
 1. **Start Immich**
 1. **Check logs** and wait for the migration to complete
@@ -210,17 +211,17 @@ Check also `Media Library Migration` section to know more ⤵️
 
 If you want Immich to move your media library to a new folder:
 
-1. **Prepare the New Folder**  
-   * Ensure the new folder is either **empty** or **does not exist** (Immich will create it).  
+1. **Prepare the New Folder**
+   * Ensure the new folder is either **empty** or **does not exist** (Immich will create it).
 
-2. **Update Configuration**  
-   * Open the **Immich Add-on Configuration Page**.  
-   * Change the `Media Location` to the new folder (e.g., `/share/immich`).  
+2. **Update Configuration**
+   * Open the **Immich Add-on Configuration Page**.
+   * Change the `Media Location` to the new folder (e.g., `/share/immich`).
 
-3. **Start Immich**  
-   * Immich will automatically perform checks and migrate all media from the old location to the new one.  
+3. **Start Immich**
+   * Immich will automatically perform checks and migrate all media from the old location to the new one.
 
-❕ **Important Notes**:  
+❕ **Important Notes**:
 * Only subfolders of `/media/` and `/share/` are supported for `Media Location` (or `/config/library` if you want to include your media library in the addon backup)
 * Migration may take time depending on your library size
 * Once complete, all new uploads will be stored in the new location
@@ -229,19 +230,19 @@ If you want Immich to move your media library to a new folder:
 
 ## 🔒 Enabling HTTPS/SSL
 
-HTTPS is enabled **by default** (`ssl: true`).  
+HTTPS is enabled **by default** (`ssl: true`).
 
-1. **Default (Self-Signed Certificate)**  
-   * If you don’t specify `certfile` and `keyfile`, Immich will automatically generate and use a self-signed SSL certificate.  
-   * You may see a browser warning the first time you connect—this is expected with self-signed certificates.  
+1. **Default (Self-Signed Certificate)**
+   * If you don’t specify `certfile` and `keyfile`, Immich will automatically generate and use a self-signed SSL certificate.
+   * You may see a browser warning the first time you connect—this is expected with self-signed certificates.
 
-2. **Using Trusted Certificates (Recommended)**  
-   * If using Home Assistant’s **Let’s Encrypt add-on**, certificates will be stored in `/ssl/`.  
-   * You should see two files:  
-     * `fullchain.pem` (certificate)  
-     * `privkey.pem` (private key)  
+2. **Using Trusted Certificates (Recommended)**
+   * If using Home Assistant’s **Let’s Encrypt add-on**, certificates will be stored in `/ssl/`.
+   * You should see two files:
+     * `fullchain.pem` (certificate)
+     * `privkey.pem` (private key)
 
-   Example configuration:  
+   Example configuration:
 
    ```yaml
    ssl: true

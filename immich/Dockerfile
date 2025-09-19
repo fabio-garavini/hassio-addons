@@ -24,7 +24,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Immich environment variables
 ENV \
     SERVER_PORT=2283 \
-    DB_URL="postgresql://immich:immich@/immich?host=/var/run/postgresql" \
+    DB_URL="postgresql:///immich?host=/var/run/postgresql&user=immich&password=immich" \
     REDIS_SOCKET="/var/run/redis/redis.sock" \
     MACHINE_LEARNING_CACHE_FOLDER="/data/cache" \
     TRANSFORMERS_CACHE="/data/cache"
