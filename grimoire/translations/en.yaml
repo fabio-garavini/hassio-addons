@@ -1,0 +1,17 @@
+---
+configuration:
+  PUBLIC_HTTPS_ONLY:
+    name: Public HTTPS Only
+    description: >-
+      When true, the web interface will only be available via HTTPS. This is recommended if the instance is publicly accessible
+  PUBLIC_SIGNUP_DISABLED:
+    name: Disable Public Signup
+    description: >-
+      When true, new user registrations will be disabled. This is recommended if the instance is publicly accessible
+  PUBLIC_ORIGIN:
+    name: Public URL
+    description: >-
+      The public URL of your Grimoire instance, if exposed to the public internet
+
+network:
+  5173/tcp: Grimoire
