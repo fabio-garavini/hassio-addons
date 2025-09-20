@@ -34,4 +34,4 @@ ports:
   5173/tcp: 5173
 ports_description:
   5173/tcp: Grimoire
-#image: fabioogaravini/hassio-grimoire
+image: fabioogaravini/hassio-grimoire
