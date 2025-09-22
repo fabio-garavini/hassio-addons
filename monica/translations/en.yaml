@@ -1,13 +1,5 @@
 ---
 configuration:
-  PUBLIC_SIGNUP_DISABLED:
-    name: Disable Public Signup
-    description: >-
-      When true, new user registrations will be disabled. This is recommended if the instance is publicly accessible
-  PUBLIC_ORIGIN:
-    name: Public URL
-    description: >-
-      The public URL of your Grimoire instance, if exposed to the public internet
   ssl:
     name: SSL
     description: >-
@@ -22,4 +14,4 @@ configuration:
       Name of the SSL private key file located under the `/ssl/` directory.
 
 network:
-  5173/tcp: Grimoire
+  8080/tcp: Monica

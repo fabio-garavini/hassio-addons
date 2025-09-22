@@ -1,0 +1,7 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+
+bashio::net.wait_for 80 localhost 900
+
+bashio::log.info "Starting NGinx..."
+exec nginx

@@ -1,0 +1,43 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+
+set -e
+
+declare service_port=80
+declare service_protocol=http
+declare nginx_port=8080
+declare certfile="/ssl/$(bashio::config 'certfile')"
+declare keyfile="/ssl/$(bashio::config 'keyfile')"
+
+# Generate upstream configuration
+bashio::var.json \
+    port "^${service_port}" \
+    | tempio \
+        -template /etc/nginx/templates/upstream.gtpl \
+        -out /etc/nginx/includes/upstream.conf
+
+if bashio::config.true 'ssl'; then
+    # Require certfile and keyfile
+    #bashio::config.require 'certfile'
+    #bashio::config.require 'keyfile'
+
+    # If certfile or keyfile does not exist, generate self-signed cert
+    if ! bashio::fs.file_exists "$certfile" || ! bashio::fs.file_exists "$keyfile"; then
+        bashio::log.warning "SSL is enabled, but certfile or keyfile is missing. Using self-signed certificate..."
+
+        certfile="/data/ssl/fullchain.pem"
+        keyfile="/data/ssl/privkey.pem"
+
+        /usr/local/bin/selfsigned-ssl-gen.sh "$certfile" "$keyfile"
+    fi
+fi
+
+bashio::var.json \
+    certfile "$certfile" \
+    keyfile "$keyfile" \
+    port "$nginx_port" \
+    protocol "$service_protocol" \
+    ssl "^$(bashio::config 'ssl')" \
+    | tempio \
+        -template /etc/nginx/templates/direct.gtpl \
+        -out /etc/nginx/servers/direct.conf

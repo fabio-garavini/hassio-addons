@@ -105,6 +105,14 @@ An open-source, self-hosted note-taking solution designed for seamless deploymen
 
 ![screenshot](https://camo.githubusercontent.com/e31052e97a940bf0afde9a63e59dd7a03c7cb698e0378df0876d131972b115a9/68747470733a2f2f7777772e7573656d656d6f732e636f6d2f64656d6f2e706e67)
 
+### 🐼 Monica
+
+*All-in-one*
+
+Monica is an open-source web application that enables you to document your life, organize, and log your interactions with your family and friends. We call it a PRM, or Personal Relationship Management. Imagine a CRM—a commonly used tool by sales teams in the corporate world—for your friends and family.
+
+![logo](https://user-images.githubusercontent.com/61099/242266547-63d98bd9-35f3-4dfe-92f4-a4a8dd75aa5c.png)
+
 ### ✨ n8n
 
 *All-in-one*

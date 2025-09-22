@@ -1,0 +1,5 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+
+# Start the application
+exec entrypoint.sh apache2-foreground
