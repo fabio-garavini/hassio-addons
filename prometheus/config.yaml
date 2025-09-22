@@ -1,6 +1,5 @@
----
 name: Prometheus
-version: v3.5.0-v0
+version: 3.6.0
 slug: prometheus
 codenotary: info@fabiogaravini.dev
 description: Prometheus monitoring system
@@ -20,7 +19,7 @@ map:
     read_only: true
     path: /etc/prometheus
 ports:
-  9090/tcp:
+  9090/tcp: null
 ports_description:
   9090/tcp: Metrics
 image: fabioogaravini/hassio-prometheus
