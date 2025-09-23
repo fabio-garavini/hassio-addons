@@ -1,7 +1,7 @@
 source:
   type: docker
   repo: cloudflare/cloudflared
-  current_version: 2025.9.0
+  current_version: 2025.9.1
   version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
