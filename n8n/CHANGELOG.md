@@ -1,6 +1,6 @@
-## [1.112.3](https://github.com/n8n-io/n8n/compare/n8n@1.112.2...n8n@1.112.3) (2025-09-19)
+## [1.112.4](https://github.com/n8n-io/n8n/compare/n8n@1.112.3...n8n@1.112.4) (2025-09-23)
 
 
-### Bug Fixes
+### Features
 
-* **core:** Credential export for personal projects ([#19720](https://github.com/n8n-io/n8n/issues/19720)) ([de26236](https://github.com/n8n-io/n8n/commit/de262362670dfec3861846f362ac6046dc924137))
+* **editor:** Change default sidebar state to collapsed ([#19692](https://github.com/n8n-io/n8n/issues/19692)) ([e688438](https://github.com/n8n-io/n8n/commit/e68843863c83d656fc6ff7daa94f5c811784def8))
