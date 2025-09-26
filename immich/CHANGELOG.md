@@ -8,4 +8,4 @@
 * chore(web): update translations by @weblate in https://github.com/immich-app/immich/pull/22288
 
 
-**Full Changelog**: https://github.com/immich-app/immich/compare/v1.143.0...
+**Full Changelog**: https://github.com/immich-app/immich/compare/v1.143.0...v1.143.1
