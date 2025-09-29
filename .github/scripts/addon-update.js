@@ -75,7 +75,7 @@ if(info.changelog?.enabled??true) {
             } catch (e) {
               console.error(e.message);
             }
-            fs.writeFileSync(changelogFile, changelog, 'utf8');
+            fs.writeFileSync(changelogFile, changelog??`# ${changelogVersion}`, 'utf8');
           });
         }
       );
