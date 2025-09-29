@@ -115,7 +115,7 @@ jobs:
 
       - name: 🔑 Login to DockerHub
         if: steps.check.outputs.build_arch == 'true' && github.event_name == 'push'
-        uses: docker/login-action@v3.5.0
+        uses: docker/login-action@v3.6.0
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -229,7 +229,7 @@ jobs:
           fi
 
       - name: 🔑 Login to DockerHub
-        uses: docker/login-action@v3.5.0
+        uses: docker/login-action@v3.6.0
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
