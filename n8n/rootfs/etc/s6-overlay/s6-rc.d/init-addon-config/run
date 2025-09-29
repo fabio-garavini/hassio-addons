@@ -24,7 +24,7 @@ jq -r 'keys[]' "${OPTIONS_SOURCE}" | while read -r KEY; do
             ;;
     esac
 
-    export "$line"
+    export line
 
     # set .env
     echo "$line" >> /.env || true

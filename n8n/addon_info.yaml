@@ -8,8 +8,8 @@ config:
   patch: 0
   image: fabioogaravini/hassio-n8n
 build:
-  image: ghcr.io/hassio-addons/base
-  version_template: stable
+  image: docker.n8n.io/n8nio/n8n
+  version_template: "{{major}}.{{minor}}.{{patch}}"
   codenotary: info@fabiogaravini.dev
 changelog:
   source: github-releases
