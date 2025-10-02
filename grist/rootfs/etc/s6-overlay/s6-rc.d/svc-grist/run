@@ -1,0 +1,6 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+
+cd /grist || exit 1
+
+exec ./sandbox/docker_entrypoint.sh node ./sandbox/supervisor.mjs

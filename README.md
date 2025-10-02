@@ -57,6 +57,12 @@ Help me expand the documentation making it as easy as possible for anyone to use
 
 ![main screenshot](https://github.com/goniszewski/grimoire/raw/main/screenshots/only-unread-white.png)
 
+### 🧮 Grist
+
+*All-in-one*
+
+[Grist](https://www.getgrist.com) is a modern, open-source spreadsheet software that goes beyond the grid
+
 ### 📷 Immich
 
 *All-in-one*
