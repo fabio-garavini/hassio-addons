@@ -1,5 +1,5 @@
 build_from:
-  aarch64: docker.n8n.io/n8nio/n8n:1.112.6
-  amd64: docker.n8n.io/n8nio/n8n:1.112.6
+  aarch64: docker.n8n.io/n8nio/n8n:1.113.3
+  amd64: docker.n8n.io/n8nio/n8n:1.113.3
 codenotary:
   signer: info@fabiogaravini.dev
