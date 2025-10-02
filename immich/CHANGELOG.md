@@ -1,54 +1,42 @@
-# v1.144.1
+# v2.0.0 - Stable Release
 
-_`v1.144.0` has been made a sacrificial object to the Release God_
+Welcome to the release `v2.0.0` of Immich. This release marks the first stable version of Immich. You can read our announcement blog post [here](https://github.com/immich-app/immich/discussions/22546) to learn what stable means for Immich, what you can expect from a stable version, along with our future plans. Of course, it wouldn't be complete without a few surprises.
 
-Welcome to the release `v1.144.1` of Immich. This release marks the end of summer, with many bugs being squashed and the continuous improvement of the upload process on the new timeline. It also comes with enhancements to storage management for iCloud users when uploading a large library. The mobile app now also displays an indicator for LivePhoto or MotionPhoto, making them easier to recognize.
+To update to this version, no special steps are required. Compose pull and compose up, and you are now on `v2.0.0`. Additionally, there are a few noteworthy items that we have been working on in preparation for the stable release:
 
-<p align="center">
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/aaee8542-bb4c-4f81-bca6-3dabd40f9c89" />
-</p>
+* New homepage
+* New API documentation
+* New community metrics
 
-## Support Immich
+## New homepage
 
+The https://immich.app/ website has been recently updated. It’s been rewritten with our very own UI component library, and includes a [blog](https://immich.app/blog) with a few initial posts, including one about [the new mobile sync implementation](https://immich.app/blog/sync-v2). Existing documentation has been moved to https://docs.immich.app/.
 
-<p align="center">
-
-<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbjY2eWc5Y2F0ZW56MmR4aWE0dDhzZXlidXRmYWZyajl1bWZidXZpcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/87CKDqErVfMqY/giphy.gif" width="450" title="SUPPORT THE PROJECT!"> 
-
-</p>
-
-If you find the project helpful, you can support Immich by purchasing a product key at https://buy.immich.app or our merchandise at https://immich.store
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/911574d2-c8a7-46c6-a6f9-2a00d06baf3e" />
 
 
-<!-- Release notes generated using configuration in .github/release.yml at v1.144.1 -->
+## Better API documentation
+
+We’re also happy to announce a new version of our API documentation, which is now live at https://api.immich.app/. The new docs include more information about authentication, authorization & permissions, a command palette for quick navigation (press `/` or `ctrl+k`), and a built-in method to view live results.
+
+
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/910a3539-cee2-417e-b1f9-77cb0e68e2b9" />
+
+
+## New community metrics
+
+The <https://data.immich.app/> website has also been updated to include new community metrics that show member growth on our [subreddit](https://www.reddit.com/r/immich/) and [discord server](https://discord.immich.app/).
+
+
+<img width="800"  alt="image" src="https://github.com/user-attachments/assets/8fc418ef-cf26-4ad3-b9a6-56bdc07eb97e" />
 
 ## What's Changed
 
-### 🚀 Features
-
-* feat: show motion photo icon on mobile timeline tile by @bwees in <https://github.com/immich-app/immich/pull/22454>
-
 ### 🐛 Bug fixes
 
-* fix(server): update libmimalloc path by @mertalev in <https://github.com/immich-app/immich/pull/22345>
-* fix: ios export sqlite db by @shenlong-tanwen in <https://github.com/immich-app/immich/pull/22369>
-* fix: map attribution and other styling by @bwees in <https://github.com/immich-app/immich/pull/22303>
-* fix: delete temp file on iOS after upload by @shenlong-tanwen in <https://github.com/immich-app/immich/pull/22364>
-* fix(mobile): load local thumbnails in album timeline by @mertalev in <https://github.com/immich-app/immich/pull/22329>
-* fix(mobile): scrubbing mode on scroll to date event by @mertalev in <https://github.com/immich-app/immich/pull/22390>
-* fix: local assets should not be added to album by @bwees in <https://github.com/immich-app/immich/pull/22304>
-* feat(mobile): add unstack button by @shenlong-tanwen in <https://github.com/immich-app/immich/pull/21869>
-* fix: prefer remote images in new timeline by @shenlong-tanwen in <https://github.com/immich-app/immich/pull/22452>
-* fix: merged timeline orderby localtime by @shenlong-tanwen in <https://github.com/immich-app/immich/pull/22371>
-* fix: process upload only after successful remote sync by @shenlong-tanwen in <https://github.com/immich-app/immich/pull/22360>
-
-### 📚 Documentation
-
-* feat: docs.immich.app by @zackpollard in <https://github.com/immich-app/immich/pull/21819>
-
-### 🌐 Translations
-
-* chore(web): update translations by @weblate in <https://github.com/immich-app/immich/pull/22343>
+* fix: show un-hashed remainder assets by @shenlong-tanwen in <https://github.com/immich-app/immich/pull/22492>
+* fix(server): Revert update libmimalloc path (#22345) by @alextran1502 in <https://github.com/immich-app/immich/pull/22526>
+* fix: missing email button padding by @Funk66 in <https://github.com/immich-app/immich/pull/22529>
 
 
-**Full Changelog**: <https://github.com/immich-app/immich/compare/v1.143.1...v1.144.1>
+**Full Changelog**: <https://github.com/immich-app/immich/compare/v1.144.1...v2.0.0>
