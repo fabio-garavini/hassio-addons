@@ -1,7 +1,7 @@
 source:
   type: docker
   repo: ghcr.io/mealie-recipes/mealie
-  current_version: v3.3.0
+  current_version: v3.3.1
   version_template: regex:^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
