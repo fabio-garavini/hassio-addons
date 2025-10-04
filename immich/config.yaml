@@ -156,6 +156,9 @@ schema:
   PGID: int(0,)
   clean_redis: bool?
   APPLY_PERMISSIONS: bool
+  backup_location: str?
+  restore_backup: bool
+  delete_db: bool?
 options:
   TZ: Etc/UTC
   IMMICH_LOG_LEVEL: log
@@ -171,6 +174,7 @@ options:
   PUID: 0
   PGID: 0
   APPLY_PERMISSIONS: false
+  restore_backup: false
 ports:
   8080/tcp: 8080
   5432/tcp: null

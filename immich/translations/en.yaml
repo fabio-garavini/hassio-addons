@@ -17,7 +17,7 @@ configuration:
     description: >-
       Timezone used for displaying dates and times. (Default: `Etc/UTC`)
 
-      You can find your timezone identifier here: 
+      You can find your timezone identifier here:
       https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   IMMICH_LOG_LEVEL:
     name: Log Level
@@ -44,7 +44,7 @@ configuration:
   MACHINE_LEARNING_MODEL_TTL:
     name: Machine Learning Model TTL
     description: >-
-      Time (in seconds) a model stays in memory after inactivity. 
+      Time (in seconds) a model stays in memory after inactivity.
       Set to `0` to never unload models.
   MACHINE_LEARNING_WORKER_TIMEOUT:
     name: Machine Learning Worker Timeout
@@ -97,7 +97,7 @@ configuration:
   IMMICH_TRUSTED_PROXIES:
     name: Trusted Proxies
     description: >-
-      Comma-separated list of IP addresses that should be treated as trusted proxies. 
+      Comma-separated list of IP addresses that should be treated as trusted proxies.
       Needed if Immich is running behind a reverse proxy such as NGINX.
   IMMICH_MEDIA_LOCATION:
     name: Media Location
@@ -119,6 +119,15 @@ configuration:
     name: Apply permissions
     description: >-
       Apply permissions to all files inside the Immich Media location during boot, it can increase boot times
+  backup_location:
+    name: Backup location
+  restore_backup:
+    name: Restore backup
+  delete_db:
+    name: DELETE DB!
+    description: >-
+      Enable this only for manually restoring a backup dump from Immich! After the restore this must be kept to false
+      Only works if also Restore backup is enabled
 network:
   8080/tcp: Immich
   5432/tcp: PostgreSQL DB

@@ -1,0 +1,17 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+
+if bashio::config.false 'restore_backup'; then
+  exit 0
+fi
+
+declare backup_location="$(bashio::config 'backup_location')"
+
+if ! bashio::fs.file_exists "$backup_location"; then
+  bashio::log.error "Backup $backup_location doesn't exist!"
+  exit 1
+fi
+
+gunzip --stdout "$backup_location" \
+| sed "s/SELECT pg_catalog.set_config('search_path', '', false);/SELECT pg_catalog.set_config('search_path', 'public, pg_catalog', true);/g" \
+| psql --dbname=$POSTGRES_DB --username=$POSTGRES_USER

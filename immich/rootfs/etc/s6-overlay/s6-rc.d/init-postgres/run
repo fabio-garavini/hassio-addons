@@ -1,6 +1,10 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+if bashio::config.true 'delete_db' && bashio::config.true 'restore_backup'; then
+  rm -rf $PGDATA
+fi
+
 set -Eeo pipefail
 
 # Source the PostgreSQL entrypoint functions
