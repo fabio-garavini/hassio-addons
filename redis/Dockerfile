@@ -1,4 +1,4 @@
-ARG BUILD_FROM=redis/redis-stack:7.4.0-v6
+ARG BUILD_FROM=redis/redis-stack:7.4.0-v7
 
 FROM oliver006/redis_exporter:alpine AS redis-exporter
 

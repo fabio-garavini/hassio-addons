@@ -1,6 +1,5 @@
----
 name: Redis DB
-version: 7.4.0-v6
+version: 7.4.0-v1
 slug: redis
 codenotary: info@fabiogaravini.dev
 description: Redis database
@@ -15,9 +14,9 @@ map:
   - type: addon_config
     read_only: false
 ports:
-  6379/tcp:
-  8001/tcp:
-  9121/tcp:
+  6379/tcp: null
+  8001/tcp: null
+  9121/tcp: null
 ports_description:
   6379/tcp: Database
   8001/tcp: Redis Insight
