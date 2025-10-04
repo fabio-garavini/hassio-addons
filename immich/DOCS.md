@@ -260,7 +260,7 @@ HTTPS is enabled **by default** (`ssl: true`).
 
 1. Make sure to backup everything by [triggering a dump](https://docs.immich.app/administration/backup-and-restore/#trigger-dump)
 
-1. Mount or Copy your Immich media library folder to Home Assistant (more informations above)
+1. Mount or Copy your Immich media library folder to Home Assistant (more information above)
 1. Open the `Configuration` tab
 
    1. Edit `Backup location` to the database dump that you want to restore (ex: `/media/immich/backups/backup.sql.gz`)
@@ -268,8 +268,8 @@ HTTPS is enabled **by default** (`ssl: true`).
    1. Enable `DELETE DB!` to delete Postgres db and `Clean Redis`
 
 1. Start Immich and check the logs
-1. Wait for Immich to start and stop the addon
-1. **DISABLE** `Restore backup`, `DELETE DB!` and `Clean Redis` before restarting Immich
+1. Wait for Immich to start
+1. **DISABLE** `Restore backup`, `DELETE DB!` and `Clean Redis` and restart Immich
 
 ---
 
