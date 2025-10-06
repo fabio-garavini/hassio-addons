@@ -5,19 +5,28 @@ if bashio::config.false 'restore_backup'; then
   exit 0
 fi
 
+bashio::log.info "Starting Postgres dump restore..."
+
 backup_location="$(bashio::config 'backup_location')"
 
 if ! bashio::fs.file_exists "$backup_location"; then
-  bashio::log.error "Backup $backup_location doesn't exist!"
+  bashio::log.error "$backup_location doesn't exist!"
   exit 1
 fi
 
+bashio::log.info "Fetching dump table name... (it can take a while)"
+
 table_name=$(gunzip --stdout "$backup_location" | grep -oP '^DROP DATABASE IF EXISTS \K[^;]+')
+
+bashio::log.info "Fetching dump user name... (it can take a while)"
+
 user_name=$(gunzip --stdout "$backup_location" | grep -oP '^DROP ROLE IF EXISTS \K[^;]+')
+
+bashio::log.info "Postgres restore:"
 
 gunzip --stdout "$backup_location" \
 | sed "s/SELECT pg_catalog.set_config('search_path', '', false);/SELECT pg_catalog.set_config('search_path', 'public, pg_catalog', true);/g" \
-| sed -E '/^DROP DATABASE IF EXISTS/,/^--/d' \
+| sed -E '/^DROP DATABASE IF EXISTS /,/^--/d' \
 | sed -E "/^CREATE DATABASE $table_name/,/^--/d" \
 | sed "s/ALTER DATABASE $table_name/ALTER DATABASE $POSTGRES_DB/g" \
 | sed "s/connect $table_name/connect $POSTGRES_DB/g" \
@@ -26,3 +35,5 @@ gunzip --stdout "$backup_location" \
 | sed -E '/^ALTER ROLE /,/^--/d' \
 | sed "s/OWNER TO $user_name;/OWNER TO $POSTGRES_USER;/g" \
 | psql --dbname="$POSTGRES_DB" --username="$POSTGRES_USER"
+
+bashio::log.info "Postgres restore complete"
