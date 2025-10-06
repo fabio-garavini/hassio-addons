@@ -120,7 +120,7 @@ configuration:
     description: >-
       Apply permissions to all files inside the Immich Media location during boot, it can increase boot times
   backup_location:
-    name: Backup location
+    name: Postgres backup location
   restore_backup:
     name: Restore backup
   delete_db:

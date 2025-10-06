@@ -1,5 +1,5 @@
 name: Immich
-version: 2.0.1-v1
+version: 2.0.1-v2
 slug: immich
 codenotary: info@fabiogaravini.dev
 description: High performance self-hosted photo and video management solution
@@ -183,4 +183,4 @@ ports_description:
   8080/tcp: Immich
   5432/tcp: Postgresql DB
   6379/tcp: Redis DB
-image: fabioogaravini/hassio-immich
+#image: fabioogaravini/hassio-immich

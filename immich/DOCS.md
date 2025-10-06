@@ -260,6 +260,8 @@ HTTPS is enabled **by default** (`ssl: true`).
 
 1. Make sure to backup everything by [triggering a dump](https://docs.immich.app/administration/backup-and-restore/#trigger-dump)
 
+   If you are trying to migrate Immich from **any other source other than this addon**, make sure to use [**VectorChord** extension](https://docs.immich.app/administration/postgres-standalone/#migrating-to-vectorchord)
+
 1. Mount or Copy your Immich media library folder to Home Assistant (more information above)
 1. Open the `Configuration` tab
 
