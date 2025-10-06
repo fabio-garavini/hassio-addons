@@ -183,4 +183,4 @@ ports_description:
   8080/tcp: Immich
   5432/tcp: Postgresql DB
   6379/tcp: Redis DB
-#image: fabioogaravini/hassio-immich
+image: fabioogaravini/hassio-immich
