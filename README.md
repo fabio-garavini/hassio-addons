@@ -63,6 +63,14 @@ Help me expand the documentation making it as easy as possible for anyone to use
 
 [Grist](https://www.getgrist.com) is a modern, open-source spreadsheet software that goes beyond the grid
 
+### 🍏 Grocy
+
+*All-in-one*
+
+[Grocy](https://grocy.info) is a groceries & household management solution for your home.
+
+![screenshot](https://grocy.info/img/__thumbs/stock-en.png)
+
 ### 📷 Immich
 
 *All-in-one*

@@ -1,0 +1,5 @@
+build_from:
+  aarch64: linuxserver/grocy:v4.5.0-ls303
+  amd64: linuxserver/grocy:v4.5.0-ls303
+codenotary:
+  signer: info@fabiogaravini.dev
