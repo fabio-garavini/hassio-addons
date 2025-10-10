@@ -5,7 +5,7 @@ FROM getmeili/meilisearch:v1.13.3 AS meilisearch
 
 FROM ${BUILD_FROM}
 
-ARG BUILD_ARCH
+ARG BUILD_ARCH=amd64
 
 # Environment variables
 ENV \
