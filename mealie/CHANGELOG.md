@@ -1,36 +1,48 @@
 # 🍴🍴🍴🍴🍴🍴
 
-This release contains few minor bug fixes that can impact users trying the ingredient parser for the first time.
+This release contains bug-fixes related to authentication and fixes a breaking change related to long passwords (>72 bytes). **No action is needed** for users with long passwords, though it may be worth [checking out the PR](https://github.com/mealie-recipes/mealie/pull/6335) for more information.
+
+## ✨ New features
+
+- feat: Added url to current version release @Choromanski (#6308)
 
 ## 🐛 Bug fixes
 
-- fix: Default to "0" qty when creating ingredients everywhere @michael-genson (#6285)
-- fix: Restore recipe meta for non-logged-in users @michael-genson (#6286)
-- fix: Updated pwa orientation to any @Choromanski (#6298)
+- fix: Re-write Nuxt auth backend and get rid of sidebase auth @michael-genson (#6322)
+- fix: Remove unused next-auth dependency @p0lycarpio (#6328)
+- fix: No Redirect On Valid Token @michael-genson (#6327)
+- fix: Translate log-out string @michael-genson (#6332)
+- fix: Truncate Long Passwords (>72 bytes) @michael-genson (#6335)
 
 ## 🧰 Maintenance
 
-- chore(auto): Update pre-commit hooks @github-actions (#6282)
+<details>
+<summary>8 changes</summary>
+
+- chore(l10n): Crowdin locale sync @github-actions (#6268)
+- chore(l10n): New Crowdin updates @hay-kot (#6273)
+- chore(l10n): New Crowdin updates @hay-kot (#6309)
+- chore(l10n): New Crowdin updates @hay-kot (#6313)
+- chore(l10n): New Crowdin updates @hay-kot (#6317)
+- chore(l10n): Crowdin locale sync @github-actions (#6318)
+- chore(auto): Update pre-commit hooks @github-actions (#6324)
+- chore(l10n): New Crowdin updates @hay-kot (#6320)
+</details>
 
 ## 📚 Documentation
 
-- docs(auto): Update image tag, for release v3.3.0 @github-actions (#6267)
-- docs: Update TOKEN_TIME docs to include max @michael-genson (#6279)
+- docs(auto): Update image tag, for release v3.3.1 @github-actions (#6300)
 
 ## ⬆️ Dependency updates
 
 <details>
-<summary>9 changes</summary>
+<summary>7 changes</summary>
 
-- chore(deps): update dependency beautifulsoup4 to v4.14.0 @renovate (#6260)
-- fix(deps): update dependency fastapi to ^0.118.0 @renovate (#6281)
-- chore(deps): update dependency beautifulsoup4 to v4.14.2 @renovate (#6283)
-- chore(deps): update dependency tzdata to v2025 @renovate (#6287)
-- fix(deps): update dependency openai to v2 @renovate (#6294)
-- chore(deps): update dependency apprise to v1.9.5 @renovate (#6290)
-- chore(deps): update node.js to d367fd3 @renovate (#6292)
-- chore(deps): update dependency pillow-heif to v1.1.1 @renovate (#6291)
-- chore(deps): update dependency mkdocs-material to v9.6.21 @renovate (#6293)
+- chore(deps): update node.js to 2bb201f @renovate (#6295)
+- chore(deps): update dependency openai to v2.0.1 @renovate (#6296)
+- chore(deps): update dependency authlib to v1.6.5 @renovate (#6299)
+- chore(deps): update dependency ruff to v0.13.3 @renovate (#6301)
+- chore(deps): update dependency openai to v2.1.0 @renovate (#6302)
+- chore(deps): update dependency pylint to v3.3.9 @renovate (#6321)
+- chore(deps): update dependency ruff to ^0.14.0 @renovate (#6334)
 </details>
-
-# 🍴🍴🍴🍴🍴🍴
