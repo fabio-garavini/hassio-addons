@@ -1,5 +1,5 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=linuxserver/grocy:v4.5.0-ls303
+ARG BUILD_FROM=linuxserver/grocy:v4.5.0-ls304
 
 FROM ${BUILD_FROM}
 

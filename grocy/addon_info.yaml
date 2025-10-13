@@ -1,15 +1,15 @@
 source:
   type: docker
   repo: linuxserver/grocy
-  current_version: v4.5.0-ls303
+  current_version: v4.5.0-ls304
   version_template: regex:^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)-ls(?<build>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
-  patch: 0
+  patch: 1
   image: fabioogaravini/hassio-grocy
 build:
   image: linuxserver/grocy
-  version_template: "v{{major}}.{{minor}}.{{patch}}-ls{{build}}"
+  version_template: v{{major}}.{{minor}}.{{patch}}-ls{{build}}
   codenotary: info@fabiogaravini.dev
 changelog:
   source: github-releases

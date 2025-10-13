@@ -1,10 +1,10 @@
 name: Grocy
-version: 4.5.0
+version: 4.5.0-v1
 slug: grocy
 codenotary: info@fabiogaravini.dev
 description: groceries & household management solution for your home
 url: https://grocy.info
-webui: "https://[HOST]:[PORT:443]"
+webui: https://[HOST]:[PORT:443]
 arch:
   - aarch64
   - amd64
