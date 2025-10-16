@@ -2,7 +2,7 @@
 source:
   type: docker
   image: ghcr.io/blakeblackshear/frigate
-  current_version: 0.16.1-tensorrt
+  current_version: 0.16.2-tensorrt
   version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)-(?<flavor>tensorrt)?$
 config:
   version_template: '{{major}}.{{minor}}.{{patch}}-{{flavor}}'
