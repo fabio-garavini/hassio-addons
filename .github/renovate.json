@@ -12,11 +12,23 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["^[\\w.-]+/addon_info\\.yaml$"],
+      "description": "Update Add-on versions",
+      "managerFilePatterns": ["^[\\w.-]+/addon_info\\.yaml$"],
       "matchStrings": [
         "source:\\s*type:\\s(?<datasource>.*?)\\s*(repo|image):\\s(?<depName>.*?)\\s*current_version:\\s(?<currentValue>.*?)(?:\\s*version_template:\\s[\"']?(?<versioning>.*?)[\"']?)?\\s"
       ],
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{/if}}"
+    },
+    {
+      "customType": "regex",
+      "description": "Update _VERSION variables in Dockerfiles",
+      "managerFilePatterns": [
+        "/(^|/|\\.)Dockerfile$/",
+        "/(^|/)Dockerfile\\.[^/]*$/"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>[a-z-]+?)(?: depName=(?<depName>.+?))? packageName=(?<packageName>.+?)(?: versioning=(?<versioning>[a-z-]+?))?\\s(?:ENV|ARG) .+?_VERSION\\s*=\\s*[\"']?(?<currentValue>.+?)[\"']?\\s"
+      ]
     }
   ],
   "packageRules": [
