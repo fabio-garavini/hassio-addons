@@ -1,4 +1,3 @@
----
 source:
   type: docker
   repo: ghcr.io/varun-raj/immich-power-tools
