@@ -2,8 +2,8 @@ ARG BUILD_FROM=ghcr.io/hassio-addons/base:stable
 
 FROM ${BUILD_FROM}
 
-ARG BUILD_VERSION \
-    BUILD_ARCH
+ARG BUILD_VERSION=2025.10.0
+ARG BUILD_ARCH=amd64
 
 RUN case "$BUILD_ARCH" in \
       aarch64) REMOTE_ARCH="arm64" ;; \
