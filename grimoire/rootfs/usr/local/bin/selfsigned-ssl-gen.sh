@@ -38,7 +38,7 @@ DNS.1 = localhost
 DNS.2 = ${hostname}
 EOF
 
-if ! openssl req -x509 -nodes -days 365 \
+if ! openssl req -x509 -nodes -days 3650 \
     -newkey rsa:4096 \
     -keyout "$keyfile" \
     -out "$certfile" \

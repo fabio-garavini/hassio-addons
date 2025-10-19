@@ -12,5 +12,9 @@ if ! bashio::fs.file_exists "$certfile" || ! bashio::fs.file_exists "$keyfile"; 
     certfile="/config/keys/cert.crt"
     keyfile="/config/keys/cert.key"
 
-    /usr/local/bin/selfsigned-ssl-gen.sh "$certfile" "$keyfile"
+    if ! bashio::fs.file_exists "$certfile" || ! bashio::fs.file_exists "$keyfile"; then
+        /usr/local/bin/selfsigned-ssl-gen.sh "$certfile" "$keyfile"
+    else
+        /usr/local/bin/check-ssl.sh "$certfile" "$keyfile"
+    fi
 fi

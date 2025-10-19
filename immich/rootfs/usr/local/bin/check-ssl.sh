@@ -9,7 +9,7 @@ fi
 
 bashio::log.debug "SSL Certificate update check"
 
-declare renew_days=30
+declare renew_days=90
 
 declare certfile="/ssl/$(bashio::config 'certfile')"
 declare keyfile="/ssl/$(bashio::config 'keyfile')"

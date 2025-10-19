@@ -68,7 +68,11 @@ if bashio::config.true 'ssl'; then
         certfile="/data/ssl/fullchain.pem"
         keyfile="/data/ssl/privkey.pem"
 
-        /usr/local/bin/selfsigned-ssl-gen.sh "$certfile" "$keyfile"
+        if ! bashio::fs.file_exists "$certfile" || ! bashio::fs.file_exists "$keyfile"; then
+            /usr/local/bin/selfsigned-ssl-gen.sh "$certfile" "$keyfile"
+        else
+            /usr/local/bin/check-ssl.sh "$certfile" "$keyfile"
+        fi
     fi
 
     printf "%s" "$keyfile" > /var/run/s6/container_environment/N8N_SSL_KEY
