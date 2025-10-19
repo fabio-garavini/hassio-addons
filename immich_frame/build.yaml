@@ -1,0 +1,5 @@
+build_from:
+  aarch64: ghcr.io/immichframe/immichframe:v1.0.29.0
+  amd64: ghcr.io/immichframe/immichframe:v1.0.29.0
+codenotary:
+  signer: info@fabiogaravini.dev

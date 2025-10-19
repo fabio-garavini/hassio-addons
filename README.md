@@ -79,6 +79,14 @@ Help me expand the documentation making it as easy as possible for anyone to use
 
 ![main screenshot](https://github.com/immich-app/immich/raw/main/design/immich-screenshots.png)
 
+### 🖼️ Immich Frame
+
+*Immich extension*
+
+[ImmichFrame](https://immichframe.online/) is an awesome way to display your photos as a digital photo frame
+
+![main screenshot](https://github.com/immichFrame/ImmichFrame/raw/main/design/demo/web_demo.png)
+
 ### ![Logo](https://github.com/varun-raj/immich-power-tools/raw/main/public/favicon-16x16.png) Immich Power Tools
 
 *Immich extension*

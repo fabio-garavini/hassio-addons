@@ -1,0 +1,124 @@
+name: Immich Frame
+version: 1.0.29.0
+slug: immich_frame
+codenotary: info@fabiogaravini.dev
+description: An awesome way to display your photos as a digital photo frame
+url: https://immichframe.online
+webui: "[PROTO:ssl]://[HOST]:[PORT:8089]"
+hassio_api: true
+arch:
+  - aarch64
+  - amd64
+  - armv7
+init: false
+map:
+  - type: data
+    read_only: false
+  - type: ssl
+    read_only: false
+schema:
+  ssl: bool
+  certfile: str?
+  keyfile: str?
+  TZ: str
+  General:
+    AuthenticationSecret: str?
+    DownloadImages: bool
+    RenewImagesDuration: int
+    Webcalendars:
+      - "str"
+    RefreshAlbumPeopleInterval: int
+    PhotoDateFormat: str
+    ImageLocationFormat: str
+    WeatherApiKey: str?
+    UnitSystem: "list(imperial|metric)"
+    WeatherLatLong: str
+    Language: str
+    Webhook: "str?"
+    Interval: int
+    TransitionDuration: float
+    ShowClock: bool
+    ClockFormat: str
+    ClockDateFormat: str
+    ShowProgressBar: bool
+    ShowPhotoDate: bool
+    ShowImageDesc: bool
+    ShowPeopleDesc: bool
+    ShowAlbumName: bool
+    ShowImageLocation: bool
+    PrimaryColor: str
+    SecondaryColor: str
+    Style: "list(none|solid|transition|blur)"
+    BaseFontSize: str
+    ShowWeatherDescription: bool
+    WeatherIconUrl: str
+    ImageZoom: bool
+    ImagePan: bool
+    ImageFill: bool
+    Layout: "list(single|splitview)"
+  Accounts:
+    - ImmichServerUrl: str
+      ApiKey: password
+      ImagesFromDate: "str?"
+      ShowMemories: bool
+      ShowFavorites: bool
+      ShowArchived: bool
+      ImagesFromDays: "int?"
+      ImagesUntilDate: "str?"
+      Rating: "int?"
+      Albums:
+        - "str"
+      ExcludedAlbums:
+        - "str"
+      People:
+        - "str"
+options:
+  ssl: false
+  certfile: fullchain.pem
+  keyfile: privkey.pem
+  TZ: Etc/UTC
+  General:
+    DownloadImages: false
+    RenewImagesDuration: 30
+    Webcalendars: []
+    RefreshAlbumPeopleInterval: 12
+    PhotoDateFormat: "MM/dd/yyyy"
+    ImageLocationFormat: "City,State,Country"
+    WeatherApiKey: ""
+    UnitSystem: "metric"
+    WeatherLatLong: "40.730610,-73.935242"
+    Language: "en"
+    Interval: 45
+    TransitionDuration: 2.0
+    ShowClock: true
+    ClockFormat: "hh:mm"
+    ClockDateFormat: "eee, MMM d"
+    ShowProgressBar: true
+    ShowPhotoDate: true
+    ShowImageDesc: true
+    ShowPeopleDesc: true
+    ShowAlbumName: true
+    ShowImageLocation: true
+    PrimaryColor: "#f5deb3"
+    SecondaryColor: "#000000"
+    Style: "none"
+    BaseFontSize: "17px"
+    ShowWeatherDescription: true
+    WeatherIconUrl: "https://openweathermap.org/img/wn/{IconId}.png"
+    ImageZoom: true
+    ImagePan: false
+    ImageFill: false
+    Layout: "splitview"
+  Accounts:
+    - ImmichServerUrl: "http://3b88f413-immich:2283"
+      ShowMemories: false
+      ShowFavorites: false
+      ShowArchived: false
+      Albums: []
+      ExcludedAlbums: []
+      People: []
+ports:
+  8089/tcp: 8089
+ports_description:
+  8089/tcp: Web UI
+image: fabioogaravini/hassio-immich-frame

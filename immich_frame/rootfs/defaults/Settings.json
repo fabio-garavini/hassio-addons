@@ -1,0 +1,53 @@
+{
+  "General": {
+    "AuthenticationSecret": null,
+    "DownloadImages": false,
+    "RenewImagesDuration": 30,
+    "Webcalendars": [],
+    "RefreshAlbumPeopleInterval": 12,
+    "PhotoDateFormat": "MM/dd/yyyy",
+    "ImageLocationFormat": "City,State,Country",
+    "WeatherApiKey": "",
+    "UnitSystem": "imperial",
+    "WeatherLatLong": "40.730610,-73.935242",
+    "Language": "en",
+    "Webhook": null,
+    "Interval": 45,
+    "TransitionDuration": 2.0,
+    "ShowClock": true,
+    "ClockFormat": "hh:mm",
+    "ClockDateFormat": "eee, MMM d",
+    "ShowProgressBar": true,
+    "ShowPhotoDate": true,
+    "ShowImageDesc": true,
+    "ShowPeopleDesc": true,
+    "ShowAlbumName": true,
+    "ShowImageLocation": true,
+    "PrimaryColor": "#f5deb3",
+    "SecondaryColor": "#000000",
+    "Style": "none",
+    "BaseFontSize": "17px",
+    "ShowWeatherDescription": true,
+    "WeatherIconUrl": "https://openweathermap.org/img/wn/{IconId}.png",
+    "ImageZoom": true,
+    "ImagePan": false,
+    "ImageFill": false,
+    "Layout": "splitview"
+  },
+  "Accounts": [
+    {
+      "ImmichServerUrl": null,
+      "ApiKey": null,
+      "ImagesFromDate": null,
+      "ShowMemories": false,
+      "ShowFavorites": false,
+      "ShowArchived": false,
+      "ImagesFromDays": null,
+      "ImagesUntilDate": null,
+      "Rating": null,
+      "Albums": [],
+      "ExcludedAlbums": [],
+      "People": []
+    }
+  ]
+}
