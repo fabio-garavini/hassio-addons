@@ -39,7 +39,7 @@ ENV \
     POSTGRES_PASSWORD="immich"
 
 # renovate: datasource=github-releases packageName=hassio-addons/bashio
-ARG BASHIO_VERSION="v0.17.1"
+ARG BASHIO_VERSION="v0.17.5"
 # renovate: datasource=github-releases packageName=hassio-addons/tempio
 ARG TEMPIO_VERSION="2024.11.2"
 RUN \
