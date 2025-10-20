@@ -1,0 +1,110 @@
+name: ezBookkeeping
+version: 1.1.1
+slug: ezbookkeeping
+codenotary: info@fabiogaravini.dev
+description: A lightweight, self-hosted personal finance app with a user-friendly interface and powerful bookkeeping features
+url: https://github.com/mayswind/ezBookkeeping
+ingress: true
+panel_icon: mdi:cash-multiple
+panel_admin: false
+ingress_port: 80
+ingress_stream: true
+arch:
+  - aarch64
+  - amd64
+init: false
+map:
+  - type: addon_config
+    read_only: false
+  - type: ssl
+schema:
+  EBK_LOG_LEVEL: list(debug|info|warn|error)
+  EBK_GLOBAL_APP_NAME: str?
+  EBK_SECURITY_SECRET_KEY: password?
+  ssl: bool
+  certfile: str?
+  keyfile: str?
+  EBK_SERVER_ROOT_URL: str?
+  EBK_SERVER_ENABLE_GZIP: bool
+  EBK_SERVER_LOG_REQUEST: bool
+  EBK_MCP_ENABLE_MCP: bool
+  EBK_EXCHANGE_RATES_DATA_SOURCE: list(reserve_bank_of_australia|bank_of_canada|czech_national_bank|danmarks_national_bank|euro_central_bank|national_bank_of_georgia|central_bank_of_hungary|bank_of_israel|central_bank_of_myanmar|norges_bank|national_bank_of_poland|national_bank_of_romania|bank_of_russia|swiss_national_bank|national_bank_of_ukraine|central_bank_of_uzbekistan|international_monetary_fund|user_custom)
+  Auth:
+    EBK_AUTH_ENABLE_TWO_FACTOR: bool
+    EBK_AUTH_ENABLE_FORGET_PASSWORD: bool
+    EBK_AUTH_FORGET_PASSWORD_REQUIRE_EMAIL_VERIFY: bool
+  User:
+    EBK_USER_ENABLE_REGISTER: bool
+    EBK_USER_ENABLE_EMAIL_VERIFY: bool
+    EBK_USER_ENABLE_FORCE_EMAIL_VERIFY: bool
+    EBK_USER_ENABLE_TRANSACTION_PICTURE: bool
+  Map:
+    EBK_MAP_MAP_PROVIDER: list(openstreetmap|openstreetmap_humanitarian|opentopomap|opnvkarte|cyclosm|cartodb|tomtom|tianditu|googlemap|baidumap|amap|custom)
+    EBK_MAP_TOMTOM_MAP_API_KEY: password?
+    EBK_MAP_TIANDITU_MAP_APP_KEY: password?
+    EBK_MAP_GOOGLE_MAP_API_KEY: password?
+    EBK_MAP_BAIDU_MAP_AK: password?
+    EBK_MAP_AMAP_APPLICATION_KEY: password?
+    EBK_MAP_AMAP_SECURITY_VERIFICATION_METHOD: list(internal_proxy|external_proxy|plain_text)?
+    EBK_MAP_AMAP_APPLICATION_SECRET: password?
+    EBK_MAP_AMAP_API_EXTERNAL_PROXY_URL: str?
+    EBK_MAP_CUSTOM_MAP_TILE_SERVER_URL: str?
+    EBK_MAP_CUSTOM_MAP_TILE_SERVER_ANNOTATION_URL: str?
+    EBK_MAP_CUSTOM_MAP_TILE_SERVER_MIN_ZOOM_LEVEL: int(0,255)?
+    EBK_MAP_CUSTOM_MAP_TILE_SERVER_MAX_ZOOM_LEVEL: int(0,255)?
+    EBK_MAP_CUSTOM_MAP_TILE_SERVER_DEFAULT_ZOOM_LEVEL: int(0,255)?
+  LLM:
+    EBK_LLM_TRANSACTION_FROM_AI_IMAGE_RECOGNITION: bool
+    EBK_LLM_IMAGE_RECOGNITION_LLM_PROVIDER: list(openai|openai_compatible|openrouter|ollama|google_ai)?
+    EBK_LLM_IMAGE_RECOGNITION_OPENAI_API_KEY: password?
+    EBK_LLM_IMAGE_RECOGNITION_OPENAI_MODEL_ID: str?
+    EBK_LLM_IMAGE_RECOGNITION_OPENAI_COMPATIBLE_BASE_URL: str?
+    EBK_LLM_IMAGE_RECOGNITION_OPENAI_COMPATIBLE_API_KEY: password?
+    EBK_LLM_IMAGE_RECOGNITION_OPENAI_COMPATIBLE_MODEL_ID: str?
+    EBK_LLM_IMAGE_RECOGNITION_OPENROUTER_API_KEY: password?
+    EBK_LLM_IMAGE_RECOGNITION_OPENROUTER_MODEL_ID: str?
+    EBK_LLM_IMAGE_RECOGNITION_OLLAMA_SERVER_URL: str?
+    EBK_LLM_IMAGE_RECOGNITION_OLLAMA_MODEL_ID: str?
+    EBK_LLM_IMAGE_RECOGNITION_GOOGLE_AI_API_KEY: password?
+    EBK_LLM_IMAGE_RECOGNITION_GOOGLE_AI_MODEL_ID: str?
+    EBK_LLM_IMAGE_RECOGNITION_REQUEST_TIMEOUT: int(0,)?
+    EBK_LLM_IMAGE_RECOGNITION_SKIP_TLS_VERIFY: bool
+  Mail:
+    EBK_MAIL_ENABLE_SMTP: bool
+    EBK_MAIL_SMTP_HOST: str?
+    EBK_MAIL_SMTP_USER: str?
+    EBK_MAIL_SMTP_PASSWD: password?
+    EBK_MAIL_SMTP_SKIP_TLS_VERIFY: bool
+    EBK_MAIL_FROM_ADDRESS: str?
+options:
+  EBK_LOG_LEVEL: info
+  EBK_GLOBAL_APP_NAME: ezBookkeeping
+  ssl: true
+  certfile: fullchain.pem
+  keyfile: privkey.pem
+  EBK_SERVER_ENABLE_GZIP: false
+  EBK_SERVER_LOG_REQUEST: false
+  EBK_MCP_ENABLE_MCP: false
+  EBK_EXCHANGE_RATES_DATA_SOURCE: euro_central_bank
+  Auth:
+    EBK_AUTH_ENABLE_TWO_FACTOR: true
+    EBK_AUTH_ENABLE_FORGET_PASSWORD: true
+    EBK_AUTH_FORGET_PASSWORD_REQUIRE_EMAIL_VERIFY: false
+  User:
+    EBK_USER_ENABLE_REGISTER: true
+    EBK_USER_ENABLE_EMAIL_VERIFY: false
+    EBK_USER_ENABLE_FORCE_EMAIL_VERIFY: false
+    EBK_USER_ENABLE_TRANSACTION_PICTURE: true
+  Map:
+    EBK_MAP_MAP_PROVIDER: openstreetmap
+  LLM:
+    EBK_LLM_TRANSACTION_FROM_AI_IMAGE_RECOGNITION: false
+    EBK_LLM_IMAGE_RECOGNITION_SKIP_TLS_VERIFY: false
+  Mail:
+    EBK_MAIL_ENABLE_SMTP: false
+    EBK_MAIL_SMTP_SKIP_TLS_VERIFY: false
+ports:
+  8080/tcp: null
+ports_description:
+  8080/tcp: Web UI (Not required for Ingress)
+#image: fabioogaravini/hassio-ezbookkeeping

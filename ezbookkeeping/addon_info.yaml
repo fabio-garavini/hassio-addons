@@ -1,0 +1,17 @@
+source:
+  type: docker
+  repo: mayswind/ezbookkeeping
+  current_version: 1.1.1
+  version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
+config:
+  version_template: "{{major}}.{{minor}}.{{patch}}"
+  patch: 0
+  image: fabioogaravini/hassio-ezbookkeeping
+build:
+  image: mayswind/ezbookkeeping
+  version_template: "{{major}}.{{minor}}.{{patch}}"
+  codenotary: info@fabiogaravini.dev
+changelog:
+  source: github-releases
+  repo: mayswind/ezbookkeeping
+  version_template: v{{major}}.{{minor}}.{{patch}}

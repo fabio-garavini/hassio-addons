@@ -1,0 +1,2 @@
+- **\[Bug Fixes\]**
+    - Fix the mobile transaction list page displayed incorrectly when loading more transactions (#277)

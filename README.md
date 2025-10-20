@@ -29,6 +29,14 @@ Help me expand the documentation making it as easy as possible for anyone to use
 
 ![cloudflare scheme](https://developers.cloudflare.com/_astro/handshake.eh3a-Ml1_ZvgY0m.webp)
 
+### 🏦 ezBookkeeping
+
+*All-in-one*
+
+**ezBookkeeping** is a lightweight, self-hosted personal finance app with a user-friendly interface and powerful bookkeeping features. 
+
+![screenshot](https://raw.githubusercontent.com/wiki/mayswind/ezbookkeeping/img/desktop/en.png)  
+
 ### 📹 Frigate ROCm
 
 [Frigate NVR](https://frigate.video) with realtime local object detection for IP cameras (ROCm version)

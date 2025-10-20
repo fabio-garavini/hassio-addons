@@ -1,0 +1,10 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+
+set -e;
+
+[[ ! -d "/config/storage" ]] && mkdir /config/storage
+
+cd /ezbookkeeping || exit 1
+
+exec /ezbookkeeping/ezbookkeeping server run --conf-path /ezbookkeeping/conf/ezbookkeeping.ini;
