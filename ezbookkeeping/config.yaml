@@ -107,4 +107,4 @@ ports:
   8080/tcp: null
 ports_description:
   8080/tcp: Web UI (Not required for Ingress)
-#image: fabioogaravini/hassio-ezbookkeeping
+image: fabioogaravini/hassio-ezbookkeeping
