@@ -18,7 +18,7 @@ keyfile="$2"
 
 enddate=$(openssl x509 -enddate -noout -in "$certfile" 2>/dev/null || true)
 if [ -n "$enddate" ]; then
-    expiry_date=$(echo "$enddate" | cut -d= -f2)
+    expiry_date=$(echo "$enddate" | cut -d= -f2 | sed 's/ GMT$//')
     expiry_ts=$(date -d "$expiry_date" +%s)
     now_ts=$(date +%s)
     days_left=$(( (expiry_ts - now_ts) / 86400 ))
