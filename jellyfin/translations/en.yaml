@@ -1,4 +1,3 @@
----
 configuration:
   JELLYFIN_PublishedServerUrl:
     name: Jellyfin URL

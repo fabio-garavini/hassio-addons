@@ -1,4 +1,3 @@
----
 name: Frigate TensorRT
 version: 0.16.2-tensorrt
 panel_icon: mdi:cctv

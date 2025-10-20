@@ -1,4 +1,3 @@
----
 name: Renovate
 
 on:
@@ -21,8 +20,8 @@ jobs:
           docker-volumes: |
             /tmp:/tmp
         env:
-          RENOVATE_PLATFORM_COMMIT: 'true'
-          RENOVATE_EXPOSE_ALL_ENV: 'true'
+          RENOVATE_PLATFORM_COMMIT: "true"
+          RENOVATE_EXPOSE_ALL_ENV: "true"
           RENOVATE_REPOSITORIES: ${{ github.repository }}
           RENOVATE_ALLOWED_COMMANDS: .*
           LOG_LEVEL: debug

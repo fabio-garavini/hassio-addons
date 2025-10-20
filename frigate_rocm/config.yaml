@@ -1,4 +1,3 @@
----
 name: Frigate ROCm
 version: 0.16.2-rocm
 panel_icon: mdi:cctv

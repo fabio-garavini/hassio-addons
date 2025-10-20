@@ -1,4 +1,3 @@
----
 configuration:
   PAPERLESS_URL:
     name: Paperless URL
@@ -31,7 +30,7 @@ configuration:
     description: >-
       Timezone used for displaying dates and times. (Default: `Etc/UTC`)
 
-      You can find your timezone identifier here: 
+      You can find your timezone identifier here:
       https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   PAPERLESS_ACCOUNT_ALLOW_SIGNUPS:
     name: Allow users to signup
@@ -72,7 +71,7 @@ configuration:
   PAPERLESS_TRUSTED_PROXIES:
     name: Trusted proxies
     description: >-
-      Comma-separated list of IP addresses that should be treated as trusted proxies. 
+      Comma-separated list of IP addresses that should be treated as trusted proxies.
       Needed if Paperless is running behind a reverse proxy such as NGINX
 network:
   8000/tcp: Paperless

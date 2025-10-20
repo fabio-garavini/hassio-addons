@@ -1,4 +1,3 @@
----
 name: Jellyfin
 version: 10.10.7-v2
 slug: jellyfin
@@ -22,9 +21,9 @@ map:
   - media:rw
   - ssl
 backup_exclude:
-  - '**/cache'
-  - '**/transcodes'
-  - '**/log'
+  - "**/cache"
+  - "**/transcodes"
+  - "**/log"
 video: true
 devices:
   - /dev/dri

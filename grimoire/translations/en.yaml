@@ -1,4 +1,3 @@
----
 configuration:
   PUBLIC_SIGNUP_DISABLED:
     name: Disable Public Signup

@@ -1,4 +1,3 @@
----
 configuration:
   POSTGRES_DB:
     name: database

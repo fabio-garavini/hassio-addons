@@ -1,4 +1,3 @@
----
 source:
   type: docker
   repo: jellyfin/jellyfin
@@ -10,7 +9,7 @@ config:
   image: fabioogaravini/hassio-jellyfin
 build:
   image: jellyfin/jellyfin
-  version_template: '{{major}}.{{minor}}.{{patch}}'
+  version_template: "{{major}}.{{minor}}.{{patch}}"
   codenotary: info@fabiogaravini.dev
 changelog:
   source: github-releases

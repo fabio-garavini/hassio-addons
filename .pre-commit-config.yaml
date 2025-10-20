@@ -1,4 +1,3 @@
----
 repos:
   - repo: https://github.com/renovatebot/pre-commit-hooks
     rev: 41.82.1
@@ -13,4 +12,4 @@ repos:
     rev: v1.37.1
     hooks:
       - id: yamllint
-        args: ['-c', '.github/yamllint.yaml']
+        args: ["-c", ".github/yamllint.yaml"]

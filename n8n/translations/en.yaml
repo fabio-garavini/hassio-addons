@@ -1,4 +1,3 @@
----
 configuration:
   TZ:
     name: Timezone
@@ -8,7 +7,8 @@ configuration:
     description: The default timezone is America/New_York. For instance, the Schedule node uses it to know at what time the workflow should start.
   tunnel:
     name: Tunnel service
-    description: To use webhooks for trigger nodes of external services like GitHub, n8n has to be reachable from the web. n8n runs a tunnel service that
+    description:
+      To use webhooks for trigger nodes of external services like GitHub, n8n has to be reachable from the web. n8n runs a tunnel service that
       can redirect requests from n8n's servers to your local n8n instance. !Use this for local development and testing. It isn't safe to use it in production!
   N8N_HOST:
     name: Host
