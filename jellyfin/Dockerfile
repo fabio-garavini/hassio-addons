@@ -1,15 +1,14 @@
-ARG BUILD_FROM=jellyfin/jellyfin:10.10.7
+ARG BUILD_FROM=jellyfin/jellyfin:10.11.0
 
 FROM ${BUILD_FROM}
-
-ARG BUILD_ARCH
 
 ENV JELLYFIN_DATA_DIR=/config \
     JELLYFIN_CONFIG_DIR=/config/config \
     JELLYFIN_CACHE_DIR=/config/cache \
-    JELLYFIN_LOG_DIR=/config/log \
-    JELLYFIN_InternalHttpPort=8096 \
-    JELLYFIN_InternalHttpsPort=8920
+    JELLYFIN_LOG_DIR=/config/log
+
+ENV SERVICE_PORT=8096 \
+    NGINX_PORT=8080
 
 # Environment variables
 ENV \
@@ -30,22 +29,51 @@ ENV \
     YARN_HTTP_TIMEOUT=1000000 \
     TERM="xterm-256color"
 
-# Set shell
+# Shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+# Install base system
+ARG BUILD_ARCH=amd64
 # renovate: datasource=github-releases packageName=hassio-addons/bashio
 ARG BASHIO_VERSION="v0.17.5"
+# renovate: datasource=github-releases packageName=just-containers/s6-overlay
+ARG S6_OVERLAY_VERSION="3.2.1.0"
 # renovate: datasource=github-releases packageName=home-assistant/tempio
 ARG TEMPIO_VERSION="2024.11.2"
 RUN \
     apt-get update \
     \
     && apt-get install -y --no-install-recommends \
+        bash \
         ca-certificates \
         curl \
         jq \
         tzdata \
         xz-utils \
+        nginx \
+    \
+    && c_rehash \
+    \
+    && S6_ARCH="${BUILD_ARCH}" \
+    && if [ "${BUILD_ARCH}" = "i386" ]; then S6_ARCH="i686"; \
+    elif [ "${BUILD_ARCH}" = "amd64" ]; then S6_ARCH="x86_64"; \
+    elif [ "${BUILD_ARCH}" = "armv7" ]; then S6_ARCH="arm"; fi \
+    \
+    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz" \
+        | tar -C / -Jxpf - \
+    \
+    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-${S6_ARCH}.tar.xz" \
+        | tar -C / -Jxpf - \
+    \
+    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-symlinks-noarch.tar.xz" \
+        | tar -C / -Jxpf - \
+    \
+    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-symlinks-arch.tar.xz" \
+        | tar -C / -Jxpf - \
+    \
+    && mkdir -p /etc/fix-attrs.d \
+    && mkdir -p /etc/services.d \
+    \
     && curl -J -L -o /tmp/bashio.tar.gz \
         "https://github.com/hassio-addons/bashio/archive/${BASHIO_VERSION}.tar.gz" \
     && mkdir /tmp/bashio \
@@ -66,11 +94,12 @@ RUN \
     && rm -fr \
         /tmp/* \
         /var/{cache,log}/* \
-        /var/lib/apt/lists/*
+        /var/lib/apt/lists/* \
+        /etc/nginx/*
 
-COPY root/ /
+COPY rootfs/ /
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/init"]
 
 ARG BUILD_VERSION \
     BUILD_DATE \

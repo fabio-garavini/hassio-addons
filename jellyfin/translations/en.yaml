@@ -3,8 +3,19 @@ configuration:
     name: Jellyfin URL
     description: >-
       Url from which Jellyfin is reachable
+  ssl:
+    name: SSL
+    description: >-
+      Enable HTTPS connections. If `SSL Certfile` and `SSL Private Key` files exist they are used to encrypt the connection, otherwise it'll generate a self-signed certificate
+  certfile:
+    name: SSL Certificate File
+    description: >-
+      Name of the SSL certificate file located under the `/ssl/` directory.
+  keyfile:
+    name: SSL Private Key File
+    description: >-
+      Name of the SSL private key file located under the `/ssl/` directory.
 network:
-  8096/tcp: HTTP (Not required for Ingress)
-  8920/tcp: HTTPS (Not required for Ingress)
+  8080/tcp: Jellyfin (Not required for Ingress)
   7359/udp: Client Discovery
   1900/udp: DLNA (optional)

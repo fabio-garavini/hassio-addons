@@ -1,0 +1,61 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+
+set -e
+
+echo "  Loading env variables:"
+
+OPTIONS_SOURCE=/data/options.json
+
+jq -r 'keys[]' "${OPTIONS_SOURCE}" | while read -r KEY; do
+    # export key
+    value=$(jq -r --arg key "$KEY" '.[$key]' "${OPTIONS_SOURCE}")
+
+    # Continue for single values
+    line="${KEY}=${value}"
+
+    # log redacted config
+    case "$KEY" in
+        *PASS*|*SECRET*|*KEY*)
+            echo "    ${KEY}=******"
+            ;;
+        *)
+            echo "    $line"
+            ;;
+    esac
+
+    export line
+
+    # set .env
+    echo "$line" >> /.env || true
+
+    # set /etc/environment
+    echo "$line" >> /etc/environment
+
+    # For s6
+    if [ -d /var/run/s6/container_environment ]; then
+        printf "%s" "$value" > /var/run/s6/container_environment/"${KEY}"
+    fi
+    echo "export $line" >> ~/.bashrc
+done
+
+if [ -n "$TZ" ] && [ -f /etc/localtime ]; then
+    if [ -f /usr/share/zoneinfo/"$TZ" ]; then
+        echo "Timezone set to $TZ"
+        ln -snf /usr/share/zoneinfo/"$TZ" /etc/localtime
+        echo "$TZ" >/etc/timezone
+    fi
+fi
+
+if bashio::config.has_value 'JELLYFIN_PublishedServerUrl'; then
+    export JELLYFIN_PublishedServerUrl=$(bashio::config 'JELLYFIN_PublishedServerUrl')
+else
+    # Try to get the HA IPv4 address; if that fails, fall back to localhost
+    if ha_address=$(bashio::network.ipv4_address 2>/dev/null); then
+        :
+    else
+        ha_address="127.0.0.1/32"
+    fi
+
+    export JELLYFIN_PublishedServerUrl="http://${ha_address%%/*}:$(bashio::addon.port 8080)"
+fi
