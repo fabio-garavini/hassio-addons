@@ -4,7 +4,6 @@ env:
   MONITORED_FILES: apparmor.txt build.yaml config.yaml Dockerfile rootfs
 
 on:
-  workflow_call:
   pull_request:
     branches:
       - main
@@ -99,7 +98,7 @@ jobs:
         with:
           path: "./${{ matrix.addon }}"
 
-      - name: 🔍 Check add-on arch
+      - name: 🔍 Check add-on arch & tests
         id: check
         run: |
           if [[ "${{ steps.info.outputs.image }}" == "null" ]]; then
@@ -110,6 +109,12 @@ jobs:
           else
             echo "${{ matrix.arch }} is not a valid arch for ${{ matrix.addon }}, skipping build";
             echo "build_arch=false" >> $GITHUB_OUTPUT;
+          fi
+
+          if [ -d "${{ steps.info.outputs.target }}/test" ]; then
+            echo "test=true" >> $GITHUB_OUTPUT
+          else
+            echo "test=false" >> $GITHUB_OUTPUT
           fi
 
       - name: 🔑 Login to DockerHub
@@ -184,14 +189,36 @@ jobs:
             BUILD_REPOSITORY=${{ github.repository }}
             BUILD_VERSION=${{ steps.info.outputs.version }}
 
+      - name: 🏗 Set up Docker Compose
+        if: steps.check.outputs.build_arch == 'true' && steps.check.outputs.test == 'true'
+        uses: docker/setup-compose-action@v1
+      
+      - name: Start Docker Compose services
+        if: steps.check.outputs.build_arch == 'true' && steps.check.outputs.test == 'true'
+        run: |
+          cd "${{ steps.info.outputs.target }}/test"
+          docker compose up -d
+      
+      - name: 🩺 Healthcheck
+        uses: jaracogmbh/docker-compose-health-check-action@v1.0.0
+        if: steps.check.outputs.build_arch == 'true' && steps.check.outputs.test == 'true'
+        with:
+          max-retries: 30
+          retry-interval: 10
+          compose-file: "${{ steps.info.outputs.target }}/test/docker-compose.yml"
+      
+      - name: Stop Docker Compose services
+        if: steps.check.outputs.build_arch == 'true' && steps.check.outputs.test == 'true'
+        run: |
+          cd "${{ steps.info.outputs.target }}/test"
+          docker compose down
+
       - name: 🚀 Push
         if: steps.check.outputs.build_arch == 'true' && github.event_name == 'push'
         # yamllint disable rule:line-length
         run: |
-          docker push \
-            ${{ steps.info.outputs.image }}:${{ steps.flags.outputs.tag_suffix }}-${{ matrix.arch }}
-          docker push \
-            ${{ steps.info.outputs.image }}:${{ steps.info.outputs.version }}-${{ matrix.arch }}
+          docker push ${{ steps.info.outputs.image }}:${{ steps.flags.outputs.tag_suffix }}-${{ matrix.arch }}
+          docker push ${{ steps.info.outputs.image }}:${{ steps.info.outputs.version }}-${{ matrix.arch }}
 
   manifest:
     name: 🚀 Deploy ${{ matrix.addon }} Multi Arch Manifest

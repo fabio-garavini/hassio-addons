@@ -158,7 +158,7 @@ jobs:
         with:
           max-retries: 30
           retry-interval: 10
-          compose-file: "${{ github.event.inputs.addon }}/test/docker-compose.yml"
+          compose-file: "${{ steps.info.outputs.target }}/test/docker-compose.yml"
       
       - name: Stop Docker Compose services
         if: steps.check.outputs.build_arch == 'true' && steps.check.outputs.test == 'true'
