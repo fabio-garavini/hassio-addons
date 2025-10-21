@@ -1,0 +1,21 @@
+services:
+  syncthing:
+    image: fabioogaravini/hassio-syncthing:latest
+    container_name: syncthing
+    restart: unless-stopped
+    volumes:
+      - ./data:/data
+      - ./config:/config
+      - ./ssl:/ssl
+      - ./share:/share
+      - ./media:/media
+    ports:
+      - "8384:8384"
+      - "22000:22000"
+      - "22000:22000/udp"
+      - "21027:21027/udp"
+    healthcheck:
+      test: curl -fkLsS -m 2 127.0.0.1:8384/rest/noauth/health | grep -o --color=never OK || exit 1
+      interval: 10s
+      timeout: 10s
+      retries: 3
