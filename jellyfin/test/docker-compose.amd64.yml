@@ -1,0 +1,31 @@
+name: jellyfin-amd64
+services:
+  jellyfin-amd64:
+    image: fabioogaravini/hassio-jellyfin:latest-amd64
+    container_name: jellyfin-amd64
+    ports:
+      - "8080:8096"
+      - "7359:7359/udp"
+      - "1900:1900/udp"
+    environment:
+      - TZ=Etc/UTC
+    volumes:
+      - data:/data
+      - ./options.json:/data/options.json:ro
+      - config:/config
+      - ssl:/ssl
+      - share:/share
+      - media:/media
+    healthcheck:
+      test: curl -sk https://127.0.0.1:8080/health | grep -q '^Healthy$' || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  data:
+  config:
+  ssl:
+  share:
+  media:

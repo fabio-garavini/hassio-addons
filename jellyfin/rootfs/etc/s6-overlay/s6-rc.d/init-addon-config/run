@@ -46,16 +46,3 @@ if [ -n "$TZ" ] && [ -f /etc/localtime ]; then
         echo "$TZ" >/etc/timezone
     fi
 fi
-
-if bashio::config.has_value 'JELLYFIN_PublishedServerUrl'; then
-    export JELLYFIN_PublishedServerUrl=$(bashio::config 'JELLYFIN_PublishedServerUrl')
-else
-    # Try to get the HA IPv4 address; if that fails, fall back to localhost
-    if ha_address=$(bashio::network.ipv4_address 2>/dev/null); then
-        :
-    else
-        ha_address="127.0.0.1/32"
-    fi
-
-    export JELLYFIN_PublishedServerUrl="http://${ha_address%%/*}:$(bashio::addon.port 8080)"
-fi

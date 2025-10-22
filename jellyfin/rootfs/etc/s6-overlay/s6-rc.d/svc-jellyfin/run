@@ -1,6 +1,17 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
 
+set -e
+
+if [ ! -v JELLYFIN_PublishedServerUrl ]; then
+    # Try to get the HA IPv4 address; if that fails, fall back to localhost
+    if ! ha_address=$(bashio::network.ipv4_address 2>/dev/null); then
+        ha_address="0.0.0.0/32"
+    fi
+
+    export JELLYFIN_PublishedServerUrl="http://${ha_address%%/*}:$(bashio::addon.port 8080)"
+fi
+
 cd /jellyfin || exit 1
 
 exec /jellyfin/jellyfin

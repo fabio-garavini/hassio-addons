@@ -1,5 +1,5 @@
 name: Jellyfin
-version: 10.11.0
+version: 10.11.0-v1
 slug: jellyfin
 codenotary: info@fabiogaravini.dev
 description: Jellyfin is the volunteer-built media solution that puts you in control of your media
