@@ -1,0 +1,29 @@
+name: immich-amd64
+services:
+  immich-amd64:
+    image: fabioogaravini/hassio-immich:latest-amd64
+    container_name: immich-amd64
+    ports:
+      - 8080:8080
+    environment:
+      - TZ=Etc/UTC
+    volumes:
+      - data:/data
+      - ./options.json:/data/options.json:ro
+      - config:/config
+      - ssl:/ssl
+      - media:/media
+      - share:/share
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sk https://127.0.0.1:8080/api/server/ping | jq -e '.res == \"pong\"'"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+volumes:
+  data:
+  config:
+  ssl:
+  media:
+  share:

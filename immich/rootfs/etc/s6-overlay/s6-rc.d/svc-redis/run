@@ -1,6 +1,10 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+set -e
+
+OPTIONS_SOURCE=/data/options.json
+
 # make redis folders
 mkdir -p \
 	/config/redis \
@@ -17,7 +21,7 @@ chown -R abc:abc \
 	/data/logs \
 	/var/run/redis
 
-if bashio::config.has_value "clean_redis" && bashio::config.true "clean_redis"; then
+if jq -e '.clean_redis == true' $OPTIONS_SOURCE > /dev/null; then
 	rm -f /config/redis/dump.rdd
 fi
 

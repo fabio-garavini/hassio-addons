@@ -3,6 +3,8 @@
 
 set -e
 
+OPTIONS_SOURCE=/data/options.json
+
 
 # ================================================================================
 # Configuration
@@ -297,8 +299,8 @@ mount_smb() {
         chmod 000 "$mount_point"
     fi
 
-    uid=$(bashio::config "PUID" "1000")
-    gid=$(bashio::config "PGID" "1000")
+    uid=$(jq -r ".PUID // 1000" $OPTIONS_SOURCE)
+    gid=$(jq -r ".PGID // 1000" $OPTIONS_SOURCE)
     
     # Build mount options
     local mount_opts="uid=$uid,gid=$gid,dir_mode=0755,file_mode=0644"
@@ -509,7 +511,7 @@ main() {
     scan_local_partitions
 
     # Check for mount configurations
-    if ! bashio::config.exists 'storage_mounts' || [ -z "$(bashio::config 'storage_mounts|keys')" ]; then
+    if jq '(.storage_mounts // empty | keys | length) == 0' $OPTIONS_SOURCE; then
         bashio::log.info "No storage mounts configured"
         exit 0
     fi

@@ -1,15 +1,19 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-if bashio::config.false 'restore_backup'; then
+set -e
+
+OPTIONS_SOURCE=/data/options.json
+
+if jq -e '.restore_backup == false' $OPTIONS_SOURCE > /dev/null; then
   exit 0
 fi
 
 bashio::log.info "Starting Postgres dump restore..."
 
-backup_location="$(bashio::config 'backup_location')"
+backup_location="$(jq -r '.backup_location' $OPTIONS_SOURCE)"
 
-if ! bashio::fs.file_exists "$backup_location"; then
+if [ ! -f "$backup_location" ]; then
   bashio::log.error "$backup_location doesn't exist!"
   exit 1
 fi

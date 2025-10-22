@@ -1,0 +1,17 @@
+{
+  "TZ": "Etc/UTC",
+  "IMMICH_LOG_LEVEL": "log",
+  "ssl": true,
+  "certfile": "fullchain.pem",
+  "keyfile": "privkey.pem",
+  "DB_STORAGE_TYPE": "SSD",
+  "MACHINE_LEARNING_MODEL_TTL": 300,
+  "MACHINE_LEARNING_WORKER_TIMEOUT": 300,
+  "IMMICH_TRUSTED_PROXIES": "172.30.32.0/23",
+  "storage_mounts": [],
+  "IMMICH_MEDIA_LOCATION": "/media/immich",
+  "PUID": 0,
+  "PGID": 0,
+  "APPLY_PERMISSIONS": false,
+  "restore_backup": false
+}
