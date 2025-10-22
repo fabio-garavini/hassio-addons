@@ -160,8 +160,22 @@ jobs:
           retry-interval: 10
           compose-file: "${{ steps.info.outputs.target }}/test/docker-compose.${{ matrix.arch }}.yml"
       
+      - name: Restart Docker Compose services
+        if: steps.check.outputs.build_arch == 'true' && steps.check.outputs.test == 'true'
+        run: |
+          cd "${{ steps.info.outputs.target }}/test"
+          docker compose -f "docker-compose.${{ matrix.arch }}.yml" restart
+      
+      - name: 🩺 Healthcheck
+        uses: jaracogmbh/docker-compose-health-check-action@v1.0.0
+        if: steps.check.outputs.build_arch == 'true' && steps.check.outputs.test == 'true'
+        with:
+          max-retries: 30
+          retry-interval: 10
+          compose-file: "${{ steps.info.outputs.target }}/test/docker-compose.${{ matrix.arch }}.yml"
+      
       - name: Stop Docker Compose services
         if: steps.check.outputs.build_arch == 'true' && steps.check.outputs.test == 'true'
         run: |
           cd "${{ steps.info.outputs.target }}/test"
-          docker compose -f "docker-compose.${{ matrix.arch }}.yml" down
+          docker compose -f "docker-compose.${{ matrix.arch }}.yml" down -v

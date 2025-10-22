@@ -1,3 +1,4 @@
+name: ezbookkeeping-aarch64
 services:
   ezbookkeeping-aarch64:
     image: fabioogaravini/hassio-ezbookkeeping:latest-aarch64
@@ -7,16 +8,18 @@ services:
     environment:
       - TZ=Etc/UTC
     volumes:
+      - data:/data
       - ./options.json:/data/options.json:ro
       - config:/config
       - ssl:/ssl
     healthcheck:
-      test: curl -sk https://127.0.0.1:8080/healthz.json | jq -e '.success == true' || exit 1
+      test: ["CMD-SHELL", "curl -sk https://127.0.0.1:8080/healthz.json | jq -e '.success == true'"]
       interval: 10s
       timeout: 5s
       retries: 3
       start_period: 10s
 
 volumes:
+  data:
   config:
   ssl:
