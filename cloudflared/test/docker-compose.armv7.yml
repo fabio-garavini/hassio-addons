@@ -7,7 +7,7 @@ services:
       - ./data:/data
       - ./config:/config
     healthcheck:
-      test: ["CMD-SHELL", "cloudflared --version"]
+      test: ["CMD", "cloudflared --version || exit 1"]
       interval: 5s
       timeout: 10s
       retries: 10

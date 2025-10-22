@@ -39,7 +39,6 @@ defaults:
 jobs:
   deploy:
     name: 👷 Build ${{ github.event.inputs.addon }} ${{ matrix.arch }}
-    #runs-on: ubuntu-latest
     runs-on: ${{ contains(fromJson('["armhf", "armv7", "aarch64"]'), matrix.arch) && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
     strategy:
       matrix:

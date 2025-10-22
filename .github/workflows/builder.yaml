@@ -76,7 +76,6 @@ jobs:
 
   deploy:
     name: 👷 Build ${{ matrix.addon }} ${{ matrix.arch }}
-    #runs-on: ubuntu-latest
     runs-on: ${{ contains(fromJson('["armhf", "armv7", "aarch64"]'), matrix.arch) && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
     needs: init
     if: needs.init.outputs.changed == 'true'
