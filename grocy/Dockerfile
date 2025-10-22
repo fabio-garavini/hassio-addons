@@ -40,8 +40,6 @@ RUN \
         libssl3 \
         musl-utils \
         musl \
-    \
-    && apk add --no-cache \
         bash \
         curl \
         jq \
@@ -62,8 +60,7 @@ RUN \
     && chmod a+x /usr/bin/tempio \
     \
     && apk del --no-cache --purge .build-dependencies \
-    && rm -f -r \
-        /tmp/*
+    && rm -f -r /tmp/*
 
 COPY rootfs/ /
 

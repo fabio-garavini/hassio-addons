@@ -3,16 +3,18 @@
 
 set -e
 
-certfile="/ssl/$(bashio::config 'certfile')"
-keyfile="/ssl/$(bashio::config 'keyfile')"
+OPTIONS_SOURCE=/data/options.json
 
-if ! bashio::fs.file_exists "$certfile" || ! bashio::fs.file_exists "$keyfile"; then
+certfile="/ssl/$(jq -r '.certfile' $OPTIONS_SOURCE)"
+keyfile="/ssl/$(jq -r '.keyfile' $OPTIONS_SOURCE)"
+
+if [ ! -f "$certfile" ] || [ ! -f "$keyfile"]; then
     bashio::log.warning "SSL is enabled, but certfile or keyfile is missing. Using self-signed certificate..."
 
     certfile="/config/keys/cert.crt"
     keyfile="/config/keys/cert.key"
 
-    if ! bashio::fs.file_exists "$certfile" || ! bashio::fs.file_exists "$keyfile"; then
+    if [ ! -f "$certfile" ] || [ ! -f "$keyfile"]; then
         /usr/local/bin/selfsigned-ssl-gen.sh "$certfile" "$keyfile"
     else
         /usr/local/bin/check-ssl.sh "$certfile" "$keyfile"
