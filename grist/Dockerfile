@@ -16,7 +16,8 @@ ENV \
     TERM="xterm-256color"
 
 ENV \
-    PORT=8484 \
+    SERVICE_PORT=8484 \
+    NGINX_PORT=8080 \
     GRIST_TELEMETRY_LEVEL=off \
     GRIST_ALLOW_AUTOMATIC_VERSION_CHECKING=false \
     GRIST_WIDGET_LIST_URL=https://github.com/gristlabs/grist-widget/releases/download/latest/manifest.json

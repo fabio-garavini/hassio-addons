@@ -1,0 +1,8 @@
+{
+  "TZ": "Etc/UTC",
+  "ssl": true,
+  "certfile": "fullchain.pem",
+  "keyfile": "privkey.pem",
+  "GRIST_SESSION_SECRET": "invent-a-secret-here",
+  "GRIST_DEFAULT_EMAIL": "example@mail.com"
+}
