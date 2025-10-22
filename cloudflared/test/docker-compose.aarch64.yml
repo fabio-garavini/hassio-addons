@@ -1,13 +1,18 @@
+name: cloudflared-aarch64
 services:
   cloudflared-aarch64:
     image: fabioogaravini/hassio-cloudflared:latest-aarch64
     container_name: cloudflared-aarch64
-    restart: unless-stopped
     volumes:
-      - ./data:/data
-      - ./config:/config
+      - data:/data
+      - ./options.json:/data/options.json:ro
+      - config:/config
     healthcheck:
       test: ["CMD", "cloudflared --version || exit 1"]
       interval: 5s
       timeout: 10s
       retries: 10
+
+volumes:
+  data:
+  config:
