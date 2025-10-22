@@ -1,0 +1,23 @@
+name: pocketbase-armv7
+services:
+  pocketbase-armv7:
+    image: fabioogaravini/hassio-pocketbase:latest-armv7
+    container_name: pocketbase-armv7
+    ports:
+      - 8090:8090
+    environment:
+      - TZ=Etc/UTC
+    volumes:
+      - data:/data
+      - ./options.json:/data/options.json:ro
+      - config:/config
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sk http://127.0.0.1:8090/api/health | jq -e '.code == 200'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  data:
+  config:

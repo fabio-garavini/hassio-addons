@@ -1,7 +1,7 @@
-#!/command/with-contenv bashio
+#!/command/with-contenv bash
 # shellcheck shell=bash
 
-bashio::log.info "Starting PocketBase"
+echo "Starting PocketBase"
 
 if [ ! -d "/config/pb_hooks" ]; then
     mkdir /config/pb_hooks
@@ -15,6 +15,6 @@ if [ ! -d "/config/pb_public" ]; then
     mkdir /config/pb_public
 fi
 
-/pb/pocketbase superuser upsert --dir /data --encryptionEnv "$ENCRYPTION_KEY" $ADMIN_EMAIL $ADMIN_PASSWORD
+/pb/pocketbase superuser upsert --dir /data --encryptionEnv "$ENCRYPTION_KEY" "$ADMIN_EMAIL" "$ADMIN_PASSWORD"
 
 /pb/pocketbase serve --http=0.0.0.0:8090 --dir /data --encryptionEnv "$ENCRYPTION_KEY" --hooksDir /config/pb_hooks --migrationsDir /config/pb_migrations --publicDir /config/pb_public
