@@ -1,0 +1,27 @@
+name: gitea-amd64
+services:
+  gitea-amd64:
+    image: fabioogaravini/hassio-gitea:latest-amd64
+    container_name: gitea-amd64
+    ports:
+      - 3000:3000
+    environment:
+      - TZ=Etc/UTC
+    volumes:
+      - data:/data
+      - ./options.json:/data/options.json
+      - config:/config
+      - ssl:/ssl
+      - share:/share
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sk http://127.0.0.1:3000/api/healthz | jq -e '.status == \"pass\"'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  data:
+  config:
+  ssl:
+  share:

@@ -1,0 +1,9 @@
+{
+  "USER_UID": "1000",
+  "USER_GID": "1000",
+  "TZ": "Etc/UTC",
+  "DISABLE_REGISTRATION": false,
+  "LFS_START_SERVER": true,
+  "DISABLE_SSH": false,
+  "SECRET_KEY": "RNXVG8MSeh5ik6abGFctBMllvVAFWmP2"
+}
