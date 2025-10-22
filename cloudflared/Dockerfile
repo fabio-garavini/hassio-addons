@@ -40,7 +40,7 @@ RUN \
     \
     && rm -f -r /tmp/*
 
-ARG BUILD_VERSION=2025.10.0-v2
+ARG BUILD_VERSION=2025.10.0-v3
 
 RUN case "$BUILD_ARCH" in \
       aarch64) REMOTE_ARCH="arm64" ;; \
