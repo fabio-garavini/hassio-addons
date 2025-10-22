@@ -39,8 +39,7 @@ RUN \
         jq \
         tzdata \
         xz-utils \
-    && curl -J -L -o /tmp/bashio.tar.gz \
-        "https://github.com/hassio-addons/bashio/archive/${BASHIO_VERSION}.tar.gz" \
+    && curl -J -L "https://github.com/hassio-addons/bashio/archive/${BASHIO_VERSION}.tar.gz" -o /tmp/bashio.tar.gz \
     && mkdir /tmp/bashio \
     && tar zxvf \
         /tmp/bashio.tar.gz \
@@ -49,8 +48,7 @@ RUN \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     \
-    && curl -L -s -o /usr/bin/tempio \
-        "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" \
+    && curl -L -s "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" -o /usr/bin/tempio \
     && chmod a+x /usr/bin/tempio \
     \
     && apt-get purge -y --auto-remove \

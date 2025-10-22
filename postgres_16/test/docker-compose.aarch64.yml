@@ -1,0 +1,20 @@
+name: postgres_16-aarch64
+services:
+  postgres_16-aarch64:
+    image: fabioogaravini/hassio-postgres-16-pgvectors:latest-aarch64
+    container_name: postgres_16-aarch64
+    environment:
+      - TZ=Etc/UTC
+    volumes:
+      - data:/data
+      - ./options.json:/data/options.json:ro
+      - config:/config
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+
+volumes:
+  data:
+  config:

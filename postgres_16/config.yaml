@@ -1,5 +1,5 @@
 name: Postgres 16
-version: pg16-v0.3.0
+version: pg16-0.3.0-v1
 slug: postgres_16
 codenotary: info@fabiogaravini.dev
 description: Postgres 16 with VectorChord (and pgvecto.rs for legacy support)
@@ -15,7 +15,7 @@ backup: cold
 backup_exclude:
   - "*/log"
 ports:
-  5432/tcp:
+  5432/tcp: null
 ports_description:
   5432/tcp: Database
 options:

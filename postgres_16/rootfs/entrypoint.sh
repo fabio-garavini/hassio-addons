@@ -44,12 +44,14 @@ bashio::log.info "Starting..."
 bashio::log.info "Timezone set to $TZ"
 ln -snf /usr/share/zoneinfo/"$TZ" /etc/localtime && echo "$TZ" >/etc/timezone
 
-export POSTGRES_DB=$(bashio::config 'POSTGRES_DB')
-export POSTGRES_HOST_AUTH_METHOD=$(bashio::config 'POSTGRES_HOST_AUTH_METHOD')
-export POSTGRES_USER=$(bashio::config 'POSTGRES_USER')
-export POSTGRES_PASSWORD=$(bashio::config 'POSTGRES_PASSWORD')
-export POSTGRES_INITDB_ARGS=$(bashio::config 'POSTGRES_INITDB_ARGS')
-export DB_STORAGE_TYPE=$(bashio::config 'DB_STORAGE_TYPE')
+OPTIONS_SOURCE=/data/options.json
+
+export POSTGRES_DB=$(jq -r '.POSTGRES_DB' $OPTIONS_SOURCE)
+export POSTGRES_HOST_AUTH_METHOD=$(jq -r '.POSTGRES_HOST_AUTH_METHOD' $OPTIONS_SOURCE)
+export POSTGRES_USER=$(jq -r '.POSTGRES_USER' $OPTIONS_SOURCE)
+export POSTGRES_PASSWORD=$(jq -r '.POSTGRES_PASSWORD' $OPTIONS_SOURCE)
+export POSTGRES_INITDB_ARGS=$(jq -r '.POSTGRES_INITDB_ARGS / empty' $OPTIONS_SOURCE)
+export DB_STORAGE_TYPE=$(jq -r '.DB_STORAGE_TYPE' $OPTIONS_SOURCE)
 
 set +e
 
