@@ -1,7 +1,7 @@
 services:
-  syncthing:
+  syncthing-aarch64:
     image: fabioogaravini/hassio-syncthing:latest-aarch64
-    container_name: syncthing
+    container_name: syncthing-aarch64
     restart: unless-stopped
     volumes:
       - ./data:/data

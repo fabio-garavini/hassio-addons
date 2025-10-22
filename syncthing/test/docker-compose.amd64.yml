@@ -1,7 +1,7 @@
 services:
-  syncthing:
+  syncthing-amd64:
     image: fabioogaravini/hassio-syncthing:latest-amd64
-    container_name: syncthing
+    container_name: syncthing-amd64
     restart: unless-stopped
     volumes:
       - ./data:/data

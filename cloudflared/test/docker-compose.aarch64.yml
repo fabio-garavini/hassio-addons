@@ -1,7 +1,7 @@
 services:
-  cloudflared:
+  cloudflared-aarch64:
     image: fabioogaravini/hassio-cloudflared:latest-aarch64
-    container_name: cloudflared
+    container_name: cloudflared-aarch64
     restart: unless-stopped
     volumes:
       - ./data:/data

@@ -1,7 +1,7 @@
 services:
-  redis:
+  redis-amd64:
     image: fabioogaravini/hassio-redis-stack:latest-amd64
-    container_name: redis
+    container_name: redis-amd64
     restart: unless-stopped
     volumes:
       - ./data:/data
