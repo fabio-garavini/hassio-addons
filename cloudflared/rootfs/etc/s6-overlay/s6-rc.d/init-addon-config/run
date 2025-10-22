@@ -1,4 +1,4 @@
-#!/command/with-contenv bashio
+#!/command/with-contenv bash
 # shellcheck shell=bash
 
 set -e
@@ -24,7 +24,7 @@ jq -r 'keys[]' "${OPTIONS_SOURCE}" | while read -r KEY; do
             ;;
     esac
 
-    export "$line"
+    export line
 
     # set .env
     echo "$line" >> /.env || true

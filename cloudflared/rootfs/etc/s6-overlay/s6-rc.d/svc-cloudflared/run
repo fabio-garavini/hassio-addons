@@ -1,10 +1,10 @@
-#!/command/with-contenv bashio
+#!/command/with-contenv bash
 # shellcheck shell=bash
 
 set -e
 
-if bashio::config.has_value "token"; then
-    cloudflared tunnel --no-autoupdate run --token $(bashio::config "token")
+if [ -n "$TOKEN" ]; then
+    cloudflared tunnel --no-autoupdate run --token $TOKEN
     exit 0
 fi
 

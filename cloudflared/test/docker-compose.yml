@@ -1,0 +1,13 @@
+services:
+  cloudflared:
+    image: fabioogaravini/hassio-cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    volumes:
+      - ./data:/data
+      - ./config:/config
+    healthcheck:
+      test: ["CMD-SHELL", "cloudflared --version"]
+      interval: 5s
+      timeout: 10s
+      retries: 10

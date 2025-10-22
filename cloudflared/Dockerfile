@@ -1,9 +1,46 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base:stable
+ARG BUILD_FROM=alpine:latest
 
 FROM ${BUILD_FROM}
 
-ARG BUILD_VERSION=2025.10.0
+RUN apk add --no-cache bash
+
+# Shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# Install S6 Overlay
 ARG BUILD_ARCH=amd64
+# renovate: datasource=github-releases packageName=just-containers/s6-overlay
+ARG S6_OVERLAY_VERSION="3.2.1.0"
+RUN \
+    apk add --no-cache \
+        libcrypto3 \
+        libssl3 \
+        musl-utils \
+        musl \
+        curl \
+        jq \
+        tzdata \
+    \
+    && S6_ARCH="${BUILD_ARCH}" \
+    && if [ "${BUILD_ARCH}" = "i386" ]; then S6_ARCH="i686"; \
+    elif [ "${BUILD_ARCH}" = "amd64" ]; then S6_ARCH="x86_64"; \
+    elif [ "${BUILD_ARCH}" = "armv7" ]; then S6_ARCH="arm"; fi \
+    \
+    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz" \
+        | tar -C / -Jxpf - \
+    \
+    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-${S6_ARCH}.tar.xz" \
+        | tar -C / -Jxpf - \
+    \
+    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-symlinks-noarch.tar.xz" \
+        | tar -C / -Jxpf - \
+    \
+    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-symlinks-arch.tar.xz" \
+        | tar -C / -Jxpf - \
+    \
+    && rm -f -r /tmp/*
+
+ARG BUILD_VERSION=2025.10.0-v1
 
 RUN case "$BUILD_ARCH" in \
       aarch64) REMOTE_ARCH="arm64" ;; \
@@ -11,11 +48,13 @@ RUN case "$BUILD_ARCH" in \
       amd64)   REMOTE_ARCH="amd64" ;; \
       *) echo "Unsupported architecture: $BUILD_ARCH" >&2; exit 1 ;; \
     esac && \
-    wget -nv "https://github.com/cloudflare/cloudflared/releases/download/${BUILD_VERSION%-v*}/cloudflared-linux-${REMOTE_ARCH}" -O /usr/bin/cloudflared; \
+    curl -fSL "https://github.com/cloudflare/cloudflared/releases/download/${BUILD_VERSION%-v*}/cloudflared-linux-${REMOTE_ARCH}" -o /usr/bin/cloudflared; \
     chmod +x /usr/bin/cloudflared; \
     cloudflared -v
 
 COPY rootfs/ /
+
+ENTRYPOINT ["/init"]
 
 ARG BUILD_DATE \
     BUILD_DESCRIPTION \

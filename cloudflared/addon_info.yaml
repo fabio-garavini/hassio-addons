@@ -5,11 +5,11 @@ source:
   version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
-  patch: 0
+  patch: 1
   image: fabioogaravini/hassio-cloudflared
 build:
-  image: ghcr.io/hassio-addons/base
-  version_template: stable
+  image: alpine
+  version_template: latest
   codenotary: info@fabiogaravini.dev
 changelog:
   source: none
