@@ -1,0 +1,33 @@
+{
+  "EBK_LOG_LEVEL": "info",
+  "EBK_GLOBAL_APP_NAME": "ezBookkeeping",
+  "ssl": true,
+  "certfile": "fullchain.pem",
+  "keyfile": "privkey.pem",
+  "EBK_SERVER_ENABLE_GZIP": false,
+  "EBK_SERVER_LOG_REQUEST": false,
+  "EBK_MCP_ENABLE_MCP": false,
+  "EBK_EXCHANGE_RATES_DATA_SOURCE": "euro_central_bank",
+  "Auth": {
+    "EBK_AUTH_ENABLE_TWO_FACTOR": true,
+    "EBK_AUTH_ENABLE_FORGET_PASSWORD": true,
+    "EBK_AUTH_FORGET_PASSWORD_REQUIRE_EMAIL_VERIFY": false
+  },
+  "User": {
+    "EBK_USER_ENABLE_REGISTER": true,
+    "EBK_USER_ENABLE_EMAIL_VERIFY": false,
+    "EBK_USER_ENABLE_FORCE_EMAIL_VERIFY": false,
+    "EBK_USER_ENABLE_TRANSACTION_PICTURE": true
+  },
+  "Map": {
+    "EBK_MAP_MAP_PROVIDER": "openstreetmap"
+  },
+  "LLM": {
+    "EBK_LLM_TRANSACTION_FROM_AI_IMAGE_RECOGNITION": false,
+    "EBK_LLM_IMAGE_RECOGNITION_SKIP_TLS_VERIFY": false
+  },
+  "Mail": {
+    "EBK_MAIL_ENABLE_SMTP": false,
+    "EBK_MAIL_SMTP_SKIP_TLS_VERIFY": false
+  }
+}

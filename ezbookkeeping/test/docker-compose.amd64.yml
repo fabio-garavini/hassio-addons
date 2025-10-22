@@ -1,0 +1,19 @@
+services:
+  ezbookkeeping-amd64:
+    image: fabioogaravini/hassio-ezbookkeeping:latest-amd64
+    container_name: ezbookkeeping-amd64
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    environment:
+      - TZ=Etc/UTC
+    volumes:
+      - ./data:/data
+      - ./config:/config
+      - ./ssl:/ssl
+    healthcheck:
+      test: curl -sk https://127.0.0.1:8080/healthz.json | jq -e '.success == true' || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
