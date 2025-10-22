@@ -7,7 +7,8 @@ ARG BUILD_ARCH=amd64
 # hadolint ignore=DL3002
 USER root
 
-ENV PORT=80
+ENV SERVICE_PORT=80 \
+    NIGNX_PORT=5137
 
 # Shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -74,9 +75,8 @@ RUN \
 
 RUN \
 	apt-get update; \
-	apt-get install -y --no-install-recommends \
-	  nginx; \
-  rm -rf /var/lib/apt/lists/* /etc/nginx
+	apt-get install -y --no-install-recommends nginx; \
+    rm -rf /etc/nginx
 
 COPY rootfs/ /
 

@@ -5,7 +5,7 @@ source:
   version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)(-hotfix\.(?<build>\d+))?$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
-  patch: 1
+  patch: 2
   image: fabioogaravini/hassio-grimoire
 build:
   image: goniszewski/grimoire

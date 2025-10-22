@@ -1,0 +1,6 @@
+{
+  "PUBLIC_SIGNUP_DISABLED": false,
+  "ssl": true,
+  "certfile": "fullchain.pem",
+  "keyfile": "privkey.pem"
+}

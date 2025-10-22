@@ -1,0 +1,25 @@
+name: grimoire-amd64
+services:
+  grimoire-amd64:
+    image: fabioogaravini/hassio-grimoire:latest-amd64
+    container_name: grimoire-amd64
+    ports:
+      - 5173:5173
+    environment:
+      - TZ=Etc/UTC
+    volumes:
+      - data:/data
+      - ./options.json:/data/options.json:ro
+      - config:/app/data
+      - ssl:/ssl
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sk https://127.0.0.1:5173/api/health | jq -e '.database == \"CONNECTED\"'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  data:
+  config:
+  ssl:
