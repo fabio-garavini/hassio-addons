@@ -198,7 +198,7 @@ jobs:
         if: steps.check.outputs.build_arch == 'true' && steps.check.outputs.test == 'true'
         run: |
           cd "${{ steps.info.outputs.target }}/test"
-          docker compose up -d -f "docker-compose.${{ matrix.arch }}.yml"
+          docker compose -f "docker-compose.${{ matrix.arch }}.yml" up -d
       
       - name: 🩺 Healthcheck
         uses: jaracogmbh/docker-compose-health-check-action@v1.0.0
@@ -212,7 +212,7 @@ jobs:
         if: steps.check.outputs.build_arch == 'true' && steps.check.outputs.test == 'true'
         run: |
           cd "${{ steps.info.outputs.target }}/test"
-          docker compose down -f "docker-compose.${{ matrix.arch }}.yml"
+          docker compose -f "docker-compose.${{ matrix.arch }}.yml" down
 
       - name: 🚀 Push
         if: steps.check.outputs.build_arch == 'true' && github.event_name == 'push'
