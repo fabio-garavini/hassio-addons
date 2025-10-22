@@ -2,20 +2,25 @@ services:
   syncthing-aarch64:
     image: fabioogaravini/hassio-syncthing:latest-aarch64
     container_name: syncthing-aarch64
-    restart: unless-stopped
-    volumes:
-      - ./data:/data
-      - ./config:/config
-      - ./ssl:/ssl
-      - ./share:/share
-      - ./media:/media
     ports:
       - "8384:8384"
       - "22000:22000"
       - "22000:22000/udp"
       - "21027:21027/udp"
+    volumes:
+      - ./options.json:/data/options.json:ro
+      - config:/config
+      - ssl:/ssl
+      - share:/share
+      - media:/media
     healthcheck:
       test: ["CMD", "curl -fkLsS -m 2 127.0.0.1:8384/rest/noauth/health | grep -o --color=never OK || exit 1"]
       interval: 10s
       timeout: 10s
       retries: 3
+
+volumes:
+  config:
+  ssl:
+  share:
+  media:
