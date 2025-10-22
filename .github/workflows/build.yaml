@@ -39,6 +39,7 @@ defaults:
 jobs:
   deploy:
     name: 👷 Build ${{ github.event.inputs.addon }} ${{ matrix.arch }}
+    #runs-on: ubuntu-latest
     runs-on: ${{ contains(fromJson('["armhf", "armv7", "aarch64"]'), matrix.arch) && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
     strategy:
       matrix:
@@ -54,7 +55,7 @@ jobs:
 
       - name: 🚀 Get add-on information
         id: info
-        uses: frenck/action-addon-information@v1.4.2
+        uses: frenck/action-addon-information@v1
         with:
           path: "./${{ github.event.inputs.addon }}"
 
@@ -79,11 +80,15 @@ jobs:
 
       - name: 🏗 Set up QEMU
         if: steps.check.outputs.build_arch == 'true'
-        uses: docker/setup-qemu-action@v3.6.0
+        uses: docker/setup-qemu-action@v3
+
+      - name: 🏗 Set up Docker Compose
+        if: steps.check.outputs.build_arch == 'true' && steps.check.outputs.test == 'true'
+        uses: docker/setup-compose-action@v1
 
       - name: 🏗 Set up Docker Buildx
         if: steps.check.outputs.build_arch == 'true'
-        uses: docker/setup-buildx-action@v3.11.1
+        uses: docker/setup-buildx-action@v3
 
       - name: ℹ️ Compose build flags
         if: steps.check.outputs.build_arch == 'true'
@@ -119,7 +124,7 @@ jobs:
 
       - name: 🚀 Build
         if: steps.check.outputs.build_arch == 'true'
-        uses: docker/build-push-action@v6.18.0
+        uses: docker/build-push-action@v6
         with:
           load: true
           # yamllint disable rule:line-length
@@ -141,16 +146,12 @@ jobs:
             BUILD_REF=${{ github.sha }}
             BUILD_REPOSITORY=${{ github.repository }}
             BUILD_VERSION=${{ steps.info.outputs.version }}
-
-      - name: 🏗 Set up Docker Compose
-        if: steps.check.outputs.build_arch == 'true' && steps.check.outputs.test == 'true'
-        uses: docker/setup-compose-action@v1
       
       - name: Start Docker Compose services
         if: steps.check.outputs.build_arch == 'true' && steps.check.outputs.test == 'true'
         run: |
           cd "${{ steps.info.outputs.target }}/test"
-          docker compose up -d
+          docker compose up -d -f "docker-compose.${{ matrix.arch }}.yml"
       
       - name: 🩺 Healthcheck
         uses: jaracogmbh/docker-compose-health-check-action@v1.0.0
@@ -158,10 +159,10 @@ jobs:
         with:
           max-retries: 30
           retry-interval: 10
-          compose-file: "${{ steps.info.outputs.target }}/test/docker-compose.yml"
+          compose-file: "${{ steps.info.outputs.target }}/test/docker-compose.${{ matrix.arch }}.yml"
       
       - name: Stop Docker Compose services
         if: steps.check.outputs.build_arch == 'true' && steps.check.outputs.test == 'true'
         run: |
           cd "${{ steps.info.outputs.target }}/test"
-          docker compose down
+          docker compose down -f "docker-compose.${{ matrix.arch }}.yml"

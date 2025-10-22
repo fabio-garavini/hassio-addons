@@ -1,0 +1,13 @@
+services:
+  redis:
+    image: fabioogaravini/hassio-redis-stack:latest-aarch64
+    container_name: redis
+    restart: unless-stopped
+    volumes:
+      - ./data:/data
+      - ./config:/config
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 1s
+      timeout: 3s
+      retries: 30

@@ -1,6 +1,6 @@
 services:
   redis:
-    image: fabioogaravini/hassio-redis-stack:latest
+    image: fabioogaravini/hassio-redis-stack:latest-amd64
     container_name: redis
     restart: unless-stopped
     volumes:

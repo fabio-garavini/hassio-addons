@@ -1,6 +1,6 @@
 services:
   cloudflared:
-    image: fabioogaravini/hassio-cloudflared:latest
+    image: fabioogaravini/hassio-cloudflared:latest-amd64
     container_name: cloudflared
     restart: unless-stopped
     volumes:
