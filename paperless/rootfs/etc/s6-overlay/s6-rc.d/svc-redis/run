@@ -1,4 +1,4 @@
-#!/command/with-contenv bashio
+#!/command/with-contenv bash
 # shellcheck shell=bash
 
 # make redis folders
@@ -11,7 +11,7 @@ mkdir -p \
 [[ ! -f "$REDIS_DATADIR/redis.conf" ]] &&
 	cp /defaults/redis.conf "$REDIS_DATADIR/redis.conf"
 
-if bashio::config.has_value "clean_redis" && bashio::config.true "clean_redis"; then
+if jq -e '.clean_redis == true' $OPTIONS_SOURCE > /dev/null; then
 	rm -f "$REDIS_DATADIR/dump.rdd"
 fi
 

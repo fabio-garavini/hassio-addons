@@ -11,7 +11,7 @@ FROM apache/tika:${TIKA_VERSION}.0 AS tika
 FROM $BUILD_FROM
 
 ARG TIKA_VERSION=3.2.2
-ARG BUILD_ARCH
+ARG BUILD_ARCH=amd64
 
 ENV PAPERLESS_PORT=8080 \
     PAPERLESS_USE_X_FORWARD_HOST=true \
@@ -39,6 +39,9 @@ ENV \
     POSTGRES_DB="paperless" \
     POSTGRES_USER="paperless" \
     POSTGRES_PASSWORD="paperless"
+
+ENV SERVICE_PORT=8080 \
+    NGINX_PORT=8000
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 

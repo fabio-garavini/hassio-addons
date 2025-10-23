@@ -1,0 +1,9 @@
+{
+  "ssl": true,
+  "certfile": "fullchain.pem",
+  "keyfile": "privkey.pem",
+  "USERMAP_UID": 0,
+  "USERMAP_GID": 0,
+  "PAPERLESS_TIME_ZONE": "Etc/UTC",
+  "PAPERLESS_TRUSTED_PROXIES": "172.30.32.0/23"
+}

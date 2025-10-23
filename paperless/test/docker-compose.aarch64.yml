@@ -1,0 +1,29 @@
+name: paperless-aarch64
+services:
+  paperless-aarch64:
+    image: fabioogaravini/hassio-paperless:${VERSION:-latest}-aarch64
+    container_name: paperless-aarch64
+    ports:
+      - 8000:8000
+    environment:
+      - TZ=Etc/UTC
+    volumes:
+      - data:/data
+      - ./options.json:/data/options.json:ro
+      - config:/config
+      - ssl:/ssl
+      - share:/share
+      - media:/media
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fk https://127.0.0.1:8000 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  data:
+  config:
+  ssl:
+  share:
+  media:

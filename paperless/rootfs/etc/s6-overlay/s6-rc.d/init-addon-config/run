@@ -1,7 +1,7 @@
-#!/command/with-contenv /usr/bin/bash
-set -e
+#!/command/with-contenv bash
+# shellcheck shell=bash
 
-[[ -d "/config/logs" ]] && mv /config/logs /data/logs
+set -e
 
 echo "  Loading env variables:"
 
@@ -24,7 +24,7 @@ jq -r 'keys[]' "${OPTIONS_SOURCE}" | while read -r KEY; do
             ;;
     esac
 
-    export "$line"
+    export line
 
     # set .env
     echo "$line" >> /.env || true
