@@ -13,11 +13,16 @@ if [ -z "${POWER_TOOLS_ENDPOINT_URL:-}" ]; then
     ha_address=${ha_address%%/*}
   fi
 
-  if jq -e '.ssl == true' $OPTIONS_SOURCE > /dev/null; then
-    printf "%s" "https://${ha_address}:$(bashio::addon.port 8080)" > /var/run/s6/container_environment/POWER_TOOLS_ENDPOINT_URL
+  if jq -e '.ssl == true' "$OPTIONS_SOURCE" > /dev/null; then
+    scheme="https"
   else
-    printf "%s" "http://${ha_address}:$(bashio::addon.port 8080)" > /var/run/s6/container_environment/POWER_TOOLS_ENDPOINT_URL
+    scheme="http"
   fi
+
+  # Construct and write the endpoint URL
+  POWER_TOOLS_ENDPOINT_URL="${scheme}://${ha_address}:$(bashio::addon.port 8080)"
+  export POWER_TOOLS_ENDPOINT_URL="${scheme}://${ha_address}:$(bashio::addon.port 8080)"
+  printf '%s' "${scheme}://${ha_address}:$(bashio::addon.port 8080)" > /var/run/s6/container_environment/POWER_TOOLS_ENDPOINT_URL
 fi
 
 cd /app
