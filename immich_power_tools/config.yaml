@@ -1,5 +1,5 @@
 name: Immich Power Tools
-version: 0.18.0-v1
+version: 0.18.0-v2
 slug: immich_power_tools
 codenotary: info@fabiogaravini.dev
 description: A unofficial immich client to provide better tools to organize and manage your immich account
@@ -10,6 +10,11 @@ arch:
   - aarch64
   - amd64
 init: false
+map:
+  - type: data
+    read_only: false
+  - type: ssl
+    read_only: false
 schema:
   ssl: bool
   certfile: str?

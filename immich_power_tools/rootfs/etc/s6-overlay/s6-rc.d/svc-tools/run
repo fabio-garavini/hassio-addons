@@ -1,6 +1,24 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
+
 set -e
+
+OPTIONS_SOURCE=/data/options.json
+
+if [ -z "${POWER_TOOLS_ENDPOINT_URL:-}" ]; then
+  
+  if ! ha_address="$(bashio::network.ipv4_address 2>/dev/null)"; then
+    ha_address="homeassistant.local"
+  else
+    ha_address=${ha_address%%/*}
+  fi
+
+  if jq -e '.ssl == true' $OPTIONS_SOURCE > /dev/null; then
+    printf "%s" "https://${ha_address}:$(bashio::addon.port 8080)" > /var/run/s6/container_environment/POWER_TOOLS_ENDPOINT_URL
+  else
+    printf "%s" "http://${ha_address}:$(bashio::addon.port 8080)" > /var/run/s6/container_environment/POWER_TOOLS_ENDPOINT_URL
+  fi
+fi
 
 cd /app
 

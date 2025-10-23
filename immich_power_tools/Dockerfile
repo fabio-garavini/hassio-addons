@@ -1,6 +1,6 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/hassio-addons/base:stable
-ARG BUILD_VERSION=0.18.0-v1
+ARG BUILD_FROM=alpine:latest
+ARG BUILD_VERSION=0.18.0-v2
 
 FROM ghcr.io/varun-raj/immich-power-tools:${BUILD_VERSION%-v*} AS immich_power_tools
 
@@ -14,7 +14,9 @@ ENV \
   NEXT_TELEMETRY_DISABLED=1 \
   VERSION=${BUILD_VERSION%-v*} \
   HOSTNAME='0.0.0.0' \
-  PORT=80
+  PORT=80 \
+  SERVICE_PORT=80 \
+  NGINX_PORT=8080
 
 ENV \
   DB_USERNAME=immich \
@@ -22,6 +24,63 @@ ENV \
   DB_PORT=5432 \
   DB_DATABASE_NAME=immich \
   SECURE_COOKIE=true
+
+# Set shell
+SHELL ["/bin/ash", "-o", "pipefail", "-c"]
+
+# Install base system
+ARG BUILD_ARCH=amd64
+ARG BASHIO_VERSION="v0.17.5"
+ARG S6_OVERLAY_VERSION="3.2.1.0"
+ARG TEMPIO_VERSION="2024.11.2"
+RUN \
+    set -o pipefail \
+    \
+    && apk add --no-cache --virtual .build-dependencies \
+        tar \
+        xz \
+    \
+    && apk add --no-cache \
+        libcrypto3 \
+        libssl3 \
+        musl-utils \
+        musl \
+        bash \
+        curl \
+        jq \
+        tzdata \
+    \
+    && S6_ARCH="${BUILD_ARCH}" \
+    && if [ "${BUILD_ARCH}" = "i386" ]; then S6_ARCH="i686"; \
+    elif [ "${BUILD_ARCH}" = "amd64" ]; then S6_ARCH="x86_64"; \
+    elif [ "${BUILD_ARCH}" = "armv7" ]; then S6_ARCH="arm"; fi \
+    \
+    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz" \
+        | tar -C / -Jxpf - \
+    \
+    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-${S6_ARCH}.tar.xz" \
+        | tar -C / -Jxpf - \
+    \
+    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-symlinks-noarch.tar.xz" \
+        | tar -C / -Jxpf - \
+    \
+    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-symlinks-arch.tar.xz" \
+        | tar -C / -Jxpf - \
+    \
+    && curl -J -L -o /tmp/bashio.tar.gz "https://github.com/hassio-addons/bashio/archive/${BASHIO_VERSION}.tar.gz" \
+    && mkdir /tmp/bashio \
+    && tar zxvf \
+        /tmp/bashio.tar.gz \
+        --strip 1 -C /tmp/bashio \
+    \
+    && mv /tmp/bashio/lib /usr/lib/bashio \
+    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
+    \
+    && curl -L -s -o /usr/bin/tempio "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" \
+    && chmod a+x /usr/bin/tempio \
+    \
+    && apk del --no-cache --purge .build-dependencies \
+    && rm -f -r /tmp/*
 
 RUN \
     apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.18/main \
@@ -42,8 +101,10 @@ COPY --from=immich_power_tools /app /app
 
 COPY rootfs/ /
 
-ARG BUILD_ARCH \
-    BUILD_DATE \
+# Entrypoint & CMD
+ENTRYPOINT ["/init"]
+
+ARG BUILD_DATE \
     BUILD_DESCRIPTION \
     BUILD_NAME \
     BUILD_REF \
