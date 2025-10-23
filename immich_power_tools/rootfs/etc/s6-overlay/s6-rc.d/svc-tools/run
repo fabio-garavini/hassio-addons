@@ -19,7 +19,7 @@ if [ -z "${POWER_TOOLS_ENDPOINT_URL:-}" ]; then
     scheme="http"
   fi
 
-  if ! port=$(bashio::addon.port 8080); then
+  if ! port=$(bashio::addon.port 8080 2>/dev/null); then
     port=8080
   fi
 
