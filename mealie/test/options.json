@@ -1,0 +1,6 @@
+{
+  "TZ": "Etc/UTC",
+  "DEFAULT_GROUP": "Home",
+  "DEFAULT_HOUSEHOLD": "Family",
+  "ALLOW_SIGNUP": false
+}

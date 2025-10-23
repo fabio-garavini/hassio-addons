@@ -2,7 +2,7 @@ ARG BUILD_FROM=ghcr.io/mealie-recipes/mealie:v3.3.2
 
 FROM ${BUILD_FROM}
 
-ARG BUILD_ARCH
+ARG BUILD_ARCH=amd64
 
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
