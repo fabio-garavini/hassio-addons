@@ -3,8 +3,8 @@
 
 # Check for required arguments
 if [ $# -ne 2 ]; then
-    bashio::log.error "[selfsigned-ssl-gen.sh] missing: <certfile> <keyfile>"
-    exit 1
+  bashio::log.error "[selfsigned-ssl-gen.sh] missing: <certfile> <keyfile>"
+  exit 1
 fi
 
 certfile="$1"

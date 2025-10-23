@@ -42,7 +42,7 @@ printf '{
   "keyfile": "%s",
   "port": "%s",
   "protocol": "%s",
-  "ssl": "%s"
+  "ssl": %s
 }' "$certfile" "$keyfile" "$nginx_port" "$service_protocol" "$(jq -r '.ssl' $OPTIONS_SOURCE)" \
     | tempio \
         -template /etc/nginx/templates/direct.gtpl \
