@@ -1,0 +1,23 @@
+name: immich_frame-amd64
+services:
+  immich_frame-amd64:
+    image: fabioogaravini/hassio-immich-frame:latest-amd64
+    container_name: immich_frame-amd64
+    ports:
+      - 8089:8089
+    environment:
+      - TZ=Etc/UTC
+    volumes:
+      - data:/data
+      - ./options.json:/data/options.json:ro
+      - ssl:/ssl
+    healthcheck:
+      test: ["CMD-SHELL", "curl -kf http://localhost:8089 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  data:
+  ssl:

@@ -3,8 +3,8 @@
 
 # Check for required arguments
 if [ $# -ne 2 ]; then
-    bashio::log.error "[selfsigned-ssl-gen.sh] missing: <certfile> <keyfile>"
-    exit 1
+  bashio::log.error "[selfsigned-ssl-gen.sh] missing: <certfile> <keyfile>"
+  exit 1
 fi
 
 certfile="$1"
@@ -15,7 +15,9 @@ if [[ -d "/data/ssl" ]]; then
 fi
 
 mkdir -p /data/ssl
-hostname="$(bashio::info.hostname)"
+if ! hostname="$(bashio::info.hostname 2>/dev/null)"; then
+  hostname="homeassistant.local"
+fi
 tmp_openssl_cfg=$(mktemp)
 trap 'rm -f "$tmp_openssl_cfg"' EXIT
 

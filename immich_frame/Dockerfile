@@ -3,9 +3,10 @@ ARG BUILD_FROM=ghcr.io/immichframe/immichframe:v1.0.29.0
 
 FROM ${BUILD_FROM}
 
-ARG BUILD_VERSION=1.0.29.0
+ARG BUILD_VERSION=1.0.29.0-v2
 
-ENV PORT=8080
+ENV SERVICE_PORT=8080 \
+    NGINX_PORT=8089
 
 # hadolint ignore=DL3002
 USER root
