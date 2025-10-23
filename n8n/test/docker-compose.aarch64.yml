@@ -1,0 +1,29 @@
+name: n8n-aarch64
+services:
+  n8n-aarch64:
+    image: fabioogaravini/hassio-n8n:${VERSION:-latest}-aarch64
+    container_name: n8n-aarch64
+    ports:
+      - 5678:5678
+    environment:
+      - TZ=Etc/UTC
+    volumes:
+      - data:/data
+      - ./options.json:/data/options.json:ro
+      - config:/config
+      - ssl:/ssl
+      - share:/share
+      - media:/media
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sk https://127.0.0.1:5678/healthz | jq -e '.status == \"ok\"'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  data:
+  config:
+  ssl:
+  share:
+  media:

@@ -1,0 +1,56 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+
+set -e
+
+OPTIONS_SOURCE=/data/options.json
+
+if ! ha_address="$(bashio::network.ipv4_address 2>/dev/null)"; then
+    ha_address="homeassistant.local"
+else
+    ha_address=${ha_address%%/*}
+fi
+
+protocol="http"
+
+if ! port=$(bashio::addon.port 5678 2>/dev/null); then
+    port=5678
+fi
+
+certfile="/ssl/$(jq -r '.certfile' $OPTIONS_SOURCE)"
+keyfile="/ssl/$(jq -r '.keyfile' $OPTIONS_SOURCE)"
+
+if jq -e '.ssl == true' $OPTIONS_SOURCE > /dev/null; then
+    # Require certfile and keyfile
+    #bashio::config.require 'certfile'
+    #bashio::config.require 'keyfile'
+
+    protocol="https"
+
+    # If certfile or keyfile does not exist, generate self-signed cert
+    if [ ! -f "$certfile" ] || [ ! -f "$keyfile" ]; then
+        bashio::log.warning "SSL is enabled, but certfile or keyfile is missing. Using self-signed certificate..."
+
+        certfile="/data/ssl/fullchain.pem"
+        keyfile="/data/ssl/privkey.pem"
+
+        if [ ! -f "$certfile" ] || [ ! -f "$keyfile" ]; then
+            /usr/local/bin/selfsigned-ssl-gen.sh "$certfile" "$keyfile"
+        else
+            /usr/local/bin/check-ssl.sh "$certfile" "$keyfile"
+        fi
+    fi
+
+    printf "%s" "$keyfile" > /var/run/s6/container_environment/N8N_SSL_KEY
+    printf "%s" "$certfile" > /var/run/s6/container_environment/N8N_SSL_CERT
+
+    printf "%s" "$protocol" > /var/run/s6/container_environment/N8N_PROTOCOL
+fi
+
+if [ -z "${N8N_HOST:-}" ]; then
+    printf "%s" "$ha_address" > /var/run/s6/container_environment/N8N_HOST
+fi
+
+if [ -z "${WEBHOOK_URL:-}" ]; then
+    printf "%s" "${protocol}://${ha_address}:${port}" > /var/run/s6/container_environment/WEBHOOK_URL
+fi
