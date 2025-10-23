@@ -1,7 +1,7 @@
 name: cloudflared-aarch64
 services:
   cloudflared-aarch64:
-    image: fabioogaravini/hassio-cloudflared:latest-aarch64
+    image: fabioogaravini/hassio-cloudflared:${VERSION:-latest}-aarch64
     container_name: cloudflared-aarch64
     volumes:
       - data:/data

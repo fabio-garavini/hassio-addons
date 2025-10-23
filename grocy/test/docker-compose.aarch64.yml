@@ -1,7 +1,7 @@
 name: grocy-aarch64
 services:
   grocy-aarch64:
-    image: fabioogaravini/hassio-grocy:latest-aarch64
+    image: fabioogaravini/hassio-grocy:${VERSION:-latest}-aarch64
     container_name: grocy-aarch64
     ports:
       - 443:443

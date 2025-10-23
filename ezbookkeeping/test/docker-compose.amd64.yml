@@ -1,7 +1,7 @@
 name: ezbookkeeping-amd64
 services:
   ezbookkeeping-amd64:
-    image: fabioogaravini/hassio-ezbookkeeping:latest-amd64
+    image: fabioogaravini/hassio-ezbookkeeping:${VERSION:-latest}-amd64
     container_name: ezbookkeeping-amd64
     ports:
       - 8080:8080

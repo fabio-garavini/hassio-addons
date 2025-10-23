@@ -1,7 +1,7 @@
 name: grimoire-aarch64
 services:
   grimoire-aarch64:
-    image: fabioogaravini/hassio-grimoire:latest-aarch64
+    image: fabioogaravini/hassio-grimoire:${VERSION:-latest}-aarch64
     container_name: grimoire-aarch64
     ports:
       - 5173:5173

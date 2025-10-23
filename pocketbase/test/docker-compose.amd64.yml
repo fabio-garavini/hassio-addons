@@ -1,7 +1,7 @@
 name: pocketbase-amd64
 services:
   pocketbase-amd64:
-    image: fabioogaravini/hassio-pocketbase:latest-amd64
+    image: fabioogaravini/hassio-pocketbase:${VERSION:-latest}-amd64
     container_name: pocketbase-amd64
     ports:
       - 8090:8090

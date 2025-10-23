@@ -1,7 +1,7 @@
 name: pocketbase-armv7
 services:
   pocketbase-armv7:
-    image: fabioogaravini/hassio-pocketbase:latest-armv7
+    image: fabioogaravini/hassio-pocketbase:${VERSION:-latest}-armv7
     container_name: pocketbase-armv7
     ports:
       - 8090:8090

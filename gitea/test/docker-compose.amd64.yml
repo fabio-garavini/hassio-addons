@@ -1,7 +1,7 @@
 name: gitea-amd64
 services:
   gitea-amd64:
-    image: fabioogaravini/hassio-gitea:latest-amd64
+    image: fabioogaravini/hassio-gitea:${VERSION:-latest}-amd64
     container_name: gitea-amd64
     ports:
       - 3000:3000

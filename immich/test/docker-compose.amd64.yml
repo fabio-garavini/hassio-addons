@@ -1,7 +1,7 @@
 name: immich-amd64
 services:
   immich-amd64:
-    image: fabioogaravini/hassio-immich:latest-amd64
+    image: fabioogaravini/hassio-immich:${VERSION:-latest}-amd64
     container_name: immich-amd64
     ports:
       - 8080:8080

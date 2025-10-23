@@ -1,7 +1,7 @@
 name: postgres_16-amd64
 services:
   postgres_16-amd64:
-    image: fabioogaravini/hassio-postgres-16-pgvectors:latest-amd64
+    image: fabioogaravini/hassio-postgres-16-pgvectors:${VERSION:-latest}-amd64
     container_name: postgres_16-amd64
     environment:
       - TZ=Etc/UTC

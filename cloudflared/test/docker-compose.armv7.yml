@@ -1,7 +1,7 @@
 name: cloudflared-armv7
 services:
   cloudflared-armv7:
-    image: fabioogaravini/hassio-cloudflared:latest-armv7
+    image: fabioogaravini/hassio-cloudflared:${VERSION:-latest}-armv7
     container_name: cloudflared-armv7
     volumes:
       - data:/data

@@ -1,7 +1,7 @@
 name: jellyfin-aarch64
 services:
   jellyfin-aarch64:
-    image: fabioogaravini/hassio-jellyfin:latest-aarch64
+    image: fabioogaravini/hassio-jellyfin:${VERSION:-latest}-aarch64
     container_name: jellyfin-aarch64
     ports:
       - "8080:8096"

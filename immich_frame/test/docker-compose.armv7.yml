@@ -1,7 +1,7 @@
 name: immich_frame-armv7
 services:
   immich_frame-armv7:
-    image: fabioogaravini/hassio-immich-frame:latest-armv7
+    image: fabioogaravini/hassio-immich-frame:${VERSION:-latest}-armv7
     container_name: immich_frame-armv7
     ports:
       - 8089:8089

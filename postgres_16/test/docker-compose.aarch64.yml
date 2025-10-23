@@ -1,7 +1,7 @@
 name: postgres_16-aarch64
 services:
   postgres_16-aarch64:
-    image: fabioogaravini/hassio-postgres-16-pgvectors:latest-aarch64
+    image: fabioogaravini/hassio-postgres-16-pgvectors:${VERSION:-latest}-aarch64
     container_name: postgres_16-aarch64
     environment:
       - TZ=Etc/UTC

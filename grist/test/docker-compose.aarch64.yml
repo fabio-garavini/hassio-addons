@@ -1,7 +1,7 @@
 name: grist-aarch64
 services:
   grist-aarch64:
-    image: fabioogaravini/hassio-grist:latest-aarch64
+    image: fabioogaravini/hassio-grist:${VERSION:-latest}-aarch64
     container_name: grist-aarch64
     ports:
       - 8080:8080

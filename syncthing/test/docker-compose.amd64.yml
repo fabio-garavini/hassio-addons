@@ -1,7 +1,7 @@
 name: syncthing-amd64
 services:
   syncthing-amd64:
-    image: fabioogaravini/hassio-syncthing:latest-amd64
+    image: fabioogaravini/hassio-syncthing:${VERSION:-latest}-amd64
     container_name: syncthing-amd64
     ports:
       - "8384:8384"

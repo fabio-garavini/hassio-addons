@@ -1,7 +1,7 @@
 name: grimoire-amd64
 services:
   grimoire-amd64:
-    image: fabioogaravini/hassio-grimoire:latest-amd64
+    image: fabioogaravini/hassio-grimoire:${VERSION:-latest}-amd64
     container_name: grimoire-amd64
     ports:
       - 5173:5173

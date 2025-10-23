@@ -1,7 +1,7 @@
 name: gitea-aarch64
 services:
   gitea-aarch64:
-    image: fabioogaravini/hassio-gitea:latest-aarch64
+    image: fabioogaravini/hassio-gitea:${VERSION:-latest}-aarch64
     container_name: gitea-aarch64
     ports:
       - 3000:3000

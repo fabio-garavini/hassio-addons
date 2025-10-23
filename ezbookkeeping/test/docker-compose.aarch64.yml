@@ -1,7 +1,7 @@
 name: ezbookkeeping-aarch64
 services:
   ezbookkeeping-aarch64:
-    image: fabioogaravini/hassio-ezbookkeeping:latest-aarch64
+    image: fabioogaravini/hassio-ezbookkeeping:${VERSION:-latest}-aarch64
     container_name: ezbookkeeping-aarch64
     ports:
       - 8080:8080

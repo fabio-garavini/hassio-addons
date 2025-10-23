@@ -1,7 +1,7 @@
 name: immich-aarch64
 services:
   immich-aarch64:
-    image: fabioogaravini/hassio-immich:latest-aarch64
+    image: fabioogaravini/hassio-immich:${VERSION:-latest}-aarch64
     container_name: immich-aarch64
     ports:
       - 8080:8080

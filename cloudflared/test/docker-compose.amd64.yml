@@ -1,7 +1,7 @@
 name: cloudflared-amd64
 services:
   cloudflared-amd64:
-    image: fabioogaravini/hassio-cloudflared:latest-amd64
+    image: fabioogaravini/hassio-cloudflared:${VERSION:-latest}-amd64
     container_name: cloudflared-amd64
     volumes:
       - data:/data

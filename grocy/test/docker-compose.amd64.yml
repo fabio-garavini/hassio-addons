@@ -1,7 +1,7 @@
 name: grocy-amd64
 services:
   grocy-amd64:
-    image: fabioogaravini/hassio-grocy:latest-amd64
+    image: fabioogaravini/hassio-grocy:${VERSION:-latest}-amd64
     container_name: grocy-amd64
     ports:
       - 443:443

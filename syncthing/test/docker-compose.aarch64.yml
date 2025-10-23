@@ -1,7 +1,7 @@
 name: syncthing-aarch64
 services:
   syncthing-aarch64:
-    image: fabioogaravini/hassio-syncthing:latest-aarch64
+    image: fabioogaravini/hassio-syncthing:${VERSION:-latest}-aarch64
     container_name: syncthing-aarch64
     ports:
       - "8384:8384"

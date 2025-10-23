@@ -1,7 +1,7 @@
 name: pocketbase-aarch64
 services:
   pocketbase-aarch64:
-    image: fabioogaravini/hassio-pocketbase:latest-aarch64
+    image: fabioogaravini/hassio-pocketbase:${VERSION:-latest}-aarch64
     container_name: pocketbase-aarch64
     ports:
       - 8090:8090

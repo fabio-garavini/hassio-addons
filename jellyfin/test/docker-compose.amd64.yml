@@ -1,7 +1,7 @@
 name: jellyfin-amd64
 services:
   jellyfin-amd64:
-    image: fabioogaravini/hassio-jellyfin:latest-amd64
+    image: fabioogaravini/hassio-jellyfin:${VERSION:-latest}-amd64
     container_name: jellyfin-amd64
     ports:
       - "8080:8096"

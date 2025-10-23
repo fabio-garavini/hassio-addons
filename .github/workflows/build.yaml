@@ -115,10 +115,13 @@ jobs:
           # Set tag suffix based on branch
           if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
             echo "tag_suffix=latest" >> "$GITHUB_OUTPUT"
+            echo "VERSION=latest" >> $GITHUB_ENV
           elif [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
             echo "tag_suffix=dev" >> "$GITHUB_OUTPUT"
+            echo "VERSION=dev" >> $GITHUB_ENV
           else
             echo "tag_suffix=test" >> "$GITHUB_OUTPUT"
+            echo "VERSION=test" >> $GITHUB_ENV
           fi
 
       - name: 🚀 Build
