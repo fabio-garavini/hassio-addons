@@ -19,10 +19,14 @@ if [ -z "${POWER_TOOLS_ENDPOINT_URL:-}" ]; then
     scheme="http"
   fi
 
+  if ! port=$(bashio::addon.port 8080); then
+    port=8080
+  fi
+
   # Construct and write the endpoint URL
-  POWER_TOOLS_ENDPOINT_URL="${scheme}://${ha_address}:$(bashio::addon.port 8080)"
-  export POWER_TOOLS_ENDPOINT_URL="${scheme}://${ha_address}:$(bashio::addon.port 8080)"
-  printf '%s' "${scheme}://${ha_address}:$(bashio::addon.port 8080)" > /var/run/s6/container_environment/POWER_TOOLS_ENDPOINT_URL
+  POWER_TOOLS_ENDPOINT_URL="${scheme}://${ha_address}:${port}"
+  export POWER_TOOLS_ENDPOINT_URL="${scheme}://${ha_address}:${port}"
+  printf '%s' "${scheme}://${ha_address}:${port}" > /var/run/s6/container_environment/POWER_TOOLS_ENDPOINT_URL
 fi
 
 cd /app
