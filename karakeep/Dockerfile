@@ -5,8 +5,6 @@ FROM getmeili/meilisearch:v1.13.3 AS meilisearch
 
 FROM ${BUILD_FROM}
 
-ARG BUILD_ARCH=amd64
-
 # Environment variables
 ENV \
     HOME="/root" \
@@ -29,15 +27,23 @@ ENV \
     MEILI_SERVER_PROVIDER=docker \
     MEILI_ENV=production
 
+ENV \
+    SERVICE_PORT=3000 \
+    NGINX_PORT=8080
+
+# Set shell
+SHELL ["/bin/ash", "-o", "pipefail", "-c"]
+
+# Install base system
+ARG BUILD_ARCH=amd64
 # renovate: datasource=github-releases packageName=hassio-addons/bashio
 ARG BASHIO_VERSION="v0.17.5"
 # renovate: datasource=github-releases packageName=home-assistant/tempio
 ARG TEMPIO_VERSION="2024.11.2"
 RUN \
-    apk add --no-cache \
-        bind-tools \
-        ca-certificates \
-        libstdc++ \
+    set -o pipefail \
+    \
+    && apk add --no-cache \
         libcrypto3 \
         libssl3 \
         musl-utils \
@@ -46,22 +52,25 @@ RUN \
         curl \
         jq \
         tzdata \
-        nginx \
         openssl \
-        xz \
-        tar; \
     \
-    curl -J -L -o /tmp/bashio.tar.gz "https://github.com/hassio-addons/bashio/archive/${BASHIO_VERSION}.tar.gz"; \
-    mkdir /tmp/bashio; \
-    tar zxvf /tmp/bashio.tar.gz --strip 1 -C /tmp/bashio; \
-    mv /tmp/bashio/lib /usr/lib/bashio; \
-    ln -s /usr/lib/bashio/bashio /usr/bin/bashio; \
-    curl -L -s -o /usr/bin/tempio "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}"; \
-    chmod a+x /usr/bin/tempio; \
-    rm -f -r /tmp/* /etc/nginx
+    && curl -J -L -o /tmp/bashio.tar.gz "https://github.com/hassio-addons/bashio/archive/${BASHIO_VERSION}.tar.gz" \
+    && mkdir /tmp/bashio \
+    && tar zxvf \
+        /tmp/bashio.tar.gz \
+        --strip 1 -C /tmp/bashio \
+    \
+    && mv /tmp/bashio/lib /usr/lib/bashio \
+    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
+    \
+    && curl -L -s -o /usr/bin/tempio "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" \
+    && chmod a+x /usr/bin/tempio \
+    \
+    && rm -f -r /tmp/*
 
-# Set shell
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+RUN \
+    apk add --no-cache bash openssl nginx \
+    && rm -rf /etc/nginx
 
 # Installs latest Chromium package.
 RUN apk upgrade --no-cache --available \

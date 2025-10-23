@@ -1,0 +1,14 @@
+{
+  "TZ": "Etc/UTC",
+  "ssl": true,
+  "certfile": "fullchain.pem",
+  "keyfile": "privkey.pem",
+  "DISABLE_SIGNUPS": false,
+  "NEXTAUTH_SECRET": "jnE2An0WyIKZvO+WgKJrn8WPW+c3DzV+c9ntBp8CdobTOmpJ",
+  "MAX_ASSET_SIZE_MB": 4,
+  "CRAWLER_DOWNLOAD_BANNER_IMAGE": true,
+  "CRAWLER_STORE_SCREENSHOT": false,
+  "CRAWLER_FULL_PAGE_SCREENSHOT": false,
+  "CRAWLER_FULL_PAGE_ARCHIVE": false,
+  "CRAWLER_ENABLE_ADBLOCKER": true
+}
