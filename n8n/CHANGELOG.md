@@ -1,8 +1,7 @@
-## [1.115.3](https://github.com/n8n-io/n8n/compare/n8n@1.115.2...n8n@1.115.3) (2025-10-14)
+## [1.116.2](https://github.com/n8n-io/n8n/compare/n8n@1.116.1...n8n@1.116.2) (2025-10-21)
 
 
 ### Bug Fixes
 
-* **core:** Block introspection attributes unconditionally ([#20641](https://github.com/n8n-io/n8n/issues/20641)) ([9483ed7](https://github.com/n8n-io/n8n/commit/9483ed77a8d0095cc783d9e5c1a05ea741c1b7dc))
-* **core:** Fix normalization in per-item mode in native Python runner ([#20750](https://github.com/n8n-io/n8n/issues/20750)) ([2dde19d](https://github.com/n8n-io/n8n/commit/2dde19d6d291a87b7c1adf5a3e382ba4e4af1d23))
-* **core:** Prevent subscript access to blocked attributes ([#20710](https://github.com/n8n-io/n8n/issues/20710)) ([b2bc38d](https://github.com/n8n-io/n8n/commit/b2bc38dac8220f5e87d056109a0a41b018568fb3))
+* **ai-builder:** AI builder memory consumption issue ([#20982](https://github.com/n8n-io/n8n/issues/20982)) ([18e66ed](https://github.com/n8n-io/n8n/commit/18e66edef9047f386ee9f22e5cb7b79aef76744a))
+* **editor:** Use existing workflowState when setting node execution issues ([#20777](https://github.com/n8n-io/n8n/issues/20777)) ([0875400](https://github.com/n8n-io/n8n/commit/08754007a23f6479a1ba92212a7448d8455e52ee))
