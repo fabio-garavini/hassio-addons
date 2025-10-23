@@ -1,0 +1,27 @@
+name: memos-aarch64
+services:
+  memos-aarch64:
+    image: fabioogaravini/hassio-memos:${VERSION:-latest}-aarch64
+    container_name: memos-aarch64
+    ports:
+      - 5230:5230
+    environment:
+      - TZ=Etc/UTC
+    volumes:
+      - data:/data
+      - ./options.json:/data/options.json:ro
+      - config:/config
+      - ssl:/ssl
+      - share:/share
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fk https://127.0.0.1:5230 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  data:
+  config:
+  ssl:
+  share:
