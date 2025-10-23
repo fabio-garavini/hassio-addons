@@ -39,11 +39,6 @@ ENV MARIADB_DATADIR="/config/mariadb" \
 # copy local files
 COPY rootfs/ /
 
-# ports and volumes
-EXPOSE 80 443
-
-VOLUME /config /data /share /media /ssl
-
 ARG BUILD_ARCH \
     BUILD_VERSION \
     BUILD_DATE \
