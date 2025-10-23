@@ -23,7 +23,7 @@ if jq -e '.ssl == true' $OPTIONS_SOURCE > /dev/null; then
     #bashio::config.require 'keyfile'
 
     # If certfile or keyfile does not exist, generate self-signed cert
-    if [ ! -f "$certfile" ] || [ ! -f "$keyfile"]; then
+    if [ ! -f "$certfile" ] || [ ! -f "$keyfile" ]; then
         bashio::log.warning "SSL is enabled, but certfile or keyfile is missing. Using self-signed certificate..."
 
         certfile="/data/ssl/fullchain.pem"

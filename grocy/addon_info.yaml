@@ -5,7 +5,7 @@ source:
   version_template: regex:^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)-ls(?<build>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
-  patch: 4
+  patch: 5
   image: fabioogaravini/hassio-grocy
 build:
   image: linuxserver/grocy
