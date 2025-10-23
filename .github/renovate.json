@@ -1,19 +1,19 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base"],
-  "baseBranches": ["main"],
+  "extends": ["config:recommended"],
+  "baseBranchPatterns": ["main"],
   "rebaseWhen": "behind-base-branch",
   "dependencyDashboard": false,
   "commitMessagePrefix": "⬆️",
   "commitMessageTopic": "{{depName}}",
   "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
-  "enabledManagers": ["regex", "github-actions"],
+  "enabledManagers": ["custom.regex", "github-actions"],
   "prHourlyLimit": 0,
   "customManagers": [
     {
       "customType": "regex",
       "description": "Update Add-on versions",
-      "managerFilePatterns": ["^[\\w.-]+/addon_info\\.yaml$"],
+      "managerFilePatterns": ["/(^|/)addon_info\\.ya?ml$/"],
       "matchStrings": [
         "source:\\s*type:\\s(?<datasource>.*?)\\s*(repo|image):\\s(?<depName>.*?)\\s*current_version:\\s(?<currentValue>.*?)(?:\\s*version_template:\\s[\"']?(?<versioning>.*?)[\"']?)?\\s"
       ],
@@ -40,7 +40,13 @@
           "/usr/local/sbin/install-tool npm latest",
           "node .github/scripts/addon-update.js {{packageFileDir}}"
         ],
-        "fileFilters": ["*/config.yaml", "*/build.yaml", "*/CHANGELOG.md", "*/addon_info.yaml", "*/Dockerfile"],
+        "fileFilters": [
+          "*/config.yaml",
+          "*/build.yaml",
+          "*/CHANGELOG.md",
+          "*/addon_info.yaml",
+          "*/Dockerfile"
+        ],
         "executionMode": "branch"
       }
     }
