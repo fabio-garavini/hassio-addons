@@ -3,32 +3,33 @@
 
 set -e
 
-declare service_port=80
-declare service_protocol=http
-declare nginx_port=8080
-declare certfile="/ssl/$(bashio::config 'certfile')"
-declare keyfile="/ssl/$(bashio::config 'keyfile')"
+OPTIONS_SOURCE=/data/options.json
+
+service_port=${SERVICE_PORT:-80}
+service_protocol=${SERVICE_PROTOCOL:-http}
+nginx_port=${NGINX_PORT:-8080}
+certfile="/ssl/$(jq -r '.certfile' $OPTIONS_SOURCE)"
+keyfile="/ssl/$(jq -r '.keyfile' $OPTIONS_SOURCE)"
 
 # Generate upstream configuration
-bashio::var.json \
-    port "^${service_port}" \
+printf '{ "port": "%s" }' "$service_port" \
     | tempio \
         -template /etc/nginx/templates/upstream.gtpl \
         -out /etc/nginx/includes/upstream.conf
 
-if bashio::config.true 'ssl'; then
+if jq -e '.ssl == true' $OPTIONS_SOURCE > /dev/null; then
     # Require certfile and keyfile
     #bashio::config.require 'certfile'
     #bashio::config.require 'keyfile'
 
     # If certfile or keyfile does not exist, generate self-signed cert
-    if ! bashio::fs.file_exists "$certfile" || ! bashio::fs.file_exists "$keyfile"; then
+    if [ ! -f "$certfile" ] || [ ! -f "$keyfile" ]; then
         bashio::log.warning "SSL is enabled, but certfile or keyfile is missing. Using self-signed certificate..."
 
         certfile="/data/ssl/fullchain.pem"
         keyfile="/data/ssl/privkey.pem"
 
-        if ! bashio::fs.file_exists "$certfile" || ! bashio::fs.file_exists "$keyfile"; then
+        if [ ! -f "$certfile" ] || [ ! -f "$keyfile" ]; then
             /usr/local/bin/selfsigned-ssl-gen.sh "$certfile" "$keyfile"
         else
             /usr/local/bin/check-ssl.sh "$certfile" "$keyfile"
@@ -36,12 +37,13 @@ if bashio::config.true 'ssl'; then
     fi
 fi
 
-bashio::var.json \
-    certfile "$certfile" \
-    keyfile "$keyfile" \
-    port "$nginx_port" \
-    protocol "$service_protocol" \
-    ssl "^$(bashio::config 'ssl')" \
+printf '{
+  "certfile": "%s",
+  "keyfile": "%s",
+  "port": "%s",
+  "protocol": "%s",
+  "ssl": %s
+}' "$certfile" "$keyfile" "$nginx_port" "$service_protocol" "$(jq -r '.ssl' $OPTIONS_SOURCE)" \
     | tempio \
         -template /etc/nginx/templates/direct.gtpl \
         -out /etc/nginx/servers/direct.conf

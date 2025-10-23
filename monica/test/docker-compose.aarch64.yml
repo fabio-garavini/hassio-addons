@@ -1,0 +1,25 @@
+name: monica-aarch64
+services:
+  monica-aarch64:
+    image: fabioogaravini/hassio-monica:${VERSION:-latest}-aarch64
+    container_name: monica-aarch64
+    ports:
+      - 80:80
+    environment:
+      - TZ=Etc/UTC
+    volumes:
+      - data:/data
+      - ./options.json:/data/options.json:ro
+      - config:/var/www/html/storage
+      - ssl:/ssl
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fk http://127.0.0.1:80 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  data:
+  config:
+  ssl:

@@ -1,3 +1,4 @@
+# check=skip=SecretsUsedInArgOrEnv
 ARG BUILD_FROM=library/monica:5.0-apache
 
 FROM $BUILD_FROM
