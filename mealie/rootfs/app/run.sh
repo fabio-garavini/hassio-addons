@@ -51,7 +51,4 @@ cd /app
 # Activate our virtual environment here
 . /opt/mealie/bin/activate
 
-# Start API
-HOST_IP=`/sbin/ip route|awk '/default/ { print $3 }'`
-
 exec mealie

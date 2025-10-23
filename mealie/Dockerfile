@@ -7,11 +7,10 @@ ARG BUILD_ARCH=amd64
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
     jq \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 COPY rootfs/ /
-
-EXPOSE 9000
 
 ARG BUILD_VERSION \
     BUILD_DATE \
