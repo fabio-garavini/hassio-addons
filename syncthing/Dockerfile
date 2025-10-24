@@ -2,6 +2,8 @@ ARG BUILD_FROM=ghcr.io/linuxserver/syncthing:v2.0.10-ls199
 
 FROM ${BUILD_FROM}
 
+COPY .common/addon-config /
+
 COPY rootfs/ /
 
 ARG BUILD_VERSION \
