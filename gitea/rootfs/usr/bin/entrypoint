@@ -5,20 +5,28 @@ echo "  Loading env variables:"
 
 OPTIONS_SOURCE=/data/options.json
 
-jq -r 'keys[]' "${OPTIONS_SOURCE}" | while read -r KEY; do
-    # export key
-    value=$(jq -r --arg key "$KEY" '.[$key]' "${OPTIONS_SOURCE}")
+jq -r '
+    reduce to_entries[] as $item (
+        {};
+        if $item.value | type == "object" then
+        . + $item.value
+        else
+        . + { ($item.key): $item.value }
+        end
+    )
+    | to_entries[]
+    | "\(.key)\u0000\(.value|tostring)"
+    ' $OPTIONS_SOURCE | while read -r -d $'\0' key && read -r value; do
 
-    # Continue for single values
-    line="${KEY}=${value}"
+    line="$key=$value"
 
     # log redacted config
-    case "$KEY" in
-        *PASS*|*SECRET*|*KEY*)
-            echo "    ${KEY}=******"
+    case "$key" in
+        *PASS*|*SECRET*|*KEY*|*TOKEN*)
+            echo "  $key=******"
             ;;
         *)
-            echo "    $line"
+            echo "  $line"
             ;;
     esac
 
@@ -32,17 +40,22 @@ jq -r 'keys[]' "${OPTIONS_SOURCE}" | while read -r KEY; do
 
     # For s6
     if [ -d /var/run/s6/container_environment ]; then
-        printf "%s" "$value" > /var/run/s6/container_environment/"${KEY}"
+        printf "%s" "$value" > /var/run/s6/container_environment/"$key"
     fi
+
     echo "export $line" >> ~/.bashrc
 done
 
 if [ -n "$TZ" ] && [ -f /etc/localtime ]; then
     if [ -f /usr/share/zoneinfo/"$TZ" ]; then
-        echo "Timezone set from $(cat /etc/timezone) to $TZ"
+        echo "Timezone set to $TZ"
         ln -snf /usr/share/zoneinfo/"$TZ" /etc/localtime
         echo "$TZ" >/etc/timezone
     fi
+fi
+
+if [ -f "/data/gitea.db" ]; then
+    mv "/data/gitea.db" "/config/gitea.db"
 fi
 
 if [ "${USER}" != "git" ]; then
