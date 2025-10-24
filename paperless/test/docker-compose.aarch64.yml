@@ -15,7 +15,7 @@ services:
       - share:/share
       - media:/media
     healthcheck:
-      test: ["CMD-SHELL", "curl -fk https://127.0.0.1:8000 || exit 1"]
+      test: ["CMD-SHELL", "curl -fk https://127.0.0.1:8080 || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
