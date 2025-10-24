@@ -46,6 +46,7 @@ function detect_unclean_start() {
 
 trap "sigterm_handler; exit" TERM
 
+# shellcheck disable=SC1091
 source /RELEASE
 echo "Current version: $RELEASE_PACKAGE=$RELEASE_VERSION"
 echo ""
@@ -57,13 +58,6 @@ sleep 3s
 set +e
 
 update-permissions
-
-#! Remove it in next release
-if [[ ! -e /var/opt/gitlab/gitlab.rb.bkp ]]; then
-  mv /var/opt/gitlab/gitlab.rb /var/opt/gitlab/gitlab.rb.bkp
-	cp /opt/gitlab/etc/gitlab.rb.template /var/opt/gitlab/gitlab.rb
-	chmod 0600 /var/opt/gitlab/gitlab.rb
-fi
 
 set -e
 

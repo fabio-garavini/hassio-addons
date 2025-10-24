@@ -9,7 +9,7 @@
 1. Click the "Open web UI" button.
 1. Log-in with default admin credentials
   - user: `root`
-  - password: `changeme`
+  - password: `change_this_insecure_password`
 1. Ready to go!
 
 ## Advanced Configuration

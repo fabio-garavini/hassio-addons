@@ -2,7 +2,9 @@
 
 set -e
 
+# shellcheck disable=SC1091
 source /etc/lsb-release
+# shellcheck disable=SC1091
 source /RELEASE
 
 # Create sshd daemon
@@ -36,7 +38,7 @@ groupadd -g 991 gitlab-consul
 groupadd -g 990 gitlab-backup
 
 # Create accounts
-## The git account is created with * as crypted password as ssh treats the account as locked if it has a ! 
+## The git account is created with * as crypted password as ssh treats the account as locked if it has a !
 ## Issue #5891 https://gitlab.com/gitlab-org/omnibus-gitlab
 useradd -m -u 998 -g git -p '*' -m -s /bin/sh -d /var/opt/gitlab git
 useradd -m -u 999 -g gitlab-www -m -s /bin/false -d /var/opt/gitlab/nginx gitlab-www

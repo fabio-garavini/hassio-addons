@@ -16,6 +16,7 @@ RUN apt-get update -q \
       locales \
       openssh-server \
       tzdata \
+      tzdata-legacy \
       wget \
       perl \
       libperl5.38 \
@@ -42,19 +43,17 @@ RUN busybox --install \
 # Legacy code to be removed on 17.0.  See: https://gitlab.com/gitlab-org/omnibus-gitlab/-/merge_requests/7035
 ENV GITLAB_ALLOW_SHA1_RSA=false
 
-ARG TARGETARCH
-
-ARG BUILD_VERSION
+ARG BUILD_VERSION=18.2.8-ce.0
 ARG GITLAB_VERSION=${BUILD_VERSION%-v*}
-ARG BUILD_ARCH
+ARG BUILD_ARCH=amd64
 
 RUN { \
     echo "RELEASE_PACKAGE=gitlab-ce"; \
     echo "RELEASE_VERSION=${GITLAB_VERSION}"; \
 } > /RELEASE
 
-RUN set -eux \
-    export GITLAB_ROOT_PASSWORD=qo98w7eoyq987y0o98q7y498q7y498; \
+RUN \
+    set -e; \
     if [[ "${BUILD_ARCH}" == "aarch64" ]]; then \
         export DOWNLOAD_ARCH="arm64"; \
     else \

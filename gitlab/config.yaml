@@ -1,5 +1,5 @@
 name: Gitlab
-version: 17.11.7-ce.0
+version: 18.2.8-ce.0
 slug: gitlab
 codenotary: info@fabiogaravini.dev
 description: Gitlab Comunity Edition
