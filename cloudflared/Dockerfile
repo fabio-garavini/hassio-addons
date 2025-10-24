@@ -2,6 +2,17 @@ ARG BUILD_FROM=alpine:latest
 
 FROM ${BUILD_FROM}
 
+# Generic Addon variables
+ENV \
+    TERM="xterm-256color" \
+    HOME="/root" \
+    LANG="C.UTF-8" \
+    PS1="$(whoami)@$(hostname):$(pwd)$ " \
+    S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
+    S6_CMD_WAIT_FOR_SERVICES=1 \
+    S6_SERVICES_READYTIME=50
+
 RUN apk add --no-cache bash
 
 # Shell
