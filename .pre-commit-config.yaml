@@ -13,3 +13,11 @@ repos:
     hooks:
       - id: yamllint
         args: ["-c", ".github/yamllint.yaml"]
+  - repo: local
+    hooks:
+      - id: fix-config-image
+        name: Ensure config.yaml has image key
+        entry: .git-hooks/fix-config-image.sh
+        language: system
+        files: (^|/)config\.yaml$
+        stages: [commit]
