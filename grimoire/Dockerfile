@@ -80,6 +80,9 @@ RUN \
 	apt-get install -y --no-install-recommends nginx; \
     rm -rf /etc/nginx
 
+COPY .common/addon-config /
+COPY .common/nginx /
+
 COPY rootfs/ /
 
 ENTRYPOINT ["/init"]
