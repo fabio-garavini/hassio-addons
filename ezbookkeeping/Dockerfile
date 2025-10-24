@@ -91,6 +91,9 @@ RUN \
     && apk del --no-cache --purge .build-dependencies \
     && rm -rf /tmp/*
 
+COPY .common/addon-config /
+COPY .common/nginx /
+
 COPY rootfs/ /
 
 ENTRYPOINT ["/init"]
