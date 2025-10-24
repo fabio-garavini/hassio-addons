@@ -7,7 +7,7 @@ RUN apk add --no-cache bash
 # Shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Install S6 Overlay
+# Addon base configuration
 ARG BUILD_ARCH=amd64
 # renovate: datasource=github-releases packageName=just-containers/s6-overlay
 ARG S6_OVERLAY_VERSION="3.2.1.0"
@@ -38,16 +38,17 @@ RUN \
     && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-symlinks-arch.tar.xz" \
         | tar -C / -Jxpf - \
     \
-    && rm -f -r /tmp/*
+    && rm -rf /tmp/*
 
-ARG BUILD_VERSION=2025.10.0-v3
+ARG BUILD_VERSION=2025.10.0-v4
 
-RUN case "$BUILD_ARCH" in \
+RUN \
+    case "$BUILD_ARCH" in \
       aarch64) REMOTE_ARCH="arm64" ;; \
       armv7)   REMOTE_ARCH="arm" ;; \
       amd64)   REMOTE_ARCH="amd64" ;; \
       *) echo "Unsupported architecture: $BUILD_ARCH" >&2; exit 1 ;; \
-    esac && \
+    esac; \
     curl -fSL "https://github.com/cloudflare/cloudflared/releases/download/${BUILD_VERSION%-v*}/cloudflared-linux-${REMOTE_ARCH}" -o /usr/bin/cloudflared; \
     chmod +x /usr/bin/cloudflared; \
     cloudflared -v
