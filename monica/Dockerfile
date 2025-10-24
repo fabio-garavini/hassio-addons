@@ -3,7 +3,17 @@ ARG BUILD_FROM=library/monica:5.0-apache
 
 FROM $BUILD_FROM
 
-ARG BUILD_ARCH=amd64
+# Container Environment variables
+ENV \
+    DEBIAN_FRONTEND="noninteractive" \
+    TERM="xterm-256color" \
+    HOME="/root" \
+    LANG="C.UTF-8" \
+    PS1="$(whoami)@$(hostname):$(pwd)$ " \
+    S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
+    S6_CMD_WAIT_FOR_SERVICES=1 \
+    S6_SERVICES_READYTIME=50
 
 ENV \
 #    APP_URL="*" \
@@ -21,6 +31,7 @@ ENV \
 # Shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+ARG BUILD_ARCH=amd64
 # renovate: datasource=github-releases packageName=hassio-addons/bashio
 ARG BASHIO_VERSION="v0.17.5"
 # renovate: datasource=github-releases packageName=just-containers/s6-overlay
@@ -85,7 +96,10 @@ RUN \
 	apt-get update; \
 	apt-get install -y --no-install-recommends \
 	  nginx; \
-  rm -rf /var/lib/apt/lists/* /etc/nginx
+    rm -rf /var/lib/apt/lists/* /etc/nginx
+
+COPY .common/addon-config /
+COPY .common/nginx /
 
 COPY rootfs/ /
 
