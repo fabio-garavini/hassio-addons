@@ -13,7 +13,7 @@ FROM $BUILD_FROM
 ARG TIKA_VERSION=3.2.2
 ARG BUILD_ARCH=amd64
 
-ENV PAPERLESS_PORT=8080 \
+ENV PAPERLESS_PORT=8000 \
     PAPERLESS_USE_X_FORWARD_HOST=true \
     PAPERLESS_USE_X_FORWARD_PORT=true \
     PAPERLESS_ENABLE_UPDATE_CHECK=false \
@@ -40,8 +40,9 @@ ENV \
     POSTGRES_USER="paperless" \
     POSTGRES_PASSWORD="paperless"
 
-ENV SERVICE_PORT=8080 \
-    NGINX_PORT=8000
+ENV \
+    SERVICE_PORT=8000 \
+    NGINX_PORT=8080
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -295,6 +296,9 @@ ENV CHROMIUM_BIN_PATH=/usr/bin/chromium \
     QPDF_BIN_PATH=/usr/bin/qpdf \
     EXIFTOOL_BIN_PATH=/usr/bin/exiftool \
     PDFCPU_BIN_PATH=/usr/bin/pdfcpu
+
+COPY .common/addon-config /
+COPY .common/nginx /
 
 COPY rootfs/ /
 
