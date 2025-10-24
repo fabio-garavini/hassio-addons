@@ -21,4 +21,4 @@ configuration:
       Name of the SSL private key file located under the `/ssl/` directory.
 
 network:
-  5173/tcp: Grimoire
+  8080/tcp: Grimoire

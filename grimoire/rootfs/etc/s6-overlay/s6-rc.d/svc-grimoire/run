@@ -1,10 +1,12 @@
 #!/command/with-contenv bash
 # shellcheck shell=bash
 
+set -e
+
 cd /app || exit 1
 
 # Run migrations first
-/usr/local/bin/bun run run-migrations
+bun --bun run run-migrations
 
 # Start the application
-exec /usr/local/bin/bun ./build/index.js > /dev/null
+bun ./build/index.js

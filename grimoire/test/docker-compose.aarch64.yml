@@ -4,7 +4,7 @@ services:
     image: fabioogaravini/hassio-grimoire:${VERSION:-latest}-aarch64
     container_name: grimoire-aarch64
     ports:
-      - 5173:5173
+      - 8080:8080
     environment:
       - TZ=Etc/UTC
     volumes:
@@ -13,7 +13,7 @@ services:
       - config:/app/data
       - ssl:/ssl
     healthcheck:
-      test: ["CMD-SHELL", "curl -sk https://127.0.0.1:5173/api/health | jq -e '.database == \"CONNECTED\"'"]
+      test: ["CMD-SHELL", "curl -sk https://127.0.0.1:8080/api/health | jq -e '.database == \"CONNECTED\"'"]
       interval: 10s
       timeout: 5s
       retries: 5

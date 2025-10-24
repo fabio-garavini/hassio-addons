@@ -7,8 +7,10 @@ ARG BUILD_ARCH=amd64
 # hadolint ignore=DL3002
 USER root
 
-ENV SERVICE_PORT=80 \
-    NIGNX_PORT=5137
+ENV \
+    PORT=5173 \
+    SERVICE_PORT=5173 \
+    NIGNX_PORT=8080
 
 # Shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
