@@ -53,6 +53,8 @@ RUN \
     chmod +x /usr/bin/cloudflared; \
     cloudflared -v
 
+COPY .common/addon-config /
+
 COPY rootfs/ /
 
 ENTRYPOINT ["/init"]
