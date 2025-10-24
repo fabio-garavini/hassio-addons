@@ -36,6 +36,8 @@ ENV MARIADB_DATADIR="/config/mariadb" \
     REDIS_DATADIR="/config/redis" \
     NEXTCLOUD_DATADIR="/share/nextcloud"
 
+COPY .common/addon-config /
+
 # copy local files
 COPY rootfs/ /
 
