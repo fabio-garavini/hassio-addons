@@ -98,7 +98,7 @@ jobs:
         with:
           path: "./${{ matrix.addon }}"
 
-      - name: 🔍 Check add-on arch & tests
+      - name: 🔍 Check add-on arch
         id: check
         run: |
           if [[ "${{ steps.info.outputs.image }}" == "null" ]]; then
@@ -111,11 +111,35 @@ jobs:
             echo "build_arch=false" >> $GITHUB_OUTPUT;
           fi
 
+      - name: 🔍 Get add-on version
+        if: steps.check.outputs.build_arch == 'true'
+        id: version
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "version_name=latest" >> "$GITHUB_OUTPUT"
+            echo "VERSION=latest" >> $GITHUB_ENV
+          elif [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
+            echo "version_name=dev" >> "$GITHUB_OUTPUT"
+            echo "VERSION=dev" >> $GITHUB_ENV
+          else
+            echo "version_name=test" >> "$GITHUB_OUTPUT"
+            echo "VERSION=test" >> $GITHUB_ENV
+          fi
+
+      - name: 🔍 Get add-on tests
+        if: steps.check.outputs.build_arch == 'true'
+        id: tests
+        run: |
           if [ -d "${{ steps.info.outputs.target }}/test" ]; then
             echo "test=true" >> $GITHUB_OUTPUT
           else
             echo "test=false" >> $GITHUB_OUTPUT
           fi
+
+      - name: 📌 Load common build files
+        if: steps.check.outputs.build_arch == 'true'
+        run: |
+          cp -r .common ${{ steps.info.outputs.target }}/.common
 
       - name: 🔑 Login to DockerHub
         if: steps.check.outputs.build_arch == 'true' && github.event_name == 'push'
@@ -129,16 +153,16 @@ jobs:
         uses: docker/setup-qemu-action@v3
 
       - name: 🏗 Set up Docker Compose
-        if: steps.check.outputs.build_arch == 'true' && steps.check.outputs.test == 'true'
+        if: steps.check.outputs.build_arch == 'true' && steps.tests.outputs.test == 'true'
         uses: docker/setup-compose-action@v1
 
       - name: 🏗 Set up Docker Buildx
         if: steps.check.outputs.build_arch == 'true'
         uses: docker/setup-buildx-action@v3
 
-      - name: ℹ️ Compose build flags
+      - name: ℹ️ Compose build args
         if: steps.check.outputs.build_arch == 'true'
-        id: flags
+        id: args
         run: |
           echo "date=$(date +"%Y-%m-%dT%H:%M:%SZ")" >> "$GITHUB_OUTPUT"
           from=$(yq --no-colors eval ".build_from.${{ matrix.arch }}" "${{ steps.info.outputs.build }}")
@@ -159,18 +183,6 @@ jobs:
             exit 1
           fi
 
-          # Set tag suffix based on branch
-          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-            echo "tag_suffix=latest" >> "$GITHUB_OUTPUT"
-            echo "VERSION=latest" >> $GITHUB_ENV
-          elif [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
-            echo "tag_suffix=dev" >> "$GITHUB_OUTPUT"
-            echo "VERSION=dev" >> $GITHUB_ENV
-          else
-            echo "tag_suffix=test" >> "$GITHUB_OUTPUT"
-            echo "VERSION=test" >> $GITHUB_ENV
-          fi
-
       - name: 🚀 Build
         if: steps.check.outputs.build_arch == 'true'
         uses: docker/build-push-action@v6
@@ -178,54 +190,54 @@ jobs:
           load: true
           # yamllint disable rule:line-length
           tags: |
-            ${{ steps.info.outputs.image }}:${{ steps.flags.outputs.tag_suffix }}-${{ matrix.arch }}
+            ${{ steps.info.outputs.image }}:${{ steps.version.outputs.version_name }}-${{ matrix.arch }}
             ${{ steps.info.outputs.image }}:${{ steps.info.outputs.version }}-${{ matrix.arch }}
           # yamllint enable rule:line-length
           context: ${{ steps.info.outputs.target }}
           file: ${{ steps.info.outputs.target }}/Dockerfile
           cache-from: type=gha,scope=${{ matrix.addon }}-${{ matrix.arch }}
           cache-to: type=gha,mode=max,scope=${{ matrix.addon }}-${{ matrix.arch }}
-          platforms: ${{ steps.flags.outputs.platform }}
+          platforms: ${{ steps.args.outputs.platform }}
           build-args: |
             BUILD_ARCH=${{ matrix.arch }}
-            BUILD_DATE=${{ steps.flags.outputs.date }}
+            BUILD_DATE=${{ steps.args.outputs.date }}
             BUILD_DESCRIPTION=${{ steps.info.outputs.description }}
-            BUILD_FROM=${{ steps.flags.outputs.from }}
+            BUILD_FROM=${{ steps.args.outputs.from }}
             BUILD_NAME=${{ steps.info.outputs.name }}
             BUILD_REF=${{ github.sha }}
             BUILD_REPOSITORY=${{ github.repository }}
             BUILD_VERSION=${{ steps.info.outputs.version }}
-      
-      - name: Start Docker Compose services
-        if: steps.check.outputs.build_arch == 'true' && steps.check.outputs.test == 'true'
+
+      - name: ⚙️ Start Docker Compose services
+        if: steps.check.outputs.build_arch == 'true' && steps.tests.outputs.test == 'true'
         run: |
           cd "${{ steps.info.outputs.target }}/test"
           docker compose -f "docker-compose.${{ matrix.arch }}.yml" up -d
-      
+
       - name: 🩺 Healthcheck
         uses: jaracogmbh/docker-compose-health-check-action@v1.0.0
-        if: steps.check.outputs.build_arch == 'true' && steps.check.outputs.test == 'true'
+        if: steps.check.outputs.build_arch == 'true' && steps.tests.outputs.test == 'true'
         with:
           max-retries: 30
           retry-interval: 10
           compose-file: "${{ steps.info.outputs.target }}/test/docker-compose.${{ matrix.arch }}.yml"
-      
-      - name: Restart Docker Compose services
-        if: steps.check.outputs.build_arch == 'true' && steps.check.outputs.test == 'true'
+
+      - name: ¿? Restart Docker Compose services
+        if: steps.check.outputs.build_arch == 'true' && steps.tests.outputs.test == 'true'
         run: |
           cd "${{ steps.info.outputs.target }}/test"
           docker compose -f "docker-compose.${{ matrix.arch }}.yml" restart
-      
+
       - name: 🩺 Healthcheck
         uses: jaracogmbh/docker-compose-health-check-action@v1.0.0
-        if: steps.check.outputs.build_arch == 'true' && steps.check.outputs.test == 'true'
+        if: steps.check.outputs.build_arch == 'true' && steps.tests.outputs.test == 'true'
         with:
           max-retries: 30
           retry-interval: 10
           compose-file: "${{ steps.info.outputs.target }}/test/docker-compose.${{ matrix.arch }}.yml"
-      
-      - name: Stop Docker Compose services
-        if: steps.check.outputs.build_arch == 'true' && steps.check.outputs.test == 'true'
+
+      - name: 🏁 Stop Docker Compose services
+        if: steps.check.outputs.build_arch == 'true' && steps.tests.outputs.test == 'true'
         run: |
           cd "${{ steps.info.outputs.target }}/test"
           docker compose -f "docker-compose.${{ matrix.arch }}.yml" down -v
@@ -234,7 +246,7 @@ jobs:
         if: steps.check.outputs.build_arch == 'true' && github.event_name == 'push'
         # yamllint disable rule:line-length
         run: |
-          docker push ${{ steps.info.outputs.image }}:${{ steps.flags.outputs.tag_suffix }}-${{ matrix.arch }}
+          docker push ${{ steps.info.outputs.image }}:${{ steps.version.outputs.version_name }}-${{ matrix.arch }}
           docker push ${{ steps.info.outputs.image }}:${{ steps.info.outputs.version }}-${{ matrix.arch }}
 
   manifest:
@@ -260,15 +272,15 @@ jobs:
       - name: 🏗 Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: ℹ️ Set tag suffix
-        id: flags
+      - name: ℹ️ Get version name tag
+        id: version
         run: |
           if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-            echo "tag_suffix=latest" >> "$GITHUB_OUTPUT"
+            echo "version_name=latest" >> "$GITHUB_OUTPUT"
           elif [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
-            echo "tag_suffix=dev" >> "$GITHUB_OUTPUT"
+            echo "version_name=dev" >> "$GITHUB_OUTPUT"
           else
-            echo "tag_suffix=test" >> "$GITHUB_OUTPUT"
+            echo "version_name=test" >> "$GITHUB_OUTPUT"
           fi
 
       - name: 🔑 Login to DockerHub
@@ -288,7 +300,7 @@ jobs:
           done
 
           docker manifest create \
-             "${{ steps.info.outputs.image }}:${{ steps.flags.outputs.tag_suffix }}" \
+             "${{ steps.info.outputs.image }}:${{ steps.version.outputs.version_name }}" \
              "${images[@]}"
 
           docker manifest create \
@@ -299,6 +311,6 @@ jobs:
         # yamllint disable rule:line-length
         run: |
           docker manifest push \
-            "${{ steps.info.outputs.image }}:${{ steps.flags.outputs.tag_suffix }}"
+            "${{ steps.info.outputs.image }}:${{ steps.version.outputs.version_name }}"
           docker manifest push \
             "${{ steps.info.outputs.image }}:${{ steps.info.outputs.version }}"
