@@ -24,16 +24,14 @@ if jq -e '.ssl == true' $OPTIONS_SOURCE > /dev/null; then
 
     # If certfile or keyfile does not exist, generate self-signed cert
     if [ ! -f "$certfile" ] || [ ! -f "$keyfile" ]; then
-        bashio::log.warning "SSL is enabled, but certfile or keyfile is missing. Using self-signed certificate..."
+        bashio::log.warning "SSL is enabled, but either certfile, keyfile, or both are missing. Falling back to a self-signed certificate..."
 
         certfile="/data/ssl/fullchain.pem"
         keyfile="/data/ssl/privkey.pem"
 
-        if [ ! -f "$certfile" ] || [ ! -f "$keyfile" ]; then
-            /usr/local/bin/selfsigned-ssl-gen.sh "$certfile" "$keyfile"
-        else
-            /usr/local/bin/check-ssl.sh "$certfile" "$keyfile"
-        fi
+        /usr/local/bin/ssl-check-generate.sh "$certfile" "$keyfile" true
+    else
+        /usr/local/bin/ssl-check-generate.sh "$certfile" "$keyfile" false
     fi
 fi
 

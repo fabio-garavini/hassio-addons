@@ -3,20 +3,20 @@
 
 # Check for required arguments
 if [ $# -ne 2 ]; then
-  bashio::log.error "[selfsigned-ssl-gen.sh] missing: <certfile> <keyfile>"
+  bashio::log.error "[ssl-keygen.sh] missing: <certfile> <keyfile>"
   exit 1
 fi
 
 certfile="$1"
 keyfile="$2"
 
-if [[ -d "/data/ssl" ]]; then
-  rm -rf /data/ssl
-fi
+[ -f "$certfile" ] && rm -f "$certfile"
+[ -f "$keyfile" ] && rm -f "$keyfile"
 
-mkdir -p /data/ssl
-if ! hostname="$(bashio::info.hostname 2>/dev/null)"; then
-  hostname="homeassistant.local"
+mkdir -p "$(dirname "$certfile")" && mkdir -p "$(dirname "$keyfile")"
+
+if ! hostname="$(bashio::info.hostname 2> /dev/null)" || [ -z "$hostname" ]; then
+  hostname="homeassistant"
 fi
 tmp_openssl_cfg=$(mktemp)
 trap 'rm -f "$tmp_openssl_cfg"' EXIT
@@ -30,14 +30,14 @@ req_extensions     = req_ext
 distinguished_name = dn
 
 [dn]
-CN = ${hostname}
+CN = ${hostname}.local
 
 [req_ext]
 subjectAltName = @alt_names
 
 [alt_names]
 DNS.1 = localhost
-DNS.2 = ${hostname}
+DNS.2 = ${hostname}.local
 EOF
 
 if ! openssl req -x509 -nodes -days 3650 \

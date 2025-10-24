@@ -20,16 +20,15 @@ jq -r '
     | "\(.key)\u0000\(.value|tostring)"
     ' $OPTIONS_SOURCE | while read -r -d $'\0' key && read -r value; do
 
-    # Continue for single values
     line="$key=$value"
 
     # log redacted config
     case "$key" in
-        *PASS*|*SECRET*|*KEY*)
-            echo "    $key=******"
+        *PASS*|*SECRET*|*KEY*|*TOKEN*)
+            echo "  $key=******"
             ;;
         *)
-            echo "    $line"
+            echo "  $line"
             ;;
     esac
 
@@ -45,6 +44,7 @@ jq -r '
     if [ -d /var/run/s6/container_environment ]; then
         printf "%s" "$value" > /var/run/s6/container_environment/"$key"
     fi
+
     echo "export $line" >> ~/.bashrc
 done
 
