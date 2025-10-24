@@ -1,23 +1,20 @@
-## paperless-ngx 2.19.1
+## paperless-ngx 2.19.2
+
+### Features / Enhancements
+
+- Fixhancement: display loading status for tags instead of 'Private' @shamoon ([#11140](https://github.com/paperless-ngx/paperless-ngx/pull/11140))
 
 ### Bug Fixes
 
-- Fix: skip workflow title migration for empty titles @shamoon ([#11136](https://github.com/paperless-ngx/paperless-ngx/pull/11136))
-- Fix: restore workflow title migration @shamoon ([#11131](https://github.com/paperless-ngx/paperless-ngx/pull/11131))
-- Fix: retrieve document\_count for tag children @shamoon ([#11125](https://github.com/paperless-ngx/paperless-ngx/pull/11125))
-- Fix: move hierarchical order logic in dropdown sorting @shamoon ([#11128](https://github.com/paperless-ngx/paperless-ngx/pull/11128))
-- Fix: use original object for children in tag list @shamoon ([#11127](https://github.com/paperless-ngx/paperless-ngx/pull/11127))
-- Fix: dont display or fetch users or groups with insufficient perms @shamoon ([#11111](https://github.com/paperless-ngx/paperless-ngx/pull/11111))
+- Fix: Remove edit requirement for bulk email, show based on setting @shamoon ([#11149](https://github.com/paperless-ngx/paperless-ngx/pull/11149))
+- Fix: handle undefined IDs in getOriginalObject @shamoon ([#11147](https://github.com/paperless-ngx/paperless-ngx/pull/11147))
 
 ### All App Changes
 
 <details>
-<summary>6 changes</summary>
+<summary>3 changes</summary>
 
-- Fix: skip workflow title migration for empty titles @shamoon ([#11136](https://github.com/paperless-ngx/paperless-ngx/pull/11136))
-- Fix: restore workflow title migration @shamoon ([#11131](https://github.com/paperless-ngx/paperless-ngx/pull/11131))
-- Fix: retrieve document\_count for tag children @shamoon ([#11125](https://github.com/paperless-ngx/paperless-ngx/pull/11125))
-- Fix: move hierarchical order logic in dropdown sorting @shamoon ([#11128](https://github.com/paperless-ngx/paperless-ngx/pull/11128))
-- Fix: use original object for children in tag list @shamoon ([#11127](https://github.com/paperless-ngx/paperless-ngx/pull/11127))
-- Fix: dont display or fetch users or groups with insufficient perms @shamoon ([#11111](https://github.com/paperless-ngx/paperless-ngx/pull/11111))
+- Fix: Remove edit requirement for bulk email, show based on setting @shamoon ([#11149](https://github.com/paperless-ngx/paperless-ngx/pull/11149))
+- Fix: handle undefined IDs in getOriginalObject @shamoon ([#11147](https://github.com/paperless-ngx/paperless-ngx/pull/11147))
+- Fixhancement: display loading status for tags instead of 'Private' @shamoon ([#11140](https://github.com/paperless-ngx/paperless-ngx/pull/11140))
 </details>
