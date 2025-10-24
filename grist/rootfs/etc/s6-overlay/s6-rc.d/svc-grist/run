@@ -1,6 +1,8 @@
 #!/command/with-contenv bash
 # shellcheck shell=bash
 
+set -e
+
 cd /grist || exit 1
 
 exec ./sandbox/docker_entrypoint.sh node ./sandbox/supervisor.mjs

@@ -6,14 +6,14 @@ FROM ${BUILD_FROM}
 # Container Environment variables
 ENV \
     DEBIAN_FRONTEND="noninteractive" \
+    TERM="xterm-256color" \
     HOME="/root" \
     LANG="C.UTF-8" \
     PS1="$(whoami)@$(hostname):$(pwd)$ " \
     S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_CMD_WAIT_FOR_SERVICES=1 \
-    S6_SERVICES_GRACETIME=0 \
-    TERM="xterm-256color"
+    S6_SERVICES_READYTIME=50
 
 ENV \
     SERVICE_PORT=8484 \
@@ -89,6 +89,9 @@ RUN \
         /var/{cache,log}/* \
         /var/lib/apt/lists/* \
         /etc/nginx/*
+
+COPY .common/addon-config /
+COPY .common/nginx /
 
 COPY rootfs/ /
 
