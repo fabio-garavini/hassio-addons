@@ -7,7 +7,7 @@ RUN apk add --no-cache bash
 # Shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Install S6 Overlay
+# Addon base configuration
 ARG BUILD_ARCH=amd64
 # renovate: datasource=github-releases packageName=just-containers/s6-overlay
 ARG S6_OVERLAY_VERSION="3.2.1.0"
@@ -38,7 +38,7 @@ RUN \
     && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-symlinks-arch.tar.xz" \
         | tar -C / -Jxpf - \
     \
-    && rm -f -r /tmp/*
+    && rm -rf /tmp/*
 
 ARG BUILD_VERSION=0.30.4-v1
 ARG POCKETBASE_VERSION=${BUILD_VERSION%-v*}
@@ -54,6 +54,8 @@ RUN \
     mkdir -p /pb; \
     unzip /tmp/pb.zip -d /pb/; \
     rm -f /tmp/*
+
+COPY .common/addon-config /
 
 COPY rootfs/ /
 
