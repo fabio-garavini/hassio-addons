@@ -41,3 +41,7 @@ if [ -n "$enddate" ]; then
 else
     bashio::log.error "Unable to determine ssl certificate expiry date"
 fi
+
+if pgrep -x nginx >/dev/null 2>&1; then
+    nginx -s reload
+fi
