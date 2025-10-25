@@ -1,8 +1,9 @@
 name: Gitea
-version: 1.24.6-v2
+version: 1.24.7
 slug: gitea
 codenotary: info@fabiogaravini.dev
-description: Gitea is a Git hosting, code review, team collaboration, package registry, and CI/CD
+description: Gitea is a Git hosting, code review, team collaboration, package
+  registry, and CI/CD
 url: https://about.gitea.com/
 webui: http://[HOST]:[PORT:3000]
 arch:
