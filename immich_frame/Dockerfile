@@ -5,8 +5,22 @@ FROM ${BUILD_FROM}
 
 ARG BUILD_VERSION=1.0.29.0-v2
 
-ENV SERVICE_PORT=8080 \
-    NGINX_PORT=8089
+# Container Environment variables
+ENV \
+    DEBIAN_FRONTEND="noninteractive" \
+    TERM="xterm-256color" \
+    HOME="/root" \
+    LANG="C.UTF-8" \
+    PS1="$(whoami)@$(hostname):$(pwd)$ " \
+    S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
+    S6_CMD_WAIT_FOR_SERVICES=1 \
+    S6_SERVICES_READYTIME=50
+
+ENV \
+    ASPNETCORE_HTTP_PORTS=80 \
+    SERVICE_PORT=80 \
+    NGINX_PORT=8080
 
 # hadolint ignore=DL3002
 USER root
@@ -14,6 +28,7 @@ USER root
 # Shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+# Install base system
 ARG BUILD_ARCH=amd64
 # renovate: datasource=github-releases packageName=hassio-addons/bashio
 ARG BASHIO_VERSION="v0.17.5"
@@ -74,9 +89,12 @@ RUN \
     && apt-get clean \
     && rm -fr \
         /tmp/* \
-        /var/cache/* \
+        /var/{cache,log}/* \
         /var/lib/apt/lists/* \
         /etc/nginx/*
+
+COPY .common/addon-config /
+COPY .common/nginx /
 
 COPY rootfs/ /
 

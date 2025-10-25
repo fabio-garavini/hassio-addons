@@ -4,7 +4,7 @@ slug: immich_frame
 codenotary: info@fabiogaravini.dev
 description: An awesome way to display your photos as a digital photo frame
 url: https://immichframe.online
-webui: "[PROTO:ssl]://[HOST]:[PORT:8089]"
+webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"
 hassio_api: true
 arch:
   - aarch64
@@ -118,7 +118,7 @@ options:
       ExcludedAlbums: []
       People: []
 ports:
-  8089/tcp: 8089
+  8080/tcp: 8089
 ports_description:
-  8089/tcp: Web UI
+  8080/tcp: Web UI
 image: fabioogaravini/hassio-immich-frame

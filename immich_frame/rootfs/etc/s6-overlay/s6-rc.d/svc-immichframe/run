@@ -1,6 +1,15 @@
 #!/command/with-contenv bash
 # shellcheck shell=bash
 
+set -e
+
+OPTIONS_SOURCE=/data/options.json
+SETTINGS="/app/config/Settings.json"
+
+[[ ! -d "/app/config" ]] && mkdir -p /app/config
+
+jq -s '.[0] * .[1]' /defaults/Settings.json "$OPTIONS_SOURCE" > "$SETTINGS"
+
 cd /app || exit 1
 
 exec dotnet ImmichFrame.WebApi.dll
