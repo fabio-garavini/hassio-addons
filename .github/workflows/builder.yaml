@@ -80,6 +80,7 @@ jobs:
     needs: init
     if: needs.init.outputs.changed == 'true'
     strategy:
+      fail-fast: false
       matrix:
         addon: ${{ fromJson(needs.init.outputs.changed_addons) }}
         arch: [aarch64, amd64, armhf, armv7, i386]
@@ -249,9 +250,26 @@ jobs:
           docker push ${{ steps.info.outputs.image }}:${{ steps.version.outputs.version_name }}-${{ matrix.arch }}
           docker push ${{ steps.info.outputs.image }}:${{ steps.info.outputs.version }}-${{ matrix.arch }}
 
+      - name: ✅ Write success artifact
+        if: steps.check.outputs.build_arch == 'true' && success()
+        run: |
+          mkdir -p deploy-status
+          # Sanitize addon name for filename (replace / with -)
+          addon_name="${{ matrix.addon }}"
+          echo "success" > "deploy-status/${addon_name}-${{ matrix.arch }}.txt"
+          echo "Build and deployment successful for ${{ matrix.addon }} on ${{ matrix.arch }}"
+
+      - name: 📤 Upload success artifact
+        if: steps.check.outputs.build_arch == 'true' && success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy-status-${{ matrix.addon }}-${{ matrix.arch }}
+          path: deploy-status/
+          retention-days: 1
+
   manifest:
     name: 🚀 Deploy ${{ matrix.addon }} Multi Arch Manifest
-    if: github.event_name == 'push'
+    if: always() && github.event_name == 'push'
     needs:
       - init
       - deploy
@@ -269,9 +287,6 @@ jobs:
         with:
           path: "./${{ matrix.addon }}"
 
-      - name: 🏗 Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
       - name: ℹ️ Get version name tag
         id: version
         run: |
@@ -283,34 +298,73 @@ jobs:
             echo "version_name=test" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: 📥 Download all deploy artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: deploy-status-${{ matrix.addon }}-*
+          path: deploy-status/
+          merge-multiple: true
+
+      - name: ✅ Verify all architectures succeeded
+        id: verify
+        run: |
+          echo "Checking deployment status for ${{ matrix.addon }}"
+          addon_name="${{ matrix.addon }}"
+          
+          all_success=true
+          for architecture in $(echo '${{ steps.info.outputs.architectures }}' | jq -r '.[]'); do
+            status_file="deploy-status/${addon_name}-${architecture}.txt"
+            
+            if [[ -f "$status_file" ]]; then
+              status=$(cat "$status_file")
+              if [[ "$status" == "success" ]]; then
+                echo "✅ ${architecture}: SUCCESS"
+              else
+                echo "❌ ${architecture}: FAILED (unexpected status: $status)"
+                all_success=false
+              fi
+            else
+              echo "❌ ${architecture}: FAILED (status file not found)"
+              all_success=false
+            fi
+          done
+          
+          if [[ "$all_success" == "true" ]]; then
+            echo "all_success=true" >> $GITHUB_OUTPUT
+            echo "✅ All architectures built successfully!"
+          else
+            echo "all_success=false" >> $GITHUB_OUTPUT
+            echo "❌ Some architectures failed. Aborting manifest creation."
+            exit 1
+          fi
+
+      - name: 🏗 Set up Docker Buildx
+        if: steps.verify.outputs.all_success == 'true'
+        uses: docker/setup-buildx-action@v3
+
       - name: 🔑 Login to DockerHub
+        if: steps.verify.outputs.all_success == 'true'
         uses: docker/login-action@v3
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: 🚀 Create manifest
-        shell: bash
-        # yamllint disable rule:line-length
+      - name: 🚀 Create & Push multi-arch image
+        if: steps.verify.outputs.all_success == 'true'
         run: |
           declare -a images
-
-          for architecture in $(echo '${{ steps.info.outputs.architectures }}' | jq --raw-output '.[]'); do
+          for architecture in $(echo '${{ steps.info.outputs.architectures }}' | jq -r '.[]'); do
             images+=("${{ steps.info.outputs.image }}:${{ steps.info.outputs.version }}-${architecture}")
           done
 
           docker manifest create \
-             "${{ steps.info.outputs.image }}:${{ steps.version.outputs.version_name }}" \
-             "${images[@]}"
-
-          docker manifest create \
-             "${{ steps.info.outputs.image }}:${{ steps.info.outputs.version }}" \
-             "${images[@]}"
-
-      - name: 🚀 Push
-        # yamllint disable rule:line-length
-        run: |
-          docker manifest push \
-            "${{ steps.info.outputs.image }}:${{ steps.version.outputs.version_name }}"
+            "${{ steps.info.outputs.image }}:${{ steps.info.outputs.version }}" \
+            "${images[@]}"
           docker manifest push \
             "${{ steps.info.outputs.image }}:${{ steps.info.outputs.version }}"
+
+          docker manifest create \
+            "${{ steps.info.outputs.image }}:${{ steps.version.outputs.version_name }}" \
+            "${images[@]}"
+          docker manifest push \
+            "${{ steps.info.outputs.image }}:${{ steps.version.outputs.version_name }}"
