@@ -6,7 +6,19 @@ FROM ghcr.io/usememos/memos:${BUILD_VERSION%-v*} AS memos
 
 FROM ${BUILD_FROM}
 
-ENV MEMOS_MODE="prod" \
+# Generic Addon variables
+ENV \
+    TERM="xterm-256color" \
+    HOME="/root" \
+    LANG="C.UTF-8" \
+    PS1="$(whoami)@$(hostname):$(pwd)$ " \
+    S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
+    S6_CMD_WAIT_FOR_SERVICES=1 \
+    S6_SERVICES_READYTIME=50
+
+ENV \
+    MEMOS_MODE="prod" \
     MEMOS_PORT="80" \
     MEMOS_DATA="/share/memos" \
     MEMOS_DRIVER="postgres" \
@@ -21,10 +33,18 @@ ENV \
     SERVICE_PORT=80 \
     NGINX_PORT=5230
 
-# Set shell
-SHELL ["/bin/ash", "-o", "pipefail", "-c"]
+# NGINX Install
+RUN \
+    apk add --no-cache \
+        bash \
+        openssl \
+        nginx \
+    && rm -rf /etc/nginx
 
-# Install base system
+# Shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# Addon base configuration
 ARG BUILD_ARCH=amd64
 # renovate: datasource=github-releases packageName=hassio-addons/bashio
 ARG BASHIO_VERSION="v0.17.5"
@@ -33,9 +53,7 @@ ARG S6_OVERLAY_VERSION="3.2.1.0"
 # renovate: datasource=github-releases packageName=home-assistant/tempio
 ARG TEMPIO_VERSION="2024.11.2"
 RUN \
-    set -o pipefail \
-    \
-    && apk add --no-cache --virtual .build-dependencies \
+    apk add --no-cache --virtual .build-dependencies \
         tar \
         xz \
     \
@@ -44,7 +62,6 @@ RUN \
         libssl3 \
         musl-utils \
         musl \
-        bash \
         curl \
         jq \
         tzdata \
@@ -66,20 +83,18 @@ RUN \
     && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-symlinks-arch.tar.xz" \
         | tar -C / -Jxpf - \
     \
-    && curl -J -L -o /tmp/bashio.tar.gz "https://github.com/hassio-addons/bashio/archive/${BASHIO_VERSION}.tar.gz" \
+    && curl -J -L "https://github.com/hassio-addons/bashio/archive/${BASHIO_VERSION}.tar.gz" -o /tmp/bashio.tar.gz \
     && mkdir /tmp/bashio \
-    && tar zxvf \
-        /tmp/bashio.tar.gz \
-        --strip 1 -C /tmp/bashio \
+    && tar zxvf /tmp/bashio.tar.gz --strip 1 -C /tmp/bashio \
     \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     \
-    && curl -L -s -o /usr/bin/tempio "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" \
+    && curl -L -s "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" -o /usr/bin/tempio \
     && chmod a+x /usr/bin/tempio \
     \
     && apk del --no-cache --purge .build-dependencies \
-    && rm -f -r /tmp/*
+    && rm -rf /tmp/*
 
 ENV PATH="$PATH:/usr/lib/postgresql/$PG_MAJOR/bin:/usr/lib/bin"
 
@@ -91,10 +106,10 @@ RUN apk add --no-cache bash logrotate postgresql$PG_MAJOR postgresql$PG_MAJOR-cl
     mkdir /docker-entrypoint-initdb.d; \
     postgres --version
 
-RUN apk add --no-cache nginx openssl curl; \
-    rm -rf /etc/nginx
-
 COPY --from=memos /usr/local/memos/memos /usr/local/memos/
+
+COPY .common/addon-config /
+COPY .common/nginx /
 
 COPY rootfs/ /
 
