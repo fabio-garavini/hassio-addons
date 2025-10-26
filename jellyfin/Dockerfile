@@ -2,37 +2,41 @@ ARG BUILD_FROM=jellyfin/jellyfin:10.11.0
 
 FROM ${BUILD_FROM}
 
-ENV JELLYFIN_DATA_DIR=/config \
+# Generic Addon variables
+ENV \
+    DEBIAN_FRONTEND="noninteractive" \
+    TERM="xterm-256color" \
+    HOME="/root" \
+    LANG="C.UTF-8" \
+    PS1="$(whoami)@$(hostname):$(pwd)$ " \
+    S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
+    S6_CMD_WAIT_FOR_SERVICES=1 \
+    S6_SERVICES_READYTIME=50
+
+ENV \
+    JELLYFIN_DATA_DIR=/config \
     JELLYFIN_CONFIG_DIR=/config/config \
     JELLYFIN_CACHE_DIR=/config/cache \
     JELLYFIN_LOG_DIR=/config/log
 
-ENV SERVICE_PORT=8096 \
+ENV \
+    SERVICE_PORT=8096 \
     NGINX_PORT=8080
 
-# Environment variables
-ENV \
-    CARGO_NET_GIT_FETCH_WITH_CLI=true \
-    DEBIAN_FRONTEND="noninteractive" \
-    HOME="/root" \
-    LANG="C.UTF-8" \
-    PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    PIP_NO_CACHE_DIR=1 \
-    PIP_PREFER_BINARY=1 \
-    PS1="$(whoami)@$(hostname):$(pwd)$ " \
-    PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
-    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
-    S6_CMD_WAIT_FOR_SERVICES=1 \
-    S6_SERVICES_GRACETIME=0 \
-    YARN_HTTP_TIMEOUT=1000000 \
-    TERM="xterm-256color"
+RUN \
+	apt-get update; \
+	apt-get install -y --no-install-recommends \
+        bash \
+        openssl \
+	    nginx; \
+    apt-get clean; \
+    rm -rf /etc/nginx
 
 # Shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Install base system
+# Addon base configuration
 ARG BUILD_ARCH=amd64
 # renovate: datasource=github-releases packageName=hassio-addons/bashio
 ARG BASHIO_VERSION="v0.17.5"
@@ -44,13 +48,11 @@ RUN \
     apt-get update \
     \
     && apt-get install -y --no-install-recommends \
-        bash \
         ca-certificates \
         curl \
         jq \
         tzdata \
         xz-utils \
-        nginx \
     \
     && c_rehash \
     \
@@ -74,8 +76,7 @@ RUN \
     && mkdir -p /etc/fix-attrs.d \
     && mkdir -p /etc/services.d \
     \
-    && curl -J -L -o /tmp/bashio.tar.gz \
-        "https://github.com/hassio-addons/bashio/archive/${BASHIO_VERSION}.tar.gz" \
+    && curl -J -L "https://github.com/hassio-addons/bashio/archive/${BASHIO_VERSION}.tar.gz" -o /tmp/bashio.tar.gz \
     && mkdir /tmp/bashio \
     && tar zxvf \
         /tmp/bashio.tar.gz \
@@ -84,8 +85,7 @@ RUN \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     \
-    && curl -L -s -o /usr/bin/tempio \
-        "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" \
+    && curl -L -s "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" -o /usr/bin/tempio \
     && chmod a+x /usr/bin/tempio \
     \
     && apt-get purge -y --auto-remove \
@@ -94,8 +94,10 @@ RUN \
     && rm -fr \
         /tmp/* \
         /var/{cache,log}/* \
-        /var/lib/apt/lists/* \
-        /etc/nginx/*
+        /var/lib/apt/lists/*
+
+COPY .common/addon-config /
+COPY .common/nginx /
 
 COPY rootfs/ /
 
