@@ -1,5 +1,0 @@
-{
-  "TZ": "Etc/UTC",
-  "certfile": "fullchain.pem",
-  "keyfile": "privkey.pem"
-}
