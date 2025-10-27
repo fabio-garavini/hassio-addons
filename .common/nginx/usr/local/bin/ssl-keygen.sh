@@ -1,6 +1,8 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
 
+set -e
+
 # Check for required arguments
 if [ $# -ne 2 ]; then
   bashio::log.error "[ssl-keygen.sh] missing: <certfile> <keyfile>"

@@ -3,7 +3,9 @@
 
 set -e
 
-mkdir -p "$MEILI_DIR"
+if [ ! -d "$MEILI_DIR" ]; then
+  mkdir -p "$MEILI_DIR"
+fi
 
 cd "$MEILI_DIR"
 
