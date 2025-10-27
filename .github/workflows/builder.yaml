@@ -261,7 +261,7 @@ jobs:
 
       - name: 📤 Upload success artifact
         if: steps.check.outputs.build_arch == 'true' && success()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: deploy-status-${{ matrix.addon }}-${{ matrix.arch }}
           path: deploy-status/
@@ -300,7 +300,7 @@ jobs:
           fi
 
       - name: 📥 Download all deploy artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
           pattern: deploy-status-${{ matrix.addon }}-*
           path: deploy-status/
