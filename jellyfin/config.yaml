@@ -1,8 +1,9 @@
 name: Jellyfin
-version: 10.11.0-v2
+version: 10.11.1
 slug: jellyfin
 codenotary: info@fabiogaravini.dev
-description: Jellyfin is the volunteer-built media solution that puts you in control of your media
+description: Jellyfin is the volunteer-built media solution that puts you in
+  control of your media
 url: https://jellyfin.org
 ingress: true
 panel_icon: mdi:filmstrip
