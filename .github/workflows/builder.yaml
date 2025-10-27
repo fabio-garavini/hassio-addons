@@ -275,6 +275,7 @@ jobs:
       - deploy
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         addon: ${{ fromJson(needs.init.outputs.changed_addons) }}
     steps:
