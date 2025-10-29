@@ -1,7 +1,7 @@
 source:
   type: github-releases
   repo: n8n-io/n8n
-  current_version: n8n@1.117.2
+  current_version: n8n@1.118.0
   version_template: regex:^n8n(?:@|%40)(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
