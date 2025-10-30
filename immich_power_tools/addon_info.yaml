@@ -1,11 +1,11 @@
 source:
   type: docker
   repo: ghcr.io/varun-raj/immich-power-tools
-  current_version: 0.18.0
+  current_version: 0.19.0
   version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 config:
-  version_template: '{{major}}.{{minor}}.{{patch}}'
-  patch: 3
+  version_template: "{{major}}.{{minor}}.{{patch}}"
+  patch: 0
   image: fabioogaravini/hassio-immich-power-tools
 build:
   image: alpine
