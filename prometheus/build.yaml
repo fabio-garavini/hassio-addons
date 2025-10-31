@@ -1,6 +1,6 @@
 build_from:
-  aarch64: prom/prometheus:v3.7.2
-  armv7: prom/prometheus:v3.7.2
-  amd64: prom/prometheus:v3.7.2
+  aarch64: prom/prometheus:v3.7.3
+  armv7: prom/prometheus:v3.7.3
+  amd64: prom/prometheus:v3.7.3
 codenotary:
   signer: info@fabiogaravini.dev
