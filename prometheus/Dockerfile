@@ -1,4 +1,4 @@
-ARG BUILD_FROM=prom/prometheus:v3.7.2
+ARG BUILD_FROM=prom/prometheus:v3.7.3
 FROM ${BUILD_FROM}
 
 # hadolint ignore=DL3002
