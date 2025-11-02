@@ -1,5 +1,5 @@
 build_from:
-  aarch64: ghcr.io/imagegenius/immich:v2.1.0-ig429
-  amd64: ghcr.io/imagegenius/immich:v2.1.0-ig429
+  aarch64: ghcr.io/imagegenius/immich:v2.2.1-ig431
+  amd64: ghcr.io/imagegenius/immich:v2.2.1-ig431
 codenotary:
   signer: info@fabiogaravini.dev
