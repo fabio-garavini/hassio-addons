@@ -1,36 +1,35 @@
-## paperless-ngx 2.19.3
+## paperless-ngx 2.19.4
 
 ### Bug Fixes
 
-- Fix: remove unnecessary permission requirements for new email endpoint @shamoon ([#11215](https://github.com/paperless-ngx/paperless-ngx/pull/11215))
-- Fix: refactor nested sorting in filterable dropdowns @shamoon ([#11214](https://github.com/paperless-ngx/paperless-ngx/pull/11214))
-- Fix: add root tag filtering for tag list page consistency, fix toggle all @shamoon ([#11208](https://github.com/paperless-ngx/paperless-ngx/pull/11208))
-- Fix: support ConsumableDocument in email attachments @shamoon ([#11196](https://github.com/paperless-ngx/paperless-ngx/pull/11196))
-- Fix: add missing import for ConfirmButtonComponent in user-edit-dialog @shamoon ([#11167](https://github.com/paperless-ngx/paperless-ngx/pull/11167))
-- Fix: resolve migration warning in 2.19.2 @shamoon ([#11157](https://github.com/paperless-ngx/paperless-ngx/pull/11157))
+- Fix: use original\_file when attaching docs to workflow emails with added trigger @shamoon ([#11266](https://github.com/paperless-ngx/paperless-ngx/pull/11266))
+- Fix: mark 'Select' button in doc list for translation @shamoon ([#11278](https://github.com/paperless-ngx/paperless-ngx/pull/11278))
+- Fix: respect fields parameter for created field @shamoon ([#11251](https://github.com/paperless-ngx/paperless-ngx/pull/11251))
+- Fix: improve legibility of processed mail error popover in light mode @shamoon ([#11258](https://github.com/paperless-ngx/paperless-ngx/pull/11258))
+- Fixhancement: truncate large logs, improve auto-scroll @shamoon ([#11239](https://github.com/paperless-ngx/paperless-ngx/pull/11239))
+- Chore: add max-height and overflow to processedmail error popover @shamoon ([#11252](https://github.com/paperless-ngx/paperless-ngx/pull/11252))
+- Fix: delay iframe DOM removal, handle onafterprint error for print in FF @shamoon ([#11237](https://github.com/paperless-ngx/paperless-ngx/pull/11237))
+- Fix: de-deduplicate children in tag list when filtering @shamoon ([#11229](https://github.com/paperless-ngx/paperless-ngx/pull/11229))
 
-### Changes
+### Performance
 
-- Change: make workflow action only title draggable @shamoon ([#11209](https://github.com/paperless-ngx/paperless-ngx/pull/11209))
-- Change: change workflowrun to softdeletemodel @shamoon ([#11194](https://github.com/paperless-ngx/paperless-ngx/pull/11194))
-
-### Dependencies
-
-- Chore(deps): Bump django from 5.2.6 to 5.2.7 @[dependabot[bot]](https://github.com/apps/dependabot) ([#11200](https://github.com/paperless-ngx/paperless-ngx/pull/11200))
+- Performance: re-enable virtual scroll, bump ng-select @shamoon ([#11279](https://github.com/paperless-ngx/paperless-ngx/pull/11279))
+- Performance: use virtual scroll container and log level parsing for logs view @MickLesk ([#11233](https://github.com/paperless-ngx/paperless-ngx/pull/11233))
 
 ### All App Changes
 
 <details>
-<summary>9 changes</summary>
+<summary>11 changes</summary>
 
-- Chore(deps): Bump django from 5.2.6 to 5.2.7 @[dependabot[bot]](https://github.com/apps/dependabot) ([#11200](https://github.com/paperless-ngx/paperless-ngx/pull/11200))
-- Fix: remove unnecessary permission requirements for new email endpoint @shamoon ([#11215](https://github.com/paperless-ngx/paperless-ngx/pull/11215))
-- Fix: refactor nested sorting in filterable dropdowns @shamoon ([#11214](https://github.com/paperless-ngx/paperless-ngx/pull/11214))
-- Fix: add root tag filtering for tag list page consistency, fix toggle all @shamoon ([#11208](https://github.com/paperless-ngx/paperless-ngx/pull/11208))
-- Change: make workflow action only title draggable @shamoon ([#11209](https://github.com/paperless-ngx/paperless-ngx/pull/11209))
-- Change: change workflowrun to softdeletemodel @shamoon ([#11194](https://github.com/paperless-ngx/paperless-ngx/pull/11194))
-- Chore: Minor migration optimization for workflow titles @stumpylog ([#11197](https://github.com/paperless-ngx/paperless-ngx/pull/11197))
-- Fix: support ConsumableDocument in email attachments @shamoon ([#11196](https://github.com/paperless-ngx/paperless-ngx/pull/11196))
-- Fix: add missing import for ConfirmButtonComponent in user-edit-dialog @shamoon ([#11167](https://github.com/paperless-ngx/paperless-ngx/pull/11167))
-- Fix: resolve migration warning in 2.19.2 @shamoon ([#11157](https://github.com/paperless-ngx/paperless-ngx/pull/11157))
+- Performance: re-enable virtual scroll, bump ng-select @shamoon ([#11279](https://github.com/paperless-ngx/paperless-ngx/pull/11279))
+- Fix: use original\_file when attaching docs to workflow emails with added trigger @shamoon ([#11266](https://github.com/paperless-ngx/paperless-ngx/pull/11266))
+- Fix: mark 'Select' button in doc list for translation @shamoon ([#11278](https://github.com/paperless-ngx/paperless-ngx/pull/11278))
+- Fix: respect fields parameter for created field @shamoon ([#11251](https://github.com/paperless-ngx/paperless-ngx/pull/11251))
+- Fix: improve legibility of processed mail error popover in light mode @shamoon ([#11258](https://github.com/paperless-ngx/paperless-ngx/pull/11258))
+- Fixhancement: truncate large logs, improve auto-scroll @shamoon ([#11239](https://github.com/paperless-ngx/paperless-ngx/pull/11239))
+- Chore: add max-height and overflow to processedmail error popover @shamoon ([#11252](https://github.com/paperless-ngx/paperless-ngx/pull/11252))
+- Fix: delay iframe DOM removal, handle onafterprint error for print in FF @shamoon ([#11237](https://github.com/paperless-ngx/paperless-ngx/pull/11237))
+- Performance: use virtual scroll container and log level parsing for logs view @MickLesk ([#11233](https://github.com/paperless-ngx/paperless-ngx/pull/11233))
+- Chore: cache Github version check for 15 minutes @shamoon ([#11235](https://github.com/paperless-ngx/paperless-ngx/pull/11235))
+- Fix: de-deduplicate children in tag list when filtering @shamoon ([#11229](https://github.com/paperless-ngx/paperless-ngx/pull/11229))
 </details>
