@@ -1,11 +1,11 @@
 source:
   type: github-releases
   repo: redis-stack/redis-stack
-  current_version: v7.4.0-v7
+  current_version: v7.4.0-v8
   version_template: regex:^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)-v(?<build>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
-  patch: 1
+  patch: 2
   image: fabioogaravini/hassio-redis-stack
 build:
   image: redis/redis-stack
