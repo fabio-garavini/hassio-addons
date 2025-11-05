@@ -1,5 +1,5 @@
 name: Gitea
-version: 1.25.0
+version: 1.25.1
 slug: gitea
 codenotary: info@fabiogaravini.dev
 description: Gitea is a Git hosting, code review, team collaboration, package
