@@ -1,5 +1,5 @@
 build_from:
-  aarch64: ghcr.io/linuxserver/syncthing:v2.0.10-ls200
-  amd64: ghcr.io/linuxserver/syncthing:v2.0.10-ls200
+  aarch64: ghcr.io/linuxserver/syncthing:v2.0.11-ls200
+  amd64: ghcr.io/linuxserver/syncthing:v2.0.11-ls200
 codenotary:
   signer: info@fabiogaravini.dev
