@@ -55,19 +55,19 @@ This release is also available as:
 
 * APT repository: https://apt.syncthing.net/
 
-* Docker image: `docker.io/syncthing/syncthing:2.0.10` or `ghcr.io/syncthing/syncthing:2.0.10`
+* Docker image: `docker.io/syncthing/syncthing:2.0.11` or `ghcr.io/syncthing/syncthing:2.0.11`
   (`{docker,ghcr}.io/syncthing/syncthing:2` to follow just the major version)
 
 ## What's Changed
 ### Fixes
-* fix: improve conflict detection by tracking previous file hash (fixes #10349) by @calmh in https://github.com/syncthing/syncthing/pull/10351
-* fix(ur): properly skip zero/empty fields in report by @calmh in https://github.com/syncthing/syncthing/pull/10394
-* fix(gui): don't fetch usage report preview unnecessarily on GUI load by @calmh in https://github.com/syncthing/syncthing/pull/10395
-* fix(db): only perform foreign key checking when a migration was applied by @pixelspark in https://github.com/syncthing/syncthing/pull/10397
-* fix(syncthing): do not perform CPU benchmark on startup unless logging enabled by @pixelspark in https://github.com/syncthing/syncthing/pull/10398
-* fix(model): don't announce untrusted devices to other devices (fixes #10393) by @calmh in https://github.com/syncthing/syncthing/pull/10408
-* fix(sqlite): actually always insert blocks for local files (fixes #10388) by @calmh in https://github.com/syncthing/syncthing/pull/10411
+* fix(policy): only allow approvals by non-author contributors by @marbens-arch in https://github.com/syncthing/syncthing/pull/10419
+* fix(fs): store `getExpireAdd` mutex in `caseCache` (fixes #9836) by @marbens-arch in https://github.com/syncthing/syncthing/pull/10430
+* fix(fs): apply case option to fakefs in casefs tests by @marbens-arch in https://github.com/syncthing/syncthing/pull/10439
+* fix(fs): only apply case option to fakefs in stress test by @marbens-arch in https://github.com/syncthing/syncthing/pull/10440
 ### Other
-* build: update GitHub actions by @mrclmr in https://github.com/syncthing/syncthing/pull/10399
+* docs(docker): make host network mode the default by @bt90 in https://github.com/syncthing/syncthing/pull/10416
+* chore(upnp): remove incorrect embedding of nat.Service (fixes #10426) by @imsodin in https://github.com/syncthing/syncthing/pull/10428
+* chore: minor lint fixes by @calmh in https://github.com/syncthing/syncthing/pull/10436
+* chore(gui): add Azerbaijani (az) and Kurdish (ckb) l10n templates. by @acolomb in https://github.com/syncthing/syncthing/pull/10442
 
-**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.9...v2.0.10
+**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.10...v2.0.11
