@@ -74,14 +74,6 @@ _All-in-one_
 
 ![screenshot](https://www.getgrist.com/wp-content/uploads/2023/06/homepage-video-poster3.jpg)
 
-### 🍏 Grocy
-
-_All-in-one_
-
-[Grocy](https://grocy.info) is a groceries & household management solution for your home.
-
-![screenshot](https://grocy.info/img/__thumbs/stock-en.png)
-
 ### 📷 Immich
 
 _All-in-one_
