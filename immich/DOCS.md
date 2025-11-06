@@ -2,11 +2,6 @@
 
 **Immich** is a high-performance self-hosted solution for managing personal photos and videos. This all-in-one addon bundles essential services for immediate use.
 
-> \[!WARNING]
-> **Project Status**: Immich is under active development.
-> Do not use as your sole photo/video storage solution!
-> *Official developer advisory*
-
 ## 🧩 All-in-One Components
 
 This monolithic package includes:
