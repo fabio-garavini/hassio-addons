@@ -1,5 +1,5 @@
 build_from:
-  aarch64: gristlabs/grist-oss:1.7.5
-  amd64: gristlabs/grist-oss:1.7.5
+  aarch64: gristlabs/grist-oss:1.7.6
+  amd64: gristlabs/grist-oss:1.7.6
 codenotary:
   signer: info@fabiogaravini.dev
