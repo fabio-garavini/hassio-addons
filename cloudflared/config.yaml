@@ -6,7 +6,6 @@ description: Cloudflare tunneling and Zero Trust service
 arch:
   - aarch64
   - amd64
-  - armv7
 init: false
 map:
   - type: addon_config

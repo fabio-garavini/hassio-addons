@@ -8,7 +8,6 @@ webui: http://[HOST]:[PORT:8090]/_/
 backup: cold
 arch:
   - aarch64
-  - armv7
   - amd64
 init: false
 map:

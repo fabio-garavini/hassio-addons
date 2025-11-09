@@ -1,6 +1,5 @@
 build_from:
   aarch64: alpine:latest
-  armv7: alpine:latest
   amd64: alpine:latest
 codenotary:
   signer: info@fabiogaravini.dev

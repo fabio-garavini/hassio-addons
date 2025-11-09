@@ -7,7 +7,6 @@ url: https://prometheus.io
 startup: initialize
 arch:
   - aarch64
-  - armv7
   - amd64
 init: false
 backup: cold
