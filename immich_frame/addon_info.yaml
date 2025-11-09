@@ -10,7 +10,6 @@ config:
 build:
   image: ghcr.io/immichframe/immichframe
   version_template: v{{major}}.{{minor}}.{{patch}}.{{build}}
-  codenotary: info@fabiogaravini.dev
 changelog:
   source: github-releases
   repo: immichFrame/ImmichFrame

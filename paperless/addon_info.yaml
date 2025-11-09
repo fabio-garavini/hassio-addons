@@ -10,7 +10,6 @@ config:
 build:
   image: ghcr.io/paperless-ngx/paperless-ngx
   version_template: "{{major}}.{{minor}}.{{patch}}"
-  codenotary: info@fabiogaravini.dev
 changelog:
   source: github-releases
   repo: paperless-ngx/paperless-ngx

@@ -1,7 +1,6 @@
 name: Memos
 version: 0.25.2
 slug: memos
-codenotary: info@fabiogaravini.dev
 description: note-taking solution designed for seamless deployment and multi-platform access
 url: https://www.usememos.com/
 webui: "[PROTO:ssl]://[HOST]:[PORT:5230]"

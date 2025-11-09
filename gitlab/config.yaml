@@ -1,7 +1,6 @@
 name: Gitlab
 version: 18.2.8-ce.0
 slug: gitlab
-codenotary: info@fabiogaravini.dev
 description: Gitlab Comunity Edition
 url: https://gitlab.com/rluna-gitlab/gitlab-ce
 webui: http://[HOST]:[PORT:80]

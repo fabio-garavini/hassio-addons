@@ -1,7 +1,6 @@
 name: Monica
 version: 5.0.0-beta.5-v2
 slug: monica
-codenotary: info@fabiogaravini.dev
 description: personal relationship management system, that lets you document your life
 url: https://github.com/monicahq/monica
 webui: "http://[HOST]:[PORT:80]"

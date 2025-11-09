@@ -10,7 +10,6 @@ config:
 build:
   image: alpine
   version_template: latest
-  codenotary: info@fabiogaravini.dev
 changelog:
   source: github-releases
   repo: usememos/memos

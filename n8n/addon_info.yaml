@@ -10,7 +10,6 @@ config:
 build:
   image: docker.n8n.io/n8nio/n8n
   version_template: "{{major}}.{{minor}}.{{patch}}"
-  codenotary: info@fabiogaravini.dev
 changelog:
   source: github-releases
   repo: n8n-io/n8n

@@ -1,7 +1,6 @@
 name: Immich Frame
 version: 1.0.29.0-v1
 slug: immich_frame
-codenotary: info@fabiogaravini.dev
 description: An awesome way to display your photos as a digital photo frame
 url: https://immichframe.online
 webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"

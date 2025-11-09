@@ -1,7 +1,6 @@
 name: Grimoire
 version: 0.4.4-v3
 slug: grimoire
-codenotary: info@fabiogaravini.dev
 description: Bookmark manager for the wizards 🧙
 url: https://github.com/goniszewski/grimoire
 webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"

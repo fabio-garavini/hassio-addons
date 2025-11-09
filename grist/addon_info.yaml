@@ -10,7 +10,6 @@ config:
 build:
   image: gristlabs/grist-oss
   version_template: "{{major}}.{{minor}}.{{patch}}"
-  codenotary: info@fabiogaravini.dev
 changelog:
   source: github-releases
   repo: gristlabs/grist-core

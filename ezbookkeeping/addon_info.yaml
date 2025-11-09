@@ -10,7 +10,6 @@ config:
 build:
   image: mayswind/ezbookkeeping
   version_template: "{{major}}.{{minor}}.{{patch}}"
-  codenotary: info@fabiogaravini.dev
 changelog:
   source: github-releases
   repo: mayswind/ezbookkeeping

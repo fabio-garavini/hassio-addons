@@ -10,7 +10,6 @@ config:
 build:
   image: ghcr.io/karakeep-app/karakeep
   version_template: "{{major}}.{{minor}}.{{patch}}"
-  codenotary: info@fabiogaravini.dev
 changelog:
   source: github-releases
   repo: karakeep-app/karakeep

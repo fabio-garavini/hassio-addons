@@ -10,7 +10,6 @@ config:
 build:
   image: jellyfin/jellyfin
   version_template: "{{major}}.{{minor}}.{{patch}}"
-  codenotary: info@fabiogaravini.dev
 changelog:
   source: github-releases
   repo: jellyfin/jellyfin

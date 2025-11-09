@@ -1,7 +1,6 @@
 name: Grist
 version: 1.7.6
 slug: grist
-codenotary: info@fabiogaravini.dev
 description: A modern, open-source spreadsheet software that goes beyond the grid
 url: https://www.getgrist.com
 webui: "[PROTO:ssl]://[HOST]:[PORT:8080]/o/docs/"

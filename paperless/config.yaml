@@ -1,7 +1,6 @@
 name: Paperless
 version: 2.19.5
 slug: paperless
-codenotary: info@fabiogaravini.dev
 description: Document management system that transforms your physical documents
   into a searchable online archive
 url: https://docs.paperless-ngx.com

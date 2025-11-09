@@ -10,7 +10,6 @@ config:
 build:
   image: ghcr.io/linuxserver/syncthing
   version_template: v{{major}}.{{minor}}.{{patch}}-ls{{build}}
-  codenotary: info@fabiogaravini.dev
 changelog:
   source: github-releases
   repo: syncthing/syncthing

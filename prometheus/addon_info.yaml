@@ -10,7 +10,6 @@ config:
 build:
   image: prom/prometheus
   version_template: v{{major}}.{{minor}}.{{patch}}
-  codenotary: info@fabiogaravini.dev
 changelog:
   source: github-releases
   repo: prometheus/prometheus

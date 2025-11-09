@@ -10,7 +10,6 @@ config:
 build:
   image: redis/redis-stack
   version_template: "{{major}}.{{minor}}.{{patch}}-v{{build}}"
-  codenotary: info@fabiogaravini.dev
 changelog:
   source: github-releases
   repo: redis-stack/redis-stack

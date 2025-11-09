@@ -10,7 +10,6 @@ config:
 build:
   image: ghcr.io/imagegenius/immich
   version_template: v{{major}}.{{minor}}.{{patch}}-ig{{build}}
-  codenotary: info@fabiogaravini.dev
 changelog:
   source: github-releases
   repo: immich-app/immich

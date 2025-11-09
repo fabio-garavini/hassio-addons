@@ -1,7 +1,6 @@
 name: Mealie
 version: 3.4.0
 slug: mealie
-codenotary: info@fabiogaravini.dev
 description: a place for all your recipes
 url: https://docs.mealie.io/
 webui: http://[HOST]:[PORT:9000]

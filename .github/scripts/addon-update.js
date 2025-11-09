@@ -131,15 +131,5 @@ function updateBuildConfig() {
     console.error('❌ Error editing Dockerfile:', err);
   }
 
-  if (info.build.codenotary != null) {
-    build.codenotary ??= {};
-    build.codenotary.signer = info.build.codenotary;
-    config.codenotary = info.build.codenotary;
-  } else if (build.codenotary != null || config.codenotary != null) {
-    delete build.codenotary?.signer;
-    if (build.codenotary?.size == 0) delete build.codenotary;
-    delete config.codenotary;
-  }
-
   fs.writeFileSync(buildFile, yaml.stringify(build), 'utf8');
 }

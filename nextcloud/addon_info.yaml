@@ -10,7 +10,6 @@ config:
 build:
   image: ghcr.io/linuxserver/nextcloud
   version_template: "{{major}}.{{minor}}.{{patch}}-ls{{build}}"
-  codenotary: info@fabiogaravini.dev
 changelog:
   source: github-releases
   repo: nextcloud-releases/server

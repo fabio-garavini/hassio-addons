@@ -1,7 +1,6 @@
 name: PocketBase
 version: 0.31.0
 slug: pocketbase
-codenotary: info@fabiogaravini.dev
 description: Pocketbase is an open source backend
 url: https://pocketbase.io
 webui: http://[HOST]:[PORT:8090]/_/
