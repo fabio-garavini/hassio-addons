@@ -1,2 +1,42 @@
+- **\[Breaking\]**
+    - The token type for requesting API in the `user-session-new` command-line argument has been changed to `api`. And before using this command-line, you need to set the `enable_api_token` option under the `security` configuration section to `true`
+
+- **\[Features\]**
+    - Add Korean language (#276, thanks @overworks)
+    - Support OAuth 2.0 (Nextcloud / Gitea / GitHub) authentication
+    - Support OIDC authentication (#242)
+    - Add overview sankey chart for categorical analysis on desktop version
+    - Add outflows / inflows / net cash flow chart data type in statistics & analysis
+    - Add asset trends in statistics & analysis (#314)
+    - Add radar chart for categorical analysis on desktop version
+    - Add bubble chart for trends analysis on desktop version
+    - Support moving all transactions from one account to another account (#288)
+    - Add an MCP tool `query_all_accounts_balance` for retrieving all account balances (#309)
+    - Support generating API token on desktop version
+
+- **\[Enhancements\]**
+    - Support canceling AI image recognition
+    - AI image recognition supports pasting images from clipboard on the desktop version
+    - Support pasting date time into the date-time picker on the desktop version
+    - Import credit card repayment transactions from WeChat pay statement file (#279)
+    - Support importing the latest format of Alipay statement file
+    - Support modifying amount and description when importing transactions
+    - Support selecting all visible in account / category / tag filter dialog / page
+    - Load configuration option value from file
+    - Display a security warning using AI image recognition or generating an MCP token
+    - Display a reminder to check important information when using AI image recognition
+    - Support setting the expiration time for generated tokens on desktop version or command line
+    - Other user interface optimization
+
+- **\[Development\]**
+    - Upgrade Golang to 1.25.3
+    - Upgrade Node.js to 24.10.0
+    - Upgrade Alpine base image to 3.22.2
+
 - **\[Bug Fixes\]**
-    - Fix the mobile transaction list page displayed incorrectly when loading more transactions (#277)
+    - Fix cannot modify transaction time after duplicating transaction with time on the mobile version
+    - Hide the "Set Location" button in the map sheet on the transaction view page in mobile version
+    - Fix cannot clear all transactions of sub-account (#304)
+    - Fix the Persian Calendar was not displayed when the calendar display type was set to Gregorian with Persian Calendar, but the date display type was not set to Persian
+    - Fix cannot shift the date range in the trend analysis after switching from categorical analysis with the date range set to "All"
+    - Support exporting transactions dated later than the current time

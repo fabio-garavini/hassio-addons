@@ -1,7 +1,8 @@
 name: ezBookkeeping
-version: 1.1.1-v3
+version: 1.2.0
 slug: ezbookkeeping
-description: A lightweight, self-hosted personal finance app with a user-friendly interface and powerful bookkeeping features
+description: A lightweight, self-hosted personal finance app with a
+  user-friendly interface and powerful bookkeeping features
 url: https://github.com/mayswind/ezBookkeeping
 ingress: true
 panel_icon: mdi:cash-multiple
