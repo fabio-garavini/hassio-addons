@@ -1,34 +1,27 @@
+## Security advisory
+
+Two vulnerabilities found in Grist by a private bug bounty program funded by DINUM (the Interministerial Digital Directorate of the French government) have been addressed.
+
+* Using the fetch URL feature, a user could execute a request to an external server with privileged network access.
+    * Mitigation: [ensure that network requests go through a trusted proxy.](https://github.com/gristlabs/grist-core/security/advisories/GHSA-qh95-2qv8-pqx3)
+* Users could use the `/compare` endpoint to get document history to parts of a document that they might not have read access to.
+    * Mitigation: [the `/compare` endpoint is now restricted to users that have full read access.](https://github.com/gristlabs/grist-core/security/advisories/GHSA-3v78-cw58-v685)
+
+Versions prior to 1.7.6 are known to be vulnerable. Please upgrade.
+
+These advisories are also documented in [our security advisory page](https://github.com/gristlabs/grist-core/security/advisories).
+ 
 ## What's Changed
 
-### New features
+* There was a missing login in Service Accounts API responses. Thanks to DINUM, this has now been fixed, which is important in order to make this feature usable.
+* The admin panel now displays information about who is currently assigned the installation admin role.
+* Miscellaneous bug fixes and translations.
 
-* Inspired by source control workflows, there is a new suggestions feature for crowd-sourcing data. Anyone can suggest a change to a document that the document editors can review then approve or reject.
+### Grist Enterprise
 
-### API improvements
-* Behind the `GRIST_ENABLE_SERVICE_ACCOUNTS` environment variable, there is a new API `api/service-accounts` for enabling, configuring, and using service accounts. A service account is intended for controlling and fine-tuning the scope and access of multiple API keys associated to a login user. Thanks to Grégoire Cutzach of DINUM for the hard work they poured into this feature.
-* There are new API endpoints `user/{id}/disable` and `user/{id}/enable` accessible only to admin accounts for enabling/disabling a user, without deleting the user.
-* The `/data/delete` API endpoint has been deprecated in favour of `records/delete`.
+* We have streamlined the procedure and instructions for building Grist with Enterprise Edition extensions. This is [now documented](https://github.com/gristlabs/grist-core/?tab=readme-ov-file#building-from-source:~:text=If%20you%20wish%20to%20include%20Grist%20Labs%20enterprise%20extensions%20in%20your%20build) in our README.
 
-### Self-hosting configuration
-* In order to better allow long uploads or downloads, there are three new environment variables: `GRIST_REQUEST_TIMEOUT_MS`, `GRIST_KEEP_ALIVE_TIMEOUT_MS`, and `GRIST_HEADERS_TIMEOUT_MS`.
-
-### UI improvements
-* When creating forms, it is now possible to set fields as hidden, as well as pre-populating those fields via a URL query parameter.
-* There are new shortcuts in the add column menu for adding various kinds of parts of dates to a table that already contains a date.
-* Copy-pasting into attachment columns now works.
-* There is now a download menu option in the document list
-
-### Accessibility
-* The search bar and the creator panel now have better keyboard navigation
-* Long lists in a form have better navigation
-* The descriptions of keyboard shortcut descriptions are now translated
-* Pie charts have been made more visually pleasing
-* The colors for selected buttons in the creator panel are now easier to read
-
-### Other
-
-* Miscellaneous bug fixes and translations
-
-**Full Changelog**: https://github.com/gristlabs/grist-core/compare/v1.7.4...v1.7.5
 
 [Join our Discord Community](https://discord.gg/MYKpYQ3fbP) if you'd like to get into development of Grist.
+
+**Full Changelog**: https://github.com/gristlabs/grist-core/compare/v1.7.5...v1.7.7
