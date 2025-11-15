@@ -1,9 +1,10 @@
-## [1.119.1](https://github.com/n8n-io/n8n/compare/n8n@1.119.0...n8n@1.119.1) (2025-11-10)
+## [1.119.2](https://github.com/n8n-io/n8n/compare/n8n@1.119.1...n8n@1.119.2) (2025-11-14)
 
 
 ### Bug Fixes
 
-* **editor:** Ensure license activation modal works when used without EULA ([#21681](https://github.com/n8n-io/n8n/issues/21681)) ([5ac5cf1](https://github.com/n8n-io/n8n/commit/5ac5cf1eeacdad740ed46a8379f5d8a8ad01a500))
+* **core:** Validate package version when installing community node ([#21886](https://github.com/n8n-io/n8n/issues/21886)) ([f869afd](https://github.com/n8n-io/n8n/commit/f869afd5f773a53da0acbff7c1022fc724be66d6))
+* **Git Node:** Disable git hooks by default ([#21797](https://github.com/n8n-io/n8n/issues/21797)) ([d5a1171](https://github.com/n8n-io/n8n/commit/d5a1171f95f75def5c3ac577707ab913e22aef04))
 
 
 
@@ -11,12 +12,14 @@
 ---
 
 > [!NOTE]
-> Patch release with a fix for the editor’s license activation modal when used without EULA; bump versions to 1.119.1.
+> Prepare release 1.119.2 with bug fixes (core package version validation for community nodes, Git Node disables hooks by default) and version bumps across packages.
 > 
-> - **Changelog**:
->   - Add `1.119.1` entry with bug fix: editor license activation modal works without EULA (`CHANGELOG.md`).
-> - **Version Bumps**:
->   - Update `version` to `1.119.1` in `package.json`, `packages/cli/package.json`, and `packages/frontend/editor-ui/package.json`.
+> - **Release 1.119.2**
+>   - Update `CHANGELOG.md` with bug fixes:
+>     - `core`: validate package version when installing community node
+>     - `Git Node`: disable git hooks by default
+> - **Version bumps**
+>   - Monorepo and packages: `package.json`, `packages/cli`, `packages/core`, `packages/nodes-base`, `packages/@n8n/nodes-langchain`, `packages/@n8n/task-runner`, `packages/@n8n/db`, `packages/@n8n/config`, `packages/@n8n/backend-common`, `packages/@n8n/backend-test-utils`, `packages/@n8n/ai-workflow-builder.ee`
 > 
-> <sup>Written by [Cursor Bugbot](https://cursor.com/dashboard?tab=bugbot) for commit 5895b002ff07fe3cbed49b2c4104a2f4b7e2afff. This will update automatically on new commits. Configure [here](https://cursor.com/dashboard?tab=bugbot).</sup>
+> <sup>Written by [Cursor Bugbot](https://cursor.com/dashboard?tab=bugbot) for commit 4f5146e7c53dfd2545b3442c5941c8fc1119f1f8. This will update automatically on new commits. Configure [here](https://cursor.com/dashboard?tab=bugbot).</sup>
 <!-- /CURSOR_SUMMARY -->
