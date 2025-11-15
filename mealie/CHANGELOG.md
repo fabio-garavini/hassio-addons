@@ -1,119 +1,79 @@
 # 🍴🍴🍴🍴🍴🍴
 
-This release contains mostly bug fixes, though we fit in a few features for you too!
+Welcome to the latest release of Mealie! This release contains a minor breaking change; the flow for downloading a recipe .zip has been simplified and no longer requires a zip token. If you are leveraging the .zip API, you'll want to update your scripts.
 
 ## 🎉 Highlights
 
-You can now set the default activity per-device (thanks @miah120!). Upon logging-in (or opening the PWA). You can choose to navigate to:
-- Your recipes (like before)
-- Your shopping lists
-- The meal planner
+- You can now add recipes as an ingredient for other recipes. Got a great teriyaki sauce recipe to go with your hibachi fried rice? You can add it as an ingredient now.
 
-This can be configured in your profile. By default, your default activity will be the recipes page (just like how it used to be before this update).
+## 🚨 Breaking changes
+
+- fix: Refactor Recipe Zip File Flow @michael-genson (#6170)
 
 ## ✨ New features
 
-- feat: Add new migration for DVO Cook'n @keyofdminer (#5085)
-- feat: Support User-Level Default Activities @miah120 (#5125)
-- feat: Improve shopping list label sections @miah120 (#6345)
+- feat: Add `DELETE /{slug}/image` @chollinger93 (#6259)
+- feat: Add recipe as ingredient @parumpum (#4800)
 
 ## 🐛 Bug fixes
 
-- fix: Change 'Units' to 'Unit' in shopping list item editor @ritoban23 (#6372)
-- fix: Check `x-forwarded-proto` header when determining auth cookie samesite attribute @michael-genson (#6383)
-- fix: Upgrade Pydantic and remove manual Postgres URL parsing @michael-genson (#6385)
-- fix: Use `crossorigin: "use-credentials"` with PWA manifest @michael-genson (#6430)
-- fix: dash slug names @fernandom06 (#5709)
-- fix: Make docs:gen consistent regardless of timestamp (again) @michael-genson (#6432)
-- fix: Changed sorting icons @RichardVanLeeuwen (#6354)
-- fix: Heart and Ranking Stars overlap each other @AurelienPautet (#6359)
-- fix: Food seed only works for American English (#6204) @flomero (#6436)
+- fix: Locale dates format @p0lycarpio (#6211)
+- fix: Update the random button flow @aliyyanWijaya (#6248)
+- fix: Include contents of purpose field when parsing ingredients @strangetom (#6494)
+- fix: Refactor Recipe Zip File Flow @michael-genson (#6170)
+- fix: Stabilize shopping list queuing @michael-genson (#6498)
+- fix: Brute parser fails if unit or food is empty @michael-genson (#6500)
+- fix: Make Ingredients and Instructions independently scrollable in cook mode @AurelienPautet (#6358)
+- fix: Improve recipe ingredient selection @p0lycarpio (#6518)
+- fix: prevent URL encoding in postgres placeholder display @LaurianeH-05 (#6438)
 
 ## 🧰 Maintenance
 
 <details>
-<summary>25 changes</summary>
+<summary>14 changes</summary>
 
-- chore(l10n): New Crowdin updates @hay-kot (#6347)
-- chore(l10n): New Crowdin updates @hay-kot (#6353)
-- chore(l10n): New Crowdin updates @hay-kot (#6357)
-- chore(l10n): Crowdin locale sync @github-actions (#6364)
-- chore(l10n): New Crowdin updates @hay-kot (#6367)
-- chore(l10n): New Crowdin updates @hay-kot (#6371)
-- chore(l10n): New Crowdin updates @hay-kot (#6376)
-- chore(l10n): New Crowdin updates @hay-kot (#6381)
-- chore(auto): Update pre-commit hooks @github-actions (#6370)
-- chore(l10n): New Crowdin updates @hay-kot (#6384)
-- chore(l10n): New Crowdin updates @hay-kot (#6388)
-- chore(l10n): New Crowdin updates @hay-kot (#6395)
-- chore(auto): Update pre-commit hooks @github-actions (#6407)
-- chore(l10n): New Crowdin updates @hay-kot (#6396)
-- chore(l10n): New Crowdin updates @hay-kot (#6434)
-- chore(l10n): New Crowdin updates @hay-kot (#6435)
-- chore(l10n): New Crowdin updates @hay-kot (#6439)
-- chore(l10n): Crowdin locale sync @github-actions (#6440)
-- chore(l10n): New Crowdin updates @hay-kot (#6441)
-- chore(l10n): New Crowdin updates @hay-kot (#6444)
-- chore(l10n): New Crowdin updates @hay-kot (#6446)
-- chore(l10n): New Crowdin updates @hay-kot (#6455)
-- chore(auto): Update pre-commit hooks @github-actions (#6445)
-- chore(l10n): New Crowdin updates @hay-kot (#6462)
-- chore(l10n): New Crowdin updates @hay-kot (#6464)
+- chore(l10n): New Crowdin updates @hay-kot (#6469)
+- chore(l10n): New Crowdin updates @hay-kot (#6478)
+- chore(l10n): Crowdin locale sync @github-actions (#6485)
+- chore(l10n): New Crowdin updates @hay-kot (#6486)
+- chore(l10n): New Crowdin updates @hay-kot (#6487)
+- chore: Update some frontend deps @michael-genson (#6490)
+- chore(l10n): New Crowdin updates @hay-kot (#6492)
+- chore(auto): Update pre-commit hooks @github-actions (#6493)
+- chore(l10n): New Crowdin updates @hay-kot (#6495)
+- chore(l10n): New Crowdin updates @hay-kot (#6502)
+- chore(l10n): New Crowdin updates @hay-kot (#6506)
+- chore(l10n): New Crowdin updates @hay-kot (#6508)
+- chore(l10n): Crowdin locale sync @github-actions (#6524)
+- chore(auto): Update pre-commit hooks @github-actions (#6528)
 </details>
 
 ## 📚 Documentation
 
-- docs(auto): Update image tag, for release v3.3.2 @github-actions (#6346)
+- docs(auto): Update image tag, for release v3.4.0 @github-actions (#6471)
+
+## 🔨 Internal development
+
+- dev: Migrate to uv @michael-genson (#6470)
 
 ## ⬆️ Dependency updates
 
 <details>
-<summary>36 changes</summary>
+<summary>6 changes</summary>
 
-- chore(deps): update dependency openai to v2.3.0 @renovate (#6330)
-- chore(deps): update dependency pydantic to v2.12.0 @renovate (#6310)
-- chore(deps): update dependency fastapi to v0.118.3 @renovate (#6336)
-- chore(deps): update dependency rich to v14.2.0 @renovate (#6341)
-- fix(deps): update dependency aiofiles to v25 @renovate (#6344)
-- chore(deps): update dependency psycopg2-binary to v2.9.11 @renovate (#6351)
-- chore(deps): update dependency sqlalchemy to v2.0.44 @renovate (#6352)
-- chore(deps): update dependency python-ldap to v3.4.5 [security] @renovate (#6356)
-- chore(deps): update dependency alembic to v1.17.0 @renovate (#6361)
-- fix(deps): update dependency fastapi to ^0.119.0 @renovate (#6362)
-- chore(deps): update dependency pylint to v4 @renovate (#6366)
-- chore(deps): update dependency pylint to v4.0.1 @renovate (#6389)
-- chore(deps): update dependency mkdocs-material to v9.6.22 @renovate (#6391)
-- chore(deps): update dependency coverage to v7.11.0 @renovate (#6392)
-- fix(deps): update dependency pillow to v12 @renovate (#6394)
-- chore(deps): update dependency pydantic to v2.12.3 @renovate (#6377)
-- chore(deps): update dependency ruff to v0.14.1 @renovate (#6397)
-- chore(deps): update dependency openai to v2.6.0 @renovate (#6398)
-- fix(deps): update dependency uvicorn to ^0.38.0 @renovate (#6400)
-- chore(deps): update dependency fastapi to v0.119.1 @renovate (#6408)
-- chore(deps): update dependency pylint to v4.0.2 @renovate (#6409)
-- chore(deps): update node.js to 58644f2 @renovate (#6418)
-- chore(deps): update node.js to a2a7dcc @renovate (#6422)
-- chore(deps): update dependency ruff to v0.14.2 @renovate (#6425)
-- fix(deps): update dependency vite to v7 [security] @renovate (#6412)
-- chore(deps): update node.js to 23c24e8 @renovate (#6424)
-- fix(deps): update dependency fastapi to ^0.120.0 @renovate (#6426)
-- chore(deps): update dependency openai to v2.6.1 @renovate (#6429)
-- chore(deps): update dependency orjson to v3.11.4 @renovate (#6431)
-- chore(deps): update dependency ingredient-parser-nlp to v2.4.0 @renovate (#6448)
-- chore(deps): update dependency python-dotenv to v1.2.1 @renovate (#6442)
-- chore(deps): update dependency alembic to v1.17.1 @renovate (#6456)
-- chore(deps): update dependency fastapi to v0.120.1 @renovate (#6450)
-- chore(deps): update node.js to v24 @renovate (#6451)
-- chore(deps): update dependency fastapi to v0.120.2 @renovate (#6457)
-- chore(deps): update dependency fastapi to v0.120.3 @renovate (#6465)
+- fix(deps): update dependency tzdata to v2025 @renovate (#6481)
+- chore(deps): update dependency types-python-slugify to v8 @renovate (#6480)
+- chore(deps): update node.js to 55b6bbe @renovate (#6503)
+- chore(deps): update node.js to e5bbac0 @renovate (#6507)
+- chore(deps): update dependency pytest to v9 @renovate (#6525)
+- chore(deps): update node.js to 7f80506 @renovate (#6539)
 </details>
 
 ## 🙏 New Contributors
 
-* @keyofdminer made their first contribution in https://github.com/mealie-recipes/mealie/pull/5085
-* @ritoban23 made their first contribution in https://github.com/mealie-recipes/mealie/pull/6372
-* @fernandom06 made their first contribution in https://github.com/mealie-recipes/mealie/pull/5709
-* @AurelienPautet made their first contribution in https://github.com/mealie-recipes/mealie/pull/6359
-* @flomero made their first contribution in https://github.com/mealie-recipes/mealie/pull/6436
+* @aliyyanWijaya made their first contribution in https://github.com/mealie-recipes/mealie/pull/6248
+* @strangetom made their first contribution in https://github.com/mealie-recipes/mealie/pull/6494
+* @chollinger93 made their first contribution in https://github.com/mealie-recipes/mealie/pull/6259
+* @LaurianeH-05 made their first contribution in https://github.com/mealie-recipes/mealie/pull/6438
 
 # 🍴🍴🍴🍴🍴🍴
