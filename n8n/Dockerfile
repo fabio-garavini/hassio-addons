@@ -1,4 +1,4 @@
-ARG BUILD_FROM=docker.n8n.io/n8nio/n8n:1.119.2
+ARG BUILD_FROM=docker.n8n.io/n8nio/n8n:1.120.3
 
 FROM ${BUILD_FROM}
 
