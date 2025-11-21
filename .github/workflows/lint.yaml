@@ -20,7 +20,7 @@ jobs:
     name: hadolint
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v6.0.0
+        uses: actions/checkout@v6
 
       - name: Run linter
         id: changed_files

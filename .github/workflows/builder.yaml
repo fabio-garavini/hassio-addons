@@ -14,6 +14,7 @@ on:
       - "**/Dockerfile"
       - "**/apparmor.txt"
       - "**/rootfs/**"
+      - '!.**'
   push:
     branches:
       - main
@@ -24,6 +25,7 @@ on:
       - "**/Dockerfile"
       - "**/apparmor.txt"
       - "**/rootfs/**"
+      - '!.**'
 
 defaults:
   run:
