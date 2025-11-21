@@ -20,7 +20,7 @@ jobs:
     name: hadolint
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v5.0.1
+        uses: actions/checkout@v6.0.0
 
       - name: Run linter
         id: changed_files
@@ -38,7 +38,7 @@ jobs:
     name: YAMLLint
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Run YAMLLint
         uses: frenck/action-yamllint@v1.5
@@ -53,7 +53,7 @@ jobs:
       changed: ${{ steps.changed_addons.outputs.changed }}
     steps:
       - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 📄 Get changed files
         id: changed_files
@@ -95,7 +95,7 @@ jobs:
         path: ${{ fromJson(needs.find.outputs.addons) }}
     steps:
       - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 🚀 Run Home Assistant Add-on Lint
         uses: frenck/action-addon-linter@v2
