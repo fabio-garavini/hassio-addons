@@ -38,7 +38,7 @@ jobs:
       changed: ${{ steps.changed_addons.outputs.changed }}
     steps:
       - name: ⤵️ Check out the repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 📄 Get changed files
         id: changed_files
@@ -91,7 +91,7 @@ jobs:
 
     steps:
       - name: ⤵️ Check out repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 🚀 Get add-on information
         id: info
@@ -280,7 +280,7 @@ jobs:
         addon: ${{ fromJson(needs.init.outputs.changed_addons) }}
     steps:
       - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 🚀 Run add-on information action
         id: info
