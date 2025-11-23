@@ -1,7 +1,7 @@
 source:
   type: docker
   repo: gitea/gitea
-  current_version: 1.25.1
+  current_version: 1.25.2
   version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
