@@ -118,10 +118,25 @@ RUN set -eux; \
 
 ENV TIKA_VERSION=$TIKA_VERSION
 
+ENV JAVA_HOME=/opt/openjdk
+ENV PATH="$JAVA_HOME/bin:$PATH"
+
 RUN set -eux; \
-#    echo "deb http://deb.debian.org/debian trixie-backports main" > /etc/apt/sources.list.d/backports.list; \
     apt-get update; \
-    apt-get install -y --no-install-recommends openjdk-17-jre-headless netcat-traditional; \
+    apt-get install -y --no-install-recommends curl ca-certificates netcat-traditional; \
+    \
+    if [ "$BUILD_ARCH" = "amd64" ]; then \
+        JDK_URL="https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_linux-x64_bin.tar.gz"; \
+    elif [ "$BUILD_ARCH" = "aarch64" ]; then \
+        JDK_URL="https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_linux-aarch64_bin.tar.gz"; \
+    else \
+        echo "Unsupported BUILD_ARCH: $BUILD_ARCH" >&2; exit 1; \
+    fi; \
+    \
+    curl -fsSL "$JDK_URL" -o /tmp/openjdk.tar.gz; \
+    mkdir -p "$JAVA_HOME"; \
+    tar -xzf /tmp/openjdk.tar.gz -C "$JAVA_HOME" --strip-components=1; \
+    apt-get clean; \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     java --version; \
     groupadd -g 9998 -o tika; \
@@ -133,7 +148,6 @@ COPY --from=tika /tika-server-standard-${TIKA_VERSION}.jar /
 
 # from https://github.com/gotenberg/gotenberg/blob/main/build/Dockerfile
 
-ARG GOTENBERG_VERSION=8.20
 ARG GOTENBERG_USER_GID=991
 ARG GOTENBERG_USER_UID=991
 # See https://github.com/googlefonts/noto-emoji/releases.
