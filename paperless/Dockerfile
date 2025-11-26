@@ -1,7 +1,7 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/paperless-ngx/paperless-ngx:2.19.6
+ARG BUILD_FROM=ghcr.io/paperless-ngx/paperless-ngx:2.20.0
 
-ARG TIKA_VERSION=3.2.2
+ARG TIKA_VERSION=3.2.3
 ARG GOTENBERG_VERSION=8.23
 
 FROM gotenberg/gotenberg:${GOTENBERG_VERSION} AS gotenberg
@@ -10,7 +10,7 @@ FROM apache/tika:${TIKA_VERSION}.0 AS tika
 
 FROM $BUILD_FROM
 
-ARG TIKA_VERSION=3.2.2
+ARG TIKA_VERSION
 ARG BUILD_ARCH=amd64
 
 ENV PAPERLESS_PORT=8000 \
@@ -100,7 +100,7 @@ ENV PATH="$PATH:/usr/lib/postgresql/$PG_MAJOR/bin:/usr/lib/bin"
 # install Postgres & Redis
 RUN set -eux; \
     apt-get update; \
-    apt-get install -y --no-install-recommends libnss-wrapper lsb-release curl ca-certificates; \
+    apt-get install -y --no-install-recommends libnss-wrapper lsb-release ca-certificates; \
     install -d /usr/share/postgresql-common/pgdg; \
     curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc; \
     sh -c "echo 'deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main' > /etc/apt/sources.list.d/pgdg.list"; \
@@ -123,7 +123,7 @@ ENV PATH="$JAVA_HOME/bin:$PATH"
 
 RUN set -eux; \
     apt-get update; \
-    apt-get install -y --no-install-recommends curl ca-certificates netcat-traditional; \
+    apt-get install -y --no-install-recommends ca-certificates netcat-traditional; \
     \
     if [ "$BUILD_ARCH" = "amd64" ]; then \
         JDK_URL="https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_linux-x64_bin.tar.gz"; \
@@ -150,9 +150,9 @@ COPY --from=tika /tika-server-standard-${TIKA_VERSION}.jar /
 
 ARG GOTENBERG_USER_GID=991
 ARG GOTENBERG_USER_UID=991
-# See https://github.com/googlefonts/noto-emoji/releases.
-ARG NOTO_COLOR_EMOJI_VERSION=v2.048
-# See https://gitlab.com/pdftk-java/pdftk/-/releases - Binary package.
+# renovate: datasource=github-releases packageName=googlefonts/noto-emoji
+ARG NOTO_COLOR_EMOJI_VERSION=v2.051
+# renovate: datasource=gitlab-releases packageName=hassio-pdftk-java/pdftk registryUrl=https://gitlab.com
 ARG PDFTK_VERSION=v3.3.3
 
 RUN \
@@ -228,6 +228,20 @@ RUN \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN \
+    # Install Hyphenation for LibreOffice.
+    # Credits: https://wiki.archlinux.org/title/LibreOffice.
+    apt-get update -qq &&\
+    apt-get upgrade -yqq &&\
+    DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends \
+        hyphen-af hyphen-as hyphen-be hyphen-bg hyphen-bn hyphen-ca hyphen-cs hyphen-da hyphen-de hyphen-el \
+        hyphen-en-gb hyphen-en-us hyphen-eo hyphen-es hyphen-fr hyphen-gl hyphen-gu hyphen-hi hyphen-hr hyphen-hu \
+        hyphen-id hyphen-is hyphen-it hyphen-kn hyphen-lt hyphen-lv hyphen-ml hyphen-mn hyphen-mr hyphen-nl \
+        hyphen-no hyphen-or hyphen-pa hyphen-pl hyphen-pt-br hyphen-pt-pt hyphen-ro hyphen-ru hyphen-sk hyphen-sl \
+        hyphen-sr hyphen-sv hyphen-ta hyphen-te hyphen-th hyphen-uk hyphen-zu &&\
+    # Cleanup.
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN \
     # Install Chromium.
     apt-get update -qq &&\
     apt-get upgrade -yqq &&\
@@ -244,13 +258,15 @@ RUN \
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
 
+COPY unoconv /usr/bin/unoconverter
+
 RUN \
     # Install LibreOffice & unoconverter.
-    echo "deb http://deb.debian.org/debian bookworm-backports main" >> /etc/apt/sources.list &&\
+    echo "deb http://deb.debian.org/debian trixie-backports main" >> /etc/apt/sources.list &&\
     apt-get update -qq &&\
     apt-get upgrade -yqq &&\
-    DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends -t bookworm-backports python3 python3-setuptools python3-uno libreoffice &&\
-    curl -Ls https://raw.githubusercontent.com/gotenberg/unoconverter/v0.1.1/unoconv -o /usr/bin/unoconverter &&\
+    DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends -t trixie-backports libreoffice &&\
+    #curl -Ls https://raw.githubusercontent.com/gotenberg/unoconverter/v0.1.1/unoconv -o /usr/bin/unoconverter &&\
     chmod +x /usr/bin/unoconverter &&\
     # unoconverter will look for the Python binary, which has to be at version 3.
     ln -s /usr/bin/python3 /usr/bin/python &&\
@@ -258,7 +274,6 @@ RUN \
     libreoffice --version &&\
     unoconverter --version &&\
     # Cleanup.
-    apt-get autoclean -y; \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN \
