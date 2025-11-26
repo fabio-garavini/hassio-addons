@@ -27,7 +27,7 @@
         "/(^|/)Dockerfile\\.[^/]*$/"
       ],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>[a-z-]+?)(?: depName=(?<depName>.+?))? packageName=(?<packageName>.+?)(?: versioning=(?<versioning>[a-z-]+?))?\\s(?:ENV|ARG) .+?_VERSION\\s*=\\s*[\"']?(?<currentValue>.+?)[\"']?\\s"
+        "# renovate: datasource=(?<datasource>[a-z-]+?)( depName=(?<depName>.+?))?( packageName=(?<packageName>.+?))?( versioning=(?<versioning>[a-z-]+?))?( registryUrl=(?<registryUrl>.*?))?\\s(?:ENV|ARG) .+?_VERSION\\s*=\\s*[\"']?(?<currentValue>.+?)[\"']?\\s"
       ]
     }
   ],
