@@ -1,22 +1,14 @@
+
 ## What's Changed
 
-- feat: automatic thumbnail generation for S3-stored images
-- feat: masonry layout with responsive columns
-- feat: system theme detection and automatic dark/light mode switching
-- feat: manual latitude/longitude input for location tagging (#5152)
-- feat: copy memo content from action menu
-- feat: enhanced reaction selector with hover and mobile-friendly scrolling
-- feat: improved geolocation handling in LocationSelector
-- feat: theme-aware syntax highlighting in code blocks
-- fix: add user authentication security checks
-- fix: correct theme colors in calendar cells
-- fix: prevent dialog state leakage between sessions
-- fix: markdown parser compatibility improvements
-- chore: accessible confirmation dialogs with markdown support (#5111)
-- chore: enhanced store architecture and state management
-- chore: simplified concurrent operations (#5162)
-- chore: improved Traditional Chinese translations (#5159)
-- refactor: streamlined memo filtering logic
+- The markdown parser/renderer now follows CommonMark and GFM specifications for better compatibility and consistency
+- feat: add Focus Mode for distraction-free writing - New writing mode that minimizes distractions for focused memo creation
+- feat: add ability to delete unused attachments (#5272) - Clean up unused attachments to save storage space
+- feat: standardize theme system with auto sync option (#5231) - Theme now syncs with system preferences automatically
+- feat: add load more button and pagination to attachments page (#5258) - Better navigation for large attachment lists
+- fix: resolve tag sidebar filtering and reactivity issues - Tags now filter properly in the sidebar
+- fix: prevent memory exhaustion in thumbnail generation - More stable thumbnail generation
+- fix: markdown list auto-completion creates new line correctly (#5238) - List continuation works as expected
 
 ## 💎 Featured Sponsor
 
@@ -26,17 +18,15 @@
   <img src="https://raw.githubusercontent.com/warpdotdev/brand-assets/main/Github/Sponsor/Warp-Github-LG-02.png" alt="Warp - The terminal for the 21st century" height="256" />
 </a>
 
+### [LambdaTest - Cross-browser testing cloud](https://www.lambdatest.com/?utm_source=memos&utm_medium=sponsor)
+  
+<a href="https://www.lambdatest.com/?utm_source=memos&utm_medium=sponsor" target="_blank" rel="noopener">
+  <img src="https://www.lambdatest.com/blue-logo.png" alt="LambdaTest - Cross-browser testing cloud" height="50" />
+</a>
+
 ## New Contributors
-* @nicolasluckie made their first contribution in https://github.com/usememos/memos/pull/5111
-* @asttool made their first contribution in https://github.com/usememos/memos/pull/5162
-* @bmitchinson made their first contribution in https://github.com/usememos/memos/pull/5152
-* @simoncarrignon made their first contribution in https://github.com/usememos/memos/pull/5174
-* @FloDwld made their first contribution in https://github.com/usememos/memos/pull/5179
+* @Elliott-byte made their first contribution in https://github.com/usememos/memos/pull/5229
+* @gitkeniwo made their first contribution in https://github.com/usememos/memos/pull/5258
+* @richardszegh made their first contribution in https://github.com/usememos/memos/pull/5272
 
-**Full Changelog**: https://github.com/usememos/memos/compare/v0.25.1...v0.25.2
-
-## Learn More
-
-Website: [www.usememos.com](https://www.usememos.com/)
-Changelog: [www.usememos.com/changelog](https://www.usememos.com/changelog)
-Documentation: [www.usememos.com/docs](https://www.usememos.com/docs)
+**Full Changelog**: https://github.com/usememos/memos/compare/v0.25.2...v0.25.3
