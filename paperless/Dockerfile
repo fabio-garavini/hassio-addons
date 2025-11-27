@@ -152,7 +152,7 @@ ARG GOTENBERG_USER_GID=991
 ARG GOTENBERG_USER_UID=991
 # renovate: datasource=github-releases packageName=googlefonts/noto-emoji
 ARG NOTO_COLOR_EMOJI_VERSION=v2.051
-# renovate: datasource=gitlab-releases packageName=hassio-pdftk-java/pdftk registryUrl=https://gitlab.com
+# renovate: datasource=gitlab-releases packageName=pdftk-java/pdftk registryUrl=https://gitlab.com
 ARG PDFTK_VERSION=v3.3.3
 
 RUN \
