@@ -55,19 +55,12 @@ This release is also available as:
 
 * APT repository: https://apt.syncthing.net/
 
-* Docker image: `docker.io/syncthing/syncthing:2.0.11` or `ghcr.io/syncthing/syncthing:2.0.11`
+* Docker image: `docker.io/syncthing/syncthing:2.0.12` or `ghcr.io/syncthing/syncthing:2.0.12`
   (`{docker,ghcr}.io/syncthing/syncthing:2` to follow just the major version)
 
 ## What's Changed
-### Fixes
-* fix(policy): only allow approvals by non-author contributors by @marbens-arch in https://github.com/syncthing/syncthing/pull/10419
-* fix(fs): store `getExpireAdd` mutex in `caseCache` (fixes #9836) by @marbens-arch in https://github.com/syncthing/syncthing/pull/10430
-* fix(fs): apply case option to fakefs in casefs tests by @marbens-arch in https://github.com/syncthing/syncthing/pull/10439
-* fix(fs): only apply case option to fakefs in stress test by @marbens-arch in https://github.com/syncthing/syncthing/pull/10440
 ### Other
-* docs(docker): make host network mode the default by @bt90 in https://github.com/syncthing/syncthing/pull/10416
-* chore(upnp): remove incorrect embedding of nat.Service (fixes #10426) by @imsodin in https://github.com/syncthing/syncthing/pull/10428
-* chore: minor lint fixes by @calmh in https://github.com/syncthing/syncthing/pull/10436
-* chore(gui): add Azerbaijani (az) and Kurdish (ckb) l10n templates. by @acolomb in https://github.com/syncthing/syncthing/pull/10442
+* chore: update quic-go, adapt to lack of write tracking by @calmh in https://github.com/syncthing/syncthing/pull/10456
+* chore(cli): clean up generated usage strings for config commands (fixes #10462) by @acolomb in https://github.com/syncthing/syncthing/pull/10463
 
-**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.10...v2.0.11
+**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.11...v2.0.12
