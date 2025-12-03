@@ -1,18 +1,10 @@
 > _To update the prebuilt executable you can run `./pocketbase update`._
 
-- Added `@request.body.someField:changed` modifier.
-    It could be used when you want to ensure that a body field either wasn't submitted or was submitted with the same value.
-    Or in other words, if you want to disallow a field change the below 2 expressions would be equivalent:
-    ```js
-    // (old)
-    (@request.body.someField:isset = false || @request.body.someField = someField)
+- Added missing `:` char to the autocomplete regex ([#7353](https://github.com/pocketbase/pocketbase/pull/7353); thanks @ouvreboite).
 
-    // (new)
-    @request.body.someField:changed = false
-    ```
+- Added "Copy raw JSON" collection dropdown option ([#7357](https://github.com/pocketbase/pocketbase/issues/7357)).
 
-- Added `MailerRecordEvent.Meta["info"]` property for the `OnMailerRecordAuthAlertSend` hook.
+- Updated Go deps and JS SDK.
 
-- Updated the backup restore popup with a short info about the performed restore steps.
-
-- Updated Go deps.
+- Bumped min Go GitHub action version to 1.25.5 because it comes with some [minor security fixes](https://github.com/golang/go/issues?q=milestone%3AGo1.25.5).
+    _The runner action was also updated to `actions/setup-go@v6` since the previous v5 Go source seems [no longer accessible](https://github.com/actions/setup-go/pull/665#issuecomment-3416693714)._
