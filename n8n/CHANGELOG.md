@@ -1,8 +1,11 @@
-## [1.122.4](https://github.com/n8n-io/n8n/compare/n8n@1.122.3...n8n@1.122.4) (2025-11-28)
+## [1.122.5](https://github.com/n8n-io/n8n/compare/n8n@1.122.4...n8n@1.122.5) (2025-12-04)
 
 
 ### Bug Fixes
 
-* **core:** Introduce batch workflow rule to fix subworkflow with wait node detection ([#22447](https://github.com/n8n-io/n8n/issues/22447)) ([8280690](https://github.com/n8n-io/n8n/commit/828069066f8dc0d62070ec933125fc560b2e1a0b))
-* **core:** OIDC form breaks when enabling OIDC while SAML is active ([#22463](https://github.com/n8n-io/n8n/issues/22463)) ([7c979e7](https://github.com/n8n-io/n8n/commit/7c979e7c3625a37e1575acbc20a9bbb430d9c2b2))
-* **editor:** Wording for migration rule detail table headers ([#22398](https://github.com/n8n-io/n8n/issues/22398)) ([969f0be](https://github.com/n8n-io/n8n/commit/969f0be2dc53c43d9f18d7bace764aba364302f0))
+* **core:** Fix html header check ([#22713](https://github.com/n8n-io/n8n/issues/22713)) ([e8cf4d6](https://github.com/n8n-io/n8n/commit/e8cf4d6bb3af94dc296cbb67bc3dd20e9b508ac9))
+
+
+### Features
+
+* **core:** Add toolCode nodes to the pyodide check for v2 migration ([#22659](https://github.com/n8n-io/n8n/issues/22659)) ([f8c7ad6](https://github.com/n8n-io/n8n/commit/f8c7ad60971fbf4b289bad1f67e8a3f1bb254757))
