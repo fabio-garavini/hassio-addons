@@ -1,5 +1,5 @@
 name: Frigate TensorRT (Nvidia Jetson)
-version: 0.16.2-tensorrt-jp6
+version: 0.16.3-tensorrt-jp6
 panel_icon: mdi:cctv
 panel_title: Frigate
 slug: frigate_tensorrt_jp6
