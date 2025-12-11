@@ -7,7 +7,6 @@
 This monolithic package includes:
 
 - **n8n**: workflow automations
-- **PostgreSQL 16**: SQL database
 - **Redis**: Real-time notifications and caching
 
 [Official n8n Documentation](https://docs.n8n.io/)

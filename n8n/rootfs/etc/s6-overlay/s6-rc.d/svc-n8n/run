@@ -3,10 +3,4 @@
 
 set -e
 
-OPTIONS_SOURCE=/data/options.json
-
-if jq -e '.tunnel == true' $OPTIONS_SOURCE > /dev/null; then
-    exec n8n start --tunnel
-else
-    exec n8n start
-fi
+exec n8n start

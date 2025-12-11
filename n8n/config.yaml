@@ -21,7 +21,6 @@ backup: cold
 backup_exclude:
   - "**/logs"
 schema:
-  tunnel: bool
   TZ: str?
   GENERIC_TIMEZONE: str?
   ssl: bool
@@ -31,7 +30,6 @@ schema:
   N8N_PATH: str?
   WEBHOOK_URL: str?
 options:
-  tunnel: false
   ssl: true
   certfile: fullchain.pem
   keyfile: privkey.pem
