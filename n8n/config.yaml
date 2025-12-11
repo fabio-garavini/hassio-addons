@@ -1,5 +1,5 @@
 name: n8n
-version: 1.123.4
+version: 2.0.0
 slug: n8n
 description: Flexible AI workflow automation
 url: https://n8n.io
@@ -21,7 +21,6 @@ backup: cold
 backup_exclude:
   - "**/logs"
 schema:
-  tunnel: bool
   TZ: str?
   GENERIC_TIMEZONE: str?
   ssl: bool
@@ -30,8 +29,8 @@ schema:
   N8N_HOST: str?
   N8N_PATH: str?
   WEBHOOK_URL: str?
+  clean_redis: bool?
 options:
-  tunnel: false
   ssl: true
   certfile: fullchain.pem
   keyfile: privkey.pem

@@ -1,4 +1,4 @@
-ARG BUILD_FROM=docker.n8n.io/n8nio/n8n:1.123.4
+ARG BUILD_FROM=docker.n8n.io/n8nio/n8n:2.0.0
 
 FROM ${BUILD_FROM}
 
@@ -21,6 +21,7 @@ USER root
 
 RUN \
     apk add --no-cache \
+        shadow \
         bash \
         curl \
         jq \
@@ -79,6 +80,11 @@ RUN \
     \
     && apk del --no-cache --purge .build-dependencies \
     && rm -rf /tmp/*
+
+# redis user and group gets created by default with the redis package
+RUN apk add --no-cache redis
+
+COPY .common/redis/ /
 
 COPY rootfs/ /
 
