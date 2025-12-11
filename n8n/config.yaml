@@ -29,6 +29,7 @@ schema:
   N8N_HOST: str?
   N8N_PATH: str?
   WEBHOOK_URL: str?
+  clean_redis: bool?
 options:
   ssl: true
   certfile: fullchain.pem

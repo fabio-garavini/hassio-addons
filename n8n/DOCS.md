@@ -22,3 +22,8 @@ This monolithic package includes:
    - Start the add-on
    - Click **OPEN WEB UI** and follow first-run wizard
 1. **Configure Libraries** (see Storage section below)
+
+
+## 📄 Redis
+
+Redis is running on `localhost` or `127.0.0.1` with port `6379`

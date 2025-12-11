@@ -15,3 +15,9 @@ configuration:
     name: SSL certificate
   N8N_SSL_KEY:
     name: SSL private key
+  clean_redis:
+    name: Clean Redis cache
+    description: >-
+      This will always start Redis with a clean new db.Use only if you are facing problems that needs cleaning Redis
+network:
+  5678/tcp: n8n Web UI
