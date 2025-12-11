@@ -1,3 +1,3 @@
 build_from:
-  aarch64: ghcr.io/imagegenius/immich:v2.3.1-ig438
-  amd64: ghcr.io/imagegenius/immich:v2.3.1-ig438
+  aarch64: ghcr.io/imagegenius/immich:v2.3.1-ig439
+  amd64: ghcr.io/imagegenius/immich:v2.3.1-ig439
