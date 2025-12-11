@@ -271,7 +271,7 @@ jobs:
 
   manifest:
     name: 🚀 Deploy ${{ matrix.addon }} Multi Arch Manifest
-    if: always() && github.event_name == 'push'
+    if: always() && github.event_name == 'push' && needs.init.outputs.changed == 'true'
     needs:
       - init
       - deploy
@@ -302,7 +302,9 @@ jobs:
           fi
 
       - name: 📥 Download all deploy artifacts
+        id: download
         uses: actions/download-artifact@v6
+        continue-on-error: true
         with:
           pattern: deploy-status-${{ matrix.addon }}-*
           path: deploy-status/
@@ -313,6 +315,13 @@ jobs:
         run: |
           echo "Checking deployment status for ${{ matrix.addon }}"
           addon_name="${{ matrix.addon }}"
+          
+          # Check if any artifacts were downloaded
+          if [[ ! -d "deploy-status" ]] || [[ -z "$(ls -A deploy-status 2>/dev/null)" ]]; then
+            echo "⚠️ No deploy artifacts found - addon may not have a Dockerfile or builds were skipped"
+            echo "all_success=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
           
           all_success=true
           for architecture in $(echo '${{ steps.info.outputs.architectures }}' | jq -r '.[]'); do
