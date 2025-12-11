@@ -1,5 +1,5 @@
 name: Immich Frame
-version: 1.0.29.0-v1
+version: 1.0.30.0
 slug: immich_frame
 description: An awesome way to display your photos as a digital photo frame
 url: https://immichframe.online
@@ -24,15 +24,15 @@ schema:
     DownloadImages: bool
     RenewImagesDuration: int
     Webcalendars:
-      - "str"
+      - str
     RefreshAlbumPeopleInterval: int
     PhotoDateFormat: str
     ImageLocationFormat: str
     WeatherApiKey: str?
-    UnitSystem: "list(imperial|metric)"
+    UnitSystem: list(imperial|metric)
     WeatherLatLong: str
     Language: str
-    Webhook: "str?"
+    Webhook: str?
     Interval: int
     TransitionDuration: float
     ShowClock: bool
@@ -46,30 +46,30 @@ schema:
     ShowImageLocation: bool
     PrimaryColor: str
     SecondaryColor: str
-    Style: "list(none|solid|transition|blur)"
+    Style: list(none|solid|transition|blur)
     BaseFontSize: str
     ShowWeatherDescription: bool
     WeatherIconUrl: str
     ImageZoom: bool
     ImagePan: bool
     ImageFill: bool
-    Layout: "list(single|splitview)"
+    Layout: list(single|splitview)
   Accounts:
     - ImmichServerUrl: str
       ApiKey: password
-      ImagesFromDate: "str?"
+      ImagesFromDate: str?
       ShowMemories: bool
       ShowFavorites: bool
       ShowArchived: bool
-      ImagesFromDays: "int?"
-      ImagesUntilDate: "str?"
-      Rating: "int?"
+      ImagesFromDays: int?
+      ImagesUntilDate: str?
+      Rating: int?
       Albums:
-        - "str"
+        - str
       ExcludedAlbums:
-        - "str"
+        - str
       People:
-        - "str"
+        - str
 options:
   ssl: false
   certfile: fullchain.pem
@@ -80,17 +80,17 @@ options:
     RenewImagesDuration: 30
     Webcalendars: []
     RefreshAlbumPeopleInterval: 12
-    PhotoDateFormat: "MM/dd/yyyy"
-    ImageLocationFormat: "City,State,Country"
+    PhotoDateFormat: MM/dd/yyyy
+    ImageLocationFormat: City,State,Country
     WeatherApiKey: ""
-    UnitSystem: "metric"
-    WeatherLatLong: "40.730610,-73.935242"
-    Language: "en"
+    UnitSystem: metric
+    WeatherLatLong: 40.730610,-73.935242
+    Language: en
     Interval: 45
-    TransitionDuration: 2.0
+    TransitionDuration: 2
     ShowClock: true
-    ClockFormat: "hh:mm"
-    ClockDateFormat: "eee, MMM d"
+    ClockFormat: hh:mm
+    ClockDateFormat: eee, MMM d
     ShowProgressBar: true
     ShowPhotoDate: true
     ShowImageDesc: true
@@ -99,16 +99,16 @@ options:
     ShowImageLocation: true
     PrimaryColor: "#f5deb3"
     SecondaryColor: "#000000"
-    Style: "none"
-    BaseFontSize: "17px"
+    Style: none
+    BaseFontSize: 17px
     ShowWeatherDescription: true
-    WeatherIconUrl: "https://openweathermap.org/img/wn/{IconId}.png"
+    WeatherIconUrl: https://openweathermap.org/img/wn/{IconId}.png
     ImageZoom: true
     ImagePan: false
     ImageFill: false
-    Layout: "splitview"
+    Layout: splitview
   Accounts:
-    - ImmichServerUrl: "http://3b88f413-immich:2283"
+    - ImmichServerUrl: http://3b88f413-immich:2283
       ShowMemories: false
       ShowFavorites: false
       ShowArchived: false
