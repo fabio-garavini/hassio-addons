@@ -1,3 +1,1 @@
-# 0.29.1
-
-A patch release for [0.29.0](https://github.com/karakeep-app/karakeep/releases/tag/v0.29.0) with the fix of NextJs CVE: CVE-2025-66478
+Upgrading Nextjs to patch two new vulnerabilities in react CVE-2025-55184 & CVE-2025-55183. This is on top of the critical vulnerability (CVE-2025-66478) that was patched in 0.29.1.
