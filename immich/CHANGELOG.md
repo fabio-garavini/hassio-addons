@@ -1,5 +1,9 @@
 # v2.3.1
 
+## Hassio addon
+
+* workaround for `No thumbnail generation` [#71](https://github.com/fabio-garavini/hassio-addons/issues/71) on aarch64
+
 ## Hot fixes
 
 Fixed an issue where the new version notification pop-up causes the web app to enter a rendering loop and freeze up. 

@@ -186,7 +186,8 @@ COPY rootfs/ /
 
 RUN ln -sT docker-ensure-initdb.sh /usr/local/bin/docker-enforce-initdb.sh
 
-VOLUME /config /data /share /media
+#! workaround for no thumbnail generation on aarch64
+ENV VIPS_NOVECTOR=1
 
 ARG BUILD_VERSION \
     BUILD_DATE \
