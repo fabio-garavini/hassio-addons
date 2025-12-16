@@ -1,5 +1,5 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/karakeep-app/karakeep:0.29.2
+ARG BUILD_FROM=ghcr.io/karakeep-app/karakeep:0.29.3
 
 FROM getmeili/meilisearch:v1.13.3 AS meilisearch
 
