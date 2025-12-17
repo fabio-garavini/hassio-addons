@@ -9,4 +9,4 @@ fi
 
 cd "$MEILI_DIR"
 
-exec /bin/meilisearch --no-analytics
+exec /bin/meilisearch --no-analytics --experimental-dumpless-upgrade

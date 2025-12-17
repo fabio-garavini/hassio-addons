@@ -1,7 +1,9 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/karakeep-app/karakeep:0.29.2
+ARG BUILD_FROM=ghcr.io/karakeep-app/karakeep:0.29.3
 
-FROM getmeili/meilisearch:v1.13.3 AS meilisearch
+ARG MEILI_VERSION="v1.13.3"
+
+FROM getmeili/meilisearch:${MEILI_VERSION} AS meilisearch
 
 FROM ${BUILD_FROM}
 
@@ -46,7 +48,11 @@ ARG BASHIO_VERSION="v0.17.5"
 # renovate: datasource=github-releases packageName=home-assistant/tempio
 ARG TEMPIO_VERSION="2024.11.2"
 RUN \
-    apk add --no-cache \
+    set -o pipefail \
+    && apk add --no-cache --virtual .build-dependencies \
+        tar \
+        xz \
+    && apk add --no-cache \
         libcrypto3 \
         libssl3 \
         musl-utils \
@@ -65,11 +71,14 @@ RUN \
     && curl -L -s "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" -o /usr/bin/tempio \
     && chmod a+x /usr/bin/tempio \
     \
+    && apk del --no-cache --purge .build-dependencies \
     && rm -rf /tmp/*
 
 # Installs latest Chromium package.
-RUN apk upgrade --no-cache --available \
+RUN \
+    apk upgrade --no-cache --available \
     && apk add --no-cache \
+      chromium \
       chromium-swiftshader \
       ttf-freefont \
       font-noto-emoji \
