@@ -1,5 +1,5 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/linuxserver/nextcloud:32.0.3-ls407
+ARG BUILD_FROM=ghcr.io/linuxserver/nextcloud:32.0.3-ls408
 
 FROM $BUILD_FROM
 
