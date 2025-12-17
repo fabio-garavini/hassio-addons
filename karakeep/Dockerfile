@@ -48,7 +48,11 @@ ARG BASHIO_VERSION="v0.17.5"
 # renovate: datasource=github-releases packageName=home-assistant/tempio
 ARG TEMPIO_VERSION="2024.11.2"
 RUN \
-    apk add --no-cache \
+    set -o pipefail \
+    && apk add --no-cache --virtual .build-dependencies \
+        tar \
+        xz \
+    && apk add --no-cache \
         libcrypto3 \
         libssl3 \
         musl-utils \
@@ -67,6 +71,7 @@ RUN \
     && curl -L -s "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" -o /usr/bin/tempio \
     && chmod a+x /usr/bin/tempio \
     \
+    && apk del --no-cache --purge .build-dependencies \
     && rm -rf /tmp/*
 
 # Installs latest Chromium package.
