@@ -68,8 +68,10 @@ RUN \
     && rm -rf /tmp/*
 
 # Installs latest Chromium package.
-RUN apk upgrade --no-cache --available \
+RUN \
+    apk upgrade --no-cache --available \
     && apk add --no-cache \
+      chromium \
       chromium-swiftshader \
       ttf-freefont \
       font-noto-emoji \
