@@ -225,6 +225,12 @@ jobs:
           retry-interval: 10
           compose-file: "${{ steps.info.outputs.target }}/test/docker-compose.${{ matrix.arch }}.yml"
 
+      - name: 📃 Logs
+        if: steps.check.outputs.build_arch == 'true' && steps.tests.outputs.test == 'true' && ( success() || failure() )
+        run: |
+          cd "${{ steps.info.outputs.target }}/test"
+          docker compose -f "docker-compose.${{ matrix.arch }}.yml" logs
+
       - name: ¿? Restart Docker Compose services
         if: steps.check.outputs.build_arch == 'true' && steps.tests.outputs.test == 'true'
         run: |
@@ -238,6 +244,12 @@ jobs:
           max-retries: 30
           retry-interval: 10
           compose-file: "${{ steps.info.outputs.target }}/test/docker-compose.${{ matrix.arch }}.yml"
+
+      - name: 📃 Logs
+        if: steps.check.outputs.build_arch == 'true' && steps.tests.outputs.test == 'true' && ( success() || failure() )
+        run: |
+          cd "${{ steps.info.outputs.target }}/test"
+          docker compose -f "docker-compose.${{ matrix.arch }}.yml" logs
 
       - name: 🏁 Stop Docker Compose services
         if: steps.check.outputs.build_arch == 'true' && steps.tests.outputs.test == 'true'
