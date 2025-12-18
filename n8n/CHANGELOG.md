@@ -1,7 +1,7 @@
-## [2.0.2](https://github.com/n8n-io/n8n/compare/n8n@2.0.1...n8n@2.0.2) (2025-12-12)
+## [2.0.3](https://github.com/n8n-io/n8n/compare/n8n@2.0.2...n8n@2.0.3) (2025-12-17)
 
 
 ### Bug Fixes
 
-* Backfill missing workflow history records ([#23070](https://github.com/n8n-io/n8n/issues/23070)) ([ace3c5f](https://github.com/n8n-io/n8n/commit/ace3c5fbf0a897db90dc7fc4e3b4722880ca0fcc))
-* Make sure duplicating workflows creates them as unpublished ([#23113](https://github.com/n8n-io/n8n/issues/23113)) ([9a01e9d](https://github.com/n8n-io/n8n/commit/9a01e9dd8dde5403ed77209ef4f0273f94de8e88))
+* **core:** Error running evaluations in queue mode ([#23248](https://github.com/n8n-io/n8n/issues/23248)) ([326fe66](https://github.com/n8n-io/n8n/commit/326fe6602b351610dd595b8ff7d1d62d65bd3cae))
+* Only support specified git config keys in Git node ([#23264](https://github.com/n8n-io/n8n/issues/23264)) ([19f42eb](https://github.com/n8n-io/n8n/commit/19f42ebe3f262fd0fd138a57b20363b2138f4514))
