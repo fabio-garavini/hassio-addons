@@ -19,6 +19,8 @@ ENV \
 # hadolint ignore=DL3002
 USER root
 
+COPY --from=alpine:3.22 / /
+
 RUN \
     apk add --no-cache \
         shadow \
@@ -29,8 +31,8 @@ RUN \
         libcrypto3 \
         libssl3 \
         musl-utils \
-        musl; \
-    rm -rf /tmp/*
+        musl \
+    && rm -rf /tmp/*
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
