@@ -1,4 +1,4 @@
-ARG BUILD_FROM=docker.n8n.io/n8nio/n8n:2.0.3
+ARG BUILD_FROM=docker.n8n.io/n8nio/n8n:2.1.2
 
 FROM ${BUILD_FROM}
 
@@ -19,6 +19,19 @@ ENV \
 # hadolint ignore=DL3002
 USER root
 
+# renovate: datasource=repology depName=alpine_3_22/apk-tools-static versioning=loose
+ARG APK_TOOLS_VERSION=3.0.3-r1
+
+# hadolint global ignore=DL4001
+RUN \
+    set -eux; \
+    cd /tmp; \
+    wget -nv http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d. -f1-2)/main/$(uname -m)/apk-tools-static-3.0.3-r1.apk; \
+    tar -xzf apk-tools-static-*.apk; \
+    ls -al sbin; \
+    ./sbin/apk.static -X http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d. -f1-2)/main --initdb add apk-tools; \
+    rm -rf /tmp/*
+
 RUN \
     apk add --no-cache \
         shadow \
@@ -29,8 +42,8 @@ RUN \
         libcrypto3 \
         libssl3 \
         musl-utils \
-        musl; \
-    rm -rf /tmp/*
+        musl \
+    && rm -rf /tmp/*
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
