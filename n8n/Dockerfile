@@ -19,7 +19,18 @@ ENV \
 # hadolint ignore=DL3002
 USER root
 
-COPY --from=alpine:3.22 / /
+# renovate: datasource=repology depName=alpine_3_22/apk-tools-static versioning=loose
+ARG APK_TOOLS_VERSION=3.0.3-r1
+
+# hadolint global ignore=DL4001
+RUN \
+    set -eux; \
+    cd /tmp; \
+    wget -nv http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d. -f1-2)/main/$(uname -m)/apk-tools-static-3.0.3-r1.apk; \
+    tar -xzf apk-tools-static-*.apk; \
+    ls -al sbin; \
+    ./sbin/apk.static -X http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d. -f1-2)/main --initdb add apk-tools; \
+    rm -rf /tmp/*
 
 RUN \
     apk add --no-cache \
