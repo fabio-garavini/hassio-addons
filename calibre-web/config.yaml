@@ -1,0 +1,29 @@
+name: Calibre Web
+version: 0.6.25
+slug: calibre-web
+description: Calibre ebook reader
+url: https://github.com/janeczku/calibre-web
+arch:
+  - aarch64
+  - amd64
+init: false
+map:
+  - type: addon_config
+    read_only: false
+  - type: share
+    read_only: false
+  - type: media
+    read_only: false
+schema:
+  PUID: int(0,)
+  PGID: int(0,)
+  TZ: str?
+options:
+  PUID: 1000
+  PGID: 1000
+  TZ: Etc/UTC
+ports:
+  8083/tcp: null
+ports_description:
+  8384/tcp: Web UI (not needed with Ingress)
+image: fabioogaravini/hassio-calibre-web
