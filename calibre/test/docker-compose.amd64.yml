@@ -1,0 +1,29 @@
+name: calibre-amd64
+services:
+  calibre-amd64:
+    image: fabioogaravini/hassio-calibre:${VERSION:-latest}-amd64
+    build:
+      context: ..
+      args:
+        BUILD_ARCH: amd64
+        BUILD_VERSION: ${VERSION:-latest}
+    container_name: calibre-amd64
+    ports:
+      - "8080:8080"
+    volumes:
+      - data:/data
+      - ./options.json:/data/options.json:ro
+      - config:/config
+      - share:/share
+      - media:/media
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8083"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  data:
+  config:
+  share:
+  media:
