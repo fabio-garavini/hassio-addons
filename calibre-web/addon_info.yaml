@@ -2,7 +2,7 @@ source:
   type: github-releases
   repo: linuxserver/docker-calibre-web
   current_version: 0.6.25-ls364
-  version_template: regex:^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)-ls(?<build>\d+)$
+  version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)-ls(?<build>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
   patch: 0
