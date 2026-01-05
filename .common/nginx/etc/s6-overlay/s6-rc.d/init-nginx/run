@@ -10,6 +10,7 @@ service_protocol=${SERVICE_PROTOCOL:-http}
 nginx_port=${NGINX_PORT:-8080}
 certfile="/ssl/$(jq -r '.certfile' $OPTIONS_SOURCE)"
 keyfile="/ssl/$(jq -r '.keyfile' $OPTIONS_SOURCE)"
+ingress_user=$(jq -r '.ingress_user' $OPTIONS_SOURCE)
 
 # Generate upstream configuration
 printf '{ "port": "%s" }' "$service_port" \
@@ -24,7 +25,7 @@ if jq -e '.ssl == true' $OPTIONS_SOURCE > /dev/null; then
 
     # If certfile or keyfile does not exist, generate self-signed cert
     if [ ! -f "$certfile" ] || [ ! -f "$keyfile" ]; then
-        bashio::log.warning "SSL is enabled, but either certfile, keyfile, or both are missing. Falling back to a self-signed certificate..."
+        bashio::log.warning "SSL is enabled, but either certfile, keyfile or both are missing. Falling back to a self-signed certificate..."
 
         certfile="/data/ssl/fullchain.pem"
         keyfile="/data/ssl/privkey.pem"
@@ -40,8 +41,9 @@ printf '{
   "keyfile": "%s",
   "port": "%s",
   "protocol": "%s",
-  "ssl": %s
-}' "$certfile" "$keyfile" "$nginx_port" "$service_protocol" "$(jq -r '.ssl' $OPTIONS_SOURCE)" \
+  "ssl": %s,
+  "ingress_user": "%s"
+}' "$certfile" "$keyfile" "$nginx_port" "$service_protocol" "$(jq -r '.ssl' $OPTIONS_SOURCE)" "$ingress_user" \
     | tempio \
         -template /etc/nginx/templates/direct.gtpl \
         -out /etc/nginx/servers/direct.conf

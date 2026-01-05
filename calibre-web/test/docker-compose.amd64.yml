@@ -9,11 +9,12 @@ services:
         BUILD_VERSION: ${VERSION:-latest}
     container_name: calibre-web-amd64
     ports:
-      - "8083:8083"
+      - "8080:8080"
     volumes:
       - data:/data
       - ./options.json:/data/options.json:ro
       - config:/config
+      - ssl:/ssl
       - share:/share
       - media:/media
     healthcheck:
@@ -25,5 +26,6 @@ services:
 volumes:
   data:
   config:
+  ssl:
   share:
   media:
