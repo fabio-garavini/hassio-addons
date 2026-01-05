@@ -38,7 +38,7 @@ ports:
   22000/udp: 22000
   21027/udp: 21027
 ports_description:
-  8384/tcp: Web frontend (not needed with Ingress)
+  8384/tcp: Web UI (not needed with Ingress)
   22000/tcp: Sync protocol tcp
   22000/udp: Sync protocol udp
   21027/udp: Discovery broadcast

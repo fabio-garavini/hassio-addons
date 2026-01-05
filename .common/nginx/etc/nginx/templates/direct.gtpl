@@ -16,6 +16,16 @@ server {
     {{ end }}
 
     location / {
+        {{ if .ingress_user }}
+        set $ingress_user "";
+
+        if ($remote_addr = 172.30.32.2) {
+            set $ingress_user {{ .ingress_user }};
+        }
+
+        proxy_set_header X-WebAuth-User $ingress_user;
+        {{ end }}
+
         proxy_pass {{ .protocol }}://backend;
     }
 }

@@ -7,18 +7,7 @@ echo "  Loading env variables:"
 
 OPTIONS_SOURCE=/data/options.json
 
-jq -r '
-    reduce to_entries[] as $item (
-        {};
-        if $item.value | type == "object" then
-        . + $item.value
-        else
-        . + { ($item.key): $item.value }
-        end
-    )
-    | to_entries[]
-    | "\(.key)\u0000\(.value|tostring)"
-    ' $OPTIONS_SOURCE | while read -r -d $'\0' key && read -r value; do
+while read -r -d $'\0' key && read -r value; do
 
     line="$key=$value"
 
@@ -32,7 +21,7 @@ jq -r '
             ;;
     esac
 
-    export line
+    export $key=$value
 
     # set .env
     echo "$line" >> /.env || true
@@ -46,7 +35,20 @@ jq -r '
     fi
 
     echo "export $line" >> ~/.bashrc
-done
+done < <(
+    jq -r '
+        reduce to_entries[] as $item (
+            {};
+            if $item.value | type == "object" then
+                . + $item.value
+            else
+                . + { ($item.key): $item.value }
+            end
+        )
+        | to_entries[]
+        | "\(.key)\u0000\(.value|tostring)"
+    ' "$OPTIONS_SOURCE"
+)
 
 if [ -n "$TZ" ] && [ -f /etc/localtime ]; then
     if [ -f /usr/share/zoneinfo/"$TZ" ]; then
