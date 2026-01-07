@@ -55,12 +55,17 @@ This release is also available as:
 
 * APT repository: https://apt.syncthing.net/
 
-* Docker image: `docker.io/syncthing/syncthing:2.0.12` or `ghcr.io/syncthing/syncthing:2.0.12`
+* Docker image: `docker.io/syncthing/syncthing:2.0.13` or `ghcr.io/syncthing/syncthing:2.0.13`
   (`{docker,ghcr}.io/syncthing/syncthing:2` to follow just the major version)
 
 ## What's Changed
+### Fixes
+* fix(beacon): don't join multicast groups on non-multicast interfaces (fixes #10497) by @marbens-arch in https://github.com/syncthing/syncthing/pull/10498
 ### Other
-* chore: update quic-go, adapt to lack of write tracking by @calmh in https://github.com/syncthing/syncthing/pull/10456
-* chore(cli): clean up generated usage strings for config commands (fixes #10462) by @acolomb in https://github.com/syncthing/syncthing/pull/10463
+* chore(model): refactor context handling for folder type by @calmh in https://github.com/syncthing/syncthing/pull/10472
+* build: fix docker build by ensuring qemu by @calmh in https://github.com/syncthing/syncthing/pull/10492
+* chore(beacon): more verbose debug logging by @marbens-arch in https://github.com/syncthing/syncthing/pull/10496
+* build: fix hash failure by limiting globbing by @calmh in https://github.com/syncthing/syncthing/pull/10505
+* chore: tweak pull retry logic by @calmh in https://github.com/syncthing/syncthing/pull/10491
 
-**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.11...v2.0.12
+**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.12...v2.0.13
