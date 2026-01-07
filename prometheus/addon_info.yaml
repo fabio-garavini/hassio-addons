@@ -1,7 +1,7 @@
 source:
   type: docker
   repo: prom/prometheus
-  current_version: v3.8.1
+  current_version: v3.9.0
   version_template: regex:^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
