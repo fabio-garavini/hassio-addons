@@ -1,1 +1,2 @@
-* [BUGFIX] remote: Fix Remote Write receiver, so it does not send wrong response headers for v1 flow and cause Prometheus senders to emit false partial error log and metrics. #17683
+ - [BUGFIX] Agent: fix crash shortly after startup from invalid type of object. #17802
+ - [BUGFIX] Scraping: fix relabel keep/drop not working. #17807
