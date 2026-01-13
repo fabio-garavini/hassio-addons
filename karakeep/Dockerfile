@@ -15,8 +15,7 @@ ENV \
     BROWSER_WEB_URL="http://127.0.0.1:9222" \
     MEILI_ADDR="http://127.0.0.1:7700" \
     MEILI_MASTER_KEY="0uIHQXWthY2L2yqCWGVGu2axN+l4qcDEc+Of/7e8X7bEyZ8k" \
-    MEILI_NO_ANALYTICS=true \
-    XDG_CACHE_HOME="/data/cache"
+    MEILI_NO_ANALYTICS=true
 
 ENV \
     CHROME_BIN=/usr/bin/chromium-browser \
@@ -76,16 +75,15 @@ RUN \
 
 # Installs latest Chromium package.
 RUN \
-    apk upgrade --no-cache --available \
-    && apk add --no-cache \
+    apk add --no-cache \
       chromium \
       chromium-swiftshader \
-      ttf-freefont \
+      font-freefont \
       font-noto-emoji \
-      font-wqy-zenhei \
-    && mkdir -p /usr/src/chrome \
-    && adduser -D chrome \
-    && chown -R chrome:chrome /usr/src/chrome
+      font-wqy-zenhei; \
+    mkdir -p /usr/src/chrome; \
+    adduser -D chrome; \
+    chown -R chrome:chrome /usr/src/chrome
 
 COPY --from=meilisearch /bin/meilisearch /bin/meilitool /bin/
 

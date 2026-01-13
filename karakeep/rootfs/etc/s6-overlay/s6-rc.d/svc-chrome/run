@@ -1,13 +1,33 @@
 #!/command/with-contenv bash
 # shellcheck shell=bash
 
-set -e
+set -euo pipefail
 
-if [ ! -d "/data/cache" ]; then
-  mkdir -p "/data/cache"
-  chown -R chrome:chrome /data/cache
-fi
+
+CHROME_CACHE_DIR="/data/cache/chrome"
+CHROME_PROFILE_DIR="/data/chrome/profiles"
+
+
+mkdir -p "$CHROME_CACHE_DIR" "$CHROME_PROFILE_DIR"
+chown -R chrome:chrome "$CHROME_CACHE_DIR" "$CHROME_PROFILE_DIR"
+
 
 cd /usr/src/chrome
 
-su chrome -c "chromium-browser --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --remote-debugging-address=0.0.0.0 --remote-debugging-port=9222 --hide-scrollbars --disable-crash-reporter --no-crash-upload &> /dev/null"
+exec su chrome -c "
+  chromium-browser \
+    --headless \
+    --use-gl=swiftshader \
+    --no-sandbox \
+    --disable-gpu \
+    --disable-software-rasterizer \
+    --disable-dev-shm-usage \
+    --disable-crash-reporter \
+    --no-crash-upload \
+    --hide-scrollbars \
+    --remote-debugging-address=0.0.0.0 \
+    --remote-debugging-port=9222 \
+    --user-data-dir='${CHROME_PROFILE_DIR}' \
+    --disk-cache-dir='${CHROME_CACHE_DIR}' \
+    &> /dev/null \
+"

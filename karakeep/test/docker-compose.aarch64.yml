@@ -2,6 +2,11 @@ name: karakeep-aarch64
 services:
   karakeep-aarch64:
     image: fabioogaravini/hassio-karakeep:${VERSION:-latest}-aarch64
+    build:
+      context: ..
+      args:
+        BUILD_ARCH: aarch64
+        BUILD_VERSION: ${VERSION:-latest}
     container_name: karakeep-aarch64
     ports:
       - 8080:8080
