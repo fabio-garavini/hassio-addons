@@ -1,3 +1,3 @@
 build_from:
-  aarch64: gristlabs/grist-oss:1.7.9
-  amd64: gristlabs/grist-oss:1.7.9
+  aarch64: gristlabs/grist-oss:1.7.10
+  amd64: gristlabs/grist-oss:1.7.10
