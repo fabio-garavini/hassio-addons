@@ -39,7 +39,12 @@ done < <(
     jq -r '
         reduce to_entries[] as $item (
             {};
-            if $item.value | type == "object" then
+            if $item.key == "env_vars" and ($item.value | type) == "array" then
+                . + (reduce $item.value[] as $ev (
+                    {};
+                    . + { ($ev.name): ($ev.value|tostring) }
+                ))
+            elif $item.value | type == "object" then
                 . + $item.value
             else
                 . + { ($item.key): $item.value }
