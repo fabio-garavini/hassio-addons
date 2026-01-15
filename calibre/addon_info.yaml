@@ -13,3 +13,5 @@ build:
 changelog:
   source: none
   version_template: "{{major}}.{{minor}}.{{patch}}"
+test:
+  enable: true

@@ -18,6 +18,8 @@ schema:
   PUID: int(0,)
   PGID: int(0,)
   TZ: str?
+  PASSWORD: password?
+  CLI_ARGS: str?
 options:
   PUID: 1000
   PGID: 1000
@@ -25,5 +27,5 @@ options:
 ports:
   8083/tcp: null
 ports_description:
-  8384/tcp: Web UI (not needed with Ingress)
+  8083/tcp: Web UI (not needed with Ingress)
 image: fabioogaravini/hassio-calibre
