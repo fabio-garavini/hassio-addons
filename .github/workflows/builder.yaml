@@ -242,7 +242,7 @@ jobs:
         if: steps.check.outputs.build_arch == 'true' && steps.tests.outputs.test == 'true'
         with:
           max-retries: 30
-          retry-interval: 10
+          retry-interval: 20
           compose-file: "${{ steps.info.outputs.target }}/test/docker-compose.${{ matrix.arch }}.yml"
 
       - name: 📃 Logs
