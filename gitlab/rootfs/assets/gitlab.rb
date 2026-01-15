@@ -34,6 +34,21 @@ gitlab_rails['store_initial_root_password'] = true
 
 gitlab_rails['trusted_proxies'] = ['192.168.0.0/16', '172.30.32.0/23', '127.0.0.1']
 
+puma['worker_processes'] = 0
+
+sidekiq['concurrency'] = 5
+
+prometheus_monitoring['enable'] = false
+
+gitlab_rails['env'] = {
+  'MALLOC_CONF' => 'dirty_decay_ms:1000,muzzy_decay_ms:1000'
+}
+
+gitaly['env'] = {
+  'MALLOC_CONF' => 'dirty_decay_ms:1000,muzzy_decay_ms:1000',
+  'GITALY_COMMAND_SPAWN_MAX_PARALLEL' => '1'
+}
+
 # Load custom config from environment variable: GITLAB_OMNIBUS_CONFIG
 # Disabling the cop since rubocop considers using eval to be security risk but
 # we don't have an easy way out, atleast yet.

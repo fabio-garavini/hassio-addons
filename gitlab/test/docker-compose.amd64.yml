@@ -1,0 +1,32 @@
+name: gitlab-amd64
+services:
+  gitlab-amd64:
+    image: fabioogaravini/hassio-gitlab:${VERSION:-latest}-amd64
+    build:
+      context: ..
+      args:
+        BUILD_ARCH: amd64
+        BUILD_VERSION: ${VERSION:-latest}
+    container_name: gitlab-amd64
+    ports:
+      - 8088:80
+    #  - 8443:443
+      - 2222:22
+    environment:
+      - TZ=Etc/UTC
+    volumes:
+      - data:/etc/gitlab
+      - ./options.json:/etc/gitlab/options.json:ro
+      - config:/var/opt/gitlab
+      - ssl:/ssl
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/-/liveness"]
+      interval: 10s
+      timeout: 10s
+      retries: 20
+      start_period: 60s
+
+volumes:
+  data:
+  config:
+  ssl:

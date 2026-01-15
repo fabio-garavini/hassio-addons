@@ -1,6 +1,7 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/ubuntu-base:stable
+ARG BUILD_FROM=docker.io/library/ubuntu
+ARG UBUNTU_VERSION="noble"
 
-FROM $BUILD_FROM
+FROM ${BUILD_FROM}:${UBUNTU_VERSION}
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -43,9 +44,11 @@ RUN busybox --install \
 # Legacy code to be removed on 17.0.  See: https://gitlab.com/gitlab-org/omnibus-gitlab/-/merge_requests/7035
 ENV GITLAB_ALLOW_SHA1_RSA=false
 
-ARG BUILD_VERSION=18.2.8-ce.0
-ARG GITLAB_VERSION=${BUILD_VERSION%-v*}
 ARG BUILD_ARCH=amd64
+
+ARG UBUNTU_VERSION
+
+ARG GITLAB_VERSION=18.5.5-ce.0
 
 RUN { \
     echo "RELEASE_PACKAGE=gitlab-ce"; \
@@ -59,7 +62,7 @@ RUN \
     else \
         export DOWNLOAD_ARCH=${BUILD_ARCH}; \
     fi; \
-    wget --quiet "https://packages.gitlab.com/gitlab/gitlab-ce/packages/ubuntu/noble/gitlab-ce_${GITLAB_VERSION}_${DOWNLOAD_ARCH}.deb/download.deb" -O /tmp/gitlab.deb; \
+    wget --quiet "https://packages.gitlab.com/gitlab/gitlab-ce/packages/ubuntu/${UBUNTU_VERSION}/gitlab-ce_${GITLAB_VERSION}_${DOWNLOAD_ARCH}.deb/download.deb" -O /tmp/gitlab.deb; \
     dpkg -i /tmp/gitlab.deb; \
     rm -rf /tmp/gitlab.deb /var/lib/apt/lists/*
 
@@ -72,18 +75,13 @@ RUN chmod -R og-w /assets RELEASE; \
 
 ENV PATH=/opt/gitlab/embedded/bin:/opt/gitlab/bin:/assets:$PATH
 
-# Expose web & ssh
-EXPOSE 443 80 22
-
-# Define data volumes
-VOLUME ["/etc/gitlab", "/var/opt/gitlab"]
-
 CMD ["/assets/init-container"]
 
 HEALTHCHECK --interval=60s --timeout=30s --retries=5 \
 CMD /opt/gitlab/bin/gitlab-healthcheck --fail --max-time 10
 
-ARG BUILD_DATE \
+ARG BUILD_VERSION \
+    BUILD_DATE \
     BUILD_DESCRIPTION \
     BUILD_NAME \
     BUILD_REF \
