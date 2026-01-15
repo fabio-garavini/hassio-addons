@@ -4,12 +4,34 @@
   "certfile": "fullchain.pem",
   "keyfile": "privkey.pem",
   "DISABLE_SIGNUPS": false,
+  "DISABLE_PASSWORD_AUTH": false,
+  "EMAIL_VERIFICATION_REQUIRED": false,
   "NEXTAUTH_SECRET": "jnE2An0WyIKZvO+WgKJrn8WPW+c3DzV+c9ntBp8CdobTOmpJ",
   "MAX_ASSET_SIZE_MB": 4,
-  "CRAWLER_DOWNLOAD_BANNER_IMAGE": true,
-  "CRAWLER_STORE_SCREENSHOT": true,
-  "CRAWLER_FULL_PAGE_SCREENSHOT": true,
-  "CRAWLER_FULL_PAGE_ARCHIVE": true,
-  "CRAWLER_ENABLE_ADBLOCKER": true,
+  "AI": {
+    "INFERENCE_ENABLE_AUTO_TAGGING": true,
+    "INFERENCE_ENABLE_AUTO_SUMMARIZATION": false,
+    "INFERENCE_OUTPUT_SCHEMA": "structured"
+  },
+  "Crawler": {
+    "CRAWLER_DOWNLOAD_BANNER_IMAGE": true,
+    "CRAWLER_STORE_SCREENSHOT": true,
+    "CRAWLER_FULL_PAGE_SCREENSHOT": true,
+    "CRAWLER_STORE_PDF": false,
+    "CRAWLER_FULL_PAGE_ARCHIVE": true,
+    "CRAWLER_ENABLE_ADBLOCKER": true
+  },
+  "SMTP": {
+    "SMTP_PORT": 587,
+    "SMTP_SECURE": true
+  },
+  "OAuth": {
+    "OAUTH_SCOPE": "openid email profile",
+    "OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING": false,
+    "OAUTH_TIMEOUT": 3500
+  },
+  "Monitoring": {
+    "OTEL_TRACING_ENABLED": false
+  },
   "env_vars": []
 }
