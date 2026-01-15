@@ -1,5 +1,5 @@
 name: Karakeep
-version: 0.30.0-v1
+version: 0.30.0-v2
 slug: karakeep
 description: bookmark-everything app with a touch of AI for the data hoarders out there
 url: https://karakeep.app/
@@ -48,6 +48,9 @@ schema:
   CRAWLER_VIDEO_DOWNLOAD_MAX_SIZE: int?
   CRAWLER_VIDEO_DOWNLOAD_TIMEOUT_SEC: int(0,)?
   CRAWLER_ENABLE_ADBLOCKER: bool
+  env_vars:
+    - key: match(^[A-Za-z0-9_]+$)
+      value: str
 options:
   TZ: Etc/UTC
   ssl: true
@@ -61,6 +64,7 @@ options:
   CRAWLER_FULL_PAGE_SCREENSHOT: false
   CRAWLER_FULL_PAGE_ARCHIVE: false
   CRAWLER_ENABLE_ADBLOCKER: true
+  env_vars: []
 ports:
   8080/tcp: 3011
 ports_description:

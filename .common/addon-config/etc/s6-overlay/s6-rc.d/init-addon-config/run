@@ -7,53 +7,59 @@ echo "  Loading env variables:"
 
 OPTIONS_SOURCE=/data/options.json
 
-while read -r -d $'\0' key && read -r value; do
+if [[ ! -f "$OPTIONS_SOURCE" ]] then
+    echo "Options file doesn't exist!"
+    exit 2
+fi
 
-    line="$key=$value"
+while IFS="=" read -r key value; do
 
-    # log redacted config
+    key=$(echo "$key" | tr '[:lower:]' '[:upper:]' | sed 's/[^A-Z0-9_]/_/g')
+
+    env=$key="$value"
+
+    # Redact log
     case "$key" in
         *PASS*|*SECRET*|*KEY*|*TOKEN*)
-            echo "  $key=******"
+            echo "  ${key}=******"
             ;;
         *)
-            echo "  $line"
+            echo "  $env"
             ;;
     esac
 
-    export $key=$value
+    export $env
 
     # set .env
-    echo "$line" >> /.env || true
+    echo "$env" >> /.env || true
+    
+    # add env to .bashrc
+    echo "export $env" >> ~/.bashrc
 
     # set /etc/environment
-    echo "$line" >> /etc/environment
+    echo "$env" >> /etc/environment
 
-    # For s6
+    # set s6 environment variables
     if [ -d /var/run/s6/container_environment ]; then
         printf "%s" "$value" > /var/run/s6/container_environment/"$key"
     fi
-
-    echo "export $line" >> ~/.bashrc
 done < <(
     jq -r '
-        reduce to_entries[] as $item (
-            {};
-            if $item.value | type == "object" then
-                . + $item.value
-            else
-                . + { ($item.key): $item.value }
-            end
-        )
-        | to_entries[]
-        | "\(.key)\u0000\(.value|tostring)"
+        to_entries[]
+        | if .key == "env_vars" then
+            .value[]?
+          elif (.value | type) == "object" then
+            .value | to_entries[]
+          end
+        | select(.value | type != "object" and type != "array")
+        | "\(.key)=\(.value|tostring)"
     ' "$OPTIONS_SOURCE"
 )
 
-if [ -n "$TZ" ] && [ -f /etc/localtime ]; then
+if [ -n "$TZ" ] && [ -f "/usr/share/zoneinfo/$TZ" ]; then
     if [ -f /usr/share/zoneinfo/"$TZ" ]; then
         echo "Timezone set to $TZ"
-        ln -snf /usr/share/zoneinfo/"$TZ" /etc/localtime
+        ln -snf "/usr/share/zoneinfo/$TZ" /etc/localtime
         echo "$TZ" >/etc/timezone
     fi
 fi
