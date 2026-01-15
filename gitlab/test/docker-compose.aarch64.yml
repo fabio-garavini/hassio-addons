@@ -19,12 +19,12 @@ services:
       - ./options.json:/etc/gitlab/options.json:ro
       - config:/var/opt/gitlab
       - ssl:/ssl
-    #healthcheck:
-    #  test: ["CMD", "curl", "-f", "http://localhost/-/liveness"]
-    #  interval: 10s
-    #  timeout: 10s
-    #  retries: 20
-    #  start_period: 60s
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/-/liveness"]
+      interval: 10s
+      timeout: 10s
+      retries: 20
+      start_period: 60s
 
 volumes:
   data:

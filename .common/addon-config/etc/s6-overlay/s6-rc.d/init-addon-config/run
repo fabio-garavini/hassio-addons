@@ -7,7 +7,7 @@ echo "  Loading env variables:"
 
 OPTIONS_SOURCE=/data/options.json
 
-if [[ ! -f "$OPTIONS_SOURCE" ]] then
+if [[ ! -f "$OPTIONS_SOURCE" ]]; then
     echo "Options file doesn't exist!"
     exit 2
 fi

@@ -14,3 +14,6 @@ changelog:
   source: github-releases
   repo: janeczku/calibre-web
   version_template: "{{major}}.{{minor}}.{{patch}}"
+test:
+  enable: true
+

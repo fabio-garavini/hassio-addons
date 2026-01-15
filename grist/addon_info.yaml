@@ -14,3 +14,5 @@ changelog:
   source: github-releases
   repo: gristlabs/grist-core
   version_template: v{{major}}.{{minor}}.{{patch}}
+test:
+  enable: true

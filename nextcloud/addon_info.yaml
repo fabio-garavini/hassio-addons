@@ -14,3 +14,5 @@ changelog:
   source: github-releases
   repo: nextcloud-releases/server
   version_template: v{{major}}.{{minor}}.{{patch}}
+test:
+  enable: true

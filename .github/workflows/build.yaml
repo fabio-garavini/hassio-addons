@@ -90,10 +90,10 @@ jobs:
         if: steps.check.outputs.build_arch == 'true'
         id: tests
         run: |
-          if [ -d "${{ steps.info.outputs.target }}/test" ]; then
-            echo "test=true" >> $GITHUB_OUTPUT
-          else
+          if [ ! -f "${{ steps.info.outputs.target }}/addon_info.yaml" ]; then
             echo "test=false" >> $GITHUB_OUTPUT
+          else
+            echo "test=$(yq e '.test.enable // false' "${{ steps.info.outputs.target }}/addon_info.yaml")" >> $GITHUB_OUTPUT
           fi
 
       - name: 📌 Load common build files
