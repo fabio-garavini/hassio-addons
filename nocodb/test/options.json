@@ -1,0 +1,5 @@
+{
+  "ssl": true,
+  "certfile": "fullchain.pem",
+  "keyfile": "privkey.pem"
+}
