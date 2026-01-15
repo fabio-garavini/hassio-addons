@@ -182,6 +182,8 @@ RUN set -eux; \
 
 #----------------------------------------------- S6 & Custom files ---------------------------------------------------------------------#
 
+COPY .common/addon-config /
+
 COPY rootfs/ /
 
 RUN ln -sT docker-ensure-initdb.sh /usr/local/bin/docker-enforce-initdb.sh

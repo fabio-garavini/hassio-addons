@@ -2,6 +2,11 @@ name: immich-aarch64
 services:
   immich-aarch64:
     image: fabioogaravini/hassio-immich:${VERSION:-latest}-aarch64
+    build:
+      context: ..
+      args:
+        BUILD_ARCH: aarch64
+        BUILD_VERSION: ${VERSION:-latest}
     container_name: immich-aarch64
     ports:
       - 8080:8080
