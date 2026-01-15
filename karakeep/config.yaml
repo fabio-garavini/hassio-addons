@@ -19,9 +19,6 @@ backup: cold
 backup_exclude:
   - "**/logs"
 schema:
-  env_vars:
-    - name: match(^[A-Za-z0-9_]+$)
-      value: str?
   TZ: str?
   ssl: bool
   certfile: str?
@@ -51,8 +48,10 @@ schema:
   CRAWLER_VIDEO_DOWNLOAD_MAX_SIZE: int?
   CRAWLER_VIDEO_DOWNLOAD_TIMEOUT_SEC: int(0,)?
   CRAWLER_ENABLE_ADBLOCKER: bool
+  env_vars:
+    - key: match(^[A-Za-z0-9_]+$)
+      value: str
 options:
-  env_vars: []
   TZ: Etc/UTC
   ssl: true
   certfile: fullchain.pem
@@ -65,6 +64,7 @@ options:
   CRAWLER_FULL_PAGE_SCREENSHOT: false
   CRAWLER_FULL_PAGE_ARCHIVE: false
   CRAWLER_ENABLE_ADBLOCKER: true
+  env_vars: []
 ports:
   8080/tcp: 3011
 ports_description:
