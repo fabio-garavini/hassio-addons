@@ -223,6 +223,7 @@ jobs:
         with:
           max-retries: 30
           retry-interval: 20
+          skip-no-healthcheck: true
           compose-file: "${{ steps.info.outputs.target }}/test/docker-compose.${{ matrix.arch }}.yml"
 
       - name: 📃 Logs
@@ -243,6 +244,7 @@ jobs:
         with:
           max-retries: 30
           retry-interval: 20
+          skip-no-healthcheck: true
           compose-file: "${{ steps.info.outputs.target }}/test/docker-compose.${{ matrix.arch }}.yml"
 
       - name: 📃 Logs
