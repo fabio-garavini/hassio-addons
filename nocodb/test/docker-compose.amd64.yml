@@ -11,7 +11,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - data:/usr/app/data/
+      - data:/data
       - ./options.json:/data/options.json:ro
       - config:/config
       - ssl:/ssl

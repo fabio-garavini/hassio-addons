@@ -19,6 +19,9 @@ ENV \
     SERVICE_PORT=80 \
     NGINX_PORT=8080
 
+ENV \
+    NC_TOOL_DIR="/config"
+
 # Shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
