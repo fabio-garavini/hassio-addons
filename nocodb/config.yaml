@@ -59,7 +59,7 @@ schema:
   Email:
     NC_SMTP_FROM: str?
     NC_SMTP_HOST: str?
-    NC_SMTP_PORT: int(1, 65535)?
+    NC_SMTP_PORT: int(1,65535)?
     NC_SMTP_USERNAME: str?
     NC_SMTP_PASSWORD: password?
     NC_SMTP_SECURE: bool?
