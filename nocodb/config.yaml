@@ -1,0 +1,91 @@
+name: Nocodb
+version: 0.301.1
+slug: nocodb
+description: 🔥 🔥 🔥 Open Source Airtable Alternative 
+url: https://nocodb.com/docs
+arch:
+  - aarch64
+  - amd64
+init: false
+map:
+  - type: addon_config
+    read_only: false
+  - type: share
+    read_only: false
+  - type: media
+    read_only: false
+schema:
+  ssl: bool
+  certfile: str?
+  keyfile: str?
+  NC_PUBLIC_URL: str?
+  NC_DASHBOARD_URL: str?
+  NUXT_PUBLIC_NC_BACKEND_URL: str?
+  Admin:
+    NC_ADMIN_EMAIL: str?
+    NC_ADMIN_PASSWORD: password?
+  Config:
+    DB_QUERY_LIMIT_DEFAULT: int(1,100)?
+    DB_QUERY_LIMIT_GROUP_BY_GROUP: int(0,)?
+    DB_QUERY_LIMIT_GROUP_BY_RECORD: int(0,)?
+    DB_QUERY_LIMIT_MAX: int(0,)?
+    DB_QUERY_LIMIT_MIN: int(0,)?
+    NC_CONNECT_TO_EXTERNAL_DB_DISABLED: bool?
+    NC_REQUEST_BODY_SIZE: int(0,)?
+    NC_ALLOW_LOCAL_HOOKS: bool?
+    NC_SANITIZE_COLUMN_NAME: bool?
+    NC_AUTOMATION_LOG_LEVEL: list(OFF|ERROR|ALL)?
+    NC_IFRAME_WHITELIST_DOMAINS: str?
+  Authentication:
+    NC_AUTH_JWT_SECRET: password?
+    NC_JWT_EXPIRES_IN: str?
+    NC_GOOGLE_CLIENT_ID: password?
+    NC_GOOGLE_CLIENT_SECRET: password?
+    NC_DISABLE_EMAIL_AUTH: bool?
+    NC_INVITE_ONLY_SIGNUP: bool?
+  Storage:
+    NC_S3_BUCKET_NAME: str?
+    NC_S3_REGION: str?
+    NC_S3_ENDPOINT: str?
+    NC_S3_ACCESS_KEY: password?
+    NC_S3_ACCESS_SECRET: password?
+    NC_S3_FORCE_PATH_STYLE: bool?
+    NC_S3_ACL: str?
+    NC_ATTACHMENT_FIELD_SIZE: int(0,)?
+    NC_MAX_ATTACHMENTS_ALLOWED: int(0,)?
+    NC_ATTACHMENT_RETENTION_DAYS: int(0,)?
+    NC_SECURE_ATTACHMENTS: bool?
+    NC_ATTACHMENT_EXPIRE_SECONDS: int(0,)?
+  Email:
+    NC_SMTP_FROM: str?
+    NC_SMTP_HOST: str?
+    NC_SMTP_PORT: int(1, 65535)?
+    NC_SMTP_USERNAME: str?
+    NC_SMTP_PASSWORD: password?
+    NC_SMTP_SECURE: bool?
+    NC_SMTP_IGNORE_TLS: bool?
+    NC_SMTP_REJECT_UNAUTHORIZED: bool?
+  NC_DISABLE_SUPPORT_CHAT: bool?
+  Telemetry:
+    NC_DISABLE_TELE: bool?
+    NC_SENTRY_DSN: str?
+    NC_DISABLE_ERR_REPORTS: bool?
+  env_vars:
+    - key: match(^[A-Za-z0-9_]+$)
+      value: str
+options:
+  ssl: true
+  certfile: fullchain.pem
+  keyfile: privkey.pem
+  Storage:
+    NC_SECURE_ATTACHMENTS: false
+  NC_DISABLE_SUPPORT_CHAT: false
+  Telemetry:
+    NC_DISABLE_TELE: true
+    NC_DISABLE_ERR_REPORTS: true
+  env_vars: []
+ports:
+  8080/tcp: 8081
+ports_description:
+  8080/tcp: Web UI (not needed for Ingress)
+image: fabioogaravini/hassio-nocodb

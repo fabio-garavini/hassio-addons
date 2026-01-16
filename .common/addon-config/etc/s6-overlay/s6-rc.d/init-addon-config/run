@@ -16,7 +16,7 @@ while IFS="=" read -r key value; do
 
     key=$(echo "$key" | tr '[:lower:]' '[:upper:]' | sed 's/[^A-Z0-9_]/_/g')
 
-    env=$key="$value"
+    env="$key=\"$value\""
 
     # Redact log
     case "$key" in
@@ -28,7 +28,7 @@ while IFS="=" read -r key value; do
             ;;
     esac
 
-    export $env
+    export "$env"
 
     # set .env
     echo "$env" >> /.env || true
@@ -43,6 +43,7 @@ while IFS="=" read -r key value; do
     if [ -d /var/run/s6/container_environment ]; then
         printf "%s" "$value" > /var/run/s6/container_environment/"$key"
     fi
+
 done < <(
     jq -r '
         to_entries[]
@@ -50,6 +51,8 @@ done < <(
             .value[]?
           elif (.value | type) == "object" then
             .value | to_entries[]
+          else
+            .
           end
         | select(.value | type != "object" and type != "array")
         | "\(.key)=\(.value|tostring)"

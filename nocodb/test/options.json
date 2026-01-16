@@ -1,0 +1,14 @@
+{
+  "ssl": true,
+  "certfile": "fullchain.pem",
+  "keyfile": "privkey.pem",
+  "Storage": {
+    "NC_SECURE_ATTACHMENTS": false
+  },
+  "NC_DISABLE_SUPPORT_CHAT": false,
+  "Telemetry": {
+    "NC_DISABLE_TELE": true,
+    "NC_DISABLE_ERR_REPORTS": true
+  },
+  "env_vars": []
+}
