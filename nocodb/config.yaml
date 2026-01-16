@@ -77,12 +77,12 @@ options:
   ssl: true
   certfile: fullchain.pem
   keyfile: privkey.pem
-  Admin:
-  Config:
-  Authentication:
+  Admin: {}
+  Config: {}
+  Authentication: {}
   Storage:
     NC_SECURE_ATTACHMENTS: false
-  Email:
+  Email: {}
   NC_DISABLE_SUPPORT_CHAT: false
   Telemetry:
     NC_DISABLE_TELE: true
