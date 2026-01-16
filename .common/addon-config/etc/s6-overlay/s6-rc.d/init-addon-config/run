@@ -50,6 +50,8 @@ done < <(
             .value[]?
           elif (.value | type) == "object" then
             .value | to_entries[]
+          else
+            .
           end
         | select(.value | type != "object" and type != "array")
         | "\(.key)=\(.value|tostring)"
