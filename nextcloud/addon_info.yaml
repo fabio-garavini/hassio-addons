@@ -1,7 +1,7 @@
 source:
   type: github-releases
   repo: linuxserver/docker-nextcloud
-  current_version: 32.0.4-ls412
+  current_version: 32.0.5-ls412
   version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)-ls(?<build>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
