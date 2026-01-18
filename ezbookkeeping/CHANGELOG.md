@@ -1,42 +1,60 @@
 - **\[Breaking\]**
-    - The token type for requesting API in the `user-session-new` command-line argument has been changed to `api`. And before using this command-line, you need to set the `enable_api_token` option under the `security` configuration section to `true`
+    - Upgrade Framework7 to 9.0
+    - Use the daylight saving time zone as default time zone rather than the current standard time zone during the DST
+    - `transactions/add.json` requires `X-Timezone-Name` or `X-Timezone-Offset` request header
+    - Remove ambiguous setting option `app_name`
 
 - **\[Features\]**
-    - Add Korean language (#276, thanks @overworks)
-    - Support OAuth 2.0 (Nextcloud / Gitea / GitHub) authentication
-    - Support OIDC authentication (#242)
-    - Add overview sankey chart for categorical analysis on desktop version
-    - Add outflows / inflows / net cash flow chart data type in statistics & analysis
-    - Add asset trends in statistics & analysis (#314)
-    - Add radar chart for categorical analysis on desktop version
-    - Add bubble chart for trends analysis on desktop version
-    - Support moving all transactions from one account to another account (#288)
-    - Add an MCP tool `query_all_accounts_balance` for retrieving all account balances (#309)
-    - Support generating API token on desktop version
+    - Add Kannada translation (#374, thanks @Darshanbm05)
+    - Add Turkish translation (#383, thanks @aydnykn)
+    - Add Slovenian translation (#405, #409, #410, #438, #448 thanks @thehijacker)
+    - Add Insights Explorer page on desktop version
+    - Add transaction tag group
+    - Tag filter supports selecting both included and excluded tags simultaneously
+    - Add search box on account / transaction category / transaction tag filter page / dialog (#382)
+    - Paste amount from clipboard on mobile version
+    - Support changing account category order
+    - Automatically detect file encoding when importing delimiter-separated values (DSV) file
+    - Support IANA time zone names when importing delimiter-separated values (DSV) files
+    - Support parsing custom date time format when importing delimiter-separated values (DSV) files with custom script
 
 - **\[Enhancements\]**
-    - Support canceling AI image recognition
-    - AI image recognition supports pasting images from clipboard on the desktop version
-    - Support pasting date time into the date-time picker on the desktop version
-    - Import credit card repayment transactions from WeChat pay statement file (#279)
-    - Support importing the latest format of Alipay statement file
-    - Support modifying amount and description when importing transactions
-    - Support selecting all visible in account / category / tag filter dialog / page
-    - Load configuration option value from file
-    - Display a security warning using AI image recognition or generating an MCP token
-    - Display a reminder to check important information when using AI image recognition
-    - Support setting the expiration time for generated tokens on desktop version or command line
+    - Improved Spanish translation (#371, #377, thanks @abrugues)
+    - Import payee field as tags when importing a QIF file (#356)
+    - Import member, project and merchant fields as tags when importing Feidee MyMoney export file
+    - Support changing timezone type in reconciliation statement dialog / page
+    - Support import delimiter-separated values file / data with UTF-16 encoding (#361)
+    - Support importing amounts that use non-breaking space (NBSP), narrow no-break space (NNBSP) or figure space as digit grouping symbol when importing delimiter-separated values file / data (#361)
+    - Support dates with `YYYY.MM.DD` / `MM.DD.YYYY` / `DD.MM.YYYY` format when importing delimiter-separated values file / data (#361)
+    - Support filtering transactions by amount in import transaction dialog
+    - Support batch converting amounts to positive / negative values in import transaction dialog
+    - Support hiding account categories with no accounts
+    - Support canceling the sorting operation on mobile version
+    - Insert the pasted content after the cursor when pasting numbers or amounts
+    - Remember last selected file type in import transaction dialog (#412)
+    - In the import dialog's data review table, keep the selection checkboxes and action button columns fixed in place
+    - Add clear all filters in import dialog (#416)
+    - Automatically update the destination amount based on the account's currency when changing the destination account (#433, thanks @OuIChien)
+    - Trim leading and trailing spaces from the username on the login page (#439, thanks @dshemin)
+    - Support importing Alipay transaction statements with transactions in the pending goods receipt confirmation status (#441)
+    - Allow the username or email address returned by OAuth 2.0 to be empty when linking OAuth 2.0 authentication to an existing user
+    - Support the username returned by Synology DSM SSO Server during OIDC authentication (#449)
+    - Place the account / transaction category at the end of the new category after changing the parent category of an account or transaction category
     - Other user interface optimization
 
 - **\[Development\]**
-    - Upgrade Golang to 1.25.3
-    - Upgrade Node.js to 24.10.0
-    - Upgrade Alpine base image to 3.22.2
+    - Upgrade Golang to 1.25.5
+    - Upgrade Node.js to 24.12.0
+    - Upgrade Alpine base image to 3.23.2
 
 - **\[Bug Fixes\]**
-    - Fix cannot modify transaction time after duplicating transaction with time on the mobile version
-    - Hide the "Set Location" button in the map sheet on the transaction view page in mobile version
-    - Fix cannot clear all transactions of sub-account (#304)
-    - Fix the Persian Calendar was not displayed when the calendar display type was set to Gregorian with Persian Calendar, but the date display type was not set to Persian
-    - Fix cannot shift the date range in the trend analysis after switching from categorical analysis with the date range set to "All"
-    - Support exporting transactions dated later than the current time
+    - Fix cannot access Alibaba Cloud OSS using `minio` object storage type (#230)
+    - Fix the incorrect url of email verify page, reset password page, and OAuth 2.0 callback page when accessing ezBookkeeping through a subpath (#348)
+    - Fix the month names were displayed incorrectly in the monthly income and expense trends chart when daylight saving time was involved (#392)
+    - Fix the median amount was calculated incorrectly in account reconciliation statements
+    - Fix the incorrect display type name of transaction categories
+    - Fix no results were shown when previewing all results while importing transactions with user custom script
+    - Fix the filter dropdown menu not display the selected hidden items after selecting multiple hidden transaction categories or accounts in transaction list page
+    - Use the number system configured in the user's settings for all numeric values in the token generation dialog
+    - Transaction reconciliation statement dialog supports sorting by account name and category name on desktop version
+    - Fix missing hyphen in "utf-8" encoding causing error when importing OFX 1.x file (#452, thanks @lucdsouza)
