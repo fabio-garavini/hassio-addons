@@ -1,7 +1,7 @@
 source:
   type: docker
   repo: jellyfin/jellyfin
-  current_version: 10.11.5
+  current_version: 10.11.6
   version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
