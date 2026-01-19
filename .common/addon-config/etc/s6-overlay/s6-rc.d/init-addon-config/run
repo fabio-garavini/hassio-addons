@@ -3,9 +3,9 @@
 
 set -e
 
-echo "  Loading env variables:"
-
 OPTIONS_SOURCE=/data/options.json
+
+printf "Loading env variables:"
 
 if [[ ! -f "$OPTIONS_SOURCE" ]]; then
     echo "Options file doesn't exist!"
@@ -32,7 +32,7 @@ while IFS="=" read -r key value; do
 
     # set .env
     echo "$env" >> /.env || true
-    
+
     # add env to .bashrc
     echo "export $env" >> ~/.bashrc
 

@@ -5,13 +5,13 @@ PUID=${PUID:-911}
 PGID=${PGID:-911}
 
 if [[ -z ${LSIO_READ_ONLY_FS} ]] && [[ -z ${LSIO_NON_ROOT_USER} ]]; then
-    USERHOME=$(grep abc /etc/passwd | cut -d ":" -f6)
-    usermod -d "/root" abc
+  USERHOME=$(grep abc /etc/passwd | cut -d ":" -f6)
+  usermod -d "/root" abc
 
-    groupmod -o -g "${PGID}" abc
-    usermod -o -u "${PUID}" abc
+  groupmod -o -g "${PGID}" abc
+  usermod -o -u "${PUID}" abc
 
-    usermod -d "${USERHOME}" abc
+  usermod -d "${USERHOME}" abc
 fi
 
 echo "
@@ -34,7 +34,7 @@ echo "
 ╚══════════════════════════════════════════════════════════════╝"
 
 if [[ -z ${LSIO_READ_ONLY_FS} ]] && [[ -z ${LSIO_NON_ROOT_USER} ]]; then
-    lsiown abc:abc /app
-    lsiown abc:abc /config
-    lsiown abc:abc /defaults
+  lsiown abc:abc /app
+  lsiown abc:abc /config
+  lsiown abc:abc /defaults
 fi

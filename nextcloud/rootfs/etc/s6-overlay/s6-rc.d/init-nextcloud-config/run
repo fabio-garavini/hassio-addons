@@ -8,7 +8,7 @@ mkdir -p \
     /config/www/nextcloud/custom_apps \
     /config/www/nextcloud/config \
     /config/www/nextcloud/themes \
-    ${NEXTCLOUD_DATADIR}
+    "${NEXTCLOUD_DATADIR}"
 
 # migrate legacy install (copy inside container)
 if [[ -f /config/www/nextcloud/version.php ]]; then
@@ -85,12 +85,12 @@ if [[ -f /config/www/nextcloud/config/needs_migration ]] || [[ -f /tmp/needs_ins
             rsync -rlD --include "/${dir}" --exclude '/*' /app/www/src/ /config/www/nextcloud/
         fi
     done
-    if [[ -z "$(ls -A ${NEXTCLOUD_DATADIR}/ 2>/dev/null)" ]]; then
+    if [[ -z "$(ls -A "${NEXTCLOUD_DATADIR}/" 2>/dev/null)" ]]; then
         rsync -rlD --include "${NEXTCLOUD_DATADIR}" --exclude '/*' /app/www/src/ /
     fi
 
     echo "Setting permissions"
-    lsiown abc:abc ${NEXTCLOUD_DATADIR}
+    lsiown abc:abc "${NEXTCLOUD_DATADIR}"
     lsiown -R abc:abc \
         /app/www/public \
         /config/www/nextcloud
@@ -172,3 +172,17 @@ if [[ -s /etc/nginx/mime.types ]]; then
     sed -i 's|\bjs;|js mjs;|g' /etc/nginx/mime.types
     sed -i 's|\bapplication/javascript|text/javascript|g' /etc/nginx/mime.types
 fi
+
+OPTIONS_SOURCE=/data/options.json
+
+mapfile -t DOMAINS < <(jq -r '.trusted_domains // empty | .[]' "$OPTIONS_SOURCE")
+
+INDEX=0
+for DOMAIN in "${DOMAINS[@]}"; do
+  DOMAIN="$(echo "$DOMAIN" | xargs)"
+  echo "Setting trusted_domains[$INDEX] = $DOMAIN"
+  $OCC config:system:set trusted_domains "$INDEX" --value="$DOMAIN"
+  ((INDEX++))
+done
+
+echo "trusted_domains updated successfully."

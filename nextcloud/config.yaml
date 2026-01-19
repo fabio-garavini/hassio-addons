@@ -1,5 +1,5 @@
 name: Nextcloud
-version: 32.0.5
+version: 32.0.5-v1
 slug: nextcloud
 description: Nextcloud all-in-one
 url: https://nextcloud.com
@@ -33,10 +33,14 @@ schema:
   PUID: int(0,)
   PGID: int(0,)
   TZ: str?
+  certfile: str?
+  keyfile: str?
   DEFAULT_PHONE_REGION: str?
   OVERWRITEPROTOCOL: str?
   OVERWRITEHOST: str?
   OVERWRITECLIURL: str?
+  trusted_domains:
+    - str?
   SMTP_HOST: str?
   SMTP_SECURE: str?
   SMTP_PORT: port?
@@ -48,6 +52,8 @@ schema:
 options:
   PUID: 1000
   PGID: 1000
+  certfile: fullchain.pem
+  keyfile: privkey.pem
 ports:
   80/tcp: null
   443/tcp: 8443

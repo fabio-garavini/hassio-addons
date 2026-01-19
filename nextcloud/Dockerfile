@@ -3,6 +3,56 @@ ARG BUILD_FROM=ghcr.io/linuxserver/nextcloud:32.0.5-ls412
 
 FROM $BUILD_FROM
 
+ENV REDIS_HOST=localhost \
+    REDIS_HOST_PORT=6379
+
+ENV MYSQL_ROOT_PASSWORD="nextcloud" \
+    MYSQL_PASSWORD="nextcloud" \
+    MYSQL_DATABASE="nextcloud" \
+    MYSQL_USER="nextcloud" \
+    MYSQL_HOST="localhost"
+
+ENV MARIADB_DATADIR="/config/mariadb" \
+    REDIS_DATADIR="/config/redis" \
+    NEXTCLOUD_DATADIR="/share/nextcloud"
+
+# Shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# Addon base configuration
+ARG BUILD_ARCH=amd64
+# renovate: datasource=github-releases packageName=hassio-addons/bashio
+ARG BASHIO_VERSION="v0.17.5"
+# renovate: datasource=github-releases packageName=home-assistant/tempio
+ARG TEMPIO_VERSION="2024.11.2"
+RUN \
+    apk add --no-cache --virtual .build-dependencies \
+        tar \
+        xz \
+    \
+    && apk add --no-cache \
+        libcrypto3 \
+        libssl3 \
+        musl-utils \
+        musl \
+        bash \
+        curl \
+        jq \
+        tzdata \
+    \
+    && curl -J -L "https://github.com/hassio-addons/bashio/archive/${BASHIO_VERSION}.tar.gz" -o /tmp/bashio.tar.gz \
+    && mkdir /tmp/bashio \
+    && tar zxvf /tmp/bashio.tar.gz --strip 1 -C /tmp/bashio \
+    \
+    && mv /tmp/bashio/lib /usr/lib/bashio \
+    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
+    \
+    && curl -L -s "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" -o /usr/bin/tempio \
+    && chmod a+x /usr/bin/tempio \
+    \
+    && apk del --no-cache --purge .build-dependencies \
+    && rm -rf /tmp/*
+
 RUN \
     apk add --no-cache \
         ffmpeg \
@@ -22,19 +72,6 @@ RUN \
         mariadb-client \
         mariadb-server-utils; \
     rm -rf /tmp/*
-
-ENV REDIS_HOST=localhost \
-    REDIS_HOST_PORT=6379
-
-ENV MYSQL_ROOT_PASSWORD="nextcloud" \
-    MYSQL_PASSWORD="nextcloud" \
-    MYSQL_DATABASE="nextcloud" \
-    MYSQL_USER="nextcloud" \
-    MYSQL_HOST="localhost"
-
-ENV MARIADB_DATADIR="/config/mariadb" \
-    REDIS_DATADIR="/config/redis" \
-    NEXTCLOUD_DATADIR="/share/nextcloud"
 
 COPY .common/addon-config /
 

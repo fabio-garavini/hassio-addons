@@ -10,7 +10,7 @@ service_protocol=${SERVICE_PROTOCOL:-http}
 nginx_port=${NGINX_PORT:-8080}
 certfile="/ssl/$(jq -r '.certfile' $OPTIONS_SOURCE)"
 keyfile="/ssl/$(jq -r '.keyfile' $OPTIONS_SOURCE)"
-ingress_user=$(jq -r '.ingress_user' $OPTIONS_SOURCE)
+ingress_user="$(jq -r '.ingress_user' $OPTIONS_SOURCE)"
 
 # Generate upstream configuration
 printf '{ "port": "%s" }' "$service_port" \
