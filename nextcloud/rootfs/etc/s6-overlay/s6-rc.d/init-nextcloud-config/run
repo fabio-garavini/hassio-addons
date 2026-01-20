@@ -177,11 +177,15 @@ OPTIONS_SOURCE=/data/options.json
 
 mapfile -t DOMAINS < <(jq -r '.trusted_domains // empty | .[]' "$OPTIONS_SOURCE")
 
+if [ "${#DOMAINS[@]}" -gt 0 ]; then
+  occ config:system:del trusted_domains
+fi
+
 INDEX=0
 for DOMAIN in "${DOMAINS[@]}"; do
   DOMAIN="$(echo "$DOMAIN" | xargs)"
   echo "Setting trusted_domains[$INDEX] = $DOMAIN"
-  $OCC config:system:set trusted_domains "$INDEX" --value="$DOMAIN"
+  occ config:system:set trusted_domains "$INDEX" --value="$DOMAIN"
   ((INDEX++))
 done
 
