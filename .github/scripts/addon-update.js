@@ -110,8 +110,8 @@ function updateBuildConfig() {
   const buildFile = `${addonSlug}/build.yaml`;
   const build = yaml.parse(fs.readFileSync(buildFile, 'utf8'));
 
-  const buildVersion = info.build?.version_template != null ? normalizeString(match, info.build.version_template) : info.source.current_version;
-  let buildFromImage = `${info.build?.image??info.source.image}:${buildVersion}`;
+  const buildVersion = info.build?.version_template != null ? normalizeString(match, info.build.version_template) : null;
+  let buildFromImage = `${info.build?.image??info.source.image}` + (buildVersion != null ? `:${buildVersion}` : "");
 
   build.build_from = {};
   for (let arch of config.arch) {
