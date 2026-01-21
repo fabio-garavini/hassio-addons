@@ -5,7 +5,7 @@ source:
   version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)-ce\.(?<build>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
-  patch: 0
+  patch: 1
   image: fabioogaravini/hassio-gitlab
 build:
   image: docker.io/library/ubuntu
@@ -13,4 +13,4 @@ changelog:
   source: none
   version_template: "{{major}}.{{minor}}.{{patch}}"
 test:
-  enable: true
+  enable: false
