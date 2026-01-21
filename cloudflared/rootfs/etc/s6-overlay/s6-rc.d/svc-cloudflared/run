@@ -3,51 +3,81 @@
 
 set -e
 
+# ------------------------------------------------------------------------
+# Dashboard managed
+# ------------------------------------------------------------------------
+
 if [ -n "$TOKEN" ]; then
-    cloudflared tunnel --no-autoupdate run --token $TOKEN
-    exit 0
+  cloudflared tunnel --no-autoupdate run --token "$TOKEN"
+  exit 0
 fi
 
-if [ ! -f /config/cert.pem ]; then
-    cloudflared --no-autoupdate tunnel login
+# ------------------------------------------------------------------------
+# Locally managed
+# ------------------------------------------------------------------------
 
-    mv /root/.cloudflared/* /config/
+# Cloudflare credentials
+CLOUDFLARE_CREDENTIALS="/config/cert.pem"
 
-    if [ ! -f /config/cert.pem ]; then
-        echo "Login error"
-        exit
-    fi
+if [ ! -f "$CLOUDFLARE_CREDENTIALS" ]; then
+  cloudflared --no-autoupdate tunnel login
+
+  mv /root/.cloudflared/* /config/
+
+  if [ ! -f "$CLOUDFLARE_CREDENTIALS" ]; then
+    echo "Login error"
+    exit 1
+  fi
 fi
 
-tunnel_id=$(find /config -maxdepth 1 -type f -name "*.json" | head -n 1 | xargs -n 1 basename 2>/dev/null)
+# Tunnel creation
 
-if [ -z "$tunnel_id" ]; then
-    cloudflared --no-autoupdate tunnel --origincert /config/cert.pem --credentials-file /config/tunnel.json create HomeAssistant >/dev/null 2>&1
+TUNNEL_CONFIG="/config/tunnel.json"
 
-    mv /root/.cloudflared/* /config/
+if [ ! -f "$TUNNEL_CONFIG" ]; then
+  cloudflared --no-autoupdate tunnel --origincert "$CLOUDFLARE_CREDENTIALS" --credentials-file "$TUNNEL_CONFIG" create "$TUNNEL_NAME"
 
-    if [ ! -f /config/tunnel.json ]; then
-        echo "HomeAssistant tunnel created"
-    else
-        echo "Could not create tunnel"
-        exit
-    fi
+  if [ -f "$TUNNEL_CONFIG" ]; then
+    echo "$TUNNEL_NAME tunnel created"
+  else
+    echo "Could not create tunnel"
+    exit 1
+  fi
 fi
 
-if [ ! -f /config/config.yml ]; then
-    tunnel_id=$(find /config -maxdepth 1 -type f -name "*.json" | head -n 1 | xargs -n 1 basename 2>/dev/null)
+# Cloudflared config
 
-    if [ -n "$tunnel_id" ]; then
-        cat > "/config/config.yml" <<EOF
-tunnel: ${tunnel_id%.json}
-credentials-file: /config/${tunnel_id}
-warp-routing:
-  enabled: true
-EOF
-    else
-        echo "No available Tunnel to start"
-        exit
-    fi
+CLOUDFLARED_CONFIG=/config/config.yml
+
+# Initializie config if not present
+if [ ! -f "$CLOUDFLARED_CONFIG" ]; then
+  tunnel_id="$(jq -r '.TunnelID' "$TUNNEL_CONFIG")"
+
+  if [ -n "$tunnel_id" ]; then
+    yq -n "
+      .tunnel = \"$tunnel_id\" |
+      .credentials-file = \"$TUNNEL_CONFIG\"
+    " > "$CLOUDFLARED_CONFIG"
+  else
+    echo "Unable to find TunnelID in $TUNNEL_CONFIG"
+    exit 1
+  fi
 fi
 
-cloudflared --no-autoupdate tunnel --config /config/config.yml --origincert /config/cert.pem --credentials-file /config/"${tunnel_id:-"tunnel.json"}" run
+# Load configuration from the addon config
+
+OPTIONS_SOURCE=/data/options.json
+
+yq eval -i "
+  .warp-routing.enabled = load(\"$OPTIONS_SOURCE\").warp-routing |
+  .originRequest = load(\"$OPTIONS_SOURCE\").originRequest |
+  .ingress = load(\"$OPTIONS_SOURCE\").ingress
+" "$CLOUDFLARED_CONFIG"
+
+# Add network routings
+jq -r '.network_routings[]' "$OPTIONS_SOURCE" | while read -r network_routing; do
+  echo "Adding route for: $network_routing"
+  cloudflared --no-autoupdate tunnel --config "$CLOUDFLARED_CONFIG" --origincert "$CLOUDFLARE_CREDENTIALS" --credentials-file "$TUNNEL_CONFIG" route ip add "$network_routing" "$TUNNEL_NAME" || true
+done
+
+cloudflared --no-autoupdate tunnel --config "$CLOUDFLARED_CONFIG" --origincert "$CLOUDFLARE_CREDENTIALS" --credentials-file "$TUNNEL_CONFIG" run

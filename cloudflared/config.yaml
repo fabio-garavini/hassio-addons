@@ -1,5 +1,5 @@
 name: Cloudflared
-version: 2026.1.1
+version: 2026.1.1-v1
 slug: cloudflared
 description: Cloudflare tunneling and Zero Trust service
 arch:
@@ -10,5 +10,26 @@ map:
   - type: addon_config
     read_only: false
 schema:
+  TUNNEL_NAME: str
   token: password?
+  warp-routing: bool
+  network_routings:
+    - str
+  originRequest:
+    noTLSVerify: bool
+    connectTimeout: str
+    disableChunkedEncoding: bool
+  ingress:
+    - hostname: str?
+      path: str?
+      service: str
+options:
+  TUNNEL_NAME: HomeAssistant
+  warp-routing: true
+  network_routings: []
+  originRequest:
+    noTLSVerify: false
+    connectTimeout: 30s
+    disableChunkedEncoding: false
+  ingress: []
 image: fabioogaravini/hassio-cloudflared

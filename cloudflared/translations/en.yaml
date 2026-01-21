@@ -1,0 +1,23 @@
+configuration:
+  TUNNEL_NAME:
+    name: Tunnel Name
+    description: >-
+      Name visible in the Cloudlfare Zero Trust dashboard
+  token:
+    name: TOKEN
+    description: >-
+      Dashboard managed cloudflared token
+      Read the `Documentation` page
+  warp-routing:
+    name: WARP Routing
+    description: >-
+      Route your client device traffic through Home Assistant
+  network_routings:
+    name: Network Routings
+    description: >-
+      Private network subnet exposed through Cloudflared
+      `<IP/CIDR>` example: `192.168.1.0/24`
+  ingress:
+    name: Ingress services
+    description: >-
+      Routes to your services

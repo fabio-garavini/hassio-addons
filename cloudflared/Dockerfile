@@ -30,6 +30,7 @@ RUN \
         musl \
         curl \
         jq \
+        yq \
         tzdata \
     \
     && S6_ARCH="${BUILD_ARCH}" \
@@ -51,7 +52,7 @@ RUN \
     \
     && rm -rf /tmp/*
 
-ARG BUILD_VERSION=2026.1.1
+ARG BUILD_VERSION=2026.1.1-v1
 
 RUN \
     case "$BUILD_ARCH" in \
