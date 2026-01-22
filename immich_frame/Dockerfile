@@ -1,9 +1,9 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/immichframe/immichframe:v1.0.30.0
+ARG BUILD_FROM=ghcr.io/immichframe/immichframe:v1.0.31.0
 
 FROM ${BUILD_FROM}
 
-ARG BUILD_VERSION=1.0.30.0
+ARG BUILD_VERSION=1.0.31.0
 
 # Container Environment variables
 ENV \
