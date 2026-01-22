@@ -2,6 +2,11 @@ name: nextcloud-aarch64
 services:
   nextcloud-aarch64:
     image: fabioogaravini/hassio-nextcloud:${VERSION:-latest}-aarch64
+    build:
+      context: ..
+      args:
+        BUILD_ARCH: aarch64
+        BUILD_VERSION: ${VERSION:-latest}
     container_name: nextcloud-aarch64
     ports:
       - 443:443

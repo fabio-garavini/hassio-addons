@@ -1,4 +1,9 @@
 {
   "PUID": 1000,
-  "PGID": 1000
+  "PGID": 1000,
+  "TZ": "Europe/Rome",
+  "certfile": "fullchain.pem",
+  "keyfile": "privkey.pem",
+  "ADMIN_USER": "admin-user",
+  "ADMIN_PASS": "admin-password"
 }

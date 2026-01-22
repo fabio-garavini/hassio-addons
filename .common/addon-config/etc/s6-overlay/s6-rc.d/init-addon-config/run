@@ -5,7 +5,7 @@ set -e
 
 OPTIONS_SOURCE=/data/options.json
 
-printf "Loading env variables:"
+echo "Loading env variables:"
 
 if [[ ! -f "$OPTIONS_SOURCE" ]]; then
     echo "Options file doesn't exist!"

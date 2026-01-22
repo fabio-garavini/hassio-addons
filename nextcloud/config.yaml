@@ -1,5 +1,5 @@
 name: Nextcloud
-version: 32.0.5-v2
+version: 32.0.5-v3
 slug: nextcloud
 description: Nextcloud all-in-one
 url: https://nextcloud.com
@@ -35,18 +35,23 @@ schema:
   TZ: str?
   certfile: str?
   keyfile: str?
+  ADMIN_USER: str
+  ADMIN_PASS: password
   DEFAULT_PHONE_REGION: str?
-  OVERWRITEPROTOCOL: str?
+  OVERWRITEPROTOCOL: list(http|https)?
   OVERWRITEHOST: str?
   OVERWRITECLIURL: str?
+  trusted_proxies:
+    - str?
   trusted_domains:
     - str?
   SMTP_HOST: str?
-  SMTP_SECURE: str?
+  SMTP_SECURE: list(STARTTLS|SSL)?
   SMTP_PORT: port?
+  SMTP_AUTH: bool?
   SMTP_AUTHTYPE: list(LOGIN|PLAIN)?
-  SMTP_USERNAME: str?
-  SMTP_PASSWORD: password?
+  SMTP_USER: str?
+  SMTP_PASS: password?
   MAIL_FROM_ADDRESS: str?
   MAIL_DOMAIN: str?
 options:
@@ -54,14 +59,16 @@ options:
   PGID: 1000
   certfile: fullchain.pem
   keyfile: privkey.pem
+  ADMIN_USER: admin
+  ADMIN_PASS: password123
 ports:
   80/tcp: null
   443/tcp: 8443
-  6379/tcp: null
   3306/tcp: null
+  6379/tcp: null
 ports_description:
   80/tcp: HTTP
   443/tcp: HTTPS
-  6379/tcp: Redis DB
   3306/tcp: MariaDB
+  6379/tcp: Redis DB
 image: fabioogaravini/hassio-nextcloud

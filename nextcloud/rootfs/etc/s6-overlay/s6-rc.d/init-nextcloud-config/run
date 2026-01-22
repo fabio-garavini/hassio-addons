@@ -34,6 +34,20 @@ for dir in apps config themes; do
     fi
 done
 
+# set data directory
+if [[ ! -s /config/www/nextcloud/config/config.php ]]; then
+    touch /config/www/nextcloud/config/CAN_INSTALL
+    echo -e "<?php\n\$CONFIG = array (\n    'datadirectory' => '$NEXTCLOUD_DATADIR',\n);" >/config/www/nextcloud/config/config.php
+elif [[ -f /config/www/nextcloud/config/config.php ]]; then
+    sed -i "s|/app/www/public/data|$NEXTCLOUD_DATADIR|g" /config/www/nextcloud/config/config.php
+fi
+
+#modify javascript mime type and add .mjs support
+if [[ -s /etc/nginx/mime.types ]]; then
+    sed -i 's|\bjs;|js mjs;|g' /etc/nginx/mime.types
+    sed -i 's|\bapplication/javascript|text/javascript|g' /etc/nginx/mime.types
+fi
+
 # get versions
 image_version=$(php -r "require '/app/www/src/version.php'; echo implode('.', \$OC_Version);" 2>/dev/null | xargs)
 installed_version=$(php -r "require '/config/www/nextcloud/config/config.php'; echo \$CONFIG['version'];" 2>/dev/null | xargs)
@@ -60,7 +74,7 @@ if [[ "${installed_version}" != "0.0.0.0" ]] && vergt "${image_major}" "${max_up
     sleep infinity
 fi
 
-if [[ "${installed_version}" = "0.0.0.0" ]] || [[ ! -f /app/www/public/version.php ]] || [[ -z "$(ls -A /config/www/nextcloud/apps 2>/dev/null)" ]]; then
+if [[ "${installed_version}" = "0.0.0.0" ]] || [[ -z "$(ls -A /config/www/nextcloud/apps 2>/dev/null)" ]]; then
     touch /tmp/needs_install
 fi
 
@@ -98,15 +112,48 @@ if [[ -f /config/www/nextcloud/config/needs_migration ]] || [[ -f /tmp/needs_ins
     if [[ -f /config/www/nextcloud/config/needs_migration ]] || [[ -f /tmp/needs_upgrade ]]; then
         # Upgrade
         occ upgrade
-    else
-        if [[ "${installed_version}" = "0.0.0.0" ]]; then
-            # Install
-            echo "New nextcloud instance"
+    elif [[ -f /tmp/needs_install ]]; then
+        # Install
+        echo "New nextcloud instance"
+
+        # Make sure all database settings are set
+        if [[ "${DB_HOST+x}" && "${DB_USER+x}" && "${DB_NAME+x}" && "${#DB_PASS}" -gt "3" ]] && \
+           [[ "${DB_TYPE}" == "sqlite" || "${DB_TYPE}" == "pgsql" || "${DB_TYPE}" == "mysql" ]]; then
+
+            # Generate admin password, if missing
+            if [[ ! "${ADMIN_PASS+x}" ]]; then
+                ADMIN_PASS="$(openssl rand -hex 64)"
+                echo "Nextcloud admin password: $ADMIN_PASS"
+            fi
+
+            # Run installation process
+            echo "Running Nextcloud installation..."
+            occ maintenance:install \
+                --database="${DB_TYPE}" \
+                --database-host="${DB_HOST}" \
+                --database-name="${DB_NAME}" \
+                --database-user="${DB_USER}" \
+                --database-pass="${DB_PASS}" \
+                --admin-user="${ADMIN_USER:-admin}" \
+                --admin-pass="${ADMIN_PASS}" \
+                --data-dir="${NEXTCLOUD_DATADIR}"
+
+            # Check return code
+            if [[ $? -eq 0 ]]; then
+                echo "Nextcloud installation successful!"
+            else
+                echo "Nextcloud installation failed!"
+                echo "Please run the web-based installer or check the logs."
+            fi
+        else
             echo "Please run the web-based installer on first connect!"
         fi
     fi
 
     echo "Initializing finished"
+else
+    #! Fix missing /app/www/public/occ
+    rsync -rlD --exclude-from=/app/upgrade.exclude /app/www/src/ /app/www/public/
 fi
 
 rm -f \
@@ -121,24 +168,39 @@ lsiown abc:abc \
 
 # setup config
 if occ config:system:get installed >/dev/null 2>&1; then
+    if ! occ config:system:get redis >/dev/null 2>&1; then
+        occ config:system:set redis host --value="$REDIS_SOCKET"
+        occ config:system:set redis port --value=0 --type=integer
+        occ config:system:set redis timeout --value=1.5
+    fi
     if ! occ config:system:get memcache.local >/dev/null 2>&1; then
-        occ config:system:set memcache.local --value='\\OC\\Memcache\\APCu'
+        occ config:system:set memcache.local --value='\\OC\\Memcache\\Redis'
     fi
     if ! occ config:system:get filelocking.enabled >/dev/null 2>&1; then
         occ config:system:set filelocking.enabled --value=true --type=boolean
     fi
     if ! occ config:system:get memcache.locking >/dev/null 2>&1; then
-        occ config:system:set memcache.locking --value='\\OC\\Memcache\\APCu'
+        occ config:system:set memcache.locking --value='\\OC\\Memcache\\Redis'
     fi
     if ! occ config:system:get datadirectory >/dev/null 2>&1; then
         occ config:system:set datadirectory --value="${NEXTCLOUD_DATADIR}"
+    fi
+    if ! occ config:system:get maintenance_window_start >/dev/null 2>&1; then
+        occ config:system:set maintenance_window_start --value=4 --type=integer
     fi
     if ! occ config:system:get upgrade.disable-web >/dev/null 2>&1; then
         occ config:system:set upgrade.disable-web --value=true --type=boolean
     fi
 
-    occ maintenance:repair --include-expensive >/dev/null 2>&1
-    occ db:add-missing-indices >/dev/null 2>&1
+    # Set admin password
+    if [[ "${ADMIN_PASS+x}" ]]; then
+        echo "Setting admin password"
+        occ user:resetpassword --password-from-env "${ADMIN_USER:-admin}"
+    fi
+
+    # Run maintenance steps, this also fixes warnings in the admin panel
+    occ db:add-missing-indices
+    occ maintenance:repair --include-expensive
 
 fi
 
@@ -162,31 +224,113 @@ for APP in richdocumentscode; do
     rm -rf "${APP_PATH}"
 done
 
-# set data directory
-if [[ -f /config/www/nextcloud/config/config.php ]]; then
-    sed -i "s|/app/www/public/data|${NEXTCLOUD_DATADIR}|g" /config/www/nextcloud/config/config.php
-fi
-
-#modify javascript mime type and add .mjs support
-if [[ -s /etc/nginx/mime.types ]]; then
-    sed -i 's|\bjs;|js mjs;|g' /etc/nginx/mime.types
-    sed -i 's|\bapplication/javascript|text/javascript|g' /etc/nginx/mime.types
-fi
+# --------------------------------------------------------------------------------------------------------------------
+# Addon specific configurations
+# --------------------------------------------------------------------------------------------------------------------
 
 OPTIONS_SOURCE=/data/options.json
 
-mapfile -t DOMAINS < <(jq -r '.trusted_domains // empty | .[]' "$OPTIONS_SOURCE")
+# Trusted domains
+mapfile -t TRUSTED_DOMAINS < <(jq -r '.trusted_domains // empty | .[]' "$OPTIONS_SOURCE")
 
-if [ "${#DOMAINS[@]}" -gt 0 ]; then
+if [ "${#TRUSTED_DOMAINS[@]}" -gt 0 ]; then
   occ config:system:del trusted_domains
 fi
 
 INDEX=0
-for DOMAIN in "${DOMAINS[@]}"; do
+for DOMAIN in "${TRUSTED_DOMAINS[@]}"; do
   DOMAIN="$(echo "$DOMAIN" | xargs)"
   echo "Setting trusted_domains[$INDEX] = $DOMAIN"
   occ config:system:set trusted_domains "$INDEX" --value="$DOMAIN"
   ((INDEX++))
 done
 
-echo "trusted_domains updated successfully."
+echo "trusted_domains updated successfully"
+
+# Trusted proxies
+mapfile -t TRUSTED_PROXIES < <(jq -r '.trusted_proxies // empty | .[]' "$OPTIONS_SOURCE")
+
+if [ "${#TRUSTED_PROXIES[@]}" -gt 0 ]; then
+  occ config:system:del trusted_proxies
+fi
+
+INDEX=0
+for PROXY in "${TRUSTED_PROXIES[@]}"; do
+  PROXY="$(echo "$PROXY" | xargs)"
+  echo "Setting trusted_proxies[$INDEX] = $PROXY"
+  occ config:system:set trusted_proxies "$INDEX" --value="$PROXY"
+  ((INDEX++))
+done
+
+echo "trusted_proxies updated successfully"
+
+if [[ -n "$OVERWRITEPROTOCOL" ]]; then
+    occ config:system:set overwriteprotocol --value="$OVERWRITEPROTOCOL"
+else
+    occ config:system:delete overwriteprotocol > /dev/null 2>&1
+fi
+if [[ -n "$OVERWRITEHOST" ]]; then
+    occ config:system:set overwritehost --value="$OVERWRITEHOST"
+else
+    occ config:system:delete overwritehost > /dev/null 2>&1
+fi
+if [[ -n "$OVERWRITECLIURL" ]]; then
+    occ config:system:set overwrite.cli.url --value="$OVERWRITECLIURL"
+else
+    occ config:system:set overwrite.cli.url --value="http://localhost"
+fi
+if [[ -n "$DEFAULT_PHONE_REGION" ]]; then
+    occ config:system:set default_phone_region --value="$DEFAULT_PHONE_REGION"
+else
+    occ config:system:delete default_phone_region > /dev/null 2>&1
+fi
+
+# SMTP config
+if ! occ config:system:get mail_smtpmode >/dev/null 2>&1; then
+    occ config:system:set mail_smtpmode --value="smtp"
+fi
+if [[ -n "$SMTP_HOST" ]]; then
+    occ config:system:set mail_smtphost --value="$SMTP_HOST" > /dev/null 2>&1
+else
+    occ config:system:delete mail_smtphost > /dev/null 2>&1
+fi
+if [[ -n "$SMTP_SECURE" ]]; then
+    occ config:system:set mail_smtpsecure --value="$SMTP_SECURE"
+else
+    occ config:system:delete mail_smtpsecure > /dev/null 2>&1
+fi
+if [[ -n "$SMTP_PORT" ]]; then
+    occ config:system:set mail_smtpport --value="$SMTP_PORT" --type=integer
+else
+    occ config:system:delete mail_smtpport > /dev/null 2>&1
+fi
+if [[ -n "$SMTP_AUTH" ]]; then
+    occ config:system:set mail_smtpauth --value="$SMTP_AUTH" --type=boolean
+else
+    occ config:system:delete mail_smtpauth > /dev/null 2>&1
+fi
+if [[ -n "$SMTP_AUTHTYPE" ]]; then
+    occ config:system:set mail_smtpauthtype --value="$SMTP_AUTHTYPE"
+else
+    occ config:system:delete mail_smtpauthtype > /dev/null 2>&1
+fi
+if [[ -n "$SMTP_USER" ]]; then
+    occ config:system:set mail_smtpname --value="$SMTP_USER" > /dev/null 2>&1
+else
+    occ config:system:delete mail_smtpname > /dev/null 2>&1
+fi
+if [[ -n "$SMTP_PASS" ]]; then
+    occ config:system:set mail_smtppassword --value="$SMTP_PASS" > /dev/null 2>&1
+else
+    occ config:system:delete mail_smtppassword > /dev/null 2>&1
+fi
+if [[ -n "$MAIL_FROM_ADDRESS" ]]; then
+    occ config:system:set mail_from_address --value="$MAIL_FROM_ADDRESS" > /dev/null 2>&1
+else
+    occ config:system:delete mail_from_address > /dev/null 2>&1
+fi
+if [[ -n "$MAIL_DOMAIN" ]]; then
+    occ config:system:set mail_domain --value="$MAIL_DOMAIN" > /dev/null 2>&1
+else
+    occ config:system:delete mail_domain > /dev/null 2>&1
+fi

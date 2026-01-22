@@ -1,28 +1,29 @@
 #!/usr/bin/with-contenv bash
+# shellcheck shell=bash
 
 # make redis folders
 mkdir -p \
-	${REDIS_DATADIR} \
+	"$REDIS_DATADIR" \
 	/config/log \
 	/var/run/redis
 
 # copy redis defaults
 [[ ! -f "${REDIS_DATADIR}/redis.conf" ]] &&
-	cp /defaults/redis.conf ${REDIS_DATADIR}/redis.conf
+	cp /defaults/redis.conf "$REDIS_DATADIR/redis.conf"
 
 # permissions
 chown -R abc:abc \
-	${REDIS_DATADIR} \
+	"$REDIS_DATADIR" \
 	/config/log \
 	/var/run/redis
 
-s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost 6379" \
-	s6-setuidgid abc \
-	redis-server ${REDIS_DATADIR}/redis.conf \
+s6-setuidgid abc \
+ redis-server "$REDIS_DATADIR/redis.conf" \
 	--bind 0.0.0.0 \
 	--port 6379 \
+	--unixsocket "$REDIS_SOCKET" \
 	--pidfile /var/run/redis/redis.pid \
 	--always-show-logo no \
-	--dir ${REDIS_DATADIR} \
+	--dir "$REDIS_DATADIR" \
 	--daemonize no \
 	--logfile /config/log/redis.log

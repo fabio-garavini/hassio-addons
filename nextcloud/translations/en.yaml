@@ -1,0 +1,82 @@
+configuration:
+  PUID:
+    name: PUID
+    description: >-
+      User ID used to run Nextcloud. (Default: `1000`)
+
+      If you're not sure, leave as default.
+  PGID:
+    name: PGID
+    description: >-
+      Group ID used to run Nextcloud. (Default: `1000`)
+
+      If you're not sure, leave as default
+  TZ:
+    name: Timezone
+    description: >-
+      Local timezone
+      You can find your timezone identifier here:
+      https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  certfile:
+    name: SSL Certificate
+    description: >-
+      Name of the SSL certificate file located under the `/ssl/` directory. ex: `fullchain.pem`
+  keyfile:
+    name: SSL Private Key
+    description: >-
+      Name of the SSL private key file located under the `/ssl/` directory. ex: `privkey.pem`
+  ADMIN_USER:
+    name: Admin user
+  ADMIN_PASS:
+    name: Admin password
+  DEFAULT_PHONE_REGION:
+    name: Default phone region
+    description: >-
+      2 letters country code, ex: `IT` for Italy.
+      https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
+  OVERWRITEPROTOCOL:
+    name: Overwrite Protocol
+    description: >-
+      Set this if you're running behind a reverse proxy
+  OVERWRITEHOST:
+    name: Overwrite Host
+    description: >-
+      Set this if you're running behind a reverse proxy. ex: `cloud.example.com`
+  OVERWRITECLIURL:
+    name: Overwrite URL
+    description: >-
+      Set this if you're running behind a reverse proxy. ex: `https://cloud.example.com/path`
+      Full url for accessing your Nextcloud instance
+  trusted_proxies:
+    name: Trusted Proxies
+  trusted_domains:
+    name: Trusted Domains
+  SMTP_HOST:
+    name: SMTP Host
+  SMTP_SECURE:
+    name: SMTP Secure
+  SMTP_PORT:
+    name: SMTP Port
+  SMTP_AUTH:
+    name: SMTP Auth
+  SMTP_AUTHTYPE:
+    name: SMTP Auth type
+  SMTP_USER:
+    name: SMTP User
+  SMTP_PASS:
+    name: SMTP Password
+  MAIL_FROM_ADDRESS:
+    name: EMail From address
+    description: >-
+      Only first part of your email, before the `@` without the domain
+      Example: for `nextcloud@example.com` you need to set this to `nextcloud`
+  MAIL_DOMAIN:
+    name: EMail Domain
+    description: >-
+      Only the domain of your email, which is the after `@`
+      Example: for `nextcloud@example.com` you need to set this to `example.com`
+network:
+  80/tcp: HTTP
+  443/tcp: HTTPS
+  3306/tcp: MariaDB
+  6379/tcp: Redis DB

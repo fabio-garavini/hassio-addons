@@ -3,8 +3,7 @@ ARG BUILD_FROM=ghcr.io/linuxserver/nextcloud:32.0.5-ls412
 
 FROM $BUILD_FROM
 
-ENV REDIS_HOST=localhost \
-    REDIS_HOST_PORT=6379
+ENV REDIS_SOCKET="/var/run/redis/redis.sock"
 
 ENV MYSQL_ROOT_PASSWORD="nextcloud" \
     MYSQL_PASSWORD="nextcloud" \
@@ -15,6 +14,12 @@ ENV MYSQL_ROOT_PASSWORD="nextcloud" \
 ENV MARIADB_DATADIR="/config/mariadb" \
     REDIS_DATADIR="/config/redis" \
     NEXTCLOUD_DATADIR="/share/nextcloud"
+
+ENV DB_TYPE="mysql" \
+    DB_HOST="127.0.0.1" \
+    DB_NAME="nextcloud" \
+    DB_USER="nextcloud" \
+    DB_PASS="nextcloud"
 
 # Shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]

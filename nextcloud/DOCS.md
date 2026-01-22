@@ -4,17 +4,15 @@
 
 ## Installation
 
-The installation of this add-on is pretty straightforward and not different in
-comparison to installing any other Home Assistant add-on.
-
-1. Click the "Install" button to install the add-on.
-1. Start the add-on.
-1. Click the "OPEN WEB UI" button and follow the setup instructions.
-1. Ready to go!
+1. **Install** Nextcloud
+1. Set **admin** `username` and `password`
+1. (optional) set `Overwrite URL` to the url you use to access Nextcloud. Example: `https://example.com:8443`
+1. Start Nextcloud
+1. Open Web UI
 
 ## Configs
 
-`DEFAULT_PHONE_REGION` is a 2 letter [country code](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes). for example `IT` for Italy
+`DEFAULT_PHONE_REGION` is a 2 letters [country code](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes). for example `IT` for Italy
 
 ## Office
 
@@ -27,7 +25,7 @@ comparison to installing any other Home Assistant add-on.
 
 ## External Storage
 
-Any folder or network storage mounted under `/media` or `/share` is visible inside the add-on and can be accessed by mounting a local folder through the External Storage app
+Any folder or network storage mounted under `/media` or `/share` is visible inside the add-on and can be accessed by mounting a local folder through the **External Storage app**
 
 ## NAS storage
 
