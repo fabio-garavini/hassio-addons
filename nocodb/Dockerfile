@@ -1,4 +1,4 @@
-ARG BUILD_FROM=docker.io/nocodb/nocodb:0.301.1
+ARG BUILD_FROM=docker.io/nocodb/nocodb:0.301.2
 
 FROM ${BUILD_FROM}
 

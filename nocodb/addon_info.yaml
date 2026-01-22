@@ -1,7 +1,7 @@
 source:
   type: github-releases
   repo: nocodb/nocodb
-  current_version: 0.301.1
+  current_version: 0.301.2
   version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
@@ -16,4 +16,3 @@ changelog:
   version_template: "{{major}}.{{minor}}.{{patch}}"
 test:
   enable: true
-

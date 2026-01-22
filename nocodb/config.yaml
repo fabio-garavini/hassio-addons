@@ -1,7 +1,7 @@
 name: Nocodb
-version: 0.301.1
+version: 0.301.2
 slug: nocodb
-description: 🔥 🔥 🔥 Open Source Airtable Alternative 
+description: 🔥 🔥 🔥 Open Source Airtable Alternative
 url: https://nocodb.com/docs
 webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"
 arch:
