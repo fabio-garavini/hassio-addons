@@ -1,26 +1,26 @@
-# 📦 ImmichFrame Release v1.0.30.0 – December 10, 2025
+# 📦 ImmichFrame Release v1.0.31.0 – January 21, 2026
 
-<!-- Release notes generated using configuration in .github/release.yml at v1.0.30.0 -->
+<!-- Release notes generated using configuration in .github/release.yml at v1.0.31.0 -->
 
 ## What's Changed
 ### ✨ New Features
-* Manifest and services for Android/Desktop PWA by @3rob3 in https://github.com/immichFrame/ImmichFrame/pull/501
-* Configurable config path by @jfly in https://github.com/immichFrame/ImmichFrame/pull/512
-* Add a `ApiKeyFile` option by @jfly in https://github.com/immichFrame/ImmichFrame/pull/511
+* Feat: support selecting photos from tags by @ahal in https://github.com/immichFrame/ImmichFrame/pull/537
 ### ⚡ Fixes
-* Request memories using UTC by @3rob3 in https://github.com/immichFrame/ImmichFrame/pull/492
+* Fix asset-info overlap by @RealFinalCode in https://github.com/immichFrame/ImmichFrame/pull/531
+* Fix: Black background for iOS safe area fix by @3rob3 in https://github.com/immichFrame/ImmichFrame/pull/528
+* Fix: immichapi client generation by @JW-CH in https://github.com/immichFrame/ImmichFrame/pull/542
+* Fix: Handle null albums, people, and excluded albums by @jrh3k5 in https://github.com/immichFrame/ImmichFrame/pull/535
+* Fix: Handle multiple weather icons by @3rob3 in https://github.com/immichFrame/ImmichFrame/pull/569
 ### 📓 Documentation
-* Chore: Update domain to immichframe.dev by @JW-CH in https://github.com/immichFrame/ImmichFrame/pull/515
-* Add release link to frameo docs by @ddzoan in https://github.com/immichFrame/ImmichFrame/pull/520
-### 🔨 Maintenance
-* Chore: Fix OpenApi generation with oazapfts by @JW-CH in https://github.com/immichFrame/ImmichFrame/pull/498
-* Use Central Package Management (cpm), move TargetFramework to BuildProps by @JW-CH in https://github.com/immichFrame/ImmichFrame/pull/519
+* Docs: Fix weather URL by @JW-CH in https://github.com/immichFrame/ImmichFrame/pull/530
 ### 🚀 Other changes
-* Bump node-forge from 1.3.1 to 1.3.2 in /docs by @dependabot[bot] in https://github.com/immichFrame/ImmichFrame/pull/516
-* Bump glob from 10.4.5 to 10.5.0 in /immichFrame.Web by @dependabot[bot] in https://github.com/immichFrame/ImmichFrame/pull/517
+* Chore: Update Docusaurus packages and config by @JW-CH in https://github.com/immichFrame/ImmichFrame/pull/564
+* Chore: Update node version in workflow by @JW-CH in https://github.com/immichFrame/ImmichFrame/pull/566
+* Chore: Remove unused packages, update npm packages by @JW-CH in https://github.com/immichFrame/ImmichFrame/pull/565
 
 ## New Contributors
-* @jfly made their first contribution in https://github.com/immichFrame/ImmichFrame/pull/512
-* @ddzoan made their first contribution in https://github.com/immichFrame/ImmichFrame/pull/520
+* @RealFinalCode made their first contribution in https://github.com/immichFrame/ImmichFrame/pull/531
+* @jrh3k5 made their first contribution in https://github.com/immichFrame/ImmichFrame/pull/535
+* @ahal made their first contribution in https://github.com/immichFrame/ImmichFrame/pull/537
 
-**Full Changelog**: https://github.com/immichFrame/ImmichFrame/compare/v1.0.29.0...v1.0.30.0
+**Full Changelog**: https://github.com/immichFrame/ImmichFrame/compare/v1.0.30.0...v1.0.31.0
