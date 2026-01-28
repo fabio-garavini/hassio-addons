@@ -52,7 +52,7 @@ RUN \
     \
     && rm -rf /tmp/*
 
-ARG BUILD_VERSION=2026.1.1-v1
+ARG BUILD_VERSION=2026.1.2
 
 RUN \
     case "$BUILD_ARCH" in \
