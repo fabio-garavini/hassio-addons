@@ -59,7 +59,7 @@ RUN set -e; \
     rm -rf /etc/nginx
 
 # renovate: datasource=github-releases packageName=kovidgoyal/calibre
-ARG MOD_VERSION="v8.16.2"
+ARG MOD_VERSION="v9.0.0"
 
 RUN set -e; \
     apt-get update; \
