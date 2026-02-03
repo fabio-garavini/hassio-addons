@@ -1,24 +1,17 @@
 # 🍴🍴🍴🍴🍴🍴
 
-Another patch release for a couple small regressions.
+Small release to patch a UI bug in some languages.
 
 ## 🐛 Bug fixes
 
-- fix: Make quantity input in shopping list item editor visually consistent with other inputs @lehnerpat (#6810)
-- fix: allow `start` attribute on ordered lists (SafeMarkdown) @p0lycarpio (#6820)
-- fix: Exception handling for recipe image reprocessing @michael-genson (#6822)
+- fix: Button overflow on main page filters @michael-genson (#6992)
 
 ## 🧰 Maintenance
 
-- chore(l10n): New Crowdin updates @hay-kot (#6804)
+- chore(l10n): New Crowdin updates @hay-kot (#6994)
 
-## 🔨 Internal development
+## 📚 Documentation
 
-- dev: Small .gitignore fixes @lehnerpat (#6796)
-
-## ⬆️ Dependency updates
-
-- chore(deps): update node.js to 33587cf @renovate (#6795)
-- chore(deps): update node.js to b52a8d1 @renovate (#6800)
+- docs: Typo @michael-genson (#6993)
 
 # 🍴🍴🍴🍴🍴🍴
