@@ -55,17 +55,23 @@ This release is also available as:
 
 * APT repository: https://apt.syncthing.net/
 
-* Docker image: `docker.io/syncthing/syncthing:2.0.13` or `ghcr.io/syncthing/syncthing:2.0.13`
+* Docker image: `docker.io/syncthing/syncthing:2.0.14` or `ghcr.io/syncthing/syncthing:2.0.14`
   (`{docker,ghcr}.io/syncthing/syncthing:2` to follow just the major version)
 
 ## What's Changed
 ### Fixes
-* fix(beacon): don't join multicast groups on non-multicast interfaces (fixes #10497) by @marbens-arch in https://github.com/syncthing/syncthing/pull/10498
+* fix(beacon): skip point-to-point interfaces on Android by @bt90 in https://github.com/syncthing/syncthing/pull/10504
+* fix(stdiscosrv): use fmt.Println for version output (fixes #10523) by @maishivamhoo123 in https://github.com/syncthing/syncthing/pull/10527
+* fix(stdiscosrv): log full device ID on startup by @maishivamhoo123 in https://github.com/syncthing/syncthing/pull/10541
 ### Other
-* chore(model): refactor context handling for folder type by @calmh in https://github.com/syncthing/syncthing/pull/10472
-* build: fix docker build by ensuring qemu by @calmh in https://github.com/syncthing/syncthing/pull/10492
-* chore(beacon): more verbose debug logging by @marbens-arch in https://github.com/syncthing/syncthing/pull/10496
-* build: fix hash failure by limiting globbing by @calmh in https://github.com/syncthing/syncthing/pull/10505
-* chore: tweak pull retry logic by @calmh in https://github.com/syncthing/syncthing/pull/10491
+* chore(api): remove charset declaration from JSON content-type (fixes #10500) by @prathik8794 in https://github.com/syncthing/syncthing/pull/10508
+* chore(sqlite): allow periodic database maintenance to be disabled by @pixelspark in https://github.com/syncthing/syncthing/pull/10441
+* chore(gui): include license files for fork-awesome assets by @gotmax23 in https://github.com/syncthing/syncthing/pull/10539
+* build: add build attestation step at release by @calmh in https://github.com/syncthing/syncthing/pull/10540
 
-**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.12...v2.0.13
+## New Contributors
+* @prathik8794 made their first contribution in https://github.com/syncthing/syncthing/pull/10508
+* @gotmax23 made their first contribution in https://github.com/syncthing/syncthing/pull/10539
+* @maishivamhoo123 made their first contribution in https://github.com/syncthing/syncthing/pull/10527
+
+**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.13...v2.0.14
