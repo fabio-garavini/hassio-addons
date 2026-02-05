@@ -1,5 +1,5 @@
 name: Gitlab
-version: 18.8.2-v1
+version: 18.8.3
 slug: gitlab
 description: Gitlab Comunity Edition
 url: https://gitlab.com/rluna-gitlab/gitlab-ce
@@ -27,7 +27,7 @@ backup_exclude:
   - "*/logs"
 ports:
   80/tcp: 8088
-  443/tcp:
+  443/tcp: null
   22/tcp: 2222
 ports_description:
   80/tcp: HTTP
