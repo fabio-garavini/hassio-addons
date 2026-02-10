@@ -1,8 +1,8 @@
-name: Spoolman
-version: 0.23.1
-slug: spoolman
-description: Keep track of your inventory of 3D-printer filament spools
-url: https://github.com/Donkie/Spoolman
+name: Spoolman Sync
+version: 1.0.0
+slug: spoolman_sync
+description: The easiest way to sync Bambu Lab AMS filament with Spoolman
+url: https://github.com/gibz104/SpoolmanSync
 webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"
 arch:
   - aarch64
@@ -10,9 +10,6 @@ arch:
 init: false
 hassio_api: true
 map:
-  - type: addon_config
-    read_only: false
-    path: /home/app/.local/share/spoolman
   - type: ssl
 backup: cold
 backup_exclude:
@@ -28,7 +25,7 @@ options:
   certfile: fullchain.pem
   keyfile: privkey.pem
 ports:
-  8080/tcp: 7912
+  8080/tcp: 7913
 ports_description:
   8080/tcp: Web UI
-image: fabioogaravini/hassio-spoolman
+image: fabioogaravini/hassio-spoolman-sync

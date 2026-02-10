@@ -18,7 +18,7 @@ services:
       - config:/home/app/.local/share/spoolman
       - ssl:/ssl
     healthcheck:
-      test: ["CMD-SHELL", "curl -sk https://127.0.0.1:8080/api/health | jq -e '.status == \"ok\"'"]
+      test: ["CMD", "curl", "-f", "https://127.0.0.1:8080/health"]
       interval: 10s
       timeout: 5s
       retries: 5

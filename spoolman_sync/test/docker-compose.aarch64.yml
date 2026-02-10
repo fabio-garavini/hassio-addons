@@ -1,24 +1,24 @@
-name: spoolman-amd64
+name: spoolman-sync-aarch64
 services:
-  spoolman-amd64:
-    image: fabioogaravini/hassio-spoolman:${VERSION:-latest}-amd64
+  spoolman-sync-aarch64:
+    image: fabioogaravini/hassio-spoolman-sync:${VERSION:-latest}-aarch64
     build:
       context: ..
       args:
-        BUILD_ARCH: amd64
+        BUILD_ARCH: aarch64
         BUILD_VERSION: ${VERSION:-latest}
-    container_name: spoolman-amd64
+    container_name: spoolman-sync-aarch64
     ports:
-      - 7912:8080
+      - 7913:8080
+      - 3000:3000
     environment:
       - TZ=Etc/UTC
     volumes:
       - data:/data
       - ./options.json:/data/options.json:ro
-      - config:/home/app/.local/share/spoolman
       - ssl:/ssl
     healthcheck:
-      test: ["CMD", "curl", "-f", "https://127.0.0.1:8080/health"]
+      test: ["CMD", "curl", "-f", "https://127.0.0.1:8080/api/v1/health"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -26,5 +26,4 @@ services:
 
 volumes:
   data:
-  config:
   ssl:

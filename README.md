@@ -204,6 +204,12 @@ Spoolman is a self-hosted web service designed to help you efficiently manage yo
 
 ![screenshot](https://github.com/Donkie/Spoolman/assets/2332094/33928d5e-440f-4445-aca9-456c4370ad0d)
 
+### 🧵 Spoolman Sync
+
+_All-in-one_
+
+SpoolmanSync automatically tracks which filament spools are loaded in your Bambu Lab printer's AMS units and syncs this information with [Spoolman](https://github.com/Donkie/Spoolman) for accurate filament inventory management. Works with **all filament brands** - not just Bambu Lab spools.
+
 ### 🔄 Syncthing
 
 _All-in-one_
