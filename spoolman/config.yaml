@@ -1,0 +1,34 @@
+name: Spoolman
+version: 0.23.1
+slug: karakeep
+description: Keep track of your inventory of 3D-printer filament spools
+url: https://github.com/Donkie/Spoolman
+webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"
+arch:
+  - aarch64
+  - amd64
+init: false
+hassio_api: true
+map:
+  - type: addon_config
+    read_only: false
+    path: /home/app/.local/share/spoolman
+  - type: ssl
+backup: cold
+backup_exclude:
+  - "**/logs"
+schema:
+  TZ: str?
+  ssl: bool
+  certfile: str?
+  keyfile: str?
+options:
+  TZ: Etc/UTC
+  ssl: true
+  certfile: fullchain.pem
+  keyfile: privkey.pem
+ports:
+  8080/tcp: 7912
+ports_description:
+  8080/tcp: Web UI
+image: fabioogaravini/hassio-spoolman

@@ -3,7 +3,7 @@
 
 set -e
 
-OPTIONS_SOURCE=/data/options.json
+OPTIONS_SOURCE=${ADDON_DATA_FOLDER:-/data}/options.json
 
 # make redis folders
 mkdir -p \

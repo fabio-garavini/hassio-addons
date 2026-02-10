@@ -3,7 +3,7 @@
 
 set -e
 
-OPTIONS_SOURCE=/data/options.json
+OPTIONS_SOURCE=${ADDON_DATA_FOLDER:-/data}/options.json
 
 service_port=${SERVICE_PORT:-80}
 service_protocol=${SERVICE_PROTOCOL:-http}
