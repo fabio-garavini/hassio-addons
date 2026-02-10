@@ -1,9 +1,9 @@
 name: ownCloud
-version: 10.16.0
+version: 10.16.0-v1
 slug: owncloud
 description: content collaboration platform
 url: https://owncloud.com/
-webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"
+webui: "[PROTO:ssl]://[HOST]:[PORT:8000]"
 arch:
   - aarch64
   - amd64
