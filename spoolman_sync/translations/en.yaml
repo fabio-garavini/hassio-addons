@@ -15,4 +15,4 @@ configuration:
       Name of the SSL private key file located under the `/ssl/` directory.
 
 network:
-  8080/tcp: Spoolman UI
+  8080/tcp: Spoolman Sync UI

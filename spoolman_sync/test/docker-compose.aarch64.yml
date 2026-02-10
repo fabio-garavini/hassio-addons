@@ -10,7 +10,6 @@ services:
     container_name: spoolman-sync-aarch64
     ports:
       - 7913:8080
-      - 3000:3000
     environment:
       - TZ=Etc/UTC
     volumes:
@@ -18,7 +17,7 @@ services:
       - ./options.json:/data/options.json:ro
       - ssl:/ssl
     healthcheck:
-      test: ["CMD", "curl", "-f", "https://127.0.0.1:8080/api/v1/health"]
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:3000"]
       interval: 10s
       timeout: 5s
       retries: 5
