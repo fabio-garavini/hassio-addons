@@ -162,6 +162,14 @@ SpeedTest by [OpenSpeedTest™](https://openspeedtest.com/) is a Free and Open-S
 
 ![speed_test](https://github.com/openspeedtest/v2-Test/raw/main/images/10G-S.gif)
 
+# ☁️ ownCloud
+
+_All-in-one_
+
+ownCloud is an open-source file sync, share and content collaboration software that lets teams work on data easily from anywhere, on any device
+
+![image](https://raw.githubusercontent.com/owncloud-docker/server/master/images/Home-UI.png)
+
 ### 📄 Paperless
 
 _All-in-one_
