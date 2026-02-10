@@ -1,0 +1,66 @@
+configuration:
+  TZ:
+    name: Timezone
+  ssl:
+    name: SSL
+    description: >-
+      Enable HTTPS connections. If `SSL Certfile` and `SSL Private Key` files exist they are used to encrypt the connection, otherwise it'll generate a self-signed certificate
+  certfile:
+    name: SSL Certificate File
+    description: >-
+      Name of the SSL certificate file located under the `/ssl/` directory.
+  keyfile:
+    name: SSL Private Key File
+    description: >-
+      Name of the SSL private key file located under the `/ssl/` directory.
+  OWNCLOUD_VOLUME_FILES:
+    name: Storage location
+    description: >-
+      Location where all your files will be stored
+  OWNCLOUD_ADMIN_USERNAME:
+    name: Admin User
+  OWNCLOUD_ADMIN_PASSWORD:
+    name: Admin Password
+  OWNCLOUD_TRUSTED_PROXIES:
+    name: Trusted Proxies
+    description: >-
+      Comma separated list
+  OWNCLOUD_TRUSTED_DOMAINS:
+    name: Trusted Domains
+    description: >-
+      Comma separated list
+  OWNCLOUD_DOMAIN:
+    name: OwnCloud Domain
+  OWNCLOUD_DEFAULT_LANGUAGE:
+    name: Default Language
+  OWNCLOUD_MAIL_DOMAIN:
+    name: Mail Domain
+  OWNCLOUD_MAIL_FROM_ADDRESS:
+    name: Mail From Address
+  OWNCLOUD_MAIL_SMTP_MODE:
+    name: Mail SMTP Mode
+  OWNCLOUD_MAIL_SMTP_HOST:
+    name: Mail SMTP Host
+  OWNCLOUD_MAIL_SMTP_PORT:
+    name: Mail SMTP Port
+  OWNCLOUD_MAIL_SMTP_SECURE:
+    name: Mail SMTP Secure
+  OWNCLOUD_MAIL_SMTP_AUTH:
+    name: Mail SMTP Auth
+  OWNCLOUD_MAIL_SMTP_AUTH_TYPE:
+    name: Mail SMTP Auth Type
+  OWNCLOUD_MAIL_SMTP_NAME:
+    name: Mail SMTP Name
+  OWNCLOUD_MAIL_SMTP_PASSWORD:
+    name: Mail SMTP Password
+  OWNCLOUD_OVERWRITE_HOST:
+    name: Overwrite Host
+  OWNCLOUD_OVERWRITE_PROTOCOL:
+    name: Overwrite Protocol
+  OWNCLOUD_OVERWRITE_CLI_URL:
+    name: Overwrite CLI Protocol
+  OWNCLOUD_UPDATE_CHECKER:
+    name: Update Check
+
+network:
+  8000/tcp: ownCloud UI

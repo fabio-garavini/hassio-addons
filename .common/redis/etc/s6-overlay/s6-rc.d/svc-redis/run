@@ -21,7 +21,7 @@ chown -R redis:redis \
 	/data/logs \
 	/var/run/redis
 
-if jq -e '.clean_redis == true' $OPTIONS_SOURCE > /dev/null; then
+if jq -e '.clean_redis == true' "$OPTIONS_SOURCE" > /dev/null; then
 	rm -f /config/redis/dump.rdd
 fi
 

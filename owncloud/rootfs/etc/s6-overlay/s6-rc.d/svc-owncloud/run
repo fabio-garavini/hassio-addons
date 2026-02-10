@@ -1,0 +1,8 @@
+#!/command/with-contenv bash
+# shellcheck shell=bash
+
+set -e;
+
+cd /var/www/owncloud || exit 1
+
+exec /usr/bin/entrypoint /usr/bin/owncloud server

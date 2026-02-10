@@ -1,0 +1,8 @@
+{
+  "TZ": "Etc/UTC",
+  "ssl": true,
+  "certfile": "fullchain.pem",
+  "keyfile": "privkey.pem",
+  "OWNCLOUD_ADMIN_USERNAME": "admin",
+  "OWNCLOUD_ADMIN_PASSWORD": "admin123"
+}

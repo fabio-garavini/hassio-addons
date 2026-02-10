@@ -1,0 +1,30 @@
+name: owncloud-aarch64
+services:
+  owncloud-aarch64:
+    image: fabioogaravini/hassio-owncloud:${VERSION:-latest}-aarch64
+    build:
+      context: ..
+      args:
+        BUILD_ARCH: aarch64
+        BUILD_VERSION: ${VERSION:-latest}
+    container_name: owncloud-aarch64
+    ports:
+      - 8080:8000
+    environment:
+      - TZ=Etc/UTC
+    volumes:
+      - data:/data
+      - ./options.json:/data/options.json:ro
+      - share:/share
+      - ssl:/ssl
+    healthcheck:
+      test: ["CMD", "/usr/bin/healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  data:
+  share:
+  ssl:
