@@ -3,6 +3,8 @@ ARG BUILD_FROM=ghcr.io/gibz104/spoolmansync:1.0.0
 
 FROM ${BUILD_FROM}
 
+ENV HA_MODE="external"
+
 ENV \
     SERVICE_PORT=3000 \
     NGINX_PORT=8080

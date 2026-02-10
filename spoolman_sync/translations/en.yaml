@@ -13,6 +13,10 @@ configuration:
     name: SSL Private Key File
     description: >-
       Name of the SSL private key file located under the `/ssl/` directory.
+  NEXTAUTH_URL:
+    name: External URL
+    description: >-
+      Manually set the Spoolman Sync external full url, ex: https://example.com:7913
 
 network:
   8080/tcp: Spoolman Sync UI

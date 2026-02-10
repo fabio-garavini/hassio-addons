@@ -1,5 +1,5 @@
 name: Spoolman Sync
-version: 1.0.0-v1
+version: 1.0.0-v2
 slug: spoolman_sync
 description: The easiest way to sync Bambu Lab AMS filament with Spoolman
 url: https://github.com/gibz104/SpoolmanSync
@@ -8,7 +8,6 @@ arch:
   - aarch64
   - amd64
 init: false
-hassio_api: true
 map:
   - type: ssl
 backup: cold
@@ -19,6 +18,7 @@ schema:
   ssl: bool
   certfile: str?
   keyfile: str?
+  NEXTAUTH_URL: str?
 options:
   TZ: Etc/UTC
   ssl: true
