@@ -154,7 +154,7 @@ _All-in-one_
 
 ![main screenshot](https://raw.githubusercontent.com/nextcloud/screenshots/master/nextcloud-hub-files-25-preview.png)
 
-# ☁️ OpenCloud
+### ☁️ OpenCloud
 
 _All-in-one_
 
@@ -170,7 +170,7 @@ SpeedTest by [OpenSpeedTest™](https://openspeedtest.com/) is a Free and Open-S
 
 ![speed_test](https://github.com/openspeedtest/v2-Test/raw/main/images/10G-S.gif)
 
-# ☁️ ownCloud
+### ☁️ ownCloud
 
 _All-in-one_
 
