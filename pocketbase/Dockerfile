@@ -9,7 +9,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Addon base configuration
 ARG BUILD_ARCH=amd64
-# renovate: datasource=github-releases packageName=just-containers/s6-overlay
+# renovate: datasource=github-releases packageName=just-containers/s6-overlay versioning=regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)\.(?<other>\d+)$
 ARG S6_OVERLAY_VERSION="3.2.1.0"
 RUN \
     apk add --no-cache \

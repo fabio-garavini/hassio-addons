@@ -150,8 +150,8 @@ COPY --from=tika /tika-server-standard-${TIKA_VERSION}.jar /
 
 ARG GOTENBERG_USER_GID=991
 ARG GOTENBERG_USER_UID=991
-# renovate: datasource=github-releases packageName=googlefonts/noto-emoji
-ARG NOTO_COLOR_EMOJI_VERSION=v2.051
+# renovate: datasource=github-releases packageName=googlefonts/noto-emoji versioning=regex:^v(?<major>\d+)\.(?<minor>\d+)$
+ARG NOTO_COLOR_EMOJI_VERSION="v2.051"
 # renovate: datasource=gitlab-releases packageName=pdftk-java/pdftk registryUrl=https://gitlab.com
 ARG PDFTK_VERSION=v3.3.3
 

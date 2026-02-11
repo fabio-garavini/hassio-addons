@@ -36,7 +36,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG BUILD_ARCH=amd64
 # renovate: datasource=github-releases packageName=hassio-addons/bashio
 ARG BASHIO_VERSION="v0.17.5"
-# renovate: datasource=github-releases packageName=just-containers/s6-overlay
+# renovate: datasource=github-releases packageName=just-containers/s6-overlay versioning=regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)\.(?<other>\d+)$
 ARG S6_OVERLAY_VERSION="3.2.1.0"
 # renovate: datasource=github-releases packageName=home-assistant/tempio
 ARG TEMPIO_VERSION="2024.11.2"
@@ -90,15 +90,15 @@ RUN \
     && rm -f -r /tmp/*
 
 # Install web apps
-# renovate: datasource=github-releases packageName=opencloud-eu/web-extensions versioning=regex:unzip-v^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
+# renovate: datasource=github-releases packageName=opencloud-eu/web-extensions versioning=regex:^unzip-v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 ARG APPS_UNZIP_VERSION="unzip-v1.0.2"
-# renovate: datasource=github-releases packageName=opencloud-eu/web-extensions versioning=regex:json-viewer-v^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
+# renovate: datasource=github-releases packageName=opencloud-eu/web-extensions versioning=regex:^json-viewer-v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 ARG APPS_JSON_VERSION="json-viewer-v1.0.2"
-# renovate: datasource=github-releases packageName=opencloud-eu/web-extensions versioning=regex:draw-io-v^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
+# renovate: datasource=github-releases packageName=opencloud-eu/web-extensions versioning=regex:^draw-io-v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 ARG APPS_DRAW_IO_VERSION="draw-io-v1.0.1"
-# renovate: datasource=github-releases packageName=opencloud-eu/web-extensions versioning=regex:progress-bars-v^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
+# renovate: datasource=github-releases packageName=opencloud-eu/web-extensions versioning=regex:^progress-bars-v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 ARG APPS_PROGRESS_BARS_VERSION="progress-bars-v1.1.0"
-# renovate: datasource=github-releases packageName=opencloud-eu/web-extensions versioning=regex:maps-v^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
+# renovate: datasource=github-releases packageName=opencloud-eu/web-extensions versioning=regex:^maps-v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 ARG APPS_MAPS_VERSION="maps-v1.0.2"
 RUN \
     set -eux; \
