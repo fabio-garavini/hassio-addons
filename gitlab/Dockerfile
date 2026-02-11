@@ -48,7 +48,8 @@ ARG BUILD_ARCH=amd64
 
 ARG UBUNTU_VERSION
 
-ARG GITLAB_VERSION=18.8.2-ce.0
+# renovate: datasource=docker depName=docker.io/gitlab/gitlab-ce versioning=regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)-ce\.(?<build>\d+)$
+ARG GITLAB_VERSION=18.8.4-ce.0
 
 RUN { \
     echo "RELEASE_PACKAGE=gitlab-ce"; \
