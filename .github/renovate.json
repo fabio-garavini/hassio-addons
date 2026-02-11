@@ -16,8 +16,7 @@
       "managerFilePatterns": ["/(^|/)addon_info\\.ya?ml$/"],
       "matchStrings": [
         "source:\\s*type:\\s(?<datasource>.*?)\\s*(repo|image):\\s(?<depName>.*?)\\s*current_version:\\s(?<currentValue>.*?)(?:\\s*version_template:\\s[\"']?(?<versioning>.*?)[\"']?)?\\s"
-      ],
-      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{/if}}"
+      ]
     },
     {
       "customType": "regex",
@@ -27,9 +26,8 @@
         "/(^|/)Dockerfile\\.[^/]*$/"
       ],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>\\S+)( depName=(?<depName>\\S+))?( packageName=(?<packageName>\\S+))?( versioning=(?<versioning>\\S+))?( registryUrl=(?<registryUrl>\\S+))?\\s(ARG|ENV)\\s.+?_VERSION\\s*=\\s*(\"|')?(?<currentValue>\\S+)(\"|')?"
-      ],
-      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{/if}}"
+        "# renovate: datasource=(?<datasource>\\S+)( depName=(?<depName>\\S+))?( packageName=(?<packageName>\\S+))?( versioning=(?<versioning>\\S+))?( registryUrl=(?<registryUrl>\\S+))?\\s(ARG|ENV)\\s.+?_VERSION\\s*=\\s*(\"|')?(?<currentValue>[^ \\s'\"]+)(\"|')?"
+      ]
     }
   ],
   "packageRules": [
