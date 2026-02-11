@@ -4,6 +4,6 @@
 chown abc:abc -R /config /data
 
 s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost 8384" \
-    s6-setuidgid abc syncthing \
+  s6-setuidgid abc syncthing \
     --home=/config --no-browser --no-restart \
     --gui-address="0.0.0.0:8384"

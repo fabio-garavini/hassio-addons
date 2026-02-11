@@ -47,7 +47,7 @@ schema:
   PGID: int(0,)
   TZ: str?
 options:
-  PUID: 1000
-  PGID: 1000
+  PUID: 0
+  PGID: 0
   TZ: Etc/UTC
 image: fabioogaravini/hassio-syncthing
