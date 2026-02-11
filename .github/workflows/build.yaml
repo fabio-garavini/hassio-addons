@@ -171,7 +171,7 @@ jobs:
         uses: jaracogmbh/docker-compose-health-check-action@v1.0.0
         if: steps.check.outputs.build_arch == 'true' && steps.tests.outputs.test == 'true'
         with:
-          max-retries: 30
+          max-retries: 10
           retry-interval: 20
           skip-no-healthcheck: true
           compose-file: "${{ steps.info.outputs.target }}/test/docker-compose.${{ matrix.arch }}.yml"
@@ -186,7 +186,7 @@ jobs:
         uses: jaracogmbh/docker-compose-health-check-action@v1.0.0
         if: steps.check.outputs.build_arch == 'true' && steps.tests.outputs.test == 'true'
         with:
-          max-retries: 30
+          max-retries: 10
           retry-interval: 20
           skip-no-healthcheck: true
           compose-file: "${{ steps.info.outputs.target }}/test/docker-compose.${{ matrix.arch }}.yml"
