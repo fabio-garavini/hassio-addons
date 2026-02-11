@@ -1,0 +1,48 @@
+configuration:
+  OC_LOG_LEVEL:
+    name: Log Level
+  OC_URL:
+    name: OpenCloud URL
+    description: >-
+      This must be set to the url you use to connect to OpenCloud (ex: https://homeassistant.local:9200)
+  OC_BASE_DATA_PATH:
+    name: Storage Location
+  TZ:
+    name: Timezone
+  ssl:
+    name: SSL
+    description: >-
+      Enable HTTPS connections. If `SSL Certfile` and `SSL Private Key` files exist they are used to encrypt the connection, otherwise it'll generate a self-signed certificate
+  certfile:
+    name: SSL Certificate File
+    description: >-
+      Name of the SSL certificate file located under the `/ssl/` directory.
+  keyfile:
+    name: SSL Private Key File
+    description: >-
+      Name of the SSL private key file located under the `/ssl/` directory.
+  OC_DEFAULT_LANGUAGE:
+    name: Default Language
+  OC_SHARING_PUBLIC_SHARE_MUST_HAVE_PASSWORD:
+    name: Public Shares Must Have Password
+  OC_SHARING_PUBLIC_WRITEABLE_SHARE_MUST_HAVE_PASSWORD:
+    name: Public Writable Shares Must Have Password
+  NOTIFICATIONS_SMTP_SENDER:
+    name: SMTP Sender
+  NOTIFICATIONS_SMTP_HOST:
+    name: SMTP Host
+  NOTIFICATIONS_SMTP_PORT:
+    name: SMTP Port
+  NOTIFICATIONS_SMTP_USERNAME:
+    name: SMTP Username
+  NOTIFICATIONS_SMTP_PASSWORD:
+    name: SMTP Password
+  NOTIFICATIONS_SMTP_INSECURE:
+    name: SMTP Insecure
+  NOTIFICATIONS_SMTP_AUTHENTICATION:
+    name: SMTP Authentication
+  NOTIFICATIONS_SMTP_ENCRYPTION:
+    name: SMTP Encryption
+
+network:
+  8080/tcp: OpenCloud UI

@@ -1,0 +1,16 @@
+#!/command/with-contenv bash
+# shellcheck shell=bash
+
+set -e
+
+[[ ! -d "$OC_BASE_DATA_PATH/web/assets/apps" ]] && mkdir -p "$OC_BASE_DATA_PATH/web/assets/apps"
+
+cp -r /apps/* "$OC_BASE_DATA_PATH/web/assets/apps/"
+
+chown opencloud-user:opencloud-group -R "$OC_BASE_DATA_PATH" /config
+chmod 755 -R "$OC_BASE_DATA_PATH" /config
+
+cd "$OC_BASE_DATA_PATH" || exit 1
+
+s6-setuidgid opencloud-user opencloud init --insecure true --admin-password changeme || true
+s6-setuidgid opencloud-user opencloud server

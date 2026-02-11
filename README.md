@@ -154,6 +154,14 @@ _All-in-one_
 
 ![main screenshot](https://raw.githubusercontent.com/nextcloud/screenshots/master/nextcloud-hub-files-25-preview.png)
 
+# ☁️ OpenCloud
+
+_All-in-one_
+
+OpenCloud is an open-source project that gives you a secure and private way to store, access, and share your files
+
+![image](https://raw.githubusercontent.com/opencloud-eu/.github/refs/heads/main/profile/web-ui-gallery-view-optimized.jpg)
+
 ### 🚀 Open Speed Test
 
 _All-in-one_
