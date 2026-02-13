@@ -38,7 +38,9 @@ ENV \
     POSTGRES_INITDB_ARGS="--data-checksum" \
     POSTGRES_DB="immich" \
     POSTGRES_USER="immich" \
-    POSTGRES_PASSWORD="immich"
+    POSTGRES_PASSWORD="immich" \
+    POSTGRES_SHARED_PRELOAD_LIBRARIES="vchord.so, vectors.so" \
+    POSTGRES_SEARCH_PATH="postgres, public, vectors"
 
 # renovate: datasource=github-releases packageName=hassio-addons/bashio
 ARG BASHIO_VERSION="v0.17.5"
@@ -183,6 +185,10 @@ RUN set -eux; \
 #----------------------------------------------- S6 & Custom files ---------------------------------------------------------------------#
 
 COPY .common/addon-config /
+COPY .common/mount-external-storage /
+COPY .common/postgres /
+COPY .common/redis /
+COPY .common/nginx /
 
 COPY rootfs/ /
 

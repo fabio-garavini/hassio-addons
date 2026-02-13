@@ -1,5 +1,5 @@
 name: Karakeep
-version: 0.30.0-v3
+version: 0.30.0-v4
 slug: karakeep
 description: bookmark-everything app with a touch of AI for the data hoarders out there
 url: https://karakeep.app/
@@ -90,7 +90,7 @@ schema:
     OTEL_SAMPLE_RATE: float(0.0,1.0)?
     PROMETHEUS_AUTH_TOKEN: password?
   env_vars:
-    - key: match(^[A-Za-z0-9_]+$)
+    - key: match(^[A-Z0-9_-]+$)
       value: str
 options:
   TZ: Etc/UTC

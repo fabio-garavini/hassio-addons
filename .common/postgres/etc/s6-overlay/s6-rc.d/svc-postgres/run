@@ -1,0 +1,15 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+
+set -Eeo pipefail
+
+# Start PostgreSQL server
+bashio::log.info "Starting PostgreSQL server..."
+
+s6-notifyoncheck -s 5000 -n 300 -w 1000 -c "pg_isready -U $POSTGRES_USER" \
+  postgres-entrypoint.sh postgres \
+    -c timezone="$TZ" \
+    -c log_timezone="$TZ" \
+    -c config_file="/etc/postgresql/postgresql.conf" \
+    -c shared_preload_libraries="$POSTGRES_SHARED_PRELOAD_LIBRARIES" \
+    -c search_path="$POSTGRES_SEARCH_PATH"
