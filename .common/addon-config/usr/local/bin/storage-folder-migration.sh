@@ -4,7 +4,7 @@
 set -e
 
 source_path="$1"
-desst_path="$2"
+dest_path="$2"
 
 # Function to check available disk space
 check_disk_space() {
@@ -39,13 +39,13 @@ perform_migration() {
   bashio::log.info "Starting migration test"
 
   # First, do a dry run to check for potential issues
-  if ! rsync -ah --dry-run --partial "${exclude_rsync[@]}" "$source_dir/" "$dest_dir/"; then
+  if ! rsync -ah --dry-run --partial "${rsync_exclusions[@]}" "$source_dir/" "$dest_dir/"; then
     bashio::log.error "Migration test failed. Aborting"
     return 1
   fi
 
   # Perform actual migration with progress and error handling
-  if ! rsync -ah --progress --remove-source-files --partial "${exclude_rsync[@]}" "$source_dir/" "$dest_dir/"; then
+  if ! rsync -ah --progress --remove-source-files --partial "${rsync_exclusions[@]}" "$source_dir/" "$dest_dir/"; then
     bashio::log.error ""
     return 1
   fi
@@ -54,10 +54,10 @@ perform_migration() {
 
   # Clean up empty directories from source
   bashio::log.info "Cleaning up empty directories..."
-  if [ "$source_dir" == "$dest_dir/*" ]; then
-    rm -f "$source_dir"
+  if [[ "$dest_dir" == "$source_dir"/* ]]; then
+    find "$source_dir" -mindepth 1 -depth '(' "${find_exclusions[@]}" -o -type d -empty ')' -a -not '(' -wholename "$dest_dir" -a -wholename "$dest_dir/*" ')' -exec rm -rv {} \;
   else
-    find "$source_dir" -depth -not "\(" -name "$dest_dir" -o -name "$dest_dir/*" "\)" -exec rm -rv {} \;
+    rm -rf "$source_dir"
   fi
 }
 
@@ -75,7 +75,7 @@ if [[ -z "$resolved_path" ]]; then
 fi
 
 # If the resolved path differs, update the environment
-if [[ "$dest_path" != "$resolved_path" ]] && dest_path="$resolved_path"
+[[ "$dest_path" != "$resolved_path" ]] && dest_path="$resolved_path"
 
 valid_paths=("/media/" "/share/" "/config/library")
 
@@ -121,6 +121,12 @@ if [[ "$source_path" == "$dest_path" ]]; then
   exit 0
 fi
 
+if [[ "$source_path" == "$dest_path"/* ]]; then
+  bashio::log.error "Moving a directory to its parent directory is not supported"
+  bashio::addon.stop
+  exit 1
+fi
+
 bashio::log.info "Start folder migration..."
 
 # Exclude common system folders from search and transfer
@@ -137,7 +143,9 @@ excludes=(
 # Build --exclude options
 rsync_exclusions=()
 find_exclusions=()
-for item in "${excludes[@]}"; do
+for i in "${!excludes[@]}"; do
+  item="${excludes[$i]}"
+
   rsync_exclusions+=("--exclude=$item")
   find_exclusions+=(-name "$item")
 
@@ -150,10 +158,12 @@ done
 # Ensure destination directory exists for disk check
 [[ ! -d "$dest_path" ]] && mkdir -p "$dest_path"
 
-if [ -n "$(find "$dest_path" -midepth 1 -not \( "${exclude_find[@]}" \) -type f -print -quit)" ]; then
-  bashio::log.warning "-----------------------------------------------------------------------------------------------------------------------"
-  bashio::log.warning "Destination folder is not empty!"
-  bashio::log.warning "-----------------------------------------------------------------------------------------------------------------------"
+if [ -n "$(find "$dest_path" -midepth 1 -not \( "${find_exclusions[@]}" \) -type f -print -quit)" ]; then
+  bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+  bashio::log.error "Destination folder is not empty!"
+  bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+  bashio::addon.stop
+  exit 1
 fi
 
 # Check disk space before attempting migration
@@ -163,12 +173,14 @@ if ! check_disk_space "$source_path" "$dest_path"; then
   bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
   bashio::log.error "Ask for help: https://github.com/fabio-garavini/hassio-addons/issues"
   bashio::addon.stop
+  exit 1
 fi
 
 # Attempt migration
 if ! perform_migration "$source_path" "$dest_path"; then
   bashio::log.error "Migration failed"
   bashio::addon.stop
+  exit 1
 fi
 
 bashio::log.info "Folder migration complete"

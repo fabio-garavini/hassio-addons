@@ -147,7 +147,7 @@ initialize_disk() {
     # Create partition table
     case "$pttype" in
         "mbr"|"gpt")
-            parted "/dev/$device" -a optimal --script mklabel "$pttype" -- mkpart primary "$fstype" 0% 100%
+            parted "/dev/$device" -a optimal --script mklabel "$pttype" -- mkpart primary $fstype 0% 100%
             ;;
         *)
             bashio::log.error "Unkown $pttype partition table"
@@ -317,8 +317,8 @@ mount_smb() {
         chmod 000 "$mount_point"
     fi
 
-    uid=$(jq -r ".PUID // 1000" "$OPTIONS_SOURCE")
-    gid=$(jq -r ".PGID // 1000" "$OPTIONS_SOURCE")
+    uid=$(jq -r ".PUID // 1000" $OPTIONS_SOURCE)
+    gid=$(jq -r ".PGID // 1000" $OPTIONS_SOURCE)
 
     # Build mount options
     local mount_opts="uid=$uid,gid=$gid,dir_mode=0755,file_mode=0644"
