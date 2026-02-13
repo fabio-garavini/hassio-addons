@@ -1,11 +1,11 @@
 source:
   type: github-releases
   repo: linuxserver/docker-nextcloud
-  current_version: 32.0.5-ls415
+  current_version: 32.0.6-ls416
   version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)-ls(?<build>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
-  patch: 6
+  patch: 0
   image: fabioogaravini/hassio-nextcloud
 build:
   image: ghcr.io/linuxserver/nextcloud
