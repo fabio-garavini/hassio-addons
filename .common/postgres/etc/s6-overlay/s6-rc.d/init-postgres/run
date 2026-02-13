@@ -1,7 +1,7 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
 
-if bashio::config.true 'delete_db' && bashio::config.true 'restore_backup'; then
+if ${DELETE_DB:-false} && ${RESTORE_BACKUP:-false}; then
   rm -rf $PGDATA
 fi
 
