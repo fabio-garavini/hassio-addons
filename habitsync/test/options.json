@@ -1,0 +1,14 @@
+{
+  "users": [
+    {"user": "test", "password": "test"}
+  ],
+  "BASE_URL": "https://127.0.0.1:8080",
+  "TZ": "Etc/UTC",
+  "ssl": true,
+  "certfile": "fullchain.pem",
+  "keyfile": "privkey.pem",
+  "SPRING_MAIL_ENABLED": false,
+  "PUID": 0,
+  "PGID": 0,
+  "env_vars": []
+}

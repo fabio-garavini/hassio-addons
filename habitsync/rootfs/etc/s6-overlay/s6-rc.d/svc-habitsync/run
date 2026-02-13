@@ -3,6 +3,4 @@
 
 set -e
 
-cd /app || exit 1
-
-exec /app/entrypoint.sh
+exec /docker-entrypoint.sh

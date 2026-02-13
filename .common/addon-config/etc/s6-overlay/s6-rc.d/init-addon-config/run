@@ -14,7 +14,7 @@ fi
 
 while IFS="=" read -r key value; do
 
-    key=$(echo "$key" | tr '[:lower:]' '[:upper:]' | sed 's/[^A-Z0-9_]/_/g')
+    key=$(echo "$key" | tr '[:lower:]' '[:upper:]' | sed 's/[^A-Za-z0-9_-]/_/g')
 
     env="$key=\"$value\""
 

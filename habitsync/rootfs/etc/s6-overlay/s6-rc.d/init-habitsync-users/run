@@ -1,0 +1,26 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+
+set -e
+
+OPTIONS_SOURCE=${ADDON_DATA_FOLDER:-"/data"}/options.json
+
+while IFS="=" read -r key value; do
+
+    key="APP_SECURITY_BASIC-AUTH-USERS_$key"
+
+    env="$key=\"$value\""
+
+    value="$(htpasswd -bnBC 10 "" "$value" | tr -d ':\n')"
+
+    # set s6 environment variables
+    if [ -d /var/run/s6/container_environment ]; then
+        printf "%s" "$value" > /var/run/s6/container_environment/"$key"
+    fi
+
+done < <(
+    jq -r '
+        .users[]
+        | "\(.user)=\(.password|tostring)"
+    ' "$OPTIONS_SOURCE"
+)

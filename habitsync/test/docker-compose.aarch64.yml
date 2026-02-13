@@ -1,0 +1,28 @@
+name: habitsync-aarch64
+services:
+  habitsync-aarch64:
+    image: fabioogaravini/hassio-habitsync:${VERSION:-latest}-aarch64
+    build:
+      context: ..
+      args:
+        BUILD_ARCH: aarch64
+        BUILD_VERSION: ${VERSION:-latest}
+    container_name: habitsync-aarch64
+    ports:
+      - 6842:8080
+    environment:
+      - TZ=Etc/UTC
+    volumes:
+      - data:/data
+      - ./options.json:/data/options.json:ro
+      - ssl:/ssl
+    healthcheck:
+      test: ["CMD", "curl", "-kf", "https://127.0.0.1:8080"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  data:
+  ssl:

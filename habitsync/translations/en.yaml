@@ -1,0 +1,44 @@
+configuration:
+  users:
+    name: Users
+  TZ:
+    name: Timezone
+  ssl:
+    name: SSL
+    description: >-
+      Enable HTTPS connections. If `SSL Certfile` and `SSL Private Key` files exist they are used to encrypt the connection, otherwise it'll generate a self-signed certificate
+  certfile:
+    name: SSL Certificate File
+    description: >-
+      Name of the SSL certificate file located under the `/ssl/` directory.
+  keyfile:
+    name: SSL Private Key File
+    description: >-
+      Name of the SSL private key file located under the `/ssl/` directory.
+  BASE_URL:
+    name: App URL
+  PAGE_CHALLENGES_VISIBLE:
+    name: Show Challenges on Homepage
+  SPRING_MAIL_ENABLED:
+    name: Enable Email Notifications
+  SPRING_MAIL_HOST:
+    name: Mail SMTP Host
+  SPRING_MAIL_USERNAME:
+    name: Mail SMTP Username
+  SPRING_MAIL_PASSWORD:
+    name: Mail SMTP Password
+  SPRING_MAIL_PORT:
+    name: Mail SMTP Port
+  APPRISE_API_URL:
+    name: Apprise API URL
+  JWT_SECRET:
+    name: JWT Secret
+  PUID:
+    name: PUID
+  PGID:
+    name: PGID
+  env_vars:
+    name: Environment Variables
+
+network:
+  8080/tcp: HabitSync UI

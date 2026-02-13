@@ -1,7 +1,7 @@
 #!/command/with-contenv bash
 # shellcheck shell=bash
 
-set -e;
+set -e
 
 chown 1000:1000 -R /home/app/.local/share/spoolman
 
