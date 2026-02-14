@@ -55,9 +55,9 @@ perform_migration() {
   # Clean up empty directories from source
   bashio::log.info "Cleaning up empty directories..."
   if [[ "$dest_dir" == "$source_dir"/* ]]; then
-    find "$source_dir" -mindepth 1 -depth '(' "${find_exclusions[@]}" -o -type d -empty ')' -a -not '(' -wholename "$dest_dir" -a -wholename "$dest_dir/*" ')' -exec rm -rv {} \;
+    find "$source_dir" -mindepth 1 -depth '(' "${find_exclusions[@]}" -o -type d -empty ')' -a -not '(' -wholename "$dest_dir" -a -wholename "$dest_dir/*" ')' -exec rm -rf {} \; >/dev/null 2>&1 || true
   else
-    rm -rf "$source_dir"
+    find "$source_dir" -maxdepth 1 -depth -exec rm -rvf {} \; >/dev/null 2>&1 || true
   fi
 }
 

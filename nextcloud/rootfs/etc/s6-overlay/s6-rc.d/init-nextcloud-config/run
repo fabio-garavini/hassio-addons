@@ -1,5 +1,7 @@
-#!/usr/bin/with-contenv bash
+#!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
+
+set +eu
 
 # create folders
 mkdir -p \
@@ -166,6 +168,50 @@ lsiown abc:abc \
     /app/www/public \
     /config/www/nextcloud
 
+CONFIG_FILE="/config/nextcloud.json"
+
+if [ ! -f "$CONFIG_FILE" ]; then
+  echo '{}' > "$CONFIG_FILE"
+fi
+
+current_data_dir=$(jq -r ".data_location // empty" "${CONFIG_FILE}")
+
+if [ -z "$current_data_dir" ]; then
+  jq --arg path "$NEXTCLOUD_DATADIR" '.data_location = $path' "$CONFIG_FILE" > "${CONFIG_FILE}.tmp" && mv "${CONFIG_FILE}.tmp" "$CONFIG_FILE"
+  current_data_dir="$NEXTCLOUD_DATADIR"
+fi
+
+if [[ "$current_data_dir" != "$NEXTCLOUD_DATADIR" ]]; then
+    if [[ ! -d "$current_data_dir" ]] || [[ ! -f "$current_data_dir/.ncdata" ]]; then
+        bashio::log.warning "-----------------------------------------------------------------------------------------------------------------------"
+        bashio::log.warning "Unable to find a data folder in ($current_data_dir)."
+        bashio::log.warning "-----------------------------------------------------------------------------------------------------------------------"
+        bashio::log.warning "This is expected if you manually moved the Nextcloud Data folder somewhere else"
+        if [[ -d "$NEXTCLOUD_DATADIR" ]] && [[ -f "$NEXTCLOUD_DATADIR/.ncdata" ]]; then
+            bashio::log.info "-----------------------------------------------------------------------------------------------------------------------"
+            bashio::log.info "Nexcloud data directory found in (${NEXTCLOUD_DATADIR})"
+            bashio::log.info "-----------------------------------------------------------------------------------------------------------------------"
+            bashio::log.info "Setting this as new data directory without migration"
+        else
+            bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+            bashio::log.error "Unable to find a data folder in (${NEXTCLOUD_DATADIR})"
+            bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+            bashio::log.error "Nextcloud cannot start without a valid data directory."
+            bashio::log.error "Please make sure to set the correct path in the app configuration and restart it"
+            bashio::addon.stop
+            exit 1
+        fi
+    else
+        occ maintenance:mode --on || true
+        bashio::log.info "Migrating data directory from $current_data_dir to ${NEXTCLOUD_DATADIR}"
+        /usr/local/bin/storage-folder-migration.sh "$current_data_dir" "${NEXTCLOUD_DATADIR}"
+    fi
+    sed -i "s|$current_data_dir|$NEXTCLOUD_DATADIR|" "/config/www/nextcloud/config/config.php"
+    occ config:system:set datadirectory --value="${NEXTCLOUD_DATADIR}"
+    jq --arg path "$NEXTCLOUD_DATADIR" '.data_location = $path' "$CONFIG_FILE" > "${CONFIG_FILE}.tmp" && mv "${CONFIG_FILE}.tmp" "$CONFIG_FILE"
+    occ maintenance:mode --off
+fi
+
 # setup config
 if occ config:system:get installed >/dev/null 2>&1; then
     if ! occ config:system:get redis >/dev/null 2>&1; then
@@ -184,13 +230,6 @@ if occ config:system:get installed >/dev/null 2>&1; then
     fi
     if ! occ config:system:get datadirectory >/dev/null 2>&1; then
         occ config:system:set datadirectory --value="${NEXTCLOUD_DATADIR}"
-    elif [[ "$(occ config:system:get datadirectory)" != "${NEXTCLOUD_DATADIR}" ]]; then
-        old_datadir="$(occ config:system:get datadirectory)"
-        occ maintenance:mode --on
-        /usr/local/bin/storage-folder-migration.sh "$old_datadir" "${NEXTCLOUD_DATADIR}"
-        sed -i "s|$old_datadir|$NEXTCLOUD_DATADIR|" "/config/www/nextcloud/config/config.php"
-        occ config:system:set datadirectory --value="${NEXTCLOUD_DATADIR}"
-        occ maintenance:mode --off
     fi
     if ! occ config:system:get maintenance_window_start >/dev/null 2>&1; then
         occ config:system:set maintenance_window_start --value=4 --type=integer
@@ -201,8 +240,14 @@ if occ config:system:get installed >/dev/null 2>&1; then
 
     # Set admin password
     if [[ "${ADMIN_PASS+x}" ]]; then
-        echo "Setting admin password"
-        occ user:resetpassword --password-from-env "${ADMIN_USER:-admin}"
+        if ! occ user:resetpassword --password-from-env "${ADMIN_USER:-admin}" 2>&1; then
+            bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+            bashio::log.error "Failed to set admin password for user ${ADMIN_USER:-admin}"
+            bashio::log.error "Please make sure the password meets the Nextcloud requirements"
+            bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+        else
+            bashio::log.info "Admin password for user ${ADMIN_USER:-admin} set successfully"
+        fi
     fi
 
     # Run maintenance steps, this also fixes warnings in the admin panel
