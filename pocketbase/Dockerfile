@@ -40,7 +40,7 @@ RUN \
     \
     && rm -rf /tmp/*
 
-ARG BUILD_VERSION=0.36.2
+ARG BUILD_VERSION=0.36.3
 ARG POCKETBASE_VERSION=${BUILD_VERSION%-v*}
 
 # download and unzip PocketBase
