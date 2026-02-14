@@ -1,5 +1,5 @@
 name: Nextcloud
-version: 32.0.6-v2
+version: 32.0.6-v3
 slug: nextcloud
 description: Nextcloud all-in-one
 url: https://nextcloud.com
@@ -161,7 +161,7 @@ schema:
   MAIL_FROM_ADDRESS: str?
   MAIL_DOMAIN: str?
   env_vars:
-    - key: match(^[A-Z0-9_-]+$)
+    - key: match(^[A-Za-z0-9_-]+$)
       value: str
 options:
   PUID: 1000

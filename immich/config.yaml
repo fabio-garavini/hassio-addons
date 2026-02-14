@@ -1,5 +1,5 @@
 name: Immich
-version: 2.5.6-v4
+version: 2.5.6-v5
 slug: immich
 description: High performance self-hosted photo and video management solution
 url: https://immich.app
@@ -159,7 +159,7 @@ schema:
   restore_backup: bool
   delete_db: bool?
   env_vars:
-    - key: match(^[A-Z0-9_-]+$)
+    - key: match(^[A-Za-z0-9_-]+$)
       value: str
 options:
   TZ: Etc/UTC

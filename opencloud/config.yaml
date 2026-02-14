@@ -1,5 +1,5 @@
 name: OpenCloud
-version: 5.0.2-v1
+version: 5.0.2-v2
 slug: opencloud
 description: "file sharing platform: Secure, simple and reliable"
 url: https://opencloud.eu
@@ -151,7 +151,7 @@ schema:
   NOTIFICATIONS_SMTP_AUTHENTICATION: str?
   NOTIFICATIONS_SMTP_ENCRYPTION: str?
   env_vars:
-    - key: match(^[A-Z0-9_-]+$)
+    - key: match(^[A-Za-z0-9_-]+$)
       value: str
 options:
   OC_LOG_LEVEL: warn
