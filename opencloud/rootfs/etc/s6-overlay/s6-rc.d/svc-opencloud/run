@@ -1,9 +1,33 @@
-#!/command/with-contenv bash
+#!/command/with-contenv bashio
 # shellcheck shell=bash
 
 set -e
 
 [[ ! -d "$OC_BASE_DATA_PATH/web/assets/apps" ]] && mkdir -p "$OC_BASE_DATA_PATH/web/assets/apps"
+
+CONFIG_FILE="/config/opencloud.json"
+
+if [ ! -f "$CONFIG_FILE" ]; then
+  echo '{}' > "$CONFIG_FILE"
+fi
+
+current_data_dir=$(jq -r ".data_location // empty" "${CONFIG_FILE}")
+
+if [ -z "$current_data_dir" ]; then
+  jq --arg path "$OC_BASE_DATA_PATH" '.data_location = $path' "$CONFIG_FILE" > "${CONFIG_FILE}.tmp" && mv "${CONFIG_FILE}.tmp" "$CONFIG_FILE"
+  current_data_dir="$OC_BASE_DATA_PATH"
+fi
+
+if [[ "$current_data_dir" != "$OC_BASE_DATA_PATH" ]]; then
+  bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+  bashio::log.error "OpenCloud does not support migrating the data directory to a different location"
+  bashio::log.error "https://docs.opencloud.eu/docs/admin/configuration/storage/storage-posix/#migration"
+  bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+  bashio::log.error "Restore the previous Storage Location in the configuration. which is: $current_data_dir"
+  bashio::log.info "If you want to move your data to a different location, you need to download ALL YOUR DATA and reintstall a OpenCloud"
+  bashio::addon.stop
+  exit 1
+fi
 
 cp -r /apps/* "$OC_BASE_DATA_PATH/web/assets/apps/"
 

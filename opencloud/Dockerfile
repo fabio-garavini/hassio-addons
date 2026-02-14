@@ -24,9 +24,17 @@ USER root
 # NGINX Install
 RUN \
     apk add --no-cache \
+        coreutils \
         bash \
         openssl \
         nginx \
+        rsync \
+        lsblk \
+        e2fsprogs \
+        cifs-utils \
+        nfs-utils \
+        eudev \
+        parted \
     && rm -rf /etc/nginx
 
 # Shell
@@ -116,6 +124,7 @@ RUN \
     rm -f -r /tmp/*
 
 COPY .common/addon-config /
+COPY .common/mount-external-storage /
 COPY .common/nginx /
 
 COPY rootfs/ /

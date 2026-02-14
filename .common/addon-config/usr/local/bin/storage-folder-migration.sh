@@ -158,7 +158,7 @@ done
 # Ensure destination directory exists for disk check
 [[ ! -d "$dest_path" ]] && mkdir -p "$dest_path"
 
-if [ -n "$(find "$dest_path" -midepth 1 -not \( "${find_exclusions[@]}" \) -type f -print -quit)" ]; then
+if [ -n "$(find "$dest_path" -mindepth 1 -not \( "${find_exclusions[@]}" \) -type f -print -quit)" ]; then
   bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
   bashio::log.error "Destination folder is not empty!"
   bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
