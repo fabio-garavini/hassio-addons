@@ -1,17 +1,17 @@
 name: Nextcloud
-version: 32.0.6
+version: 32.0.6-v1
 slug: nextcloud
 description: Nextcloud all-in-one
 url: https://nextcloud.com
+webui: https://[HOST]:[PORT:443]
 arch:
   - aarch64
   - amd64
 init: false
-webui: https://[HOST]:[PORT:443]
 map:
-  - type: addon_config
-    read_only: false
   - type: data
+    read_only: false
+  - type: addon_config
     read_only: false
   - type: share
     read_only: false
@@ -23,12 +23,108 @@ backup_exclude:
   - "**/log"
 tmpfs: true
 video: true
+usb: true
+udev: true
+privileged:
+  - SYS_ADMIN
+  - DAC_READ_SEARCH
 devices:
+  - /dev/ttyUSB0
   - /dev/kfd
   - /dev/dri
+  - /dev/dxg
   - /dev/vchiq
   - /dev/video0
+  - /dev/video1
   - /dev/video10
+  - /dev/mmcblk
+  - /dev/fuse
+  - /dev/nvme
+  - /dev/nvme0
+  - /dev/nvme0n1
+  - /dev/nvme0n1p1
+  - /dev/nvme0n1p2
+  - /dev/nvme0n1p3
+  - /dev/nvme1
+  - /dev/nvme1n1
+  - /dev/nvme1n1p1
+  - /dev/nvme1n1p2
+  - /dev/nvme1n1p3
+  - /dev/nvme2
+  - /dev/nvme2n1
+  - /dev/nvme2n1p1
+  - /dev/nvme2n1p2
+  - /dev/nvme2n3p3
+  - /dev/nvme3
+  - /dev/nvme3n1
+  - /dev/nvme3n1p1
+  - /dev/nvme3n1p2
+  - /dev/nvme3n3p3
+  - /dev/nvme4
+  - /dev/nvme4n1
+  - /dev/nvme4n1p1
+  - /dev/nvme4n1p2
+  - /dev/nvme4n3p3
+  - /dev/sda
+  - /dev/sda1
+  - /dev/sda2
+  - /dev/sda3
+  - /dev/sda4
+  - /dev/sdb
+  - /dev/sdb1
+  - /dev/sdb2
+  - /dev/sdb3
+  - /dev/sdb4
+  - /dev/sdc
+  - /dev/sdc1
+  - /dev/sdc2
+  - /dev/sdc3
+  - /dev/sdc4
+  - /dev/sdd
+  - /dev/sdd1
+  - /dev/sdd2
+  - /dev/sdd3
+  - /dev/sdd4
+  - /dev/sde
+  - /dev/sde1
+  - /dev/sde2
+  - /dev/sde3
+  - /dev/sde4
+  - /dev/sdf
+  - /dev/sdf1
+  - /dev/sdf2
+  - /dev/sdf3
+  - /dev/sdf4
+  - /dev/vda
+  - /dev/vda1
+  - /dev/vda2
+  - /dev/vda3
+  - /dev/vda4
+  - /dev/vdb
+  - /dev/vdb1
+  - /dev/vdb2
+  - /dev/vdb3
+  - /dev/vdb4
+  - /dev/vdc
+  - /dev/vdc1
+  - /dev/vdc2
+  - /dev/vdc3
+  - /dev/vdc4
+  - /dev/vdd
+  - /dev/vdd1
+  - /dev/vdd2
+  - /dev/vdd3
+  - /dev/vdd4
+  - /dev/vde
+  - /dev/vde1
+  - /dev/vde2
+  - /dev/vde3
+  - /dev/vde4
+  - /dev/vdf
+  - /dev/vdf1
+  - /dev/vdf2
+  - /dev/vdf3
+  - /dev/vdf4
 schema:
   PUID: int(0,)
   PGID: int(0,)
@@ -41,6 +137,16 @@ schema:
   OVERWRITEPROTOCOL: list(http|https)?
   OVERWRITEHOST: str?
   OVERWRITECLIURL: str?
+  NEXTCLOUD_DATADIR: str
+  storage_mounts:
+    - path: str
+      type: list(local|smb|cifs|nfs)
+      mount: str
+      options: str?
+      auto_format: bool?
+      erase: bool?
+      username: str?
+      password: password?
   trusted_proxies:
     - str?
   trusted_domains:
@@ -54,6 +160,9 @@ schema:
   SMTP_PASS: password?
   MAIL_FROM_ADDRESS: str?
   MAIL_DOMAIN: str?
+  env_vars:
+    - key: match(^[A-Z0-9_-]+$)
+      value: str
 options:
   PUID: 1000
   PGID: 1000
@@ -61,6 +170,9 @@ options:
   keyfile: privkey.pem
   ADMIN_USER: admin
   ADMIN_PASS: password123
+  NEXTCLOUD_DATADIR: /share/nextcloud
+  storage_mounts: []
+  env_vars: []
 ports:
   80/tcp: null
   443/tcp: 8443

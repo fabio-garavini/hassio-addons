@@ -203,10 +203,7 @@ mount_local() {
 
             bashio::log.info "Waiting for the formatted disk ..."
 
-            udevadm settle
-            partx -u "/dev/$device"
-            udevadm settle
-
+            # Needed to wait for the system to recognize the new partition
             sleep 5
 
             device=$(lsblk --json -o name "/dev/$device" | jq -r '.blockdevices[0].children[0].name')
@@ -242,9 +239,6 @@ mount_local() {
             if ! format_partition "$device" "ext4" "$(basename "${mount_point%/}")"; then
                 return 1
             fi
-
-            partprobe "/dev/$device"
-            udevadm settle
 
             uuid=$(lsblk --json -o uuid "/dev/$device" | jq -r '.blockdevices[0].uuid')
 

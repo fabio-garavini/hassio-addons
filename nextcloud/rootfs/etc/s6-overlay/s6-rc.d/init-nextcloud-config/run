@@ -184,6 +184,13 @@ if occ config:system:get installed >/dev/null 2>&1; then
     fi
     if ! occ config:system:get datadirectory >/dev/null 2>&1; then
         occ config:system:set datadirectory --value="${NEXTCLOUD_DATADIR}"
+    elif [[ "$(occ config:system:get datadirectory)" != "${NEXTCLOUD_DATADIR}" ]]; then
+        old_datadir="$(occ config:system:get datadirectory)"
+        occ maintenance:mode --on
+        /usr/local/bin/storage-folder-migration.sh "$old_datadir" "${NEXTCLOUD_DATADIR}"
+        sed -i "s|$old_datadir|$NEXTCLOUD_DATADIR|" "/config/www/nextcloud/config/config.php"
+        occ config:system:set datadirectory --value="${NEXTCLOUD_DATADIR}"
+        occ maintenance:mode --off
     fi
     if ! occ config:system:get maintenance_window_start >/dev/null 2>&1; then
         occ config:system:set maintenance_window_start --value=4 --type=integer

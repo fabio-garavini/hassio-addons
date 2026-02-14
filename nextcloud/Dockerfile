@@ -60,6 +60,12 @@ RUN \
 
 RUN \
     apk add --no-cache \
+        rsync \
+        e2fsprogs \
+        cifs-utils \
+        nfs-utils \
+        eudev \
+        parted \
         ffmpeg \
         imagemagick \
         imagemagick-pdf \
@@ -78,6 +84,7 @@ RUN \
         mariadb-server-utils; \
     rm -rf /tmp/*
 
+COPY .common/mount-external-storage /
 COPY .common/addon-config /
 
 # copy local files
