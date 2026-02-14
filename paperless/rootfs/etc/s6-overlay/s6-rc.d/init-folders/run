@@ -1,5 +1,7 @@
-#!/command/with-contenv bash
+#!/command/with-contenv bashio
 # shellcheck shell=bash
+
+set +u
 
 declare -r log_prefix="[init-folders]"
 
@@ -65,3 +67,69 @@ else
 		find "${dir}" -not \( -user paperless -and -group paperless \) -exec chown --changes paperless:paperless {} +
 	done
 fi
+
+CONFIG_FILE="/config/paperless.json"
+
+if [ ! -f "$CONFIG_FILE" ]; then
+  echo '{}' > "$CONFIG_FILE"
+fi
+
+set_config_value() {
+  local key="$1"
+  local val="$2"
+  local tmp
+  tmp=$(mktemp) || tmp="${CONFIG_FILE}.tmp"
+  jq --arg path "$val" ".${key} = \$path" "$CONFIG_FILE" > "$tmp" && mv "$tmp" "$CONFIG_FILE"
+}
+
+handle_folder() {
+  local key="$1"
+  local new_dir="$2"
+  local pretty="$3"
+
+  # read current from config
+  local current
+  current=$(jq -r ".${key} // empty" "$CONFIG_FILE")
+
+  # if not set in config, set to provided new_dir
+  if [[ -z "$current" ]]; then
+    set_config_value "$key" "$new_dir"
+    current="$new_dir"
+  fi
+
+  # if value changed, handle migration or update
+  if [[ "$current" != "$new_dir" ]]; then
+    if [[ ! -d "$current" ]]; then
+      # previous folder not found — warn and try to accept new_dir if it exists
+			bashio::log.warning "-----------------------------------------------------------------------------------------------------------------------"
+      bashio::log.warning "Unable to find a ${pretty} in ($current)."
+			bashio::log.warning "-----------------------------------------------------------------------------------------------------------------------"
+      bashio::log.warning "This is expected if you manually moved the Paperless ${pretty} somewhere else"
+      if [[ -d "$new_dir" ]]; then
+				bashio::log.info "-----------------------------------------------------------------------------------------------------------------------"
+        bashio::log.info "Paperless ${pretty} directory found in ($new_dir)"
+				bashio::log.info "-----------------------------------------------------------------------------------------------------------------------"
+        bashio::log.info "Setting this as new ${pretty} directory without migration"
+      else
+				bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+        bashio::log.error "Unable to find a ${pretty} in ($new_dir)"
+				bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+        bashio::log.error "Paperless cannot start without a valid ${pretty} directory."
+        bashio::log.error "Please make sure to set the correct path in the app configuration and restart it"
+        bashio::addon.stop
+        exit 1
+      fi
+    else
+      # previous folder exists: attempt migration
+      /usr/local/bin/storage-folder-migration.sh "$current" "$new_dir"
+    fi
+
+    # persist the new path
+    set_config_value "$key" "$new_dir"
+  fi
+}
+
+handle_folder "export_dir"       "${export_dir}"        "export folder"
+handle_folder "media_root_dir"   "${media_root_dir}"    "media_root folder"
+handle_folder "empty_trash_dir"  "${empty_trash_dir}"   "empty_trash folder"
+handle_folder "consume_dir"      "${consume_dir}"       "consume folder"

@@ -1,5 +1,5 @@
 name: Paperless
-version: 2.20.6
+version: 2.20.6-v1
 slug: paperless
 description: Document management system that transforms your physical documents
   into a searchable online archive
@@ -39,6 +39,13 @@ schema:
   PAPERLESS_SECRET_KEY: password?
   PAPERLESS_CONSUMER_POLLING: int(0,)?
   PAPERLESS_TRUSTED_PROXIES: str?
+  PAPERLESS_CONSUMPTION_DIR: str
+  PAPERLESS_MEDIA_ROOT: str
+  PAPERLESS_EXPORT_DIR: str
+  PAPERLESS_EMPTY_TRASH_DIR: str?
+  env_vars:
+    - key: match(^[A-Za-z0-9_-]+$)
+      value: str
 options:
   ssl: true
   certfile: fullchain.pem
@@ -47,6 +54,11 @@ options:
   USERMAP_GID: 0
   PAPERLESS_TIME_ZONE: Etc/UTC
   PAPERLESS_TRUSTED_PROXIES: 172.30.32.0/23
+  PAPERLESS_CONSUMPTION_DIR: /share/paperless/consume
+  PAPERLESS_MEDIA_ROOT: /share/paperless
+  PAPERLESS_EXPORT_DIR: /share/paperless/export
+  PAPERLESS_EMPTY_TRASH_DIR: /share/paperless/.trash
+  env_vars: []
 ports:
   8080/tcp: 8010
 ports_description:

@@ -7,32 +7,32 @@ OPTIONS_SOURCE=${ADDON_DATA_FOLDER:-"/data"}/options.json
 
 # make redis folders
 mkdir -p \
-	/config/redis \
+	"${REDIS_DATADIR:-/config/redis}" \
 	/data/logs \
 	/var/run/redis
 
 # copy redis defaults
-[[ ! -f "/config/redis/redis.conf" ]] &&
-	cp /defaults/redis.conf /config/redis/redis.conf
+[[ ! -f "${REDIS_DATADIR:-/config/redis}/redis.conf" ]] &&
+	cp /defaults/redis.conf ${REDIS_DATADIR:-/config/redis}/redis.conf
 
 # permissions
 chown -R redis:redis \
-	/config/redis \
+	"${REDIS_DATADIR:-/config/redis}" \
 	/data/logs \
 	/var/run/redis
 
 if jq -e '.clean_redis == true' "$OPTIONS_SOURCE" > /dev/null; then
-	rm -f /config/redis/dump.rdd
+	rm -f "${REDIS_DATADIR:-/config/redis}/dump.rdd"
 fi
 
 s6-notifyoncheck -s 1000 -n 300 -w 1000 -c "redis-cli PING" \
 	s6-setuidgid redis \
-		redis-server /config/redis/redis.conf \
+		redis-server ${REDIS_DATADIR:-/config/redis}/redis.conf \
 		--bind 0.0.0.0 \
 		--port 6379 \
 		--pidfile /var/run/redis/redis.pid \
 		--always-show-logo no \
-		--dir /config/redis \
+		--dir "${REDIS_DATADIR:-/config/redis}" \
 		--daemonize no \
 		--logfile /data/logs/redis.log \
 		--unixsocket /var/run/redis/redis.sock \

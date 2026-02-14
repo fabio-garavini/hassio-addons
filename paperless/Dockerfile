@@ -18,16 +18,12 @@ ENV PAPERLESS_PORT=8000 \
     PAPERLESS_USE_X_FORWARD_PORT=true \
     PAPERLESS_ENABLE_UPDATE_CHECK=false \
     PAPERLESS_PROXY_SSL_HEADER='["HTTP_X_FORWARDED_PROTO", "https"]' \
-    PAPERLESS_CONSUMPTION_DIR="/share/paperless/consume" \
     PAPERLESS_DATA_DIR="/config/paperless" \
-    PAPERLESS_EMPTY_TRASH_DIR="/share/paperless/.trash" \
-    PAPERLESS_MEDIA_ROOT="/share/paperless" \
-    PAPERLESS_EXPORT_DIR="/share/paperless/export" \
     PAPERLESS_LOGGING_DIR="/data/logs/paperless" \
     PAPERLESS_SCRATCH_DIR="/data/tmp" \
-    PAPERLESS_REDIS="redis://localhost:6379" \
-    PAPERLESS_DBHOST=localhost \
-    PAPERLESS_TIKA_ENABLED=1 \
+    PAPERLESS_REDIS="unix:///var/run/redis/redis.sock" \
+    PAPERLESS_DBHOST="/var/run/postgresql" \
+    PAPERLESS_TIKA_ENABLED=true \
     PAPERLESS_TIKA_GOTENBERG_ENDPOINT="http://localhost:3000" \
     PAPERLESS_TIKA_ENDPOINT="http://localhost:9998"
 
@@ -326,8 +322,14 @@ ENV CHROMIUM_BIN_PATH=/usr/bin/chromium \
     EXIFTOOL_BIN_PATH=/usr/bin/exiftool \
     PDFCPU_BIN_PATH=/usr/bin/pdfcpu
 
+RUN apt-get update; \
+    apt-get install -y --no-install-recommends \
+        rsync; \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 COPY .common/addon-config /
 COPY .common/nginx /
+COPY .common/redis /
 
 COPY rootfs/ /
 
