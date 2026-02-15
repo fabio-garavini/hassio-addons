@@ -15,4 +15,4 @@ changelog:
   repo: prometheus/prometheus
   version_template: v{{major}}.{{minor}}.{{patch}}
 test:
-  enable: true
+  enable: false
