@@ -1,8 +1,52 @@
-#!/command/with-contenv bash
+#!/command/with-contenv bashio
 # shellcheck shell=bash
 
 set -e
 
 cd /var/www/owncloud || exit 1
+
+CONFIG_FILE="/data/owncloud.json"
+
+if [ ! -f "$CONFIG_FILE" ]; then
+  echo '{}' > "$CONFIG_FILE"
+fi
+
+current_data_dir=$(jq -r ".data_location // empty" "${CONFIG_FILE}")
+
+if [ -z "$current_data_dir" ]; then
+  jq --arg path "$OWNCLOUD_VOLUME_FILES" '.data_location = $path' "$CONFIG_FILE" > "${CONFIG_FILE}.tmp" && mv "${CONFIG_FILE}.tmp" "$CONFIG_FILE"
+  current_data_dir="$OWNCLOUD_VOLUME_FILES"
+fi
+
+if [[ "$current_data_dir" != "$OWNCLOUD_VOLUME_FILES" ]]; then
+  if [[ ! -d "$current_data_dir" ]] || [[ ! -f "$current_data_dir/.ocdata" ]]; then
+    bashio::log.warning "-----------------------------------------------------------------------------------------------------------------------"
+    bashio::log.warning "Unable to find a data folder in ($current_data_dir)."
+    bashio::log.warning "-----------------------------------------------------------------------------------------------------------------------"
+    bashio::log.warning "This is expected if you manually moved the ownCloud Data folder somewhere else"
+    if [[ -d "$OWNCLOUD_VOLUME_FILES" ]] && [[ -f "$OWNCLOUD_VOLUME_FILES/.ocdata" ]]; then
+      bashio::log.info "-----------------------------------------------------------------------------------------------------------------------"
+      bashio::log.info "Nexcloud data directory found in (${OWNCLOUD_VOLUME_FILES})"
+      bashio::log.info "-----------------------------------------------------------------------------------------------------------------------"
+      bashio::log.info "Setting this as new data directory without migration"
+    else
+      bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+      bashio::log.error "Unable to find a data folder in (${OWNCLOUD_VOLUME_FILES})"
+      bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+      bashio::log.error "ownCloud cannot start without a valid data directory."
+      bashio::log.error "Please make sure to set the correct path in the app configuration and restart it"
+      bashio::addon.stop
+      exit 1
+    fi
+  else
+    bashio::log.info "Migrating data directory from $current_data_dir to ${OWNCLOUD_VOLUME_FILES}"
+    /usr/local/bin/storage-folder-migration.sh "$current_data_dir" "${OWNCLOUD_VOLUME_FILES}"
+  fi
+
+  sqlite3 "$OWNCLOUD_VOLUME_FILES/owncloud.db" "UPDATE oc_storages SET id='local::$OWNCLOUD_VOLUME_FILES/' WHERE id='local::$current_data_dir/';"
+  sqlite3 "$OWNCLOUD_VOLUME_FILES/owncloud.db" "UPDATE oc_accounts SET home = REPLACE( home, '$current_data_dir/', '$OWNCLOUD_VOLUME_FILES/');"
+  sqlite3 "$OWNCLOUD_VOLUME_FILES/owncloud.db" "UPDATE oc_jobs SET argument = REPLACE( argument, '${current_data_dir//\//\\/}', '${OWNCLOUD_VOLUME_FILES//\//\\/}\\/')"
+  jq --arg path "$OWNCLOUD_VOLUME_FILES" '.data_location = $path' "$CONFIG_FILE" > "${CONFIG_FILE}.tmp" && mv "${CONFIG_FILE}.tmp" "$CONFIG_FILE"
+fi
 
 exec /usr/bin/entrypoint /usr/bin/owncloud server

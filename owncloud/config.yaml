@@ -1,5 +1,5 @@
 name: ownCloud
-version: 10.16.0-v1
+version: 10.16.0-v2
 slug: owncloud
 description: content collaboration platform
 url: https://owncloud.com/
@@ -10,18 +10,124 @@ arch:
 init: false
 hassio_api: true
 map:
+  - type: data
+    read_only: false
   - type: share
     read_only: false
   - type: ssl
 backup: cold
 backup_exclude:
   - "**/logs"
+tmpfs: true
+usb: true
+udev: true
+privileged:
+  - SYS_ADMIN
+  - DAC_READ_SEARCH
+devices:
+  - /dev/mmcblk
+  - /dev/fuse
+  - /dev/nvme
+  - /dev/nvme0
+  - /dev/nvme0n1
+  - /dev/nvme0n1p1
+  - /dev/nvme0n1p2
+  - /dev/nvme0n1p3
+  - /dev/nvme1
+  - /dev/nvme1n1
+  - /dev/nvme1n1p1
+  - /dev/nvme1n1p2
+  - /dev/nvme1n1p3
+  - /dev/nvme2
+  - /dev/nvme2n1
+  - /dev/nvme2n1p1
+  - /dev/nvme2n1p2
+  - /dev/nvme2n3p3
+  - /dev/nvme3
+  - /dev/nvme3n1
+  - /dev/nvme3n1p1
+  - /dev/nvme3n1p2
+  - /dev/nvme3n3p3
+  - /dev/nvme4
+  - /dev/nvme4n1
+  - /dev/nvme4n1p1
+  - /dev/nvme4n1p2
+  - /dev/nvme4n3p3
+  - /dev/sda
+  - /dev/sda1
+  - /dev/sda2
+  - /dev/sda3
+  - /dev/sda4
+  - /dev/sdb
+  - /dev/sdb1
+  - /dev/sdb2
+  - /dev/sdb3
+  - /dev/sdb4
+  - /dev/sdc
+  - /dev/sdc1
+  - /dev/sdc2
+  - /dev/sdc3
+  - /dev/sdc4
+  - /dev/sdd
+  - /dev/sdd1
+  - /dev/sdd2
+  - /dev/sdd3
+  - /dev/sdd4
+  - /dev/sde
+  - /dev/sde1
+  - /dev/sde2
+  - /dev/sde3
+  - /dev/sde4
+  - /dev/sdf
+  - /dev/sdf1
+  - /dev/sdf2
+  - /dev/sdf3
+  - /dev/sdf4
+  - /dev/vda
+  - /dev/vda1
+  - /dev/vda2
+  - /dev/vda3
+  - /dev/vda4
+  - /dev/vdb
+  - /dev/vdb1
+  - /dev/vdb2
+  - /dev/vdb3
+  - /dev/vdb4
+  - /dev/vdc
+  - /dev/vdc1
+  - /dev/vdc2
+  - /dev/vdc3
+  - /dev/vdc4
+  - /dev/vdd
+  - /dev/vdd1
+  - /dev/vdd2
+  - /dev/vdd3
+  - /dev/vdd4
+  - /dev/vde
+  - /dev/vde1
+  - /dev/vde2
+  - /dev/vde3
+  - /dev/vde4
+  - /dev/vdf
+  - /dev/vdf1
+  - /dev/vdf2
+  - /dev/vdf3
+  - /dev/vdf4
 schema:
   TZ: str?
   ssl: bool
   certfile: str?
   keyfile: str?
   OWNCLOUD_VOLUME_FILES: str
+  storage_mounts:
+    - path: str
+      type: list(local|smb|cifs|nfs)
+      mount: str
+      options: str?
+      auto_format: bool?
+      erase: bool?
+      username: str?
+      password: password?
   OWNCLOUD_ADMIN_USERNAME: str
   OWNCLOUD_ADMIN_PASSWORD: password
   OWNCLOUD_TRUSTED_DOMAINS: str?
@@ -42,14 +148,19 @@ schema:
   OWNCLOUD_MAIL_SMTP_NAME: str?
   OWNCLOUD_MAIL_SMTP_PASSWORD: password?
   OWNCLOUD_UPDATE_CHECKER: bool
+  env_vars:
+    - key: match(^[A-Za-z0-9_-]+$)
+      value: str
 options:
   TZ: Etc/UTC
   ssl: true
   certfile: fullchain.pem
   keyfile: privkey.pem
   OWNCLOUD_VOLUME_FILES: /share/owncloud
+  storage_mounts: []
   OWNCLOUD_TRUSTED_PROXIES: 127.0.0.1
   OWNCLOUD_UPDATE_CHECKER: false
+  env_vars: []
 ports:
   8000/tcp: 8080
 ports_description:

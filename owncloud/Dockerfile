@@ -20,7 +20,13 @@ RUN \
         bash \
         openssl \
         redis \
-	    nginx; \
+	    nginx \
+        rsync \
+        e2fsprogs \
+        cifs-utils \
+        nfs-common \
+        parted \
+        udev; \
     apt-get clean; \
     rm -rf /etc/nginx
 
@@ -88,6 +94,7 @@ RUN \
         /var/lib/apt/lists/*
 
 COPY .common/addon-config /
+COPY .common/mount-external-storage /
 COPY .common/nginx /
 COPY .common/redis /
 
