@@ -87,6 +87,20 @@ handle_folder() {
   local new_dir="$2"
   local pretty="$3"
 
+	counter=0
+
+	for dir in "${extra_dirs[@]}"; do
+		[[ "${new_dir}" == "${dir}" ]] && coutner=$((counter + 1))
+		if [[ "$counter" -ge 2 ]]; then
+			bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+			bashio::log.error "Cannot set two folders to the same path ($new_dir)"
+			bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+			bashio::log.error "Please make sure to set the correct folder paths in the app configuration and restart it"
+			bashio::addon.stop
+			exit 1
+		fi
+	done
+
   # read current from config
   local current
   current=$(jq -r ".${key} // empty" "$CONFIG_FILE")
@@ -130,6 +144,6 @@ handle_folder() {
 }
 
 handle_folder "export_dir"       "${export_dir}"        "export folder"
-handle_folder "media_root_dir"   "${media_root_dir}"    "media_root folder"
 handle_folder "empty_trash_dir"  "${empty_trash_dir}"   "empty_trash folder"
 handle_folder "consume_dir"      "${consume_dir}"       "consume folder"
+handle_folder "media_root_dir"   "${media_root_dir}"    "media_root folder"
