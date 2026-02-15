@@ -1,5 +1,5 @@
 name: Paperless
-version: 2.20.6-v1
+version: 2.20.6-v2
 slug: paperless
 description: Document management system that transforms your physical documents
   into a searchable online archive
@@ -22,6 +22,100 @@ backup_exclude:
   - "**/logs"
   - "**/tmp"
 tmpfs: true
+usb: true
+udev: true
+privileged:
+  - SYS_ADMIN
+  - DAC_READ_SEARCH
+devices:
+  - /dev/mmcblk
+  - /dev/fuse
+  - /dev/nvme
+  - /dev/nvme0
+  - /dev/nvme0n1
+  - /dev/nvme0n1p1
+  - /dev/nvme0n1p2
+  - /dev/nvme0n1p3
+  - /dev/nvme1
+  - /dev/nvme1n1
+  - /dev/nvme1n1p1
+  - /dev/nvme1n1p2
+  - /dev/nvme1n1p3
+  - /dev/nvme2
+  - /dev/nvme2n1
+  - /dev/nvme2n1p1
+  - /dev/nvme2n1p2
+  - /dev/nvme2n3p3
+  - /dev/nvme3
+  - /dev/nvme3n1
+  - /dev/nvme3n1p1
+  - /dev/nvme3n1p2
+  - /dev/nvme3n3p3
+  - /dev/nvme4
+  - /dev/nvme4n1
+  - /dev/nvme4n1p1
+  - /dev/nvme4n1p2
+  - /dev/nvme4n3p3
+  - /dev/sda
+  - /dev/sda1
+  - /dev/sda2
+  - /dev/sda3
+  - /dev/sda4
+  - /dev/sdb
+  - /dev/sdb1
+  - /dev/sdb2
+  - /dev/sdb3
+  - /dev/sdb4
+  - /dev/sdc
+  - /dev/sdc1
+  - /dev/sdc2
+  - /dev/sdc3
+  - /dev/sdc4
+  - /dev/sdd
+  - /dev/sdd1
+  - /dev/sdd2
+  - /dev/sdd3
+  - /dev/sdd4
+  - /dev/sde
+  - /dev/sde1
+  - /dev/sde2
+  - /dev/sde3
+  - /dev/sde4
+  - /dev/sdf
+  - /dev/sdf1
+  - /dev/sdf2
+  - /dev/sdf3
+  - /dev/sdf4
+  - /dev/vda
+  - /dev/vda1
+  - /dev/vda2
+  - /dev/vda3
+  - /dev/vda4
+  - /dev/vdb
+  - /dev/vdb1
+  - /dev/vdb2
+  - /dev/vdb3
+  - /dev/vdb4
+  - /dev/vdc
+  - /dev/vdc1
+  - /dev/vdc2
+  - /dev/vdc3
+  - /dev/vdc4
+  - /dev/vdd
+  - /dev/vdd1
+  - /dev/vdd2
+  - /dev/vdd3
+  - /dev/vdd4
+  - /dev/vde
+  - /dev/vde1
+  - /dev/vde2
+  - /dev/vde3
+  - /dev/vde4
+  - /dev/vdf
+  - /dev/vdf1
+  - /dev/vdf2
+  - /dev/vdf3
+  - /dev/vdf4
 schema:
   PAPERLESS_URL: str?
   ssl: bool
@@ -43,6 +137,15 @@ schema:
   PAPERLESS_MEDIA_ROOT: str
   PAPERLESS_EXPORT_DIR: str
   PAPERLESS_EMPTY_TRASH_DIR: str?
+  storage_mounts:
+    - path: str
+      type: list(local|smb|cifs|nfs)
+      mount: str
+      options: str?
+      auto_format: bool?
+      erase: bool?
+      username: str?
+      password: password?
   env_vars:
     - key: match(^[A-Za-z0-9_-]+$)
       value: str
@@ -58,6 +161,7 @@ options:
   PAPERLESS_MEDIA_ROOT: /share/paperless
   PAPERLESS_EXPORT_DIR: /share/paperless/export
   PAPERLESS_EMPTY_TRASH_DIR: /share/paperless/.trash
+  storage_mounts: []
   env_vars: []
 ports:
   8080/tcp: 8010

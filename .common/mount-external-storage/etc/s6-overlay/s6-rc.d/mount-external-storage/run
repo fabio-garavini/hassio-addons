@@ -243,9 +243,9 @@ mount_local() {
             uuid=$(lsblk --json -o uuid "/dev/$device" | jq -r '.blockdevices[0].uuid')
 
             bashio::log.info "Disk partition created. Please update your storage_mounts config with:"
-            bashio::log.blue "- type: local"
+            bashio::log.blue "- path: ${mount_point#$MOUNT_BASE_DIR/}"
             bashio::log.blue "  mount: disk/by-uuid/$uuid"
-            bashio::log.blue "  path: ${mount_point#/mnt/}"
+            bashio::log.blue "  type: local"
             bashio::log.blue "  erase: false"
             bashio::log.blue "  auto_format: false"
             bashio::log.warning "Make shure to disable 'auto_format' and 'erase' options!"
@@ -460,8 +460,8 @@ process_mount() {
     # Ensure mount path doesn't contain dangerous characters
     if [[ "$mount_path" =~ \.\. ]] || [[ "$mount_path" =~ ^/ ]]; then
         bashio::log.error "Invalid mount path: $mount_path"
-        bashio::log.error "Path should only contain the folder name to mount under /mnt/ (example 'immich-library' )"
-        bashio::log.error "For example path: 'immich-library' will be mounted on '/mnt/immich-library'"
+        bashio::log.error "Path should only contain the folder name to mount under $MOUNT_BASE_DIR/ (example 'immich-library' )"
+        bashio::log.error "For example path: 'immich-library' will be mounted on '$MOUNT_BASE_DIR/immich-library'"
         return 1
     fi
 

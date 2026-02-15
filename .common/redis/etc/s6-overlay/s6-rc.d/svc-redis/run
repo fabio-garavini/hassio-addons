@@ -8,7 +8,7 @@ OPTIONS_SOURCE=${ADDON_DATA_FOLDER:-"/data"}/options.json
 # make redis folders
 mkdir -p \
 	"${REDIS_DATADIR:-/config/redis}" \
-	/data/logs \
+	/data/logs/redis \
 	/var/run/redis
 
 # copy redis defaults
@@ -18,7 +18,7 @@ mkdir -p \
 # permissions
 chown -R redis:redis \
 	"${REDIS_DATADIR:-/config/redis}" \
-	/data/logs \
+	/data/logs/redis \
 	/var/run/redis
 
 if jq -e '.clean_redis == true' "$OPTIONS_SOURCE" > /dev/null; then
@@ -34,6 +34,6 @@ s6-notifyoncheck -s 1000 -n 300 -w 1000 -c "redis-cli PING" \
 		--always-show-logo no \
 		--dir "${REDIS_DATADIR:-/config/redis}" \
 		--daemonize no \
-		--logfile /data/logs/redis.log \
+		--logfile /data/logs/redis/redis.log \
 		--unixsocket /var/run/redis/redis.sock \
 		--unixsocketperm 777

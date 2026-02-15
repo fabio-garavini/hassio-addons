@@ -324,10 +324,16 @@ ENV CHROMIUM_BIN_PATH=/usr/bin/chromium \
 
 RUN apt-get update; \
     apt-get install -y --no-install-recommends \
-        rsync; \
+        rsync \
+        e2fsprogs \
+        cifs-utils \
+        nfs-common \
+        parted \
+        udev; \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY .common/addon-config /
+COPY .common/mount-external-storage /
 COPY .common/nginx /
 COPY .common/redis /
 
