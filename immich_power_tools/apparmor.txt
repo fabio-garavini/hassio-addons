@@ -1,6 +1,6 @@
 #include <tunables/global>
 
-profile immich flags=(attach_disconnected,mediate_deleted) {
+profile immich_power_tools flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
   capability,

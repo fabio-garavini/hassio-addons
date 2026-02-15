@@ -1,6 +1,6 @@
 #include <tunables/global>
 
-profile paperless flags=(attach_disconnected,mediate_deleted) {
+profile prometheus flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
   capability,
