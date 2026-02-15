@@ -18,26 +18,10 @@ if [ ! -f "$backup_location" ]; then
   exit 1
 fi
 
-bashio::log.info "Fetching dump table name... (it can take a while)"
-
-table_name=$(gunzip --stdout "$backup_location" | grep -oP '^DROP DATABASE IF EXISTS \K[^;]+')
-
-bashio::log.info "Fetching dump user name... (it can take a while)"
-
-user_name=$(gunzip --stdout "$backup_location" | grep -oP '^DROP ROLE IF EXISTS \K[^;]+')
-
 bashio::log.info "Postgres restore:"
 
 gunzip --stdout "$backup_location" \
 | sed "s/SELECT pg_catalog.set_config('search_path', '', false);/SELECT pg_catalog.set_config('search_path', 'public, pg_catalog', true);/g" \
-| sed -E '/^DROP DATABASE IF EXISTS /,/^--/d' \
-| sed -E "/^CREATE DATABASE $table_name/,/^--/d" \
-| sed "s/ALTER DATABASE $table_name/ALTER DATABASE $POSTGRES_DB/g" \
-| sed "s/connect $table_name/connect $POSTGRES_DB/g" \
-| sed -E '/^DROP ROLE /,/^--/d' \
-| sed -E '/^CREATE ROLE /,/^--/d' \
-| sed -E '/^ALTER ROLE /,/^--/d' \
-| sed "s/OWNER TO $user_name;/OWNER TO $POSTGRES_USER;/g" \
-| psql --dbname="$POSTGRES_DB" --username="$POSTGRES_USER"
+| psql --dbname="$POSTGRES_DB" --username="$POSTGRES_USER" --single-transaction --set ON_ERROR_STOP=on
 
 bashio::log.info "Postgres restore complete"

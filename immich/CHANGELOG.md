@@ -1,5 +1,11 @@
 # v2.5.6
 
+## App
+
+* Fix postgres dump restore process
+
+## Immich
+
 This patch release addresses the following issues
 
 - Fixed an issue where thumbnail generation runs every night when `full-size image generation` option is enabled.
