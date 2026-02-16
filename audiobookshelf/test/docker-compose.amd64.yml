@@ -1,0 +1,34 @@
+name: audiobookshelf-amd64
+services:
+  audiobookshelf-amd64:
+    image: fabioogaravini/hassio-audiobookshelf:${VERSION:-latest}-amd64
+    build:
+      context: ..
+      args:
+        BUILD_ARCH: amd64
+        BUILD_VERSION: ${VERSION:-latest}
+    container_name: audiobookshelf-amd64
+    ports:
+      - 13378:8080
+    environment:
+      - TZ=Etc/UTC
+    volumes:
+      - data:/data
+      - ./options.json:/data/options.json:ro
+      - config:/config
+      - share:/share
+      - media:/media
+      - ssl:/ssl
+    healthcheck:
+      test: ["CMD", "curl", "-kf", "https://127.0.0.1:8080"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  data:
+  config:
+  share:
+  media:
+  ssl:

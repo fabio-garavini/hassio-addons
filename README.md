@@ -14,6 +14,14 @@ Help me expand the documentation making it as easy as possible for anyone to use
 
 > [!NOTE] > _All-in-one_ addons are configured to work completely stand-alone, as they pack everything that they need
 
+### 🎧 Audiobookshelf
+
+_All-in-one_
+
+Audiobookshelf is a self-hosted audiobook and podcast server
+
+![screenshot](https://github.com/advplyr/audiobookshelf/raw/master/images/DemoLibrary.png)
+
 ### 📄 Collabora CODE
 
 _Nextcloud extension_
