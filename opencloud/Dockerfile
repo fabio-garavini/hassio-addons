@@ -1,5 +1,5 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=docker.io/opencloudeu/opencloud-rolling:5.0.2
+ARG BUILD_FROM=docker.io/opencloudeu/opencloud-rolling:5.1.0
 
 FROM ${BUILD_FROM}
 
