@@ -23,6 +23,18 @@ Audiobookshelf is a self-hosted audiobook and podcast server
 
 ![screenshot](https://github.com/advplyr/audiobookshelf/raw/master/images/DemoLibrary.png)
 
+# 📚 Calibre
+
+_All-in-one_
+
+Calibre is a powerful and easy to use e-book manager
+
+# 📚 Calibre Web
+
+_Calibre alternative web interface_
+
+![main-page](https://github.com/janeczku/calibre-web/wiki/images/main_screen.png)
+
 ### 📄 Collabora CODE
 
 _Nextcloud extension_
