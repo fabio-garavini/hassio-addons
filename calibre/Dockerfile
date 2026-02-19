@@ -3,6 +3,12 @@ ARG BUILD_FROM=lscr.io/linuxserver/calibre:v9.2.1-ls386
 
 FROM ${BUILD_FROM}
 
+ENV \
+    START_DOCKER=false \
+    HOME=/config \
+    FM_HOME=/config \
+    CALIBRE_CONFIG_DIRECTORY=/config
+
 # Shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 

@@ -3,22 +3,21 @@ version: 9.2.1
 slug: calibre
 description: Calibre is a powerful and easy to use e-book manager
 url: https://calibre-ebook.com/
-ingress: true
-ingress_port: 8080
-ingress_stream: true
-panel_title: Calibre
-panel_icon: mdi:book-multiple
+webui: "https://[HOST]:[PORT:8181]"
 arch:
   - aarch64
   - amd64
 init: false
 map:
+  - type: data
+    read_only: false
   - type: addon_config
     read_only: false
   - type: share
     read_only: false
   - type: media
     read_only: false
+  - type: ssl
 tmpfs: true
 video: true
 usb: true
@@ -133,16 +132,16 @@ schema:
   PASSWORD: password?
   CLI_ARGS: str?
   storage_mounts:
-    - type: list(local|smb|cifs|nfs)
+    - path: str
+      type: list(local|smb|cifs|nfs)
       mount: str
-      path: str
       options: str?
       auto_format: bool?
       erase: bool?
       username: str?
       password: password?
   env_vars:
-    - key: match(^[A-Za-z0-9_]+$)
+    - key: match(^[A-Za-z0-9_-]+$)
       value: str
 options:
   PUID: 0
@@ -152,7 +151,9 @@ options:
   storage_mounts: []
   env_vars: []
 ports:
-  8083/tcp: null
+  8181/tcp: 8181
+  8081/tcp: null
 ports_description:
-  8083/tcp: Web UI (not needed with Ingress)
+  8181/tcp: Calibre Administration
+  8081/tcp: Calibre web server
 image: fabioogaravini/hassio-calibre
