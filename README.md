@@ -12,7 +12,8 @@ Help me expand the documentation making it as easy as possible for anyone to use
 
 ## Add-ons
 
-> [!NOTE] > _All-in-one_ addons are configured to work completely stand-alone, as they pack everything that they need
+> [!TIP]
+> _All-in-one_ addons are configured to work completely stand-alone, as they pack everything that they need
 
 ### 🎧 Audiobookshelf
 
