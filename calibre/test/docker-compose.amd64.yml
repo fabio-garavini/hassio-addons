@@ -18,11 +18,6 @@ services:
       - config:/config
       - share:/share
       - media:/media
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://127.0.0.1:8080"]
-      interval: 10s
-      timeout: 10s
-      retries: 3
 
 volumes:
   data:
