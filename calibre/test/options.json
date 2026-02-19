@@ -1,5 +1,10 @@
 {
-  "PUID": 1000,
-  "PGID": 1000,
-  "TZ": "Etc/UTC"
+  "PUID": 0,
+  "PGID": 0,
+  "TZ": "Etc/UTC",
+  "FILE_MANAGER_PATH": "/share/calibre",
+  "CUSTOM_USER": "admin",
+  "PASSWORD": "changeme",
+  "storage_mounts": [],
+  "env_vars": []
 }

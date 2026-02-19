@@ -9,7 +9,9 @@ services:
         BUILD_VERSION: ${VERSION:-latest}
     container_name: calibre-aarch64
     ports:
-      - "8080:8080"
+      - 8080:8080
+      - 8181:8181
+      - 8081:8081
     volumes:
       - data:/data
       - ./options.json:/data/options.json:ro
@@ -17,7 +19,7 @@ services:
       - share:/share
       - media:/media
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://127.0.0.1:8083"]
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8080"]
       interval: 10s
       timeout: 10s
       retries: 3

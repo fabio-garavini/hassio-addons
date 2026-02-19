@@ -1,7 +1,49 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=lscr.io/linuxserver/calibre:v8.16.2-ls380
+ARG BUILD_FROM=lscr.io/linuxserver/calibre:v9.2.1-ls386
 
 FROM ${BUILD_FROM}
+
+# Shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# renovate: datasource=github-releases packageName=hassio-addons/bashio
+ARG BASHIO_VERSION="v0.17.5"
+# renovate: datasource=github-releases packageName=home-assistant/tempio
+ARG TEMPIO_VERSION="2024.11.2"
+RUN \
+    apt-get update \
+    \
+    && apt-get install -y --no-install-recommends \
+        ca-certificates \
+        curl \
+        jq \
+        tzdata \
+        rsync \
+        e2fsprogs \
+        cifs-utils \
+        nfs-common \
+        parted \
+        udev \
+        xz-utils \
+    && curl -J -L -o /tmp/bashio.tar.gz \
+        "https://github.com/hassio-addons/bashio/archive/${BASHIO_VERSION}.tar.gz" \
+    && mkdir /tmp/bashio \
+    && tar zxvf /tmp/bashio.tar.gz --strip 1 -C /tmp/bashio \
+    \
+    && mv /tmp/bashio/lib /usr/lib/bashio \
+    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
+    \
+    && curl -L -s -o /usr/bin/tempio \
+        "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" \
+    && chmod a+x /usr/bin/tempio \
+    \
+    && apt-get purge -y --auto-remove \
+        xz-utils \
+    && apt-get clean \
+    && rm -fr \
+        /tmp/* \
+        /var/cache/* \
+        /var/lib/apt/lists/*
 
 COPY .common/addon-config /
 
