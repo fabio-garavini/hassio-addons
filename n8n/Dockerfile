@@ -1,4 +1,8 @@
-ARG BUILD_FROM=docker.n8n.io/n8nio/n8n:2.9.0
+ARG BUILD_FROM=docker.n8n.io/n8nio/n8n:2.9.1
+
+ARG BUILD_VERSION=2.9.1
+
+FROM docker.io/n8nio/runners:${BUILD_VERSION%-v*} as runner
 
 FROM ${BUILD_FROM}
 
@@ -8,13 +12,19 @@ ENV \
     N8N_EDITION="community" \
     N8N_USER_FOLDER="/config" \
     DB_SQLITE_POOL_SIZE=2 \
+    #Migrate `~/.n8n/binaryData` to `~/.n8n/storage`. Will become the default in v3
+    N8N_MIGRATE_FS_STORAGE_PATH=true \  
     N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true \
     N8N_BLOCK_ENV_ACCESS_IN_NODE=false \
     N8N_DIAGNOSTICS_ENABLED=false \
     N8N_VERSION_NOTIFICATIONS_ENABLED=false \
-    N8N_RUNNERS_ENABLED=true \
     N8N_PORT=5678 \
-    N8N_PROTOCOL="http"
+    N8N_PROTOCOL="http" \
+    N8N_RUNNERS_MODE="external" \
+    N8N_RUNNERS_AUTH_TOKEN="n8n-runner" \
+    N8N_RUNNERS_BROKER_LISTEN_ADDRESS="0.0.0.0" \
+    N8N_NATIVE_PYTHON_RUNNER=true \
+    N8N_RUNNERS_TASK_BROKER_URI="http://localhost:5679"
 
 # hadolint ignore=DL3002
 USER root
@@ -34,6 +44,7 @@ RUN \
     rm -rf /tmp/*
 
 RUN \
+    set -eux; \
     apk add --no-cache \
         shadow \
         bash \
@@ -44,7 +55,13 @@ RUN \
         libssl3 \
         musl-utils \
         musl \
-    && rm -rf /tmp/*
+        python3 \
+        py3-pip \
+        python3-dev \
+        redis; \
+    python3 -m venv /usr/local/lib/node_modules/@n8n/task-runner-python/.venv; \
+    /usr/local/lib/node_modules/@n8n/task-runner-python/.venv/bin/pip install --upgrade pip; \
+    rm -rf /tmp/*
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -95,8 +112,26 @@ RUN \
     && apk del --no-cache --purge .build-dependencies \
     && rm -rf /tmp/*
 
-# redis user and group gets created by default with the redis package
-RUN apk add --no-cache redis
+# renovate: datasource=github-releases packageName=n8n-io/task-runner-launcher
+ARG LAUNCHER_VERSION=1.4.3
+
+RUN set -e; \
+    case "$BUILD_ARCH" in \
+        "amd64") ARCH_NAME="amd64" ;; \
+        "aarch64") ARCH_NAME="arm64" ;; \
+        *) echo "Unsupported platform: $BUILD_ARCH" && exit 1 ;; \
+    esac; \
+    mkdir /launcher-temp && cd /launcher-temp; \
+    wget -q "https://github.com/n8n-io/task-runner-launcher/releases/download/${LAUNCHER_VERSION}/task-runner-launcher-${LAUNCHER_VERSION}-linux-${ARCH_NAME}.tar.gz"; \
+    wget -q "https://github.com/n8n-io/task-runner-launcher/releases/download/${LAUNCHER_VERSION}/task-runner-launcher-${LAUNCHER_VERSION}-linux-${ARCH_NAME}.tar.gz.sha256"; \
+    echo "$(cat task-runner-launcher-${LAUNCHER_VERSION}-linux-${ARCH_NAME}.tar.gz.sha256) task-runner-launcher-${LAUNCHER_VERSION}-linux-${ARCH_NAME}.tar.gz" > checksum.sha256; \
+    sha256sum -c checksum.sha256; \
+    mkdir -p /launcher-bin; \
+    tar xzf task-runner-launcher-${LAUNCHER_VERSION}-linux-${ARCH_NAME}.tar.gz -C /usr/local/bin; \
+    cd / && rm -rf /launcher-temp
+
+COPY --from=runner --chown=root:root /opt/runners/task-runner-javascript /opt/runners/task-runner-javascript
+COPY --from=runner --chown=root:root /opt/runners/task-runner-python /opt/runners/task-runner-python
 
 COPY .common/redis/ /
 

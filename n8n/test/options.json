@@ -1,5 +1,5 @@
 {
-  "tunnel": false,
+  "N8N_LOG_LEVEL": "info",
   "ssl": true,
   "certfile": "fullchain.pem",
   "keyfile": "privkey.pem"

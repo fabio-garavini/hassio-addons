@@ -1,5 +1,5 @@
 name: n8n
-version: 2.9.0
+version: 2.9.1
 slug: n8n
 description: Flexible AI workflow automation
 url: https://n8n.io
@@ -21,6 +21,7 @@ backup: cold
 backup_exclude:
   - "**/logs"
 schema:
+  N8N_LOG_LEVEL: list(error|warn|info|debug)
   TZ: str?
   GENERIC_TIMEZONE: str?
   ssl: bool
@@ -30,10 +31,15 @@ schema:
   N8N_PATH: str?
   WEBHOOK_URL: str?
   clean_redis: bool?
+  env_vars:
+    - key: match(^[A-Za-z0-9_-]+$)
+      value: str
 options:
+  N8N_LOG_LEVEL: info
   ssl: true
   certfile: fullchain.pem
   keyfile: privkey.pem
+  env_vars: []
 ports:
   5678/tcp: 5678
 ports_description:

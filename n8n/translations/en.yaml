@@ -1,4 +1,6 @@
 configuration:
+  N8N_LOG_LEVEL:
+    name: Log level
   TZ:
     name: Timezone
     description: The timezone of your n8n instance. This is used to display dates and times correctly. If you don't set this, it defaults to UTC.
