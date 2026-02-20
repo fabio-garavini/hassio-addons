@@ -1,5 +1,5 @@
 name: Immich
-version: 2.5.6-v7
+version: 2.5.6-v8
 slug: immich
 description: High performance self-hosted photo and video management solution
 url: https://immich.app
@@ -164,7 +164,7 @@ schema:
 options:
   TZ: Etc/UTC
   IMMICH_LOG_LEVEL: log
-  ssl: true
+  ssl: false
   certfile: fullchain.pem
   keyfile: privkey.pem
   DB_STORAGE_TYPE: HDD
