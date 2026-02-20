@@ -1,9 +1,9 @@
 name: Calibre
-version: 9.2.1
+version: 9.3.0
 slug: calibre
 description: Calibre is a powerful and easy to use e-book manager
 url: https://calibre-ebook.com/
-webui: "https://[HOST]:[PORT:8181]"
+webui: https://[HOST]:[PORT:8181]
 arch:
   - aarch64
   - amd64
