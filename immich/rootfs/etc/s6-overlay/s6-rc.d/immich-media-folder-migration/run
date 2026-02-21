@@ -18,14 +18,21 @@ fi
 
 if [ ! -d "$current_media_dir" ] || [ ! -f "$current_media_dir/library/.immich" ]; then
   if [ ! -d "$IMMICH_MEDIA_LOCATION" ] || [ ! -f "$IMMICH_MEDIA_LOCATION/library/.immich" ]; then
-    bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
-    bashio::log.error "Unable to find a media library in source ($current_media_dir) and destination ($IMMICH_MEDIA_LOCATION). Unknown media location"
-    bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
-    bashio::log.error "This is expected if you manually moved the Immich Media folder somewhere else"
-    bashio::log.error "Make shure that 'Media Library' config point to your folder"
-    bashio::log.error "Read the DOCUMENTATION page for more information on how to migrate the Immich Media folder"
-    bashio::log.error "Ask for help: https://github.com/fabio-garavini/hassio-addons/issues"
-    bashio::addon.stop
+    if [ "$current_media_dir" != "$IMMICH_MEDIA_LOCATION" ]; then
+      bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+      bashio::log.error "Unable to find a media library in source ($current_media_dir) and destination ($IMMICH_MEDIA_LOCATION). Unknown media location"
+      bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+      bashio::log.error "This is expected if you manually moved the Immich Media folder somewhere else"
+      bashio::log.error "Make shure that 'Media Library' config point to your folder"
+      bashio::log.error "Read the DOCUMENTATION page for more information on how to migrate the Immich Media folder"
+      bashio::log.error "Ask for help: https://github.com/fabio-garavini/hassio-addons/issues"
+      bashio::addon.stop
+    else
+      bashio::log.warning "-----------------------------------------------------------------------------------------------------------------------"
+      bashio::log.warning "Unable to find a media library in ($current_media_dir)."
+      bashio::log.warning "-----------------------------------------------------------------------------------------------------------------------"
+      bashio::log.warning "This can happend if you interrupted Immich before completing the initial setup"
+    fi
   else
     bashio::log.warning "-----------------------------------------------------------------------------------------------------------------------"
     bashio::log.warning "Old media location ($current_media_dir) is empty but detected existing Media library in $IMMICH_MEDIA_LOCATION"
