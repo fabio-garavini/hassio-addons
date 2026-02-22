@@ -1,5 +1,5 @@
 > _To update the prebuilt executable you can run `./pocketbase update`._
 
-- Made the optional `Bearer` token prefix case-insensitive ([#7525](https://github.com/pocketbase/pocketbase/pull/7525); thanks @benjamesfleming).
+- Disabled collection and fields name normalization while in IME mode ([#7532](https://github.com/pocketbase/pocketbase/pull/7532); thanks @miaopan607).
 
-- Enabled `$filesystem.s3(...)` and `$filesystem.local(...)` JSVM bindings ([#7526](https://github.com/pocketbase/pocketbase/issues/7526)).
+- Updated `modernc.org/sqlite` to v1.46.1 _(resets connection state on Tx.Commit failure)_.
