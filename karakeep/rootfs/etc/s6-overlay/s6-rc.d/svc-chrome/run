@@ -15,7 +15,7 @@ chown -R chrome:chrome "$CHROME_CACHE_DIR" "$CHROME_PROFILE_DIR"
 cd /usr/src/chrome
 
 exec su chrome -c "
-  chromium-browser \
+  $CHROME_BIN \
     --headless \
     --use-gl=swiftshader \
     --no-sandbox \

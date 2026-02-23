@@ -1,9 +1,9 @@
 # check=skip=SecretsUsedInArgOrEnv
 ARG BUILD_FROM=ghcr.io/karakeep-app/karakeep:0.31.0
 
-ARG MEILI_VERSION="v1.13.3"
+#ARG MEILI_VERSION="v1.13.3"
 
-FROM getmeili/meilisearch:${MEILI_VERSION} AS meilisearch
+#FROM getmeili/meilisearch:${MEILI_VERSION} AS meilisearch
 
 FROM ${BUILD_FROM}
 
@@ -18,7 +18,7 @@ ENV \
     MEILI_NO_ANALYTICS=true
 
 ENV \
-    CHROME_BIN=/usr/bin/chromium-browser \
+    CHROME_BIN=/usr/bin/chromium \
     CHROME_PATH=/usr/lib/chromium/ \
     CHROMIUM_FLAGS="--disable-software-rasterizer --disable-dev-shm-usage" \
     MEILI_HTTP_ADDR=0.0.0.0:7700 \
@@ -31,11 +31,13 @@ ENV \
 
 # NGINX Install
 RUN \
-    apk add --no-cache \
+	apt-get update; \
+	apt-get install -y --no-install-recommends \
         bash \
         openssl \
-        nginx \
-    && rm -rf /etc/nginx
+	    nginx; \
+    apt-get clean; \
+    rm -rf /etc/nginx
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -47,15 +49,10 @@ ARG BASHIO_VERSION="v0.17.5"
 # renovate: datasource=github-releases packageName=home-assistant/tempio
 ARG TEMPIO_VERSION="2024.11.2"
 RUN \
-    set -o pipefail \
-    && apk add --no-cache --virtual .build-dependencies \
-        tar \
-        xz \
-    && apk add --no-cache \
-        libcrypto3 \
-        libssl3 \
-        musl-utils \
-        musl \
+    apt-get update \
+    \
+    && apt-get install -y --no-install-recommends \
+        ca-certificates \
         curl \
         jq \
         tzdata \
@@ -70,22 +67,37 @@ RUN \
     && curl -L -s "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" -o /usr/bin/tempio \
     && chmod a+x /usr/bin/tempio \
     \
-    && apk del --no-cache --purge .build-dependencies \
-    && rm -rf /tmp/*
+    && apt-get purge -y --auto-remove \
+        xz-utils \
+    && apt-get clean \
+    && rm -fr \
+        /tmp/* \
+        /var/{cache,log}/* \
+        /var/lib/apt/lists/*
+
+ARG MEILI_VERSION="1.13.3-1"
+
+# Install Meilisearch
+RUN \
+    set -eux; \
+    echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" | tee /etc/apt/sources.list.d/fury.list; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends meilisearch=${MEILI_VERSION}; \
+    rm -rf /var/lib/apt/lists/*
 
 # Installs latest Chromium package.
-RUN \
-    apk add --no-cache \
-      chromium \
-      chromium-swiftshader \
-      font-freefont \
-      font-noto-emoji \
-      font-wqy-zenhei; \
-    mkdir -p /usr/src/chrome; \
-    adduser -D chrome; \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        chromium \
+        fonts-freefont-ttf \
+        fonts-noto-color-emoji \
+        fonts-wqy-zenhei && \
+    rm -rf /var/lib/apt/lists/* && \
+    mkdir -p /usr/src/chrome && \
+    useradd -m -s /bin/bash chrome && \
     chown -R chrome:chrome /usr/src/chrome
 
-COPY --from=meilisearch /bin/meilisearch /bin/meilitool /bin/
+#COPY --from=meilisearch /bin/meilisearch /bin/meilitool /bin/
 
 COPY .common/addon-config /
 COPY .common/nginx /
