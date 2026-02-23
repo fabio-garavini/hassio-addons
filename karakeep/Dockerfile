@@ -1,10 +1,6 @@
 # check=skip=SecretsUsedInArgOrEnv
 ARG BUILD_FROM=ghcr.io/karakeep-app/karakeep:0.31.0
 
-#ARG MEILI_VERSION="v1.13.3"
-
-#FROM getmeili/meilisearch:${MEILI_VERSION} AS meilisearch
-
 FROM ${BUILD_FROM}
 
 # Environment variables
@@ -75,15 +71,13 @@ RUN \
         /var/{cache,log}/* \
         /var/lib/apt/lists/*
 
-ARG MEILI_VERSION="1.13.3-1"
+ARG MEILI_VERSION="v1.13.3"
 
 # Install Meilisearch
 RUN \
     set -eux; \
-    echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" | tee /etc/apt/sources.list.d/fury.list; \
-    apt-get update; \
-    apt-get install -y --no-install-recommends meilisearch=${MEILI_VERSION}; \
-    rm -rf /var/lib/apt/lists/*
+    curl -J -L "https://github.com/meilisearch/meilisearch/releases/download/${MEILI_VERSION}/meilisearch-linux-${BUILD_ARCH}" -o /bin/meilisearch; \
+    chmod +x /bin/meilisearch
 
 # Installs latest Chromium package.
 RUN apt-get update && \
@@ -96,8 +90,6 @@ RUN apt-get update && \
     mkdir -p /usr/src/chrome && \
     useradd -m -s /bin/bash chrome && \
     chown -R chrome:chrome /usr/src/chrome
-
-#COPY --from=meilisearch /bin/meilisearch /bin/meilitool /bin/
 
 COPY .common/addon-config /
 COPY .common/nginx /
