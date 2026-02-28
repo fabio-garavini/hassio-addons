@@ -1,7 +1,7 @@
 source:
   type: docker
   repo: ghcr.io/gibz104/spoolmansync
-  current_version: 1.2.4
+  current_version: 1.3.0
   version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
