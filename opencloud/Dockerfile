@@ -107,7 +107,7 @@ ARG APPS_DRAW_IO_VERSION="draw-io-v1.0.1"
 # renovate: datasource=github-releases packageName=opencloud-eu/web-extensions versioning=regex:^progress-bars-v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 ARG APPS_PROGRESS_BARS_VERSION="progress-bars-v1.1.0"
 # renovate: datasource=github-releases packageName=opencloud-eu/web-extensions versioning=regex:^maps-v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
-ARG APPS_MAPS_VERSION="maps-v2.0.0"
+ARG APPS_MAPS_VERSION="maps-v2.0.1"
 RUN \
     set -eux; \
     mkdir /apps; \
