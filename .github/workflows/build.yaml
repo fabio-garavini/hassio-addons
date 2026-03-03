@@ -107,7 +107,7 @@ jobs:
 
       - name: 🏗 Set up Docker Compose
         if: steps.check.outputs.build_arch == 'true' && steps.tests.outputs.test == 'true'
-        uses: docker/setup-compose-action@v1
+        uses: docker/setup-compose-action@v2
 
       - name: 🏗 Set up Docker Buildx
         if: steps.check.outputs.build_arch == 'true'
