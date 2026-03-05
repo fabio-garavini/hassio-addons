@@ -1,18 +1,20 @@
-## paperless-ngx 2.20.9
+## paperless-ngx 2.20.10
 
 > [!NOTE]
-> This release addresses a security issue (GHSA-386h-chg4-cfw9) and is recommended for all users. Our sincere thank you to the community members who reported this.
+> This release addresses a bug in v2.20.7 that affected some pre-existing storage path templates. Affected users can run the [`document_renamer`](https://docs.paperless-ngx.com/administration/#renamer) command to correct this after updating.
 
 ### Bug Fixes
 
-- Fixhancement: config option reset @shamoon ([#12176](https://github.com/paperless-ngx/paperless-ngx/pull/12176))
-- Fix: correct page count by separating display vs collection sizes for tags @shamoon ([#12170](https://github.com/paperless-ngx/paperless-ngx/pull/12170))
+- Fix: support string coercion in filepath jinja templates @shamoon ([#12244](https://github.com/paperless-ngx/paperless-ngx/pull/12244))
+- Fix: apply ordering after annotating tag document count @shamoon ([#12238](https://github.com/paperless-ngx/paperless-ngx/pull/12238))
+- Fix: enforce path limit for db filename fields @shamoon ([#12235](https://github.com/paperless-ngx/paperless-ngx/pull/12235))
 
 ### All App Changes
 
 <details>
-<summary>2 changes</summary>
+<summary>3 changes</summary>
 
-- Fixhancement: config option reset @shamoon ([#12176](https://github.com/paperless-ngx/paperless-ngx/pull/12176))
-- Fix: correct page count by separating display vs collection sizes for tags @shamoon ([#12170](https://github.com/paperless-ngx/paperless-ngx/pull/12170))
+- Fix: support string coercion in filepath jinja templates @shamoon ([#12244](https://github.com/paperless-ngx/paperless-ngx/pull/12244))
+- Fix: apply ordering after annotating tag document count @shamoon ([#12238](https://github.com/paperless-ngx/paperless-ngx/pull/12238))
+- Fix: enforce path limit for db filename fields @shamoon ([#12235](https://github.com/paperless-ngx/paperless-ngx/pull/12235))
 </details>
