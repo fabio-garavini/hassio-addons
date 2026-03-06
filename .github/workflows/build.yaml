@@ -138,7 +138,7 @@ jobs:
 
       - name: 🚀 Build
         if: steps.check.outputs.build_arch == 'true'
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           load: true
           # yamllint disable rule:line-length
