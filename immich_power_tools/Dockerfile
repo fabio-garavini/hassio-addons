@@ -1,8 +1,8 @@
 # check=skip=SecretsUsedInArgOrEnv
 ARG BUILD_FROM=alpine:latest
-ARG BUILD_VERSION=0.19.1
+ARG BUILD_VERSION=0.20.0
 
-FROM ghcr.io/varun-raj/immich-power-tools:${BUILD_VERSION%-v*} AS immich_power_tools
+FROM ghcr.io/immich-power-tools/immich-power-tools:${BUILD_VERSION%-v*} AS immich_power_tools
 
 FROM ${BUILD_FROM}
 
@@ -17,7 +17,7 @@ ENV \
     S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_READYTIME=50
 
-ARG BUILD_VERSION=0.18.0-v3
+ARG BUILD_VERSION
 
 ENV \
     NODE_ENV=production \
