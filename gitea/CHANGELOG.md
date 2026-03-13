@@ -1,32 +1,48 @@
-* SECURITY
-  * Release attachments must belong to the intended repo (#36347) (#36375)
-  * Fix permission check on org project operations (#36318) (#36373)
-  * Clean watches when make a repository private and check permission when send release emails (#36319) (#36370)
-  * Add more check for stopwatch read or list (#36340) (#36368)
-  * Fix openid setting check (#36346) (#36361)
-  * Fix cancel auto merge bug (#36341) (#36356)
-  * Fix delete attachment check (#36320) (#36355)
-  * LFS locks must belong to the intended repo (#36344) (#36349)
-  * Fix bug on notification read (#36339) #36387
-
-* ENHANCEMENTS
-  * Add more routes to the "expensive" list (#36290)
-  * Make "commit statuses" API accept slashes in "ref" (#36264) (#36275)
-
-* BUGFIXES
-  * Fix markdown newline handling during IME composition (#36421) #36424
-  * Fix missing repository id when migrating release attachments (#36389)
-  * Fix bug when compare in the pull request (#36363) (#36372)
-  * Fix incorrect text content detection (#36364) (#36369)
-  * Fill missing `has_code` in repository api (#36338) (#36359)
-  * Fix notifications pagination query parameters (#36351) (#36358)
-  * Fix some trivial problems (#36336) (#36337)
-  * Prevent panic when GitLab release has more links than sources (#36295) (#36305)
-  * Fix stats bug when syncing release (#36285) (#36294)
-  * Always honor user's choice for "delete branch after merge" (#36281) (#36286)
-  * Use the requested host for LFS links (#36242) (#36258)
-  * Fix panic when get editor config file (#36241) (#36247)
-  * Fix regression in writing authorized principals (#36213) (#36218)
-  * Fix WebAuthn error checking (#36219) (#36235)
+* SECURITY 
+  * Toolchain Update to Go 1.25.6 (#36480) (#36487)   
+  * Adjust the toolchain version (#36537) (#36542)   
+  * Update toolchain to 1.25.8 for v1.25 (#36888)   
+  * Prevent redirect bypasses via backslash-encoded paths (#36660) (#36716)   
+  * Fix get release draft permission check (#36659) (#36715)   
+  * Fix a bug user could change another user's primary email (#36586) (#36607)   
+  * Fix OAuth2 authorization code expiry and reuse handling (#36797) (#36851)   
+  * Add validation constraints for repository creation fields (#36671) (#36757)   
+  * Fix bug to check whether user can update pull request branch or rebase branch (#36465) (#36838)   
+  * Add migration http transport for push/sync mirror lfs (#36665) (#36691)   
+  * Fix track time list permission check (#36662) (#36744)   
+  * Fix track time issue id (#36664) (#36689)   
+  * Fix path resolving (#36734) (#36746)   
+  * Fix dump release asset bug (#36799) (#36839)   
+  * Fix org permission API visibility checks for hidden members and private orgs (#36798) (#36841)   
+  * Fix forwarded proto handling for public URL detection (#36810) (#36836)   
+  * Add a git grep search timeout (#36809) (#36835)   
+  * Fix oauth2 s256 (#36462) (#36477) 
+ 
+* ENHANCEMENTS   
+  * Make `security-check` informational only (#36681) (#36852)   
+  * Upgrade to github.com/cloudflare/circl 1.6.3, svgo 4.0.1, markdownlint-cli 0.48.0 (#36840)   
+  * Add some validation on values provided to USER_DISABLED_FEATURES and EXTERNAL_USER_DISABLED_FEATURES (#36688) (#36692)
+  * Upgrade gogit to 5.16.5 (#36687)   
+  * Add wrap to runner label list (#36565) (#36574)   
+  * Add dnf5 command for Fedora in RPM package instructions (#36527) (#36572)   
+  * Allow scroll propagation outside code editor (#36502) (#36510) 
+  
+* BUGFIXES   
+  * Fix non-admins unable to automerge PRs from forks (#36833) (#36843)   
+  * Fix bug when pushing mirror with wiki (#36795) (#36807)   
+  * Fix artifacts v4 backend upload problems (#36805) (#36834)   
+  * Fix CRAN package version validation to allow more than 4 version components (#36813) (#36821)   
+  * Fix force push time-line commit comments of pull request (#36653) (#36717)   
+  * Fix SVG height calculation in diff viewer (#36748) (#36750)   
+  * Fix push time bug (#36693) (#36713)   
+  * Fix bug the protected branch rule name is conflicted with renamed branch name (#36650) (#36661)   
+  * Fix bug when do LFS GC (#36500) (#36608)   
+  * Fix focus lost bugs in the Monaco editor (#36609)   
+  * Reprocess htmx content after loading more files (#36568) (#36577)   
+  * Fix assignee sidebar links and empty placeholder (#36559) (#36563)   
+  * Fix issues filter dropdown showing empty label scope section (#36535) (#36544)  
+  * Fix various mermaid bugs (#36547) (#36552)   
+  * Fix data race when uploading container blobs concurrently (#36524) (#36526)   
+  * Correct spacing between username and bot label (#36473) (#36484)
 
 Instances on **[Gitea Cloud](https://cloud.gitea.com)** will be automatically upgraded to this version during the specified maintenance window.
