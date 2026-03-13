@@ -1,5 +1,5 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/advplyr/audiobookshelf:2.32.1
+ARG BUILD_FROM=ghcr.io/advplyr/audiobookshelf:2.33.0
 
 FROM ${BUILD_FROM}
 
