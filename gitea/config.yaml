@@ -1,5 +1,5 @@
 name: Gitea
-version: 1.25.4
+version: 1.25.5
 slug: gitea
 description: Gitea is a Git hosting, code review, team collaboration, package
   registry, and CI/CD
