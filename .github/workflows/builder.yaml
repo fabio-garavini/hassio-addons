@@ -44,7 +44,7 @@ jobs:
 
       - name: 📄 Get changed files
         id: changed_files
-        uses: masesgroup/retrieve-changed-files@v3
+        uses: masesgroup/retrieve-changed-files@v4
 
       - name: 🔍 Find add-ons
         id: addons
