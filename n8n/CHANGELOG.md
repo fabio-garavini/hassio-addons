@@ -1,11 +1,7 @@
-## [2.12.2](https://github.com/n8n-io/n8n/compare/n8n@2.12.1...n8n@2.12.2) (2026-03-13)
-  
-  
-  ### Bug Fixes
-  
-  * **core:** Fix task runner hanging when connection attempt fails (backport to release-candidate/2.12.x) ([#26928](https://github.com/n8n-io/n8n/issues/26928)) ([a431d88](https://github.com/n8n-io/n8n/commit/a431d88b2597faf8fcaa8b0afac0edf47d3bb8c2))
-  
-  
-  ### Features
-  
-  * Allow skipping foreignkey constraint disablement for imports (backport to release-candidate/2.12.x) ([#26883](https://github.com/n8n-io/n8n/issues/26883)) ([c9f8c20](https://github.com/n8n-io/n8n/commit/c9f8c202f4c9a4d1d0120e29d71cd8872e29095d))
+## [2.12.3](https://github.com/n8n-io/n8n/compare/n8n@2.12.2...n8n@2.12.3) (2026-03-18)
+
+
+### Bug Fixes
+
+* **core:** Emit `leader-takeover` on leadership mismatch in `checkLeader` ([#27150](https://github.com/n8n-io/n8n/issues/27150)) ([d6e8212](https://github.com/n8n-io/n8n/commit/d6e8212a10bc59e0fdcdf2a4584720901d2d3b8e))
+* **editor:** Command bar wasn't finding any workflows ([#27137](https://github.com/n8n-io/n8n/issues/27137)) ([38620d5](https://github.com/n8n-io/n8n/commit/38620d5f5becd87a94acce467a9889ce84224060))
