@@ -1,22 +1,25 @@
-## paperless-ngx 2.20.11
+## paperless-ngx 2.20.12
 
 > [!NOTE]
-> This release addresses a security issue (GHSA-59xh-5vwx-4c4q) and is recommended for all users. Our sincere thank you to the community members who reported this.
+> This release addresses a security issue (GHSA-96jx-fj7m-qh6x) and is recommended for all users. Our sincere thank you to the community members who reported this.
 
 ### Bug Fixes
 
-- Fix: correct dropdown list active color in dark mode @shamoon ([#12328](https://github.com/paperless-ngx/paperless-ngx/pull/12328))
-- Fixhancement: clear descendant selections in dropdown when parent toggled @shamoon ([#12326](https://github.com/paperless-ngx/paperless-ngx/pull/12326))
-- Fix: prevent wrapping with larger amounts of tags on small cards, reset moreTags setting to correct count @shamoon ([#12302](https://github.com/paperless-ngx/paperless-ngx/pull/12302))
-- Fix: prevent stale db filename during workflow actions @shamoon ([#12289](https://github.com/paperless-ngx/paperless-ngx/pull/12289))
+- Fix:  Scope the workflow saves to prevent clobbering filename/archive\_filename @stumpylog ([#12390](https://github.com/paperless-ngx/paperless-ngx/pull/12390))
+- Fix: don't try to usermod/groupmod when non-root + update docs (#<!---->12365) @stumpylog ([#12391](https://github.com/paperless-ngx/paperless-ngx/pull/12391))
+- Fix: avoid moving files if already moved @shamoon ([#12389](https://github.com/paperless-ngx/paperless-ngx/pull/12389))
+- Fix: remove pagination from document notes api spec @shamoon ([#12388](https://github.com/paperless-ngx/paperless-ngx/pull/12388))
+- Fix: fix file button hover color in dark mode @shamoon ([#12367](https://github.com/paperless-ngx/paperless-ngx/pull/12367))
+- Fixhancement: only offer basic auth for appropriate requests @shamoon ([#12362](https://github.com/paperless-ngx/paperless-ngx/pull/12362))
 
 ### All App Changes
 
 <details>
-<summary>4 changes</summary>
+<summary>5 changes</summary>
 
-- Fix: correct dropdown list active color in dark mode @shamoon ([#12328](https://github.com/paperless-ngx/paperless-ngx/pull/12328))
-- Fixhancement: clear descendant selections in dropdown when parent toggled @shamoon ([#12326](https://github.com/paperless-ngx/paperless-ngx/pull/12326))
-- Fix: prevent wrapping with larger amounts of tags on small cards, reset moreTags setting to correct count @shamoon ([#12302](https://github.com/paperless-ngx/paperless-ngx/pull/12302))
-- Fix: prevent stale db filename during workflow actions @shamoon ([#12289](https://github.com/paperless-ngx/paperless-ngx/pull/12289))
+- Fix:  Scope the workflow saves to prevent clobbering filename/archive\_filename @stumpylog ([#12390](https://github.com/paperless-ngx/paperless-ngx/pull/12390))
+- Fix: avoid moving files if already moved @shamoon ([#12389](https://github.com/paperless-ngx/paperless-ngx/pull/12389))
+- Fix: remove pagination from document notes api spec @shamoon ([#12388](https://github.com/paperless-ngx/paperless-ngx/pull/12388))
+- Fix: fix file button hover color in dark mode @shamoon ([#12367](https://github.com/paperless-ngx/paperless-ngx/pull/12367))
+- Fixhancement: only offer basic auth for appropriate requests @shamoon ([#12362](https://github.com/paperless-ngx/paperless-ngx/pull/12362))
 </details>
