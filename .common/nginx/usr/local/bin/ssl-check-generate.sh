@@ -11,14 +11,14 @@ fi
 
 bashio::log.debug "SSL Certificate check"
 
-renew_days=90
+renew_days=60
 
 certfile="$1"
 keyfile="$2"
 selfsigned=${3:-true}
 
 if [ ! -f "$certfile" ] || [ ! -f "$keyfile" ]; then
-    if [ "$selfsigned" = "true" ]; then
+    if [ "$selfsigned" == "true" ]; then
         /usr/local/bin/ssl-keygen.sh "$certfile" "$keyfile"
         exit 0
     else
@@ -34,9 +34,17 @@ if [ -n "$enddate" ]; then
     now_ts=$(date +%s)
     days_left=$(( (expiry_ts - now_ts) / 86400 ))
 
+    if [ "$days_left" -le "0" ]; then
+        bashio::log.error "SSL certificate expired"
+    fi
+
     if [ "$days_left" -le "$renew_days" ]; then
-        bashio::log.info "Self-signed cert expiring in $days_left days, regenerating..."
-        /usr/local/bin/ssl-keygen.sh "$certfile" "$keyfile"
+        if [ "$selfsigned" == "true" ]; then
+            bashio::log.info "Self-signed cert expiring in $days_left days, regenerating..."
+            /usr/local/bin/ssl-keygen.sh "$certfile" "$keyfile"
+        else
+            bashio::log.info "SSL certificate expiring in $days_left days"
+        fi
     fi
 else
     bashio::log.error "Unable to determine ssl certificate expiry date"
