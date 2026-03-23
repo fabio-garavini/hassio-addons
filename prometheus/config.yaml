@@ -17,7 +17,7 @@ map:
     read_only: true
     path: /etc/prometheus
 ports:
-  9090/tcp: null
+  9090/tcp: 9090
 ports_description:
   9090/tcp: Metrics
 image: fabioogaravini/hassio-prometheus
