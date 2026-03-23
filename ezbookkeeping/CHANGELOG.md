@@ -1,10 +1,52 @@
+- **\[Breaking\]**
+    - Remove deprecated Reserve Bank of Australia exchange rate data source
+
 - **\[Features\]**
-    - Support importing camt.052 bank statement file
+    - Add agent skill and ezBookkeeping API Tools script for AI Agent Integration
+    - Support "Add Another" in transaction add page / dialog (#471)
+    - Support sub condition in insights explorer queries
+    - Display total transactions, total amount, average amount, median amount, minimum amount, maximum amount, and more statistic data in the data table tab of insights explorer
+    - Display year-over-year and period-over-period growth rates in trends chart in statistics & analysis page on desktop version
+    - Add cache management page
+    - Support caching map data in browser when the map provider that supports `map_data_fetch_proxy` and `map_data_fetch_proxy` is set to `true`
+    - Support setting exchange rate cache expiration time
+    - Support sorting transaction tags by name (#487)
+    - Support receiving images from the Web Share Target API Level 2 and directly opening AI image recognition on mobile version (#522)
+    - LLM provider supports LM Studio
+    - LLM provider supports Anthropic and Anthropic compatibility API
+    - Support importing transactions from custom xlsx / xls file
 
 - **\[Enhancements\]**
-    - Support date formats that use dashes as separators and date formats without leading zeros when import delimiter-separated values file / data
-    - When pasting date time, if multiple formats match and one matches the current display order, use that format for parsing
+    - Improved Russian translation (#483, #521, thanks @dshemin)
+    - Improved Spanish translation (#495, thanks @abrugues)
+    - Improved Portuguese (Brazil) translation (#530, thanks @balaios)
+    - Support filtering by geographic latitude and longitude in insights explorer queries
+    - Add transaction time zone and transaction hour of day to axis / category / series in insights explorer
+    - Add 90th percentile amount, range, interquartile range, variance, standard deviation, and coefficient of variation to value metrics in insights explorer
+    - Add boxplot chart in reconciliation statement dialog
+    - Support restricting API token access based on IP address
+    - Support automatically applying known column mapping and transaction type mapping rules when importing custom files with column mapping handle method
+    - Support batch replacement of transaction time zones in the import tool
+    - Support exporting reconciliation statement, statistics & analysis result and import check result to SSV (semicolon separated values) file
+    - Support custom quick save button styles on the mobile transaction edit page
+    - Support exporting statistics & analysis result to Mermaid
+    - Merge UTF-8 and UTF-16 encodings with or without BOM, with BOM automatically detected and handled
+    - Support UTF-32 file encoding when importing delimiter-separated values (DSV) file
+    - Optimize the performance of the retrieve all transactions API
+    - Add attributes to disable spell check and automatic capitalization to all username input fields (#526, thanks @RasterCrow)
+    - Support importing WeChat Pay statements with the latest format that includes thousand separators (#534)
+    - Add more icons from Line Awesome
     - Other user interface optimization
 
+- **\[Development\]**
+    - Upgrade Golang to 1.25.7
+    - Upgrade Node.js to 24.14.0
+    - Upgrade Alpine base image to 3.23.3
+
 - **\[Bug Fixes\]**
-    - Fix the continue button was missing during two-factor authentication on the desktop version when both two-factor authentication and third-party login are enabled both
+    - Fix incorrect time for some time zones on the scheduled transaction edit page (#499)
+    - Fix the user settings is reset after using the command line tool to change the user password (#516)
+    - Fix incorrect display when use transaction year-quarter as axis / category / series in insights explorer
+    - Fix incorrect data when exporting 100% stacked charts data in insights explorer
+    - Fix incorrect column count when importing mscfb excel file
+    - Fix the updated transaction template is not reflected in the interface immediately after modification
