@@ -1,5 +1,5 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/jofoerster/habitsync:0.18.2
+ARG BUILD_FROM=ghcr.io/jofoerster/habitsync:0.19.0
 
 FROM ${BUILD_FROM}
 
