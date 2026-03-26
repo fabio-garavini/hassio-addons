@@ -1,6 +1,6 @@
 # check=skip=SecretsUsedInArgOrEnv
 ARG BUILD_FROM=alpine:latest
-ARG BUILD_VERSION=0.20.0-v1
+ARG BUILD_VERSION=0.20.1
 
 FROM ghcr.io/immich-power-tools/immich-power-tools:${BUILD_VERSION%-v*} AS immich_power_tools
 
