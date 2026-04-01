@@ -1,65 +1,83 @@
 ## What's Changed
 
-### New features
+Airtable imports are now smoother, and the import lands in your current workspace instead of somewhere unexpected. Suggestions got a visual refresh with automatic comparison highlighting as you type. Forms are more accessible, and the API now has a `cellFormat=typed` option so you can get properly typed values back without guessing.
 
-* [Optional authentication using getgrist.com accounts](https://support.getgrist.com/install/sign-in-with-grist/)
-  * This provides an easy-to-use authentication option for self-hosted installations that don't want to run their own authentication servers or configure other external identity providers.
-* [Import from Airtable](https://support.getgrist.com/imports/#import-from-airtable)
-  * Airtable bases can be imported directly into new or existing Grist documents.
-* [New environment variables](https://github.com/gristlabs/grist-core/blob/v1.7.11/README.md#environment-variables) have been added to provide better control over which users are able to access your Grist instance. `GRIST_PERSONAL_ORGS` will disable personal organizations, while `GRIST_ORG_CREATION_ANYONE` will prevent any non-admins from creating new organizations.
-* [Configurable email notifications for suggestions](https://support.getgrist.com/document-settings/#notifications)
+If you include [extra extensions](https://github.com/gristlabs/grist-core?tab=readme-ov-file#building-from-source) in your build, there's a new automations UI that lets you set up triggers on your data. You can define conditions on any table, then fire off email notifications or webhooks when rows match. You can send dynamic emails to different recipients based on column values, filter with Python conditions, and monitor everything from a delivery log. Automations are part of the full edition of Grist, which has a 30-day trial, and is [free for individuals and small orgs](https://www.getgrist.com/free-grist-activation-key-faq/) (under $1M annual funding). The full edition funds the development of grist-core.
 
 ### Improvements
 
-* Forms
-  * Allow the maximum options limit on Forms to be configured (defaults to 30 options, configurable up to 1000)
-* Sandboxing / security
-  * Limit GVisor to 8 process by default
+* Airtable import
+  * Formula columns with field references are imported as better comments (#2201)
+  * Single record link fields are imported as "Ref" (vs "RefList") columns (#2165)
+  * Imports now use the `/tables` endpoint for better availability (#2171)
+  * Import now targets the current org and workspace (#2139)
+  * Show a nicer message when Airtable OAuth integration isn't configured (#2146)
 * Suggestions
-  * Display references and reference lists in a friendlier fashion
-  * Prevent conditional formatting changes from being displayed as suggestions
+  * Comparison highlighting is now shown automatically in suggestion mode (#2140)
+  * Improved "compare to original" feature (#2068)
+  * Fix suggestion count on a copied document that has been auto-forked (#2117)
+  * Fix deleting rows correctly in suggestions (#2174)
+* Forms
+  * Make `select` fields better usable with screen readers (#2164)
+* SCIM
+  * Speed up user search (#2070)
+* Sandboxing
+  * Use `gristlabs/gvisor-unprivileged` in the base Docker image for a more up-to-date version of runsc
+* API
+  * New [`cellFormat=typed`](https://github.com/gristlabs/grist-core/commit/757059da) option for both the REST API and Custom Widget API, providing consistent, self-describing values that preserve type information for Ref, RefList, Attachments, Date, and DateTime columns
+  * Reduce `GRIST_LOG_API_DETAILS` logging: omit body and result, add docId (#2175)
 * UI/UX
-  * Add a confirmation dialog when a resource is being shared publicly
-  * Hide the bell icon showing connection state when Grist is connected and functioning normally
+  * Improve accessibility of Undo / Redo action buttons (#2167)
+  * Add max length on text inputs in forms (#2097)
+  * Fix document icon when the second word of the doc name is an emoji (#2170)
+  * Fix unreadable dark mode colors in banners (#2138)
+  * Hide admin panel links in grist-desktop (#2181)
+  * Remove the ⌘⇧H / Ctrl+Shift+H shortcut from the "Use as table headers" command
+  * Store anchor links in comments as relative URLs
+* Documentation
+  * Rewrite grist-data-format.md to reflect actual Grist data format (#2177)
+  * Freshen list of features in README.md (#2142)
+* Internal / infrastructure
+  * Upgrade @gristlabs/sqlite3
+  * Add Storybook for documenting Grist UI components
 
 ### Fixes
 
-* API endpoints
-  * Correct attachment endpoints having inconsistent permissions (#2116)
-* Exports
-  * Fix XLSX downloads when the export options don't include tableId (#2054)
-* Import
-  * Fix an error that would pop up when doing multiple successive imports with the Pyodide sandbox enabled (#2073)
-  * Fix an error with importing when the Grist instance is hosted on Windows (e.g. Grist desktop) (#2064)
-* Suggestions
-  * Fix suggestions occasionally displaying incorrectly in documents with deleted tables (#2069)
-* SCIM
-  * Fix role members having incorrect entries (#2051)
-* UI/UX
-  * Fix doubled-up overlays in filter-linked widgets that have rows blocked by access control lists (#2056)
-  * Fix virtual table display and scrollbar issues on MacOS (#2075)
+* Fix 'Row unavailable' race condition (#2156)
+* Fix NumericFormatter test flakiness across ICU versions (#2176)
+* Fix typo in floating menu selector (#2187)
+
+### Full Grist edition extensions
+
+* [Automations](https://support.getgrist.com/automations/), a new tool in the left-hand panel for document owners to create trigger-driven workflows
+  * Set conditions on any table, filter by column values, require specific columns to be filled, use custom Python filters
+  * Choose when to trigger: when a row enters the filtered view, when it's newly added, or on any update
+  * Actions: [send an email](https://github.com/gristlabs/grist-core/commit/2eeb4cea) (with dynamic recipients, variable placeholders, and Markdown support) or create a webhook
+  * Monitor all automations from a delivery log with success/error/pending status
+* Automation tool visibility can be controlled via [`GRIST_HIDE_UI_ELEMENTS` and `GRIST_UI_FEATURES`](https://github.com/gristlabs/grist-core/commit/36cc798f)
 
 ## Contributions
 
-@fflorent 
+* @fflorent: Speed up SCIM user search (#2070), improve Undo/Redo accessibility (#2167), fix document icon emoji handling (#2170), floating menu typo fix (#2187), bump axios (#2163), bump chrome driver (#2093), bump mocha-webdriver (#2198)
+* @manuhabitela: Make form `select` fields better usable with screen readers (#2164), add missing translation strings in themes selection (#2205)
+* @imagoiq: Add "still working..." to translatable strings (#2188)
+* @Vortezz: Add max length on text inputs (#2097)
+* @webash: Fix formatting for Advanced Admin Controls in README (#2161)
 
 ### Translations
 
-@VaclavDort
-@filiphanes
-@qleroy
-@mirithillion
-@hexaltation
-@alimahwer
-@thuma
-@audez
-@vonbraun22
-@umam15
-@kraudio
-@xabirequejo
-@Artur Dabrowski
-@Thanyanit-J 
+* audus
+* Barna Kovács
+* Grégoire Cutzach
+* imagoiq
+* Martin Harari Thuresson
+* Philip Steffan
+* RapidShade
+* ssantos
+* xabirequejo
+* Zaim Ali Karim
+* தமிழ்நேரம்
 
-**Full Changelog**: https://github.com/gristlabs/grist-core/compare/v1.7.10...v1.7.11
+**Full Changelog**: https://github.com/gristlabs/grist-core/compare/v1.7.11...v1.7.12
 
 [Join our Discord Community](https://discord.gg/MYKpYQ3fbP) if you'd like to get into development of Grist.
