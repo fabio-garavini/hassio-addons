@@ -22,6 +22,16 @@ ENV \
 ENV \
     NC_TOOL_DIR="/config"
 
+RUN \
+    apt-get update \
+    \
+    && apt-get install -y --no-install-recommends \
+        bash \
+    && apt-get clean \
+    && rm -fr \
+        /tmp/* \
+        /var/lib/apt/lists/*
+
 # Shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -37,7 +47,6 @@ RUN \
     apt-get update \
     \
     && apt-get install -y --no-install-recommends \
-        bash \
         ca-certificates \
         curl \
         jq \
