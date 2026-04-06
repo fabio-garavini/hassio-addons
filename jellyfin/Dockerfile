@@ -1,4 +1,4 @@
-ARG BUILD_FROM=jellyfin/jellyfin:10.11.7
+ARG BUILD_FROM=jellyfin/jellyfin:10.11.8
 
 FROM ${BUILD_FROM}
 
