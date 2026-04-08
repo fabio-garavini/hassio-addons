@@ -55,23 +55,17 @@ This release is also available as:
 
 * APT repository: https://apt.syncthing.net/
 
-* Docker image: `docker.io/syncthing/syncthing:2.0.15` or `ghcr.io/syncthing/syncthing:2.0.15`
+* Docker image: `docker.io/syncthing/syncthing:2.0.16` or `ghcr.io/syncthing/syncthing:2.0.16`
   (`{docker,ghcr}.io/syncthing/syncthing:2` to follow just the major version)
 
 ## What's Changed
 ### Fixes
-* fix(gui): show restarting modal during upgrade restart (fixes #1248) by @steadytao in https://github.com/syncthing/syncthing/pull/10566
-* fix(gui): remove width limit for language select items by @EastSun5566 in https://github.com/syncthing/syncthing/pull/10531
+* fix(protocol): verify compressed message length before decompression by @calmh in https://github.com/syncthing/syncthing/pull/10595
+* fix(systemd): support overrides for syncOwnership by @Valloric in https://github.com/syncthing/syncthing/pull/10602
+* fix(systemd): add back chown allowed syscalls by @Valloric in https://github.com/syncthing/syncthing/pull/10605
 ### Other
-* chore(gui): add id and name to Stay logged in checkbox for password managers by @epifeny in https://github.com/syncthing/syncthing/pull/10558
-* chore(db): add ability to wait for programmatically started database maintenance, query last maintenance time by @pixelspark in https://github.com/syncthing/syncthing/pull/10565
-* chore(etc): add comprehensive sandboxing by @Valloric in https://github.com/syncthing/syncthing/pull/10421
-* chore: build with Go 1.26; use Go 1.25 features by @calmh in https://github.com/syncthing/syncthing/pull/10570
+* chore(config, connections): use same reconnection interval for QUIC and TCP (fixes #10507) by @marbens-arch in https://github.com/syncthing/syncthing/pull/10573
+* build(deps): update dependencies by @calmh in https://github.com/syncthing/syncthing/pull/10588
+* chore(sqlite): reduce max open connections, keep them open permanently (fixes #10592) by @calmh in https://github.com/syncthing/syncthing/pull/10596
 
-## New Contributors
-* @epifeny made their first contribution in https://github.com/syncthing/syncthing/pull/10558
-* @steadytao made their first contribution in https://github.com/syncthing/syncthing/pull/10566
-* @EastSun5566 made their first contribution in https://github.com/syncthing/syncthing/pull/10531
-* @Valloric made their first contribution in https://github.com/syncthing/syncthing/pull/10421
-
-**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.14...v2.0.15
+**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.15...v2.0.16
