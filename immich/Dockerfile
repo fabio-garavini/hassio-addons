@@ -1,5 +1,5 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/imagegenius/immich:v2.6.2-ig450
+ARG BUILD_FROM=ghcr.io/imagegenius/immich:v2.6.3-ig451
 
 FROM ${BUILD_FROM}
 
@@ -136,7 +136,7 @@ RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends libnss-wrapper lsb-release; \
     curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc; \
-    sh -c 'echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'; \
+    sh -c 'echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt noble-pgdg main" > /etc/apt/sources.list.d/pgdg.list'; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
         logrotate \
