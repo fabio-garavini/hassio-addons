@@ -23,14 +23,11 @@ ENV \
     NC_TOOL_DIR="/config"
 
 RUN \
-    apt-get update \
-    \
-    && apt-get install -y --no-install-recommends \
+    apk add --no-cache \
         bash \
-    && apt-get clean \
-    && rm -fr \
-        /tmp/* \
-        /var/lib/apt/lists/*
+        openssl \
+        nginx \
+    && rm -rf /etc/nginx
 
 # Shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -44,22 +41,24 @@ ARG S6_OVERLAY_VERSION="3.2.1.0"
 # renovate: datasource=github-releases packageName=home-assistant/tempio
 ARG TEMPIO_VERSION="2024.11.2"
 RUN \
-    apt-get update \
+    set -o pipefail \
     \
-    && apt-get install -y --no-install-recommends \
-        ca-certificates \
+    && apk add --no-cache --virtual .build-dependencies \
+        tar \
+        xz \
+    \
+    && apk add --no-cache \
+        libcrypto3 \
+        libssl3 \
+        musl-utils \
+        musl \
+        bash \
         curl \
         jq \
         tzdata \
-        xz-utils \
-        nginx \
-    \
-    && c_rehash \
     \
     && S6_ARCH="${BUILD_ARCH}" \
-    && if [ "${BUILD_ARCH}" = "i386" ]; then S6_ARCH="i686"; \
-    elif [ "${BUILD_ARCH}" = "amd64" ]; then S6_ARCH="x86_64"; \
-    elif [ "${BUILD_ARCH}" = "armv7" ]; then S6_ARCH="arm"; fi \
+    && if [ "${BUILD_ARCH}" = "amd64" ]; then S6_ARCH="x86_64"; fi \
     \
     && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz" \
         | tar -C / -Jxpf - \
@@ -72,9 +71,6 @@ RUN \
     \
     && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-symlinks-arch.tar.xz" \
         | tar -C / -Jxpf - \
-    \
-    && mkdir -p /etc/fix-attrs.d \
-    && mkdir -p /etc/services.d \
     \
     && curl -J -L -o /tmp/bashio.tar.gz \
         "https://github.com/hassio-addons/bashio/archive/${BASHIO_VERSION}.tar.gz" \
@@ -90,14 +86,9 @@ RUN \
         "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" \
     && chmod a+x /usr/bin/tempio \
     \
-    && apt-get purge -y --auto-remove \
-        xz-utils \
-    && apt-get clean \
-    && rm -fr \
-        /tmp/* \
-        /var/{cache,log}/* \
-        /var/lib/apt/lists/* \
-        /etc/nginx/*
+    && apk del --no-cache --purge .build-dependencies \
+    && rm -f -r \
+        /tmp/*
 
 COPY .common/addon-config /
 COPY .common/nginx /
