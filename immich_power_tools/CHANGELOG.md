@@ -1,9 +1,11 @@
 ## What's Changed
-* Update README.md by @kive in https://github.com/immich-power-tools/immich-power-tools/pull/238
-* fix: health check by @sai80082 in https://github.com/immich-power-tools/immich-power-tools/pull/239
-* fix: remove encodedVideoPath column removed in latest Immich by @sai80082 in https://github.com/immich-power-tools/immich-power-tools/pull/243
+* feat: workflow UI improvements, dark mode, and Docker fix by @varun-raj in https://github.com/immich-power-tools/immich-power-tools/pull/252
 
-## New Contributors
-* @kive made their first contribution in https://github.com/immich-power-tools/immich-power-tools/pull/238
 
-**Full Changelog**: https://github.com/immich-power-tools/immich-power-tools/compare/v0.20.0...v0.20.1
+**Full Changelog**: https://github.com/immich-power-tools/immich-power-tools/compare/v0.21.0...v0.21.1
+
+## What's Changed
+* feat: workflow UI improvements, dark mode, and Docker fix by @varun-raj in https://github.com/immich-power-tools/immich-power-tools/pull/252
+
+
+**Full Changelog**: https://github.com/immich-power-tools/immich-power-tools/compare/v0.21.0...v0.21.1
