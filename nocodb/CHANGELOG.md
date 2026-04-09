@@ -1,175 +1,129 @@
+## Workspace-Level Roles & Permission Inheritance
+
+This release replaces the previous Organization (ORG) model with a unified Default Workspace, introducing a more intuitive and streamlined approach to access management.
+
+Previously, organization-level roles such as ORG Viewer and ORG Creator governed what users could do at a high level, but did not automatically grant access to individual bases. Regardless of their ORG role, users had to be explicitly invited to each base separately — a process that often created unnecessary overhead for administrators.
+
+With this update, workspace-based roles — Owner, Creator, Editor, Commenter, Viewer, and No Access — now serve as the foundation of the permission model. Users invited at the workspace level automatically inherit their assigned role across all resources within that workspace, eliminating the need for redundant base-level invitations. For example, a user granted the Creator role at the workspace level can immediately create and access bases without any additional configuration.
+
+Notably, advanced workspace-level access control, previously limited to paid installations, is now fully available for self-hosted deployments.
+
+Existing permissions are not affected by this change. Any base-level access configured prior to this release will continue to be respected, ensuring a seamless transition with no disruption to current setups.
+
+Learn more about Workspace & Base collaboration [here](https://nocodb.com/docs/product-docs/collaboration)
+
 ## 🐛 Closed Issues
 
-- [**closed**] 🐛 Bug: Noco Desync from datasource [#13085](https://github.com/nocodb/nocodb/issues/13085)
-- [**closed**] 🐛 Bug: Unpredictable "id field unique constraint violation" when adding new record [#13050](https://github.com/nocodb/nocodb/issues/13050)
-- [**closed**] 🐛 Bug: PATCH on SingleSelect column wipes colOptions even for metadata-only updates [#13044](https://github.com/nocodb/nocodb/issues/13044)
-- [**closed**] 🐛 Bug: getCellValue always returns reference count for Links fields [#12998](https://github.com/nocodb/nocodb/issues/12998)
-- [**closed**] 🐛 Bug: PATCH /api/v2/meta/columns/{columnId} returns HTTP 500 for Checkbox columns [#12972](https://github.com/nocodb/nocodb/issues/12972)
-- [**closed**] 🐛 Bug: [Self-hosted] error "ERR_BASE_NOT_FOUND" for api v1 endpoints after 0.301.2 update [#12950](https://github.com/nocodb/nocodb/issues/12950)
-- [**closed**] 🐛 Bug: [Self hosted] The table does not appear in the UI's table list. [#12949](https://github.com/nocodb/nocodb/issues/12949)
-- [**closed**] 🐛 Bug: The description of the `queryRecords` tool in the MCP service regarding time is unclear, causing the LLM to be unable to correctly query time-related filter conditions [#12944](https://github.com/nocodb/nocodb/issues/12944)
-- [**closed**] Frontend crashes in HTTP + IP access due to Secure Context assumption (crypto.randomUUID) [#12937](https://github.com/nocodb/nocodb/issues/12937)
-- [**closed**] 🐛 Bug: Can't export data with Editor and Viewer role [#12930](https://github.com/nocodb/nocodb/issues/12930)
-- [**closed**] 🐛 [Self Hosted] Bug: Docker, Error: SQLITE_CANTOPEN: unable to open database file [#12877](https://github.com/nocodb/nocodb/issues/12877)
-- [**closed**] 🐛 Bug: Dark mode upgrade causes comment badges to be hidden until row clicked [#12876](https://github.com/nocodb/nocodb/issues/12876)
-- [**closed**] 🐛 Bug: Workspace ID is required" + "Forbidden - Unauthorized access" when creating base (v0.301.1) [#12874](https://github.com/nocodb/nocodb/issues/12874)
-- [**closed**] 🐛 Bug: Webhook receives incomplete data (missing lookup and link fields) when using v3 API [#12831](https://github.com/nocodb/nocodb/issues/12831)
-- [**closed**] 🐛 Bug: uri for attachment breaks on csv export. [#12796](https://github.com/nocodb/nocodb/issues/12796)
-- [**closed**] 🐛 Bug: [Self Hosted][SQLite] MultiSelect field still limited to ~500 options despite fix in #8907 [#12759](https://github.com/nocodb/nocodb/issues/12759)
-- [**closed**] 🐛 Bug: Endpoint does not return the full list of paginated linked records inline [#12717](https://github.com/nocodb/nocodb/issues/12717)
-- [**closed**] 🐛 Bug: the Chinese characters are garbled when exporting to CSV [#12715](https://github.com/nocodb/nocodb/issues/12715)
-- [**closed**] 🔦 Feature: missing random option in api v2 [#12714](https://github.com/nocodb/nocodb/issues/12714)
-- [**closed**] 🐛 Bug: scripts feature is not able to update the records in external data source [#12672](https://github.com/nocodb/nocodb/issues/12672)
-- [**Status: Reproducible**] 🐛 Bug: Incorrect records shown inside groups when grouping by DateTime field [#12658](https://github.com/nocodb/nocodb/issues/12658)
-- [**closed**] 🐛 Bug: [External DB] Error when trying to rename BT field [#12639](https://github.com/nocodb/nocodb/issues/12639)
-- [**closed**] 🐛 Bug: v3 api views not found [#12632](https://github.com/nocodb/nocodb/issues/12632)
-- [**closed**] 🐛 Bug: [Self-hosted] MCP getTablesList cannot get table information generated by external databases（postgres) [#12629](https://github.com/nocodb/nocodb/issues/12629)
-- [**closed**] 🐛 Bug: The "does not contain any of" filter doesn't work. [#12580](https://github.com/nocodb/nocodb/issues/12580)
-- [**closed**] 🔦 Feature: trigger webhook based on a date field [#11160](https://github.com/nocodb/nocodb/issues/11160)
-- [**🔦 Type: Feature**] 🔦 Feature: Send a record by email to any address [#9979](https://github.com/nocodb/nocodb/issues/9979)
-- [**🔦 Type: Feature**] 🔦 Feature: Rollup of rollup [#9214](https://github.com/nocodb/nocodb/issues/9214)
-- [**🔦 Type: Feature**] 🔦 Feature: CRON based Webhook trigger [#9080](https://github.com/nocodb/nocodb/issues/9080)
-- [**closed**] 🔦 Feature: Add Column Type 'Image URL' with image preview [#7462](https://github.com/nocodb/nocodb/issues/7462)
-- [**closed**] 🔦 Feature: Column base permission [#5075](https://github.com/nocodb/nocodb/issues/5075)
-- [**🔦 Type: Feature**] 🔦 Feature: Should be able to add unique constraints to columns [#4728](https://github.com/nocodb/nocodb/issues/4728)
-- [**🔦 Type: Feature**][**🔭 Scope : Project**] 🔦 Feature: Custom roles [#2712](https://github.com/nocodb/nocodb/issues/2712)
-- [**🔦 Type: Feature**] 🔦 Feature: Automations [#1924](https://github.com/nocodb/nocodb/issues/1924)
-- [**🔦 Type: Feature**][**🚘 Scope : Automation**] 🔦 Feature: Automations based on date/time and recurring events [#310](https://github.com/nocodb/nocodb/issues/310)
-- [**🔦 Type: Feature**][**🔭 Scope : Project**] 🔦 Feature: Templates [#147](https://github.com/nocodb/nocodb/issues/147)
+- [**closed**] Bug: Infinite reactive loop in columns computed causes complete browser freeze on grid view open [#13269](https://github.com/nocodb/nocodb/issues/13269)
+- [**closed**] 🐛 Bug: Error on trying to view Meta Sync: Cannot read properties of null (reading 'getModel') [#13265](https://github.com/nocodb/nocodb/issues/13265)
+- [**closed**] 🐛 Bug: View Mode Locked but i can edit [#13241](https://github.com/nocodb/nocodb/issues/13241)
+- [**closed**] 🐛 Bug: [Self-hosted] Grid view with Links/Lookup columns is 100x slower than plain columns [#13231](https://github.com/nocodb/nocodb/issues/13231)
+- [**closed**] 🔦 Feature: Research for more items/all the table [#13189](https://github.com/nocodb/nocodb/issues/13189)
+- [**closed**] 🐛 Bug: Editor Role Cannot Configure Field Visibility in Their Own View [#13173](https://github.com/nocodb/nocodb/issues/13173)
+- [**closed**] 🐛 Bug: Metadata-only PATCH on Checkbox columns silently strips NOT NULL and DEFAULT constraints [#13166](https://github.com/nocodb/nocodb/issues/13166)
+- [**closed**] 🐛 Bug: PATCH on primary key column metadata fails with HTTP 400 (same class as #12972 / #13044) [#13165](https://github.com/nocodb/nocodb/issues/13165)
+- [**closed**] API v2 Meta docs: multiple incorrect/missing endpoints for columns, form views, and view creation [#13164](https://github.com/nocodb/nocodb/issues/13164)
+- [**closed**] 🔦 Feature: Support MultiSelect population import [#13156](https://github.com/nocodb/nocodb/issues/13156)
+- [**closed**] 🐛 Bug: Text overflows in UI components when switching languages [#13155](https://github.com/nocodb/nocodb/issues/13155)
+- [**closed**] 🐛 Bug: Deleting API token fails when there is only one token left in second page [#13154](https://github.com/nocodb/nocodb/issues/13154)
+- [**closed**] 🐛 Bug: Knex Timeout acquiring a connection [#13150](https://github.com/nocodb/nocodb/issues/13150)
+- [**closed**] 🐛 Bug: Rollup Field doesn't keep Currency format for Formula fields [#13147](https://github.com/nocodb/nocodb/issues/13147)
+- [**closed**] 🔦 Feature: Filter View by current user (Assigned only view) [#13102](https://github.com/nocodb/nocodb/issues/13102)
+- [**closed**] 🐛 Bug: Data API v3 won't return primary key field [#13077](https://github.com/nocodb/nocodb/issues/13077)
+- [**closed**] Broken link in README under Installation [#13028](https://github.com/nocodb/nocodb/issues/13028)
+- [**closed**] 🔦 Feature: Show first/selected field in links [#13027](https://github.com/nocodb/nocodb/issues/13027)
+- [**closed**] 🐛 Bug: No Create Base Option in New Install [#13005](https://github.com/nocodb/nocodb/issues/13005)
+- [**closed**] 🐛 Bug: Failed to copy to clipboard [#13001](https://github.com/nocodb/nocodb/issues/13001)
+- [**closed**] 🐛 Bug: Cannot find package 'ipaddr.js' [#12939](https://github.com/nocodb/nocodb/issues/12939)
+- [**closed**] 🔦 Feature: Exporting databases only allows CSV, it doesn't allow me to export in .json format [#12790](https://github.com/nocodb/nocodb/issues/12790)
+- [**closed**] 🔦 Feature: Let the filter have a CheckBox property [#8758](https://github.com/nocodb/nocodb/issues/8758)
 
 ## What's Changed
-* fix: public form submission fails by @DarkPhoenix2704 in https://github.com/nocodb/nocodb/pull/12915
-* fix: Extract base_id from column by @pranavxc in https://github.com/nocodb/nocodb/pull/12912
-* Nc Fix: feature cleanup and dark mode changes by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/12918
-* mock airtable import when playwright by @mertmit in https://github.com/nocodb/nocodb/pull/12919
-* Nc fix/sandbox UI changes by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/12920
-* Nc fix: hide signup btn from shared view in cloud paid plan and onprem by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/12923
-* Nc fix: editor cannot export csv by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/12925
-* Nc fix/formula validation by @pranavxc in https://github.com/nocodb/nocodb/pull/12926
-* Nc Fix: Remove lazy loading from views as it feels like stuck by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/12924
-* Nc feat/sandbox to managed by @dstala in https://github.com/nocodb/nocodb/pull/12922
-* fix: cross base link - lookup sort related fix by @pranavxc in https://github.com/nocodb/nocodb/pull/12931
-* fix: skip validation for unique constraint when both previous and existing are unique by @pranavxc in https://github.com/nocodb/nocodb/pull/12932
-* Nc fix/sentry errors 24 jan by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/12934
-* fix: modclean by @DarkPhoenix2704 in https://github.com/nocodb/nocodb/pull/12933
-* fix: Cache clear by @pranavxc in https://github.com/nocodb/nocodb/pull/12945
-* fix: test for "will create a formula referencing lookup referencing formula" by @fendy3002 in https://github.com/nocodb/nocodb/pull/12816
-* fix csv import to different source by @fendy3002 in https://github.com/nocodb/nocodb/pull/12947
-* Sync missing changes by @pranavxc in https://github.com/nocodb/nocodb/pull/12946
-* Nc feat/managed app UI changes by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/12951
-* fix: add detection for Knex connection pool timeout as transient error by @pranavxc in https://github.com/nocodb/nocodb/pull/12952
-* Fix: Managed app acl by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/12956
-* Nc feat: add discard draft managed app by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/12957
-* fix: Lazy loaded component related issue by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/12954
-* Nc chore/remove api tokens doc by @dstala in https://github.com/nocodb/nocodb/pull/12959
-* unify single query list / read by @fendy3002 in https://github.com/nocodb/nocodb/pull/12960
-* fix: truncate long text in query by @mertmit in https://github.com/nocodb/nocodb/pull/12963
-* feat: web search for ai nodes by @DarkPhoenix2704 in https://github.com/nocodb/nocodb/pull/12966
-* Nc feat: improve inherit UI with double-lined role display by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/12955
-* Nc chore: enable templates by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/12871
-* fix: limit batchInsert meta on sqlite by @fendy3002 in https://github.com/nocodb/nocodb/pull/12965
-* fix: do not encode signed url by @fendy3002 in https://github.com/nocodb/nocodb/pull/12967
-* Update license information and branch licensing details by @dstala in https://github.com/nocodb/nocodb/pull/12969
-* Nc Feat: Update managed app icon by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/12971
-* fix: do not override cdf when update by @fendy3002 in https://github.com/nocodb/nocodb/pull/12974
-* Nc Fix: Sidebar navigation issue in mobile view by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/12977
-* fix: AI fill handle by @dstala in https://github.com/nocodb/nocodb/pull/12980
-* fix: update where Description by @DarkPhoenix2704 in https://github.com/nocodb/nocodb/pull/12983
-* fix: isBlank for hm lookup by @mertmit in https://github.com/nocodb/nocodb/pull/12984
-* set is_api_token to context correctly also fix the typescript definit… by @fendy3002 in https://github.com/nocodb/nocodb/pull/12948
-* handle empty meta during v3 transform by @fendy3002 in https://github.com/nocodb/nocodb/pull/12976
-* fix: insert webhook all fields by @fendy3002 in https://github.com/nocodb/nocodb/pull/12970
-* Nc fix/sort query param validation by @mertmit in https://github.com/nocodb/nocodb/pull/12985
-* refactor: KnexClient - cleanup by @pranavxc in https://github.com/nocodb/nocodb/pull/12958
-* Prevent duplicate table or view name error by @pranavxc in https://github.com/nocodb/nocodb/pull/12990
-* Nc fix/date filter use handler by @dstala in https://github.com/nocodb/nocodb/pull/12988
-* Nc fix/at import table title by @dstala in https://github.com/nocodb/nocodb/pull/12991
-* Nc fix/filter sort direct url load by @dstala in https://github.com/nocodb/nocodb/pull/12992
-* disable prefix on at import by @fendy3002 in https://github.com/nocodb/nocodb/pull/12996
-* Nc fix/shared form theme query param by @fendy3002 in https://github.com/nocodb/nocodb/pull/12997
-* Nc fix/wait for meta before loading filters sorts by @fendy3002 in https://github.com/nocodb/nocodb/pull/13006
-* Nc feat: hide Clear Form button and add custom Submit button label by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13007
-* Nc fix/date handler when utc by @pranavxc in https://github.com/nocodb/nocodb/pull/13009
-* fix considering null in nanyof by @fendy3002 in https://github.com/nocodb/nocodb/pull/13000
-* fix: hide customize submit btn for now by @dstala in https://github.com/nocodb/nocodb/pull/13011
-* Nc fix: remove text truncation in form submission email template by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13012
-* Nc send email via app by @dstala in https://github.com/nocodb/nocodb/pull/12994
-* chore: sync EE changes by @pranavxc in https://github.com/nocodb/nocodb/pull/13017
-* fix: cross-base link issues with dataAggregate and duplicate-base by @fendy3002 in https://github.com/nocodb/nocodb/pull/13014
-* add tests for cross base links by @fendy3002 in https://github.com/nocodb/nocodb/pull/13019
-* Nc claude/issue 8015 20260206 1536 by @dstala in https://github.com/nocodb/nocodb/pull/13016
-* fix: use correct context for nested lookup sorting by @pranavxc in https://github.com/nocodb/nocodb/pull/13015
-* Nc [claude] feat: Add Excel download functionality to data export by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13020
-* fix: enable form custom submit btn text by @dstala in https://github.com/nocodb/nocodb/pull/13024
-* Nc feat: add workflow dashboard tab with table layout by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13025
-* Nc fix: handle mov file by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13026
-* Nc fix/8030 group by cross base by @fendy3002 in https://github.com/nocodb/nocodb/pull/13031
-* Nc test/formula improvement by @fendy3002 in https://github.com/nocodb/nocodb/pull/13029
-* fix: resolve double encryption of integration config by @DarkPhoenix2704 in https://github.com/nocodb/nocodb/pull/13038
-* Nc claude/issue 7866 20260126 1845 by @dstala in https://github.com/nocodb/nocodb/pull/13035
-* Nc personal view followup by @pranavxc in https://github.com/nocodb/nocodb/pull/13041
-* Nc feat/editor ephemeral group by by @pranavxc in https://github.com/nocodb/nocodb/pull/13043
-* chore: update discord invite link by @mertmit in https://github.com/nocodb/nocodb/pull/13067
-* Nc feat/filters from chat by @dstala in https://github.com/nocodb/nocodb/pull/13060
-* fix: link issue by @pranavxc in https://github.com/nocodb/nocodb/pull/13070
-* chore: migrate to ubicloud runners by @mertmit in https://github.com/nocodb/nocodb/pull/13072
-* chore: change machine sizes by @mertmit in https://github.com/nocodb/nocodb/pull/13075
-* feat: links as ltar param by @DarkPhoenix2704 in https://github.com/nocodb/nocodb/pull/13069
-* fix: restrict aliases by @mertmit in https://github.com/nocodb/nocodb/pull/13039
-* chore: set node build memory by @mertmit in https://github.com/nocodb/nocodb/pull/13076
-* fix rollup alias problem by @fendy3002 in https://github.com/nocodb/nocodb/pull/13056
-* fix: skip dtxp max-length validation for date/time columns by @fendy3002 in https://github.com/nocodb/nocodb/pull/13083
-* fix: metadata retrieval in LTAR store by adding partial meta support by @pranavxc in https://github.com/nocodb/nocodb/pull/13084
-* chore: update by @mertmit in https://github.com/nocodb/nocodb/pull/13087
-* Sync changes from ee by @pranavxc in https://github.com/nocodb/nocodb/pull/13086
-* do not readonly checkbox rating by @mertmit in https://github.com/nocodb/nocodb/pull/13088
-* fix: preserve colOptions on metadata-only PATCH for SingleSelect/MultiSelect by @veeceey in https://github.com/nocodb/nocodb/pull/13052
-* feat: sync sandbox changes by @mertmit in https://github.com/nocodb/nocodb/pull/13089
-* Nc feat: implement conditional cell coloring functionality by @dstala in https://github.com/nocodb/nocodb/pull/13081
-* prevent overridden v3 column options by @fendy3002 in https://github.com/nocodb/nocodb/pull/13093
-* fix passing contexes by @fendy3002 in https://github.com/nocodb/nocodb/pull/13095
-* Nc fix/links as ltar cache key by @DarkPhoenix2704 in https://github.com/nocodb/nocodb/pull/13097
-* Fix lookup quick search to LongText by @DarkPhoenix2704 in https://github.com/nocodb/nocodb/pull/13098
-* fix: show insert audits by @dstala in https://github.com/nocodb/nocodb/pull/13099
-* Nc feat: workspace and baselist modal by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13013
-* Nc feat/SCIM by @pranavxc in https://github.com/nocodb/nocodb/pull/13103
-* Sync EE by @pranavxc in https://github.com/nocodb/nocodb/pull/13106
-* Nc Fix: staging folow-up's by @dstala in https://github.com/nocodb/nocodb/pull/13104
-* fix: resolve flaky attachment test race condition by @pranavxc in https://github.com/nocodb/nocodb/pull/13108
-* Nc feat: multi field support for de-dupe by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13109
-* Nc feat: record templates by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13107
-* Add audit events by @pranavxc in https://github.com/nocodb/nocodb/pull/13114
-* Nc Feat: add back to base bar by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13113
-* Nc feat: ws and baselist search api by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13115
-* chore: sync rls by @mertmit in https://github.com/nocodb/nocodb/pull/13112
-* Nc chore/migration with timestamp by @fendy3002 in https://github.com/nocodb/nocodb/pull/13117
-* feat: outline view by @DarkPhoenix2704 in https://github.com/nocodb/nocodb/pull/13116
-* Nc feat/conditional button v2 by @DarkPhoenix2704 in https://github.com/nocodb/nocodb/pull/13118
-* delete irrelevant md by @mertmit in https://github.com/nocodb/nocodb/pull/13120
-* Nc rename outline to list by @pranavxc in https://github.com/nocodb/nocodb/pull/13121
-* Nc feat/folders by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13119
-* Nc feat/ltar v2 by @dstala in https://github.com/nocodb/nocodb/pull/12968
-* fix: add /ln/ route to public shared view for LTAR v2 links by @pranavxc in https://github.com/nocodb/nocodb/pull/13125
-* chore: patches by @mertmit in https://github.com/nocodb/nocodb/pull/13127
-* chore: lint by @mertmit in https://github.com/nocodb/nocodb/pull/13132
-* chore: sync changes by @mertmit in https://github.com/nocodb/nocodb/pull/13133
-
-## Security fixes
-
-This release addresses multiple security vulnerabilities. Full details will be published via GitHub Security Advisories after users have had time to upgrade.
-
-### Acknowledgements
-
-We thank the following researchers for responsibly reporting these vulnerabilities:
-
-- [@bugbunny-research](https://github.com/bugbunny-research) ([bugbunny.ai](https://bugbunny.ai/))
-- [@p-](https://github.com/p-) and [@m-y-mo](https://github.com/m-y-mo) of [GitHub Security Lab](https://securitylab.github.com/)
-- [@Akokonunes](https://github.com/Akokonunes)
-- [@q1uf3ng](https://github.com/q1uf3ng)
-- [@Tulgaaaaaaaa](https://github.com/Tulgaaaaaaaa)
-- [@lighthousekeeper1212](https://github.com/lighthousekeeper1212)
+* Nc Refactor keyboard shortcuts dialog and add menu access by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13134
+* Nc feat/map view experiments by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13126
+* chore: post-release sync by @github-actions[bot] in https://github.com/nocodb/nocodb/pull/13137
+* Nc feat/autonumber field by @dstala in https://github.com/nocodb/nocodb/pull/13123
+* Nc feat/ltar v2 followup by @pranavxc in https://github.com/nocodb/nocodb/pull/13140
+* chore: lighter typecheck by @mertmit in https://github.com/nocodb/nocodb/pull/13139
+* feat: drag files to create records by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13141
+* Nc feat/timeline2 by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13142
+* fix(nc-gui): local GroupBy not working in dashboard and shared view by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13144
+* feat: single docker preps by @mertmit in https://github.com/nocodb/nocodb/pull/13145
+* fix: missing apis and cache issue by @mertmit in https://github.com/nocodb/nocodb/pull/13151
+* chore: lint by @mertmit in https://github.com/nocodb/nocodb/pull/13153
+* fix: integration list api call issue by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13152
+* override attachment test by @fendy3002 in https://github.com/nocodb/nocodb/pull/13158
+* Nc fix hooks error notification by @DarkPhoenix2704 in https://github.com/nocodb/nocodb/pull/13162
+* Nc feat/team hierarchy by @DarkPhoenix2704 in https://github.com/nocodb/nocodb/pull/13161
+* chore: presence types by @mertmit in https://github.com/nocodb/nocodb/pull/13163
+* Nc refactor/rename envs by @fendy3002 in https://github.com/nocodb/nocodb/pull/13160
+* fix: batch DB calls by @DarkPhoenix2704 in https://github.com/nocodb/nocodb/pull/13168
+* fix: wrong feature badge visible issue by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13169
+* fix: resolve lookup target type for group-by filter building by @DarkPhoenix2704 in https://github.com/nocodb/nocodb/pull/13171
+* fix: resolve column ID to title in public shared form nested list AST by @pranavxc in https://github.com/nocodb/nocodb/pull/13174
+* sanitize markdown render by @fendy3002 in https://github.com/nocodb/nocodb/pull/13179
+* Nc missing audit by @pranavxc in https://github.com/nocodb/nocodb/pull/13178
+* Nc refactor: Sidebar by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13149
+* fix: improve for pool usage by @mertmit in https://github.com/nocodb/nocodb/pull/13181
+* fix/pool issues follow by @mertmit in https://github.com/nocodb/nocodb/pull/13187
+* fix: cdf overridden by @fendy3002 in https://github.com/nocodb/nocodb/pull/13177
+* Nc chore/switch from hash routing by @pranavxc in https://github.com/nocodb/nocodb/pull/13175
+* change the direction to CHILD_TO_PARENT by @fendy3002 in https://github.com/nocodb/nocodb/pull/13193
+* Nc sidebar improvements by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13192
+* fix: small issue by @mertmit in https://github.com/nocodb/nocodb/pull/13188
+* fix: Learn more button redirect loop by @pranavxc in https://github.com/nocodb/nocodb/pull/13195
+* fix: text overflow issue in overview page card by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13194
+* chore: sync changes by @mertmit in https://github.com/nocodb/nocodb/pull/13200
+* chore: sync changes by @mertmit in https://github.com/nocodb/nocodb/pull/13203
+* chore: sync changes by @mertmit in https://github.com/nocodb/nocodb/pull/13202
+* fix: Validate redirect URL protocol in PageLeavingWarning by @pranavxc in https://github.com/nocodb/nocodb/pull/13201
+* chore: type issue by @mertmit in https://github.com/nocodb/nocodb/pull/13204
+* fix: avoid protected constructor by @mertmit in https://github.com/nocodb/nocodb/pull/13205
+* Nc formula fix by @pranavxc in https://github.com/nocodb/nocodb/pull/13196
+* chore: manual sync by @DarkPhoenix2704 in https://github.com/nocodb/nocodb/pull/13208
+* Nc fix/mini sidebar arrangements by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13207
+* chore: sync sdk workflow nodes by @DarkPhoenix2704 in https://github.com/nocodb/nocodb/pull/13210
+* Nc feat/dashboard v3 api by @DarkPhoenix2704 in https://github.com/nocodb/nocodb/pull/13209
+* fix: SPA fallback fails for URLs with dots in path segments by @pranavxc in https://github.com/nocodb/nocodb/pull/13217
+* Nc excel import by @pranavxc in https://github.com/nocodb/nocodb/pull/13218
+* Nc Fix: Shared base and view issues by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13216
+* fix: xss vulnerabilities by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13219
+* chore: keep workflows mini sidebar menu after data menu by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13220
+* Nc fix: minor fixes + gating by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13223
+* Nc Feat: Responsive UI changes by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13212
+* Nc chore/lint 11th march by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13226
+* Nc fix: sidebar create new menu item alignment by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13225
+* Nc grid performance by @pranavxc in https://github.com/nocodb/nocodb/pull/13224
+* Nc feat/responsive UI 11 march by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13230
+* fix: Parallelise nocoExecute DataLoader batching with serial query queue by @pranavxc in https://github.com/nocodb/nocodb/pull/13237
+* fix: Group by aggregation missing by @pranavxc in https://github.com/nocodb/nocodb/pull/13233
+* Nc rollup filter bug by @pranavxc in https://github.com/nocodb/nocodb/pull/13240
+* Nc fix/single docker changes by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13243
+* Nc Feat: Responsive UI 12th march (IMP: deps install before merge) by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13232
+* fix: add missing exports by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13246
+* Fix: one docker followup changes by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13249
+* docs: fix broken installation docs link in README by @vizzv in https://github.com/nocodb/nocodb/pull/13211
+* fix(nc-gui): fix mention copy-paste corruption by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13247
+* Nc feat: Cross section view drag and drop by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13245
+* Nc chore/one docker build by @pranavxc in https://github.com/nocodb/nocodb/pull/13252
+* Nc fix/misc by @pranavxc in https://github.com/nocodb/nocodb/pull/13250
+* Nc one docker by @pranavxc in https://github.com/nocodb/nocodb/pull/13251
+* Optimize column resize by avoiding heavy re-computation by @pranavxc in https://github.com/nocodb/nocodb/pull/13239
+* fix: allow field configuration if it is used for formatting by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13254
+* Nc docs/misc fixes by @dstala in https://github.com/nocodb/nocodb/pull/13256
+* fix: rollup field not respecting formula field formatting configuration by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13255
+* Nc chat act improvements by @DarkPhoenix2704 in https://github.com/nocodb/nocodb/pull/13257
+* fix: migration order by @mertmit in https://github.com/nocodb/nocodb/pull/13258
+* fix: deleting API token fails when there is only one token left in second page by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13259
+* chore: move tests and actions to single source by @mertmit in https://github.com/nocodb/nocodb/pull/13244
+* fix: link filter UI issue by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13263
+* fix: workflow draft guard by @DarkPhoenix2704 in https://github.com/nocodb/nocodb/pull/13264
+* fix: tool call permissions by @DarkPhoenix2704 in https://github.com/nocodb/nocodb/pull/13266
+* fix: AI Generate text followup changes  by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/12811
+* fix(nocodb): use proper context for personal view ACL checks in internal API by @pranavxc in https://github.com/nocodb/nocodb/pull/13271
+* feat: allow display format configuration for CreatedAt/UpdatedAt fields by @rameshmane7218 in https://github.com/nocodb/nocodb/pull/13273
 
 ## New Contributors
-* @veeceey made their first contribution in https://github.com/nocodb/nocodb/pull/13052
+* @vizzv made their first contribution in https://github.com/nocodb/nocodb/pull/13211
 
-**Full Changelog**: https://github.com/nocodb/nocodb/compare/0.301.2...0.301.3
+**Full Changelog**: https://github.com/nocodb/nocodb/compare/0.301.3...0.301.5
