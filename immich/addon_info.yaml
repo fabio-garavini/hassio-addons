@@ -1,7 +1,7 @@
 source:
   type: docker
   repo: ghcr.io/imagegenius/immich
-  current_version: v2.7.2-ig453
+  current_version: v2.7.3-ig454
   version_template: regex:^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)-ig(?<build>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
