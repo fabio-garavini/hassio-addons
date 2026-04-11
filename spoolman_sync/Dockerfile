@@ -1,5 +1,5 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/gibz104/spoolmansync:1.4.3
+ARG BUILD_FROM=ghcr.io/gibz104/spoolmansync:1.5.0
 
 FROM ${BUILD_FROM}
 
