@@ -99,13 +99,13 @@ RUN \
 
 # Install web apps
 # renovate: datasource=github-releases packageName=opencloud-eu/web-extensions versioning=regex:^unzip-v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
-ARG APPS_UNZIP_VERSION="unzip-v1.0.4"
+ARG APPS_UNZIP_VERSION="unzip-v2.0.0"
 # renovate: datasource=github-releases packageName=opencloud-eu/web-extensions versioning=regex:^json-viewer-v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
-ARG APPS_JSON_VERSION="json-viewer-v1.0.2"
+ARG APPS_JSON_VERSION="json-viewer-v2.0.0"
 # renovate: datasource=github-releases packageName=opencloud-eu/web-extensions versioning=regex:^draw-io-v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
-ARG APPS_DRAW_IO_VERSION="draw-io-v1.0.1"
+ARG APPS_DRAW_IO_VERSION="draw-io-v2.0.0"
 # renovate: datasource=github-releases packageName=opencloud-eu/web-extensions versioning=regex:^progress-bars-v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
-ARG APPS_PROGRESS_BARS_VERSION="progress-bars-v1.1.0"
+ARG APPS_PROGRESS_BARS_VERSION="progress-bars-v2.0.0"
 # renovate: datasource=github-releases packageName=opencloud-eu/web-extensions versioning=regex:^maps-v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 ARG APPS_MAPS_VERSION="maps-v3.0.0"
 RUN \
