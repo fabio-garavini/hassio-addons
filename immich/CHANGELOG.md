@@ -1,13 +1,10 @@
-# v2.7.4
-
-This release addresses some issues with image rendering on the mobile app
+# v2.7.5
 
 ## What's Changed
 ### 🐛 Bug fixes
-* refactor(mobile): cleanup iOS image loading pipeline by @LeLunZ in https://github.com/immich-app/immich/pull/27672
-* fix(server): hide original filename when not showing metadata by @meesfrensel in https://github.com/immich-app/immich/pull/27581
-* fix(mobile): fix Flutter cache eviction on thumbnails    by @LeLunZ in https://github.com/immich-app/immich/pull/27663
-* chore: pump cronet version by @shenlong-tanwen in https://github.com/immich-app/immich/pull/27685
+* fix(server): add rate limit and deduplication to version check by @zackpollard in https://github.com/immich-app/immich/pull/27747
+### 🌐 Translations
+* chore(web): update translations by @weblate in https://github.com/immich-app/immich/pull/27589
 
 
-**Full Changelog**: https://github.com/immich-app/immich/compare/v2.7.3...v2.7.4
+**Full Changelog**: https://github.com/immich-app/immich/compare/v2.7.4...v2.7.5
