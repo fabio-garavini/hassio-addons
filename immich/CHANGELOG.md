@@ -1,5 +1,9 @@
 # v2.7.5
 
+## Hassio Addon
+
+* Auto Postgres DB collation update
+
 ## What's Changed
 ### 🐛 Bug fixes
 * fix(server): add rate limit and deduplication to version check by @zackpollard in https://github.com/immich-app/immich/pull/27747
