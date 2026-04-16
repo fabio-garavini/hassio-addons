@@ -2,45 +2,66 @@
 # Start Backend API
 set -e
 
-echo "  Loading env variables:"
+OPTIONS_SOURCE=${ADDON_DATA_FOLDER:-"/data"}/options.json
 
-OPTIONS_SOURCE=/data/options.json
+echo "Loading env variables:"
 
-jq -r 'keys[]' "${OPTIONS_SOURCE}" | while read -r KEY; do
-    # export key
-    value=$(jq -r --arg key "$KEY" '.[$key]' "${OPTIONS_SOURCE}")
+if [[ ! -f "$OPTIONS_SOURCE" ]]; then
+    echo "Options file doesn't exist!"
+    exit 2
+fi
 
-    # Continue for single values
-    line="${KEY}=${value}"
+while IFS="=" read -r key value; do
 
-    # log redacted config
-    case "$KEY" in
-        *PASS*|*SECRET*|*KEY*)
-            echo "    ${KEY}=******"
+    key=$(echo "$key" | tr '[:lower:]' '[:upper:]' | sed 's/[^A-Za-z0-9_-]/_/g')
+
+    env="$key=$value"
+
+    # Redact log
+    case "$key" in
+        *PASS*|*SECRET*|*KEY*|*TOKEN*)
+            echo "  ${key}=******"
             ;;
         *)
-            echo "    $line"
+            echo "  $env"
             ;;
     esac
 
-    export "$line"
+    export "$env"
 
     # set .env
-    echo "$line" >> /.env || true
+    echo "$env" >> /.env || true
+
+    # add env to .bashrc
+    echo "export $env" >> ~/.bashrc
 
     # set /etc/environment
-    echo "$line" >> /etc/environment
+    echo "$env" >> /etc/environment
 
-    # For s6
+    # set s6 environment variables
     if [ -d /var/run/s6/container_environment ]; then
-        printf "%s" "$value" > /var/run/s6/container_environment/"${KEY}"
+        printf "%s" "$value" > /var/run/s6/container_environment/"$key"
     fi
-    echo "export $line" >> ~/.bashrc
-done
 
-if [ -n "$TZ" ] && [ -f /etc/localtime ]; then
+done < <(
+    jq -r '
+        to_entries[]
+        | if .key == "env_vars" then
+            .value[]?
+          elif (.value | type) == "object" then
+            .value | to_entries[]
+          else
+            .
+          end
+        | select(.value | type != "object" and type != "array")
+        | "\(.key)=\(.value|tostring)"
+    ' "$OPTIONS_SOURCE"
+)
+
+if [ -n "$TZ" ] && [ -f "/usr/share/zoneinfo/$TZ" ]; then
     if [ -f /usr/share/zoneinfo/"$TZ" ]; then
-        ln -snf /usr/share/zoneinfo/"$TZ" /etc/localtime
+        echo "Timezone set to $TZ"
+        ln -snf "/usr/share/zoneinfo/$TZ" /etc/localtime
         echo "$TZ" >/etc/timezone
     fi
 fi

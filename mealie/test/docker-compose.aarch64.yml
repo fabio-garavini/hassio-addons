@@ -2,6 +2,11 @@ name: mealie-aarch64
 services:
   mealie-aarch64:
     image: fabioogaravini/hassio-mealie:${VERSION:-latest}-aarch64
+    build:
+      context: ..
+      args:
+        BUILD_ARCH: aarch64
+        BUILD_VERSION: ${VERSION:-latest}
     container_name: mealie-aarch64
     ports:
       - 9000:9000
