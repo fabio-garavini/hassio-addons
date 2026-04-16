@@ -37,10 +37,10 @@ ARG ALPINE_VERSION=v3.23
 RUN \
     set -eux; \
     cd /tmp; \
-    wget -nv http://dl-cdn.alpinelinux.org/alpine/${ALPINE_VERSION}/main/$(uname -m)/apk-tools-static-${APK_TOOLS_VERSION}.apk; \
+    wget -nv https://dl-cdn.alpinelinux.org/alpine/${ALPINE_VERSION}/main/$(uname -m)/apk-tools-static-${APK_TOOLS_VERSION}.apk; \
     tar -xzf apk-tools-static-*.apk; \
     ls -al sbin; \
-    ./sbin/apk.static -X http://dl-cdn.alpinelinux.org/alpine/${ALPINE_VERSION}/main --initdb add apk-tools; \
+    ./sbin/apk.static -X https://dl-cdn.alpinelinux.org/alpine/${ALPINE_VERSION}/main --initdb add apk-tools; \
     rm -rf /tmp/*
 
 RUN \
