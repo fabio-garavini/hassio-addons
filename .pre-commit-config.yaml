@@ -1,15 +1,15 @@
 repos:
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 41.82.1
+    rev: 43.127.1
     hooks:
       - id: renovate-config-validator
   - repo: https://github.com/hadolint/hadolint
-    rev: v2.12.0
+    rev: v2.14.0
     hooks:
       - id: hadolint-docker
         args: [--config, .github/hadolint.yaml]
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.37.1
+    rev: v1.38.0
     hooks:
       - id: yamllint
         args: ["-c", ".github/yamllint.yaml"]
@@ -20,4 +20,4 @@ repos:
         entry: .git-hooks/fix-config-image.sh
         language: system
         files: (^|/)config\.yaml$
-        stages: [commit]
+        stages: [pre-commit]
