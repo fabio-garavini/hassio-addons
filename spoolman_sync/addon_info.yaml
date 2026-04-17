@@ -11,8 +11,7 @@ build:
   image: ghcr.io/gibz104/spoolmansync
   version_template: "{{major}}.{{minor}}.{{patch}}"
 changelog:
-  source: github-releases
-  repo: gibz104/spoolmansync
-  version_template: v{{major}}.{{minor}}.{{patch}}
+  source: none
+  version_template: "{{major}}.{{minor}}.{{patch}}"
 test:
   enable: true
