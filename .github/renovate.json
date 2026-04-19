@@ -6,7 +6,7 @@
   "dependencyDashboard": false,
   "commitMessagePrefix": "⬆️",
   "commitMessageTopic": "{{depName}}",
-  "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
+  "gitAuthor": "Fabio Garavini <info@fabiogaravini.dev>",
   "enabledManagers": ["custom.regex", "github-actions"],
   "prHourlyLimit": 0,
   "customManagers": [
@@ -34,7 +34,10 @@
   ],
   "packageRules": [
     {
-      "matchFileNames": ["*/addon_info.yaml"],
+      "matchFileNames": [
+        "*/addon_info.yaml",
+        "*/Dockerfile"
+      ],
       "postUpgradeTasks": {
         "commands": [
           "/usr/local/sbin/install-tool node latest",
@@ -48,7 +51,7 @@
           "*/addon_info.yaml",
           "*/Dockerfile"
         ],
-        "executionMode": "branch"
+        "executionMode": "update"
       }
     }
   ]
