@@ -1,184 +1,166 @@
 > [!NOTE]
 > This is a rolling release. Learn here about the [release types and lifecycle](https://docs.opencloud.eu/docs/admin/resources/lifecycle#release-types).
 
-# Releasenotes OpenCloud 6.0.0
+# Releasenotes OpenCloud 6.1.0
 
-##  ⭐ Favorite Feature
-
-The Favorites feature in the OpenCloud Web UI allows users to mark important and frequently used files for quick access. Favorite status is stored server-side, so it is available centrally and not tied to a single client. Favorited files are indicated with a star and are visible across personal and project spaces, subfolders, and search results. All favorites are collected on a dedicated Favorites page, supporting both list and grid views, with consistent display of file name, preview/type, status indicators, and available actions. Spaces themselves cannot yet be marked as favorites.
-
-## 🧮 Calculator Extension
-
-The Calculator Extension enables quick calculations directly in the OpenCloud search bar. Users can type a calculation, see the result instantly, and copy it directly. This extension comes from the community, providing practical functionality without leaving the Web UI.
-
-## 📋 Pastebin Extension
-
-The Pastebin Extension allows users to easily share text content. Shared items are automatically stored in a hidden .space folder within the personal area. This extension is also contributed by the community, making it simple to manage and share text snippets securely.
-
-# Changelog
-
-## [6.0.0](https://github.com/opencloud-eu/opencloud/releases/tag/v6.0.0) - 2026-03-31
+## [6.1.0](https://github.com/opencloud-eu/opencloud/releases/tag/v6.1.0) - 2026-04-20
 
 ### ❤️ Thanks to all contributors! ❤️
 
-@ScharfViktor, @aduffeck, @dragonchaser, @micbar, @pascalwengerter, @smoothscholar, @rhafer, @AlexAndBear, @JammingBen, @dschmidt, @kulmann, @saw-jan, @tammi-23
+@JammingBen, @ScharfViktor, @aduffeck, @dragonchaser, @pedropintosilva, @rhafer, @AlexAndBear, @FrankM64, @kulmann, @pascalwengerter, @pedropintosilva, @tammi-23, @tiran133, @aduffeck, @fschade
 
-## Opencloud:
+## Opencloud
 
-### 💥 Breaking changes
+### 📚 Documentation
 
-- Improve opensearch highlighting, fix favorites [[#2514](https://github.com/opencloud-eu/opencloud/pull/2514)]
-
-### ✅ Tests
-
-- [full-ci] api-test: check that report contains favorites [[#2531](https://github.com/opencloud-eu/opencloud/pull/2531)]
-- api-tests: search for favorites [[#2487](https://github.com/opencloud-eu/opencloud/pull/2487)]
-- [test-only] favorites tests [[#2474](https://github.com/opencloud-eu/opencloud/pull/2474)]
-
-### 📈 Enhancement
-
-- feat: add userid to spans [[#2536](https://github.com/opencloud-eu/opencloud/pull/2536)]
-- feat: add openFilesInNewTab web config option [[#2522](https://github.com/opencloud-eu/opencloud/pull/2522)]
-- Always enable favorites, remove FRONTEND_ENABLE_FAVORITES flag [[#2494](https://github.com/opencloud-eu/opencloud/pull/2494)]
-- Implement favorites [[#2454](https://github.com/opencloud-eu/opencloud/pull/2454)]
+- docs(web): deprecation notices for cern related feature flags [[#2629](https://github.com/opencloud-eu/opencloud/pull/2629)]
+- Update CI badge URL in README.md [[#2614](https://github.com/opencloud-eu/opencloud/pull/2614)]
 
 ### 🐛 Bug Fixes
 
-- Fix bleve batches [[#2524](https://github.com/opencloud-eu/opencloud/pull/2524)]
+- Add a flag to the reindex command to force a full reindex [[#2606](https://github.com/opencloud-eu/opencloud/pull/2606)]
+
+### 📈 Enhancement
+
+- proxy: Allow mapping from an external tenant id to the internal id [[#2569](https://github.com/opencloud-eu/opencloud/pull/2569)]
+- feat: enable EnableInsertRemoteFile WOPI flag for Collabora [[#2555](https://github.com/opencloud-eu/opencloud/pull/2555)]
+- feat(multi-tenancy): verify tenant via OIDC claim [[#2559](https://github.com/opencloud-eu/opencloud/pull/2559)]
 
 ### 📦️ Dependencies
 
-- build(deps): bump github.com/nats-io/nats-server/v2 from 2.12.5 to 2.12.6 [[#2525](https://github.com/opencloud-eu/opencloud/pull/2525)]
-- build(deps-dev): bump postcss-preset-env from 10.1.3 to 11.2.0 in /services/idp [[#2392](https://github.com/opencloud-eu/opencloud/pull/2392)]
-- build(deps): bump github.com/tus/tusd/v2 from 2.8.0 to 2.9.2 [[#2485](https://github.com/opencloud-eu/opencloud/pull/2485)]
-- build(deps): bump google.golang.org/grpc from 1.79.2 to 1.79.3 [[#2519](https://github.com/opencloud-eu/opencloud/pull/2519)]
-- build(deps): bump github.com/nats-io/nats-server/v2 from 2.12.4 to 2.12.5 [[#2499](https://github.com/opencloud-eu/opencloud/pull/2499)]
-- build(deps): bump github.com/russellhaering/goxmldsig from 1.5.0 to 1.6.0 [[#2503](https://github.com/opencloud-eu/opencloud/pull/2503)]
-- build(deps): bump golang.org/x/net from 0.51.0 to 0.52.0 [[#2472](https://github.com/opencloud-eu/opencloud/pull/2472)]
-- build(deps): bump go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc from 0.65.0 to 0.67.0 [[#2473](https://github.com/opencloud-eu/opencloud/pull/2473)]
-- build(deps): bump github.com/olekukonko/tablewriter from 1.1.3 to 1.1.4 [[#2468](https://github.com/opencloud-eu/opencloud/pull/2468)]
-- build(deps): bump go.opentelemetry.io/contrib/zpages from 0.65.0 to 0.67.0 [[#2467](https://github.com/opencloud-eu/opencloud/pull/2467)]
-- build(deps): bump github.com/testcontainers/testcontainers-go/modules/opensearch from 0.40.0 to 0.41.0 [[#2458](https://github.com/opencloud-eu/opencloud/pull/2458)]
-- build(deps): bump go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc from 1.41.0 to 1.42.0 [[#2459](https://github.com/opencloud-eu/opencloud/pull/2459)]
-- build(deps): bump github.com/testcontainers/testcontainers-go from 0.40.0 to 0.41.0 [[#2453](https://github.com/opencloud-eu/opencloud/pull/2453)]
-- build(deps): bump golang.org/x/oauth2 from 0.35.0 to 0.36.0 [[#2452](https://github.com/opencloud-eu/opencloud/pull/2452)]
-- build(deps): bump go.opentelemetry.io/otel/exporters/stdout/stdouttrace from 1.40.0 to 1.42.0 [[#2441](https://github.com/opencloud-eu/opencloud/pull/2441)]
-- build(deps): bump go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp from 0.65.0 to 0.67.0 [[#2442](https://github.com/opencloud-eu/opencloud/pull/2442)]
+- Bump reva  [[#2611](https://github.com/opencloud-eu/opencloud/pull/2611)]
+- chore(idp): clean up js dependencies [[#2607](https://github.com/opencloud-eu/opencloud/pull/2607)]
+- build(deps-dev): bump dotenv from 16.4.7 to 17.4.2 in /services/idp [[#2603](https://github.com/opencloud-eu/opencloud/pull/2603)]
+- chore: bump IDP javascript dependencies [[#2600](https://github.com/opencloud-eu/opencloud/pull/2600)]
+- build(deps): bump github.com/nats-io/nats.go from 1.49.0 to 1.50.0 [[#2587](https://github.com/opencloud-eu/opencloud/pull/2587)]
+- build(deps): bump go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc from 1.42.0 to 1.43.0 [[#2586](https://github.com/opencloud-eu/opencloud/pull/2586)]
+- chore: bump reva to latest main [[#2584](https://github.com/opencloud-eu/opencloud/pull/2584)]
+- build(deps): bump golang.org/x/image from 0.36.0 to 0.38.0 [[#2581](https://github.com/opencloud-eu/opencloud/pull/2581)]
+- build(deps-dev): bump css-minimizer-webpack-plugin from 7.0.4 to 8.0.0 in /services/idp [[#2551](https://github.com/opencloud-eu/opencloud/pull/2551)]
+- build(deps): bump github.com/go-ldap/ldap/v3 from 3.4.12 to 3.4.13 [[#2526](https://github.com/opencloud-eu/opencloud/pull/2526)]
+- build(deps): bump github.com/open-policy-agent/opa from 1.14.1 to 1.15.0 [[#2535](https://github.com/opencloud-eu/opencloud/pull/2535)]
 
 ## Web
+### 📈 Enhancement
 
-### ⚠️ Deprecation
-
-- The AMD format for external apps is now deprecated. External apps need to be built with the latest `extension-sdk` to use the new ESM format. Support for the AMD format will be removed in an upcoming version. [[#2213](https://github.com/opencloud-eu/web/pull/2213)]
+- change: exchange icons [[#2385](https://github.com/opencloud-eu/web/pull/2385)]
+-  Merge header and file info in file sidebar [[#2377](https://github.com/opencloud-eu/web/pull/2377)]
+- feat: set global color-scheme [[#2379](https://github.com/opencloud-eu/web/pull/2379)]
+- feat: adjust mobile nav bar [[#2372](https://github.com/opencloud-eu/web/pull/2372)]
+- feat(preview): play next audio file automatically after current track… [[#2351](https://github.com/opencloud-eu/web/pull/2351)]
+- feat: active state for navigation in sidebar [[#2374](https://github.com/opencloud-eu/web/pull/2374)]
+- Scroll selected mail into view after reload [[#2341](https://github.com/opencloud-eu/web/pull/2341)]
+- Add contact details view [[#2322](https://github.com/opencloud-eu/web/pull/2322)]
+- perf: use standalone silent redirect instead of bootstrapping the app [[#2333](https://github.com/opencloud-eu/web/pull/2333)]
+- feat(design-system): add support for nuxt-link [[#2318](https://github.com/opencloud-eu/web/pull/2318)]
+- feat: add drop with truncated items to oc-breadcrumb [[#2309](https://github.com/opencloud-eu/web/pull/2309)]
+- feat: redesign share sidebar panel [[#2293](https://github.com/opencloud-eu/web/pull/2293)]
+- feat: handle UI_InsertFile postMessage from Collabora [[#2270](https://github.com/opencloud-eu/web/pull/2270)]
+- feat: focus global search bar via keyboard shortcut [[#2274](https://github.com/opencloud-eu/web/pull/2274)]
+- feat: redesign sidebar file/space details panel [[#2273](https://github.com/opencloud-eu/web/pull/2273)]
+- feat(design-system): redesign checkbox active state [[#2266](https://github.com/opencloud-eu/web/pull/2266)]
+- feat: move favorite resource indicator to resource name [[#2261](https://github.com/opencloud-eu/web/pull/2261)]
+- feat: add to favorites in preview app [[#2251](https://github.com/opencloud-eu/web/pull/2251)]
 
 ### 🐛 Bug Fixes
 
-- fix: remove search limit from favorites request [[#2245](https://github.com/opencloud-eu/web/pull/2245)]
-- fix: add missing breadcrumb in favorites view [[#2243](https://github.com/opencloud-eu/web/pull/2243)]
-- fix: idp logout on network errors [[#2230](https://github.com/opencloud-eu/web/pull/2230)]
-- fix: breadcrumb in admin settings info section not clickable [[#2237](https://github.com/opencloud-eu/web/pull/2237)]
-- fix: metadataUrl in user manager [[#2239](https://github.com/opencloud-eu/web/pull/2239)]
-- fix: remove redundant header in admin settings info section [[#2236](https://github.com/opencloud-eu/web/pull/2236)]
-- fix: admin settings user avatar take too much space and divergend fro… [[#2222](https://github.com/opencloud-eu/web/pull/2222)]
-- Fix password modal can be confirmed even if the password is empty [[#2219](https://github.com/opencloud-eu/web/pull/2219)]
-- fix: context menu does not close when favorite item [[#2212](https://github.com/opencloud-eu/web/pull/2212)]
-- fix: preserve query params on public link redirect [[#2199](https://github.com/opencloud-eu/web/pull/2199)]
-- fix: version check in conjunction with dev docker image leads to left… [[#2156](https://github.com/opencloud-eu/web/pull/2156)]
-- fix: sidebar top margin too low when no FAB is present [[#2147](https://github.com/opencloud-eu/web/pull/2147)]
-- fix: files with name e.G. .space won't be shown when 'show file extens… [[#2149](https://github.com/opencloud-eu/web/pull/2149)]
-- fix: account settings on mobile view [[#2148](https://github.com/opencloud-eu/web/pull/2148)]
-- fix: app top bar gets removed, even if unsaved changes modal appears [[#2141](https://github.com/opencloud-eu/web/pull/2141)]
-- fix: oc-drop a11y and overflow issues [[#2100](https://github.com/opencloud-eu/web/pull/2100)]
-- fix: search bar disappears when entering account preferences [[#2122](https://github.com/opencloud-eu/web/pull/2122)]
-- fix: bring back disabled space indicator in tiles view [[#2110](https://github.com/opencloud-eu/web/pull/2110)]
-- fix: focus ring for upload buttons [[#2111](https://github.com/opencloud-eu/web/pull/2111)]
-
-### 📈 Enhancement
-
-- feat: add openFilesInNewTab config option [[#2218](https://github.com/opencloud-eu/web/pull/2218)]
-- feat: auto-register extension dev servers with host [[#2220](https://github.com/opencloud-eu/web/pull/2220)]
-- feat: add logo to admin settings info section [[#2228](https://github.com/opencloud-eu/web/pull/2228)]
-- feat: add module federation support for external apps [[#2213](https://github.com/opencloud-eu/web/pull/2213)]
-- feat: add empty state icon for favorites [[#2211](https://github.com/opencloud-eu/web/pull/2211)]
-- Use favorites from graph api [[#2171](https://github.com/opencloud-eu/web/pull/2171)]
-- Implement sending a draft  [[#2193](https://github.com/opencloud-eu/web/pull/2193)]
-- Feat/1959 [[#2125](https://github.com/opencloud-eu/web/pull/2125)]
-- feat: contacts support full name and name components [[#2187](https://github.com/opencloud-eu/web/pull/2187)]
-- feat: add contacts app skeleton [[#2155](https://github.com/opencloud-eu/web/pull/2155)]
-- feat: small UI improvements/fixes [[#2177](https://github.com/opencloud-eu/web/pull/2177)]
-- feat: add no content images for mail app [[#2165](https://github.com/opencloud-eu/web/pull/2165)]
-- feat: webfinger oidc discovery [[#2152](https://github.com/opencloud-eu/web/pull/2152)]
-- Added draft state handling [[#1956](https://github.com/opencloud-eu/web/pull/1956)]
-- feat: use oc colors in collabora [[#2144](https://github.com/opencloud-eu/web/pull/2144)]
-- feat: polish input fields [[#2127](https://github.com/opencloud-eu/web/pull/2127)]
-- feat(runtime): add dynamic extension points for sidebar-nav [[#2134](https://github.com/opencloud-eu/web/pull/2134)]
-- feat: polish drop menus [[#2133](https://github.com/opencloud-eu/web/pull/2133)]
-- feat: polish filters [[#2124](https://github.com/opencloud-eu/web/pull/2124)]
-- feat: polish shares page [[#2116](https://github.com/opencloud-eu/web/pull/2116)]
-- feat: polish left sidebar [[#2118](https://github.com/opencloud-eu/web/pull/2118)]
-- feat: polish space enabled/disabled status indicators [[#2113](https://github.com/opencloud-eu/web/pull/2113)]
-- feat: show icon of the current view mode in view mode switch [[#2105](https://github.com/opencloud-eu/web/pull/2105)]
+- fix: favorites list, undo delte doesn't return item to the favorites … [[#2382](https://github.com/opencloud-eu/web/pull/2382)]
+- fix: extension action 'context' category  [[#2369](https://github.com/opencloud-eu/web/pull/2369)]
+- fix: prevent scroll when opening resource context menu [[#2375](https://github.com/opencloud-eu/web/pull/2375)]
+- fix: mobile floating action button is too small [[#2353](https://github.com/opencloud-eu/web/pull/2353)]
+- fix(runtime): optimize auth flow with expired token [[#2346](https://github.com/opencloud-eu/web/pull/2346)]
+- fix(extension-sdk): add missing color roles [[#2339](https://github.com/opencloud-eu/web/pull/2339)]
+- fix: optimize route change announcer [[#2328](https://github.com/opencloud-eu/web/pull/2328)]
+- fix: prevent accidental space reset on public links [[#2319](https://github.com/opencloud-eu/web/pull/2319)]
+- fix: markdown editor: incorrect rendering of unordered lists [[#2315](https://github.com/opencloud-eu/web/pull/2315)]
+- Fix: #2262 accesssToken tripe S event [[#2271](https://github.com/opencloud-eu/web/pull/2271)]
+- fix: preview app doesn't show video and mp3 meta data preview in phot… [[#2302](https://github.com/opencloud-eu/web/pull/2302)]
+- fix(extension-sdk): do not run federation plugin in test mode [[#2291](https://github.com/opencloud-eu/web/pull/2291)]
+- fix: v-oc-tooltip not reactive [[#2255](https://github.com/opencloud-eu/web/pull/2255)]
 
 ### ✅ Tests
 
-- [full-ci] test(e2e): fix share type label check [[#2191](https://github.com/opencloud-eu/web/pull/2191)]
-- [with-tracing] fix: e2e-test public deletes folders [[#2130](https://github.com/opencloud-eu/web/pull/2130)]
+- e2e-tests: favorites [[#2370](https://github.com/opencloud-eu/web/pull/2370)]
 
 ### 📦️ Dependencies
 
-- chore(deps): update tiptap monorepo to v3.20.6 [[#2214](https://github.com/opencloud-eu/web/pull/2214)]
-- chore(deps): update dependency happy-dom to v20.8.9 [[#2242](https://github.com/opencloud-eu/web/pull/2242)]
-- chore(deps): update pnpm to v10.33.0 [[#2215](https://github.com/opencloud-eu/web/pull/2215)]
-- chore(deps): update node.js to v24.14.1 [[#2216](https://github.com/opencloud-eu/web/pull/2216)]
-- chore(deps): update devdependencies (non-major) [[#2217](https://github.com/opencloud-eu/web/pull/2217)]
-- fix(deps): update dependency @sentry/vue to v10.46.0 [[#2225](https://github.com/opencloud-eu/web/pull/2225)]
-- chore(deps): update traefik docker tag to v3.6.12 [[#2240](https://github.com/opencloud-eu/web/pull/2240)]
-- chore(deps): update dependency happy-dom to v20.8.8 [security] [[#2241](https://github.com/opencloud-eu/web/pull/2241)]
-- Dependency bumps across packages [[#2233](https://github.com/opencloud-eu/web/pull/2233)]
-- chore(deps): update typescript-eslint monorepo to v8.57.2 [[#2206](https://github.com/opencloud-eu/web/pull/2206)]
-- chore(deps): update dependency fast-xml-parser to v5.5.9 [[#2203](https://github.com/opencloud-eu/web/pull/2203)]
-- chore(deps): update devdependencies (non-major) [[#2196](https://github.com/opencloud-eu/web/pull/2196)]
-- chore(deps): update apache/tika docker tag to v3.3.0.0 [[#2207](https://github.com/opencloud-eu/web/pull/2207)]
-- chore(deps): update pnpm to v10.32.1 [[#1875](https://github.com/opencloud-eu/web/pull/1875)]
-- chore(deps): update dependency vite-plugin-static-copy to v4 [[#2198](https://github.com/opencloud-eu/web/pull/2198)]
-- chore(deps): update dependency fast-xml-parser to v5.5.8 [[#2182](https://github.com/opencloud-eu/web/pull/2182)]
-- chore(deps): update dependency md-editor-v3 to v6.4.1 [[#2197](https://github.com/opencloud-eu/web/pull/2197)]
-- fix(deps): update dependency vue-router to v5.0.4 [[#2186](https://github.com/opencloud-eu/web/pull/2186)]
-- fix(deps): update dependency @sentry/vue to v10.45.0 [[#2181](https://github.com/opencloud-eu/web/pull/2181)]
-- chore(deps): update dependency fast-xml-parser to v5.5.7 [security] [[#2190](https://github.com/opencloud-eu/web/pull/2190)]
-- chore(deps): update traefik docker tag to v3.6.11 [[#2189](https://github.com/opencloud-eu/web/pull/2189)]
-- chore(deps): update tiptap monorepo to v3.20.4 [[#2151](https://github.com/opencloud-eu/web/pull/2151)]
-- chore(deps): update devdependencies (non-major) [[#2150](https://github.com/opencloud-eu/web/pull/2150)]
-- fix(deps): update dependency @sentry/vue to v10.44.0 [[#2168](https://github.com/opencloud-eu/web/pull/2168)]
-- chore(deps): update typescript-eslint monorepo to v8.57.1 [[#2154](https://github.com/opencloud-eu/web/pull/2154)]
-- chore(deps): update dependency fast-xml-parser to v5.5.6 [[#2145](https://github.com/opencloud-eu/web/pull/2145)]
-- chore(deps): update dependency vite-plugin-static-copy to v3.3.0 [[#2142](https://github.com/opencloud-eu/web/pull/2142)]
-- chore(deps): update dependency @codemirror/view to v6.40.0 [[#2131](https://github.com/opencloud-eu/web/pull/2131)]
-- chore(deps): update dependency fast-xml-parser to v5.5.4 [[#2140](https://github.com/opencloud-eu/web/pull/2140)]
-- chore(deps): update devdependencies (non-major) [[#2138](https://github.com/opencloud-eu/web/pull/2138)]
-- chore(deps): update dependency fast-xml-parser to v5.5.3 [[#2121](https://github.com/opencloud-eu/web/pull/2121)]
-- chore(deps): update dependency dompurify to v3.3.3 [[#2092](https://github.com/opencloud-eu/web/pull/2092)]
-- chore(deps): update typescript-eslint monorepo to v8.57.0 [[#2112](https://github.com/opencloud-eu/web/pull/2112)]
-- fix(deps): update dependency @sentry/vue to v10.43.0 [[#2119](https://github.com/opencloud-eu/web/pull/2119)]
-- chore(deps): update dependency @codemirror/view to v6.39.17 [[#2115](https://github.com/opencloud-eu/web/pull/2115)]
-- chore(deps): update devdependencies (non-major) [[#2103](https://github.com/opencloud-eu/web/pull/2103)]
-- chore(deps): update traefik docker tag to v3.6.10 [[#2102](https://github.com/opencloud-eu/web/pull/2102)]
-- chore(deps): update tiptap monorepo to v3.20.1 [[#2101](https://github.com/opencloud-eu/web/pull/2101)]
+- fix(deps): update dependency @casl/ability to v6.8.1 [[#2396](https://github.com/opencloud-eu/web/pull/2396)]
+- fix(deps): update dependency axios to v1.15.1 [[#2392](https://github.com/opencloud-eu/web/pull/2392)]
+- chore(deps): update dependency filesize to v11.0.16 [[#2395](https://github.com/opencloud-eu/web/pull/2395)]
+- chore(deps): update dependency fast-xml-parser to v5.7.1 [[#2388](https://github.com/opencloud-eu/web/pull/2388)]
+- fix(deps): update dependency @sentry/vue to v10.49.0 [[#2381](https://github.com/opencloud-eu/web/pull/2381)]
+- chore(deps): update node.js to v24.15.0 [[#2380](https://github.com/opencloud-eu/web/pull/2380)]
+- chore(deps): update devdependencies (non-major) - autoclosed [[#2387](https://github.com/opencloud-eu/web/pull/2387)]
+- fix(deps): update dependency uuid to v14 [[#2393](https://github.com/opencloud-eu/web/pull/2393)]
+- chore(deps): update devdependencies (non-major) [[#2378](https://github.com/opencloud-eu/web/pull/2378)]
+- chore(deps): update dependency @cucumber/cucumber to v12.8.1 [[#2362](https://github.com/opencloud-eu/web/pull/2362)]
+- chore(deps): update dependency fast-xml-parser to v5.6.0 [[#2373](https://github.com/opencloud-eu/web/pull/2373)]
+- chore(deps): update dependency dompurify to v3.4.0 [[#2363](https://github.com/opencloud-eu/web/pull/2363)]
+- chore(deps): update typescript-eslint monorepo to v8.58.2 [[#2360](https://github.com/opencloud-eu/web/pull/2360)]
+- chore(deps): update devdependencies (non-major) [[#2358](https://github.com/opencloud-eu/web/pull/2358)]
+- chore(deps): update tiptap monorepo to v3.22.3 [[#2320](https://github.com/opencloud-eu/web/pull/2320)]
+- chore(deps): update dependency globals to v17.5.0 [[#2352](https://github.com/opencloud-eu/web/pull/2352)]
+- chore(deps): update dependency fast-xml-parser to v5.5.12 [[#2354](https://github.com/opencloud-eu/web/pull/2354)]
+- chore(deps): update devdependencies (non-major) [[#2350](https://github.com/opencloud-eu/web/pull/2350)]
+- chore(deps): update dependency @types/node to v25.6.0 [[#2338](https://github.com/opencloud-eu/web/pull/2338)]
+- fix(deps): update dependency @unhead/vue to v3 [[#2337](https://github.com/opencloud-eu/web/pull/2337)]
+- fix(deps): update dependency @sentry/vue to v10.48.0 [[#2336](https://github.com/opencloud-eu/web/pull/2336)]
+- fix(deps): update dependency qs to v6.15.1 [[#2327](https://github.com/opencloud-eu/web/pull/2327)]
+- chore(deps): update devdependencies (non-major) [[#2331](https://github.com/opencloud-eu/web/pull/2331)]
+- chore(deps): update dependency fast-xml-parser to v5.5.11 [[#2324](https://github.com/opencloud-eu/web/pull/2324)]
+- fix(deps): update dependency axios to v1.15.0 [[#2330](https://github.com/opencloud-eu/web/pull/2330)]
+- chore(deps): update devdependencies (non-major) [[#2325](https://github.com/opencloud-eu/web/pull/2325)]
+- chore(deps): update traefik docker tag to v3.6.13 [[#2316](https://github.com/opencloud-eu/web/pull/2316)]
+- chore(deps): update typescript-eslint monorepo to v8.58.1 [[#2317](https://github.com/opencloud-eu/web/pull/2317)]
+- chore(deps): update devdependencies (non-major) [[#2313](https://github.com/opencloud-eu/web/pull/2313)]
+- chore(deps): update devdependencies (non-major) [[#2307](https://github.com/opencloud-eu/web/pull/2307)]
+- fix(deps): update dependency p-queue to v9.1.2 [[#2308](https://github.com/opencloud-eu/web/pull/2308)]
+- fix(deps): update dependency typescript to v6 [[#2204](https://github.com/opencloud-eu/web/pull/2204)]
+- chore(deps): update dependency @unhead/vue to v2.1.13 [[#2303](https://github.com/opencloud-eu/web/pull/2303)]
+- fix(deps): update dependency fuse.js to v7.3.0 [[#2297](https://github.com/opencloud-eu/web/pull/2297)]
+- chore(deps): update tiptap monorepo to v3.22.2 [[#2285](https://github.com/opencloud-eu/web/pull/2285)]
+- chore(deps): update dependency @panzoom/panzoom to v4.6.2 [[#2295](https://github.com/opencloud-eu/web/pull/2295)]
+- chore(deps): update dependency fast-xml-parser to v5.5.10 [[#2299](https://github.com/opencloud-eu/web/pull/2299)]
+- chore(deps): update dependency md-editor-v3 to v6.4.2 [[#2304](https://github.com/opencloud-eu/web/pull/2304)]
+- chore(deps): update devdependencies (non-major) [[#2294](https://github.com/opencloud-eu/web/pull/2294)]
+- fix(deps): update dependency vitest-mock-extended to v4 [[#2306](https://github.com/opencloud-eu/web/pull/2306)]
+- chore(deps): update dependency vite to v8.0.5 [security] [[#2305](https://github.com/opencloud-eu/web/pull/2305)]
+- chore(deps): update dependency vitest-mock-extended to v3.1.1 [[#2289](https://github.com/opencloud-eu/web/pull/2289)]
+- fix(deps): update dependency lodash-es to v4.18.1 [security] [[#2282](https://github.com/opencloud-eu/web/pull/2282)]
+- chore(deps): update tiptap monorepo to v3.22.0 [[#2248](https://github.com/opencloud-eu/web/pull/2248)]
+- chore(deps): update dependency @playwright/test to v1.59.1 [[#2277](https://github.com/opencloud-eu/web/pull/2277)]
+- fix(deps): update dependency p-queue to v9.1.1 [[#2278](https://github.com/opencloud-eu/web/pull/2278)]
+- chore(deps): update dependency @codemirror/view to v6.41.0 [[#2275](https://github.com/opencloud-eu/web/pull/2275)]
+- chore(deps): update devdependencies (non-major) [[#2268](https://github.com/opencloud-eu/web/pull/2268)]
+- fix(deps): update dependency @sentry/vue to v10.47.0 [[#2269](https://github.com/opencloud-eu/web/pull/2269)]
+- chore(deps): update dependency filesize to v11.0.15 [[#2223](https://github.com/opencloud-eu/web/pull/2223)]
+- fix(deps): update dependency axios to v1.14.0 [[#2250](https://github.com/opencloud-eu/web/pull/2250)]
+- chore(deps): update dependency @module-federation/vite to v1.13.6 [[#2264](https://github.com/opencloud-eu/web/pull/2264)]
+- chore(deps): update typescript-eslint monorepo to v8.58.0 [[#2265](https://github.com/opencloud-eu/web/pull/2265)]
+- chore(deps): update devdependencies (non-major) [[#2257](https://github.com/opencloud-eu/web/pull/2257)]
 
 ## Reva
+### 🐛 Bug Fixes
+
+- Fix race conditions in the hybrid metadata backend [[#594](https://github.com/opencloud-eu/reva/pull/594)]
+- fix: error handling in upload session cleanup [[#582](https://github.com/opencloud-eu/reva/pull/582)]
+
+### 📈 Enhancement
+
+- experimental: add darwin watchfs support [[#471](https://github.com/opencloud-eu/reva/pull/471)]
+- Tracing [[#596](https://github.com/opencloud-eu/reva/pull/596)]
 
 ### 📦️ Dependencies
 
-- chore(deps): bump github.com/nats-io/nats-server/v2 from 2.12.4 to 2.12.6 in the go_modules group across 1 directory [[#568](https://github.com/opencloud-eu/reva/pull/568)]
-- chore(deps): bump golang.org/x/oauth2 from 0.35.0 to 0.36.0 [[#565](https://github.com/opencloud-eu/reva/pull/565)]
-- chore(deps): bump github.com/nats-io/nats.go from 1.48.0 to 1.49.0 [[#564](https://github.com/opencloud-eu/reva/pull/564)]
-- chore(deps): bump github.com/mattn/go-sqlite3 from 1.14.34 to 1.14.37 [[#563](https://github.com/opencloud-eu/reva/pull/563)]
-- chore(deps): bump google.golang.org/grpc from 1.79.2 to 1.79.3 in the go_modules group across 1 directory [[#562](https://github.com/opencloud-eu/reva/pull/562)]
-- chore(deps): bump golang.org/x/crypto from 0.48.0 to 0.49.0 [[#559](https://github.com/opencloud-eu/reva/pull/559)]
-- chore(deps): bump github.com/ceph/go-ceph from 0.37.0 to 0.38.0 [[#560](https://github.com/opencloud-eu/reva/pull/560)]
-- chore(deps): bump golang.org/x/sync from 0.19.0 to 0.20.0 [[#558](https://github.com/opencloud-eu/reva/pull/558)]
-- chore(deps): bump github.com/tus/tusd/v2 from 2.8.0 to 2.9.2 [[#557](https://github.com/opencloud-eu/reva/pull/557)]
-- chore(deps): bump go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc from 1.41.0 to 1.42.0 [[#555](https://github.com/opencloud-eu/reva/pull/555)]
-- chore(deps): bump github.com/google/renameio/v2 from 2.0.1 to 2.0.2 [[#495](https://github.com/opencloud-eu/reva/pull/495)]
-- chore(deps): bump github.com/minio/minio-go/v7 from 7.0.98 to 7.0.99 [[#553](https://github.com/opencloud-eu/reva/pull/553)]
-- chore(deps): bump go.opentelemetry.io/otel/trace from 1.41.0 to 1.42.0 [[#550](https://github.com/opencloud-eu/reva/pull/550)]
+- chore(deps): bump github.com/nats-io/nats.go from 1.49.0 to 1.51.0 [[#591](https://github.com/opencloud-eu/reva/pull/591)]
+- chore(deps): bump github.com/coreos/go-oidc/v3 from 3.17.0 to 3.18.0 [[#586](https://github.com/opencloud-eu/reva/pull/586)]
+- chore(deps): bump github.com/go-git/go-git/v5 from 5.17.1 to 5.18.0 in the go_modules group across 1 directory [[#595](https://github.com/opencloud-eu/reva/pull/595)]
+- chore(deps): bump github.com/go-playground/validator/v10 from 10.30.1 to 10.30.2 [[#589](https://github.com/opencloud-eu/reva/pull/589)]
+- chore(deps): bump go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc from 1.42.0 to 1.43.0 [[#585](https://github.com/opencloud-eu/reva/pull/585)]
+- chore(deps): bump go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc from 0.65.0 to 0.68.0 [[#584](https://github.com/opencloud-eu/reva/pull/584)]
+- chore(deps): bump github.com/rs/zerolog from 1.34.0 to 1.35.0 [[#583](https://github.com/opencloud-eu/reva/pull/583)]
+- chore(deps): bump github.com/go-jose/go-jose/v4 from 4.1.3 to 4.1.4 in the go_modules group across 1 directory [[#581](https://github.com/opencloud-eu/reva/pull/581)]
+- chore(deps): bump github.com/onsi/ginkgo/v2 from 2.28.0 to 2.28.1 [[#580](https://github.com/opencloud-eu/reva/pull/580)]
+- chore(deps): bump github.com/samber/slog-zerolog/v2 from 2.9.1 to 2.9.2 [[#569](https://github.com/opencloud-eu/reva/pull/569)]
+- chore(deps): bump github.com/go-git/go-git/v5 from 5.16.5 to 5.17.1 in the go_modules group across 1 directory [[#579](https://github.com/opencloud-eu/reva/pull/579)]
+- chore(deps): bump golang.org/x/image from 0.24.0 to 0.38.0 in the go_modules group across 1 directory [[#577](https://github.com/opencloud-eu/reva/pull/577)]
