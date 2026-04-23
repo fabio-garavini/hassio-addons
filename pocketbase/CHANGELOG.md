@@ -1,9 +1,11 @@
 > _To update the prebuilt executable you can run `./pocketbase update`._
 
-- Fixed autoexpandable input in Firefox ([#7648](https://github.com/pocketbase/pocketbase/discussions/7648)).
+- Fixed total count load on page back/forward navigation.
 
-- Slightly adjusted the dark theme colors for better readability ([#7648](https://github.com/pocketbase/pocketbase/discussions/7648)).
+- Fixed `editor` floating dialogs position when scrolling ([#7653](https://github.com/pocketbase/pocketbase/issues/7653)).
 
-- Removed unnecessary tags stripping from the displayed log attributes ([#7649](https://github.com/pocketbase/pocketbase/issues/7649)).
+- Enabled text wrapping for the API rule fields.
 
-- Workarounded Safari freeze caused by a buggy CSS popover property ([#7650](https://github.com/pocketbase/pocketbase/issues/7650)).
+- Added view query sample loading indicator.
+
+- Other minor light UI contrast and styles improvements.
