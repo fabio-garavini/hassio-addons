@@ -1,7 +1,7 @@
 # check=skip=SecretsUsedInArgOrEnv
 ARG BUILD_FROM=docker.n8n.io/n8nio/n8n:2.17.7
 
-ARG BUILD_VERSION=2.17.7
+ARG BUILD_VERSION=2.17.7-v1
 
 FROM docker.io/n8nio/runners:${BUILD_VERSION%-v*} AS runner
 
@@ -114,7 +114,7 @@ RUN \
     && rm -rf /tmp/*
 
 # renovate: datasource=github-releases packageName=n8n-io/task-runner-launcher
-ARG LAUNCHER_VERSION=1.4.4
+ARG LAUNCHER_VERSION=1.4.5
 
 RUN set -e; \
     case "$BUILD_ARCH" in \
