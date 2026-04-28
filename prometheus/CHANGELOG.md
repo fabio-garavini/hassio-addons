@@ -1,5 +1,10 @@
-This release has a fix for a Stored XSS vulnerability that can be triggered via crafted metric names and label values in Prometheus web UI tooltips and metrics explorer. Thanks to Duc Anh Nguyen from TinyxLab for reporting it.
+This release fixes mutiple security issues.
 
-- [SECURITY] UI: Fix stored XSS via unescaped metric names and labels. CVE-2026-40179. #18506
-- [ENHANCEMENT] Consul SD: Introduce `health_filter` field for Health API filtering. #18499
-- [BUGFIX] Consul SD: Fix filter parameter being incorrectly applied to the Health API. #18499
+We would like to thank the following people for the responsible disclosures:
+- Shadowbyte (4c1dr3aper) - Charlie Lewis for the Remote-Read snappy decode vulnerability.
+- Brett Gervasoni for the AzureAD OAuth `client_secret` vulnerability.
+- @iiihaiii and @Ngocnn97 for the Old UI XSS vulnerability. 
+
+- [SECURITY] AzureAD remote write: Fix OAuth `client_secret` being exposed in plaintext via `/-/config` endpoint. GHSA-wg65-39gg-5wfj / CVE-2026-42151 #18590
+- [SECURITY] Remote-read: Reject snappy-compressed requests whose declared decoded length exceeds the decode limit. GHSA-8rm2-7qqf-34qm / CVE-2026-42154 #18584
+- [SECURITY] UI: Fix stored XSS via unescaped `le` label values in old UI heatmap chart tick labels. GHSA-fw8g-cg8f-9j28 #18588
