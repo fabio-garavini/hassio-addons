@@ -1,3 +1,3 @@
 build_from:
-  aarch64: ghcr.io/linuxserver/nextcloud:33.0.2-ls427
-  amd64: ghcr.io/linuxserver/nextcloud:33.0.2-ls427
+  aarch64: ghcr.io/linuxserver/nextcloud:33.0.3-ls428
+  amd64: ghcr.io/linuxserver/nextcloud:33.0.3-ls428
