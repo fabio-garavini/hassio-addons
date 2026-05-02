@@ -1,23 +1,9 @@
 > _To update the prebuilt executable you can run `./pocketbase update`._
 
-> [!IMPORTANT]
-> This release include a security fix related to [#7662](https://github.com/pocketbase/pocketbase/discussions/7662).
+- Fixed password fields not being detected as changed ([#7670](https://github.com/pocketbase/pocketbase/issues/7670)).
 
-- Added backups list scroll container ([#7655](https://github.com/pocketbase/pocketbase/issues/7655)).
+- Added the local time zone name next to the `date` field label.
 
-- Optimized record upsert and preview modals data loading to minimize layout jumps.
+- Reload trusted proxy info UI after settings save.
 
-- Fixed SMTP IPv6 network address format ([#7659](https://github.com/pocketbase/pocketbase/issues/7659)).
-
-- Fixed autocomplete selection not properly updating the underlying input value ([#7664](https://github.com/pocketbase/pocketbase/issues/7664)).
-
-- Added `ghupdate.BaseURL` config option ([#7665](https://github.com/pocketbase/pocketbase/issues/7665)).
-
-- Added dummy bcrypt password check for the failure auth path to minimize enumeration timing attacks when registrations are disabled.
-
-- Adjusted Bitbucket, GitHub, GitLab and Gitea/Forgejo OAuth2 providers to better reflect recent API updates and doc references.
-    _In case the userinfo data is not sufficient, some of the providers now send a separate list emails request in order to minimize eventual linking security issues caused by custom onpremise setups (e.g. Gitea/Forgejo allows skipping the email verification if an ENV variable is configured)._
-
-- ⚠️ Fixed a pre-hijacking OAuth2 linking vulnerability ([#7662](https://github.com/pocketbase/pocketbase/discussions/7662); thanks @Alardiians for reporting it privately).
-
-- Bumped Go and npm dependencies.
+- Other minor improvements (skips the duplicated record ids from the `IN` expand list, reordered confirm-email-change error checks to minimize enumeration attacks, etc.).
