@@ -1,0 +1,34 @@
+name: Luanti
+version: 5.15.2
+slug: luanti
+description: An open-source voxel game creation platform
+url: https://www.luanti.org
+ingress: true
+ingress_port: 8384
+ingress_stream: true
+panel_title: Syncthing
+panel_icon: mdi:sync
+arch:
+  - aarch64
+  - amd64
+init: false
+backup: cold
+map:
+  - type: addon_config
+    read_only: false
+  - type: data
+    read_only: false
+  - type: ssl
+ports:
+  30000/tcp: 30000
+ports_description:
+  30000/tcp: Web UI (not needed with Ingress)
+schema:
+  PUID: int(0,)
+  PGID: int(0,)
+  TZ: str?
+options:
+  PUID: 0
+  PGID: 0
+  TZ: Etc/UTC
+image: fabioogaravini/hassio-luanti

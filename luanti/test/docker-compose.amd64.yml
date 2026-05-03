@@ -1,0 +1,22 @@
+name: luanti-amd64
+services:
+  luanti-amd64:
+    image: fabioogaravini/hassio-luanti:${VERSION:-latest}-amd64
+    build:
+      context: ..
+      args:
+        BUILD_ARCH: amd64
+        BUILD_VERSION: ${VERSION:-latest}
+    container_name: luanti-amd64
+    ports:
+      - "30000:30000"
+    volumes:
+      - data:/data
+      - ./options.json:/data/options.json:ro
+      - config:/config
+      - ssl:/ssl
+
+volumes:
+  data:
+  config:
+  ssl:
