@@ -1,19 +1,10 @@
 ## What's Changed
-* Updates power-tools image path referenced by @jicetus in https://github.com/immich-power-tools/immich-power-tools/pull/253
-* feat: add volume configuration for immich power tools in docker-compo… by @sai80082 in https://github.com/immich-power-tools/immich-power-tools/pull/261
-* fix: restore gallery grid selection UI by @varun-raj in https://github.com/immich-power-tools/immich-power-tools/pull/273
+* feat: enhance API key validation with detailed permission checks and … by @sai80082 in https://github.com/immich-power-tools/immich-power-tools/pull/256
+* fix(find): use getUserHeaders() for Immich smart search auth by @dgilperez in https://github.com/immich-power-tools/immich-power-tools/pull/263
+* fix(find): drop hallucinated future-date filters from AI output by @dgilperez in https://github.com/immich-power-tools/immich-power-tools/pull/264
+* Prerelease by @sai80082 in https://github.com/immich-power-tools/immich-power-tools/pull/281
 
 ## New Contributors
-* @jicetus made their first contribution in https://github.com/immich-power-tools/immich-power-tools/pull/253
+* @dgilperez made their first contribution in https://github.com/immich-power-tools/immich-power-tools/pull/263
 
-**Full Changelog**: https://github.com/immich-power-tools/immich-power-tools/compare/v0.21.1...v0.21.2
-
-## What's Changed
-* Updates power-tools image path referenced by @jicetus in https://github.com/immich-power-tools/immich-power-tools/pull/253
-* feat: add volume configuration for immich power tools in docker-compo… by @sai80082 in https://github.com/immich-power-tools/immich-power-tools/pull/261
-* fix: restore gallery grid selection UI by @varun-raj in https://github.com/immich-power-tools/immich-power-tools/pull/273
-
-## New Contributors
-* @jicetus made their first contribution in https://github.com/immich-power-tools/immich-power-tools/pull/253
-
-**Full Changelog**: https://github.com/immich-power-tools/immich-power-tools/compare/v0.21.1...v0.21.2
+**Full Changelog**: https://github.com/immich-power-tools/immich-power-tools/compare/v0.21.2...v0.21.3
