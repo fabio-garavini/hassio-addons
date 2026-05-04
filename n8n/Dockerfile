@@ -1,7 +1,7 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=docker.n8n.io/n8nio/n8n:2.18.5
+ARG BUILD_FROM=docker.n8n.io/n8nio/n8n:2.18.6
 
-ARG BUILD_VERSION=2.18.5
+ARG BUILD_VERSION=2.18.6
 
 FROM docker.io/n8nio/runners:${BUILD_VERSION%-v*} AS runner
 
