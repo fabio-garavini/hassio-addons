@@ -1,5 +1,5 @@
 name: Luanti
-version: 5.15.2
+version: 5.15.2-v1
 slug: luanti
 description: An open-source voxel game creation platform
 url: https://www.luanti.org
@@ -20,13 +20,14 @@ map:
     read_only: false
   - type: ssl
 ports:
-  30000/tcp: 30000
+  30000/udp: 30000
 ports_description:
-  30000/tcp: Web UI (not needed with Ingress)
+  30000/udp: Luanti
 schema:
   PUID: int(0,)
   PGID: int(0,)
   TZ: str?
+  CLI_ARGS: str?
 options:
   PUID: 0
   PGID: 0
