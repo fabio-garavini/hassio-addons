@@ -1,13 +1,8 @@
 name: Luanti
-version: 5.15.2-v1
+version: 5.15.2-v2
 slug: luanti
 description: An open-source voxel game creation platform
 url: https://www.luanti.org
-ingress: true
-ingress_port: 8384
-ingress_stream: true
-panel_title: Syncthing
-panel_icon: mdi:sync
 arch:
   - aarch64
   - amd64
