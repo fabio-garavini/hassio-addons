@@ -1,5 +1,6 @@
 {
   "PUID": 1000,
   "PGID": 1000,
-  "TZ": "Etc/UTC"
+  "TZ": "Etc/UTC",
+  "CLI_ARGS": "--gameid devtest"
 }

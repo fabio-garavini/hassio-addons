@@ -9,12 +9,18 @@ services:
         BUILD_VERSION: ${VERSION:-latest}
     container_name: luanti-aarch64
     ports:
-      - "30000:30000"
+      - "30000:30000/udp"
     volumes:
       - data:/data
       - ./options.json:/data/options.json:ro
       - config:/config
       - ssl:/ssl
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep luantiserver || pgrep minetestserver || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
 
 volumes:
   data:
