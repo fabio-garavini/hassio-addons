@@ -1,5 +1,5 @@
 name: Luanti
-version: 5.15.2-v2
+version: 5.15.2-v3
 slug: luanti
 description: An open-source voxel game creation platform
 url: https://www.luanti.org
@@ -11,6 +11,7 @@ backup: cold
 map:
   - type: addon_config
     read_only: false
+    path: /config/.minetest
   - type: data
     read_only: false
   - type: ssl
