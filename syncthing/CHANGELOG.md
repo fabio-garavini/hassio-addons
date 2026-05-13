@@ -1,71 +1,72 @@
-## Major changes in 2.0
+## Major changes in 2.1
 
-- Database backend switched from LevelDB to SQLite. There is a migration on
-  first launch which can be lengthy for larger setups. The new database is
-  easier to understand and maintain and, hopefully, less buggy.
+- Devices and folders can now be grouped in the GUI by setting the new
+  `group` attribute.
 
-- The logging format has changed to use structured log entries (a message
-  plus several key-value pairs). Additionally, we can now control the log
-  level per package, and a new log level WARNING has been inserted between
-  INFO and ERROR (which was previously known as WARNING...). The INFO level
-  has become more verbose, indicating the sync actions taken by Syncthing. A
-  new command line flag `--log-level` sets the default log level for all
-  packages, and the `STTRACE` environment variable and GUI has been updated
-  to set log levels per package. The `--verbose` and `--logflags` command
-  line options have been removed and will be ignored if given.
+- HTTP and HTTPS proxies with support for CONNECT can now be used, in
+  addition to the existing support for SOCKS proxies (the environment
+  variable `all_proxy=https://...`).
 
-- Deleted items are no longer kept forever in the database, instead they are
-  forgotten after fifteen months. If your use case require deletes to take
-  effect after more than a fifteen month delay, set the
-  `--db-delete-retention-interval` command line option or corresponding
-  environment variable to zero, or a longer time interval of your choosing.
+- Block indexing can be turned off for folders where it's more desirable to
+  optimise for reduced database size and overhead than minimal transfer
+  size (the `blockIndexing` attribute on folder configuration).
 
-- Modernised command line options parsing. Old single-dash long options are
-  no longer supported, e.g. `-home` must be given as `--home`. Some options
-  have been renamed, others have become subcommands. All serve options are
-  now also accepted as environment variables. See  `syncthing --help` and
-  `syncthing serve --help` for details.
-
-- Rolling hash detection of shifted data is no longer supported as this
-  effectively never helped. Instead, scanning and syncing is faster and more
-  efficient without it.
-
-- A "default folder" is no longer created on first startup.
-
-- Multiple connections are now used by default between v2 devices. The new
-  default value is to use three connections: one for index metadata and two
-  for data exchange.
-
-- The following platforms unfortunately no longer get prebuilt binaries for
-  download at syncthing.net and on GitHub, due to complexities related to
-  cross compilation with SQLite:
-
-  - dragonfly/amd64
-  - solaris/amd64
-  - linux/ppc64
-  - netbsd/*
-  - openbsd/386 and openbsd/arm
-  - windows/arm
-
-- The handling of conflict resolution involving deleted files has changed. A
-  delete can now be the winning outcome of conflict resolution, resulting in
-  the deleted file being moved to a conflict copy.
+- GUI login session duration can be configured to be longer or shorter than
+  the default one week, or set to infinitely long. The cookie path can also
+  be adjusted. (The `sessionCookieDurationS` and `sessionCookiePath`
+  attributes in the GUI configuration.)
 
 This release is also available as:
 
 * APT repository: https://apt.syncthing.net/
 
-* Docker image: `docker.io/syncthing/syncthing:2.0.16` or `ghcr.io/syncthing/syncthing:2.0.16`
+* Docker image: `docker.io/syncthing/syncthing:2.1.0` or `ghcr.io/syncthing/syncthing:2.1.0`
   (`{docker,ghcr}.io/syncthing/syncthing:2` to follow just the major version)
 
 ## What's Changed
 ### Fixes
-* fix(protocol): verify compressed message length before decompression by @calmh in https://github.com/syncthing/syncthing/pull/10595
-* fix(systemd): support overrides for syncOwnership by @Valloric in https://github.com/syncthing/syncthing/pull/10602
-* fix(systemd): add back chown allowed syscalls by @Valloric in https://github.com/syncthing/syncthing/pull/10605
+* fix(stdiscosrv): close file descriptor on flush error in write by @cuiweixie in https://github.com/syncthing/syncthing/pull/10615
+* fix(gui): disable autocomplete for folder password by @bt90 in https://github.com/syncthing/syncthing/pull/10342
+* fix(protocol): limit size of incoming request messages by @calmh in https://github.com/syncthing/syncthing/pull/10629
+* fix(gui): don't show local device under remote devices (ref #10563) by @maen-bn in https://github.com/syncthing/syncthing/pull/10631
+* fix(gui): order folders alphabetically and ensure local device stays hidden (ref #10563, ref #10631) by @maen-bn in https://github.com/syncthing/syncthing/pull/10637
+* fix(gui): fallback to folder ID when label is empty in remove dialog by @RealCharlesChia in https://github.com/syncthing/syncthing/pull/10657
+* fix(gui): fix tabs visually disabled but still clickable during ignore patterns setup (fixes #10634) by @JRNitre in https://github.com/syncthing/syncthing/pull/10651
+* fix(strelaysrv): properly use bind address for outgoing requests (fixes #10658) by @calmh in https://github.com/syncthing/syncthing/pull/10659
+* fix(stdiscosrv): only read certificate proxy headers with --http by @calmh in https://github.com/syncthing/syncthing/pull/10674
+### Features
+* feat(gui, config): support simple folder grouping (fixes #2070) by @maen-bn in https://github.com/syncthing/syncthing/pull/10563
+* feat: make http session cookie path & duration configurable by @vvaswani in https://github.com/syncthing/syncthing/pull/10632
+* feat(dialer): add HTTP/HTTPS proxy support via CONNECT by @luizluca in https://github.com/syncthing/syncthing/pull/10572
+* feat: make block indexing configurable by @calmh in https://github.com/syncthing/syncthing/pull/10608
 ### Other
-* chore(config, connections): use same reconnection interval for QUIC and TCP (fixes #10507) by @marbens-arch in https://github.com/syncthing/syncthing/pull/10573
-* build(deps): update dependencies by @calmh in https://github.com/syncthing/syncthing/pull/10588
-* chore(sqlite): reduce max open connections, keep them open permanently (fixes #10592) by @calmh in https://github.com/syncthing/syncthing/pull/10596
+* chore: remove tracking inode change time by @calmh in https://github.com/syncthing/syncthing/pull/10579
+* build(deps): temporarily switch to fork of gateway discovery library (fixes #10593) by @marbens-arch in https://github.com/syncthing/syncthing/pull/10594
+* build: extract github.ref_name expression to env mapping by @dagecko in https://github.com/syncthing/syncthing/pull/10624
+* build: pin 20 third-party actions to immutable commit SHAs by @dagecko in https://github.com/syncthing/syncthing/pull/10625
+* build: have dependabot group PRs and use cooldown by @calmh in https://github.com/syncthing/syncthing/pull/10630
+* chore: trivial fixes by @calmh in https://github.com/syncthing/syncthing/pull/10650
+* chore(model): more efficient tracking of renames during scan by @calmh in https://github.com/syncthing/syncthing/pull/10653
+* chore(model): deflake cluster config tests by @calmh in https://github.com/syncthing/syncthing/pull/10662
+* chore(model): deflake TestCompletionEmptyGlobal by @calmh in https://github.com/syncthing/syncthing/pull/10663
+* chore(scanner): deflake TestStopWalk by @calmh in https://github.com/syncthing/syncthing/pull/10664
+* build: parallelise linux builds slightly by @calmh in https://github.com/syncthing/syncthing/pull/10666
+* chore(api): deflake TestHTTPLogin on Windows by @calmh in https://github.com/syncthing/syncthing/pull/10667
+* chore(api): use ldap package escape functions by @calmh in https://github.com/syncthing/syncthing/pull/10672
+* build: only run the periodic build jobs in the syncthing org by @calmh in https://github.com/syncthing/syncthing/pull/10675
+* build(deps): update dependencies by @calmh in https://github.com/syncthing/syncthing/pull/10683
+* chore(model): slightly improve handling of pulling empty blocks by @calmh in https://github.com/syncthing/syncthing/pull/10679
+* chore(gui): upgrade jQuery to 3.7.1 to fix CVE-2020-11022, CVE-2020-11023, CVE-2015-9251 by @Umer-Azaz in https://github.com/syncthing/syncthing/pull/10673
+* chore(fs): remove unused SymlinksSupported() method by @calmh in https://github.com/syncthing/syncthing/pull/10684
 
-**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.15...v2.0.16
+## New Contributors
+* @cuiweixie made their first contribution in https://github.com/syncthing/syncthing/pull/10615
+* @dagecko made their first contribution in https://github.com/syncthing/syncthing/pull/10624
+* @maen-bn made their first contribution in https://github.com/syncthing/syncthing/pull/10563
+* @RealCharlesChia made their first contribution in https://github.com/syncthing/syncthing/pull/10657
+* @JRNitre made their first contribution in https://github.com/syncthing/syncthing/pull/10651
+* @vvaswani made their first contribution in https://github.com/syncthing/syncthing/pull/10632
+* @luizluca made their first contribution in https://github.com/syncthing/syncthing/pull/10572
+* @Umer-Azaz made their first contribution in https://github.com/syncthing/syncthing/pull/10673
+
+**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.0.16...v2.1.0
