@@ -1,52 +1,43 @@
 - **\[Breaking\]**
-    - Remove deprecated Reserve Bank of Australia exchange rate data source
+    - Amounts are grouped using the default currency when axis/category or series is set to amount or transfer in amount in insights explorer
 
 - **\[Features\]**
-    - Add agent skill and ezBookkeeping API Tools script for AI Agent Integration
-    - Support "Add Another" in transaction add page / dialog (#471)
-    - Support sub condition in insights explorer queries
-    - Display total transactions, total amount, average amount, median amount, minimum amount, maximum amount, and more statistic data in the data table tab of insights explorer
-    - Display year-over-year and period-over-period growth rates in trends chart in statistics & analysis page on desktop version
-    - Add cache management page
-    - Support caching map data in browser when the map provider that supports `map_data_fetch_proxy` and `map_data_fetch_proxy` is set to `true`
-    - Support setting exchange rate cache expiration time
-    - Support sorting transaction tags by name (#487)
-    - Support receiving images from the Web Share Target API Level 2 and directly opening AI image recognition on mobile version (#522)
-    - LLM provider supports LM Studio
-    - LLM provider supports Anthropic and Anthropic compatibility API
-    - Support importing transactions from custom xlsx / xls file
+    - Support batch edit / delete transactions in insights explorer
+    - Add treemap / sunburst / heatmap / calendar heatmap charts in insights explorer
+    - Display year-over-year and period-over-period growth rates in insights explorer
+    - Display year-over-year and period-over-period growth rates in account balance trends chart in account reconciliation statements on desktop version
+    - Add transaction gallery mode in transaction list page
+    - Support setting last reconciled time for account
+    - Support daily and yearly intervals for scheduled transactions
+    - Support filtering transactions by time zone minute offset, day of week, day of month, month of year and transaction hour of day in insights explorer
+    - Add National Bank of Kazakhstan exchange rates data source (#564, #565, thanks @vigdail)
 
 - **\[Enhancements\]**
-    - Improved Russian translation (#483, #521, thanks @dshemin)
-    - Improved Spanish translation (#495, thanks @abrugues)
-    - Improved Portuguese (Brazil) translation (#530, thanks @balaios)
-    - Support filtering by geographic latitude and longitude in insights explorer queries
-    - Add transaction time zone and transaction hour of day to axis / category / series in insights explorer
-    - Add 90th percentile amount, range, interquartile range, variance, standard deviation, and coefficient of variation to value metrics in insights explorer
-    - Add boxplot chart in reconciliation statement dialog
-    - Support restricting API token access based on IP address
-    - Support automatically applying known column mapping and transaction type mapping rules when importing custom files with column mapping handle method
-    - Support batch replacement of transaction time zones in the import tool
-    - Support exporting reconciliation statement, statistics & analysis result and import check result to SSV (semicolon separated values) file
-    - Support custom quick save button styles on the mobile transaction edit page
-    - Support exporting statistics & analysis result to Mermaid
-    - Merge UTF-8 and UTF-16 encodings with or without BOM, with BOM automatically detected and handled
-    - Support UTF-32 file encoding when importing delimiter-separated values (DSV) file
-    - Optimize the performance of the retrieve all transactions API
-    - Add attributes to disable spell check and automatic capitalization to all username input fields (#526, thanks @RasterCrow)
-    - Support importing WeChat Pay statements with the latest format that includes thousand separators (#534)
-    - Add more icons from Line Awesome
+    - Improved German translation (#540, thanks @1270o1)
+    - Improved Spanish translation (#562, thanks @abrugues)
+    - Support credit card billing cycles as a time granularity option in the account balance trend chart on the account reconciliation statements page
+    - Support filtering transaction description using regular expressions in insights explorer
+    - Support "Not in" options for transaction type, transaction category and account filters in insights explorer
+    - Add amount range to axis / category / series in insights explorer
+    - Add active transaction days, transactions per active day, total income, total expense, net income, expense / income ratio, savings rate, Q1/Q3 amount, 10th/95th/99th percentile amount, mean absolute deviation, median absolute deviation, maximum amount share, top 5 amount sum, top 5 amount share, transactions for 80% of amount, skewness and kurtosis to value metric in insights explorer
+    - Support setting the last 1 to 3 days of the month to scheduled transaction frequency
+    - Support configuring the default behavior of the reconciliation statement button and the default time range for the reconciliation statement page
+    - Improve action button rendering performance on desktop version (#547)
+    - Scroll page to bottom automatically when creating a new tag
     - Other user interface optimization
 
 - **\[Development\]**
-    - Upgrade Golang to 1.25.7
-    - Upgrade Node.js to 24.14.0
-    - Upgrade Alpine base image to 3.23.3
+    - Upgrade Golang to 1.26.2
+    - Upgrade Node.js to 24.15.0
+    - Upgrade Alpine base image to 3.23.4
+    - Replace Jest with Vitest
 
 - **\[Bug Fixes\]**
-    - Fix incorrect time for some time zones on the scheduled transaction edit page (#499)
-    - Fix the user settings is reset after using the command line tool to change the user password (#516)
-    - Fix incorrect display when use transaction year-quarter as axis / category / series in insights explorer
-    - Fix incorrect data when exporting 100% stacked charts data in insights explorer
-    - Fix incorrect column count when importing mscfb excel file
-    - Fix the updated transaction template is not reflected in the interface immediately after modification
+    - Fix the transfer in transactions are not included when exporting transactions under some conditions (#550)
+    - Fix cannot switch between hours, minutes and seconds by pressing the tab (#554)
+    - Fix the page navigation did not work correctly when clicking page numbers above 1000
+    - Fix incorrect calculations of median and quartiles in some cases
+    - Fix amounts on some pages were not formatted using the account currency
+    - Fix incorrect top 5 amount share calculation in insights explorer
+    - Fix cannot change explorer display order when fewer than two items are visible on the insights explorer page
+    - Check whether every transactions are editable when moving all transactions in an account
