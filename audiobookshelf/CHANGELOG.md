@@ -2,32 +2,22 @@
 
 ### Added
 
-- Japanese language and Japan as podcast search region by @na3shkw in #5211
-- Autocomplete attributes on login and setup fields for password manager support by @meek2100 in #5089
+- Access token refresh grace period (fixes frequently needing to re-login) #4630 by @nichwall in #5004
 
 ### Fixed
 
-- Recent episodes not updating from cache when media progress changes in #5159
-- Error logging when a podcast's auto-download schedule has an invalid cron expression
+- Listening sessions from Android app showing device name as `Abs iOS`
+- RSS feeds serving m4b files with incorrect Content-Type #5041 by @brandonfhall in #5221
 
 ### Changed
 
-- Public media item shares: use start time passed in query parameter for existing sessions by @pjkottke in #5163
-- Podcast episode downloads use SSRF filtering on the HTTP request (matches other external requests)
-- Podcast create and update validate the auto-download schedule cron expression and sanitizes the HTML description
-- Playlists, collections, and library item batch API routes enforce library and per-item access
+- Book & podcast descriptions from audio files are sanitized
+- `cancel_scan` and `set_log_listener` socket events validate account type and log level
 - More strings translated
   - Belarusian by @pavel-miniutka
-  - Hungarian by @ugyes
-  - Japanese by @na3shkw
-
-### Internal
-
-- ApiCacheManager test coverage for recent-episodes cache invalidation
+  - Polish by @TheMatrixan
 
 ## New Contributors
-* @pjkottke made their first contribution in https://github.com/advplyr/audiobookshelf/pull/5163
-* @meek2100 made their first contribution in https://github.com/advplyr/audiobookshelf/pull/5089
-* @na3shkw made their first contribution in https://github.com/advplyr/audiobookshelf/pull/5211
+* @brandonfhall made their first contribution in https://github.com/advplyr/audiobookshelf/pull/5221
 
-**Full Changelog**: https://github.com/advplyr/audiobookshelf/compare/v2.33.2...v2.34.0
+**Full Changelog**: https://github.com/advplyr/audiobookshelf/compare/v2.34.0...v2.35.0
