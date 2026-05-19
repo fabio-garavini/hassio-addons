@@ -1,7 +1,7 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=docker.n8n.io/n8nio/n8n:2.20.9
+ARG BUILD_FROM=docker.n8n.io/n8nio/n8n:2.20.11
 
-ARG BUILD_VERSION=2.20.9-v1
+ARG BUILD_VERSION=2.20.11
 
 FROM docker.io/n8nio/runners:${BUILD_VERSION%-v*} AS runner
 
@@ -122,14 +122,14 @@ RUN set -e; \
         "aarch64") ARCH_NAME="arm64" ;; \
         *) echo "Unsupported platform: $BUILD_ARCH" && exit 1 ;; \
     esac; \
-    mkdir /launcher-temp && cd /launcher-temp; \
+    mkdir -p /tmp/launcher && cd /tmp/launcher; \
     wget -q "https://github.com/n8n-io/task-runner-launcher/releases/download/${LAUNCHER_VERSION}/task-runner-launcher-${LAUNCHER_VERSION}-linux-${ARCH_NAME}.tar.gz"; \
     wget -q "https://github.com/n8n-io/task-runner-launcher/releases/download/${LAUNCHER_VERSION}/task-runner-launcher-${LAUNCHER_VERSION}-linux-${ARCH_NAME}.tar.gz.sha256"; \
     echo "$(cat task-runner-launcher-${LAUNCHER_VERSION}-linux-${ARCH_NAME}.tar.gz.sha256) task-runner-launcher-${LAUNCHER_VERSION}-linux-${ARCH_NAME}.tar.gz" > checksum.sha256; \
     sha256sum -c checksum.sha256; \
-    mkdir -p /launcher-bin; \
-    tar xzf task-runner-launcher-${LAUNCHER_VERSION}-linux-${ARCH_NAME}.tar.gz -C /usr/local/bin; \
-    cd / && rm -rf /launcher-temp
+    mkdir -p /launcher-bin /usr/local/bin; \
+    tar -xzf "task-runner-launcher-${LAUNCHER_VERSION}-linux-${ARCH_NAME}.tar.gz" -C /usr/local/bin; \
+    cd / && rm -rf /tmp/launcher
 
 COPY --from=runner --chown=root:root /opt/runners/task-runner-javascript /opt/runners/task-runner-javascript
 COPY --from=runner --chown=root:root /opt/runners/task-runner-python /opt/runners/task-runner-python
