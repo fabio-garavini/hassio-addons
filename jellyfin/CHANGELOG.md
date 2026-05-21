@@ -1,14 +1,14 @@
-# :rocket: Jellyfin Server 10.11.8
+# :rocket: Jellyfin Server 10.11.9
 
-We are pleased to announce the latest stable release of Jellyfin, version 10.11.8! This minor release brings several bugfixes to improve your Jellyfin experience. As always, please ensure you take a full backup before upgrading!
+We are pleased to announce the latest stable release of Jellyfin, version 10.11.9! This minor release brings several bugfixes to improve your Jellyfin experience. As always, please ensure you take a full backup before upgrading!
 
-**Note**: This release fixes several regressions from 10.11.7, with the goal to get people onto an updated release due to the forthcoming (t-minus 9 days) release of the GHSAs/CVEs that were fixed in 10.11.7. Please upgrade to this release as soon as you can.
+You can find more details about and discuss this release [on our forums](https://forum.jellyfin.org/t-new-jellyfin-server-web-release-10-11-9).
 
-You can find more details about and discuss this release [on our forums](https://forum.jellyfin.org/t-new-jellyfin-server-web-release-10-11-8).
-
-## Changelog (3)
+## Changelog (5)
 
 ### 📈 General Changes
-* Handle folders without associated library in FixLibrarySubtitleDownloadLanguages [PR #16540], by @Shadowghost
-* Fix subtitle saving [PR #16539], by @MBR-0001
-* Fix querying media with language filters [PR #16538], by @MBR-0001
+* Fix rate control in av1_amf encoder [PR #16819], by @nyanmisaka
+* Fix UserManager after EFcore refactor [PR #15368], by @JPVenson
+* Update log for user session related concurrency update fails [PR #16845], by @JPVenson
+* Allow HDR10 for VPP tonemapping [PR #16718], by @gnattu
+* Use strict QSV CPB size for less powerful H.264 decoder [PR #16743], by @nyanmisaka
