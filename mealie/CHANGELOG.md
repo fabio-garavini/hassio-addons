@@ -1,90 +1,52 @@
 # 🍴🍴🍴🍴🍴🍴
 
-## 🎉 Highlights
-
-The shopping list experience has been improved, especially for mobile users, including:
-- a new create menu for new items
-- swipe controls to check off an item (for mobile users)
-
 ## ✨ New features
 
-- feat: Improve add shopping list item form @miah120 (#7091)
-- feat: Shopping list / Swipe to check off @miah120 (#7118)
+- feat: Improve new shopping list UI @michael-genson (#7600)
+- feat: Remember screen lock preference @michael-genson (#7609)
 
 ## 🐛 Bug fixes
 
-- fix: prevent delete-image dialog from reopening in a loop inside v-menu @zdenek-stursa (#7469)
-- fix: use correct title and icon on Recipe Actions data page @zdenek-stursa (#7498)
-- fix: Allow user-configurable OIDC timeout @t0xicCode (#7496)
-- fix: pressing Enter in dialogs now confirms instead of silently closing @zdenek-stursa (#7503)
-- fix: add missing search bar to Recipe Data management page @zdenek-stursa (#7504)
-- fix: Don't hit authenticated endpoints when logged out @garlic-hub (#7563)
-- fix: restore create-item button in recipe dropdowns (categories, tags, tools) @zdenek-stursa (#7564)
-- fix: Adjust ingredient section spacing @michael-genson (#7580)
+- fix: Query Filter Builder "Advanced" bug @michael-genson (#7599)
+- fix: make PWA share target functional on Android Chrome @zdenek-stursa (#7468)
+- fix: redirect to login and validate input on password reset flow @zdenek-stursa (#7521)
+- fix: Update backend normalization to match search normalization logic @michael-genson (#7603)
+- fix: Update OpenAI recipe parse prompt to return the same number of ingredients as given @michael-genson (#7604)
+- fix: redirect to new slug URL after recipe rename @zdenek-stursa (#7522)
+- fix: prevent double-scaling of sub-recipe ingredients in shopping list @zdenek-stursa (#7537)
+- fix: Infinite API request loop on empty stores @michael-genson (#7613)
+- fix: downgrade OIDC missing-claims log from ERROR to DEBUG (#6801) @hay-kot (#7620)
+- fix: use locale for Recipe Created timeline event (#4497) @hay-kot (#7623)
+- fix: block scriptable asset extensions and force Content-Disposition: attachment (GHSA-gfwc-pjx4-mg9p) @hay-kot (#7626)
+- fix: enforce ownership check on recipe deletion (GHSA-x5v9-9jvh-7c7q) @hay-kot (#7625)
 
 ## 🧰 Maintenance
 
 <details>
-<summary>13 changes</summary>
+<summary>8 changes</summary>
 
-- chore(l10n): Crowdin locale sync @[mealie-actions[bot]](https://github.com/apps/mealie-actions) (#7497)
-- chore(l10n): New Crowdin updates @hay-kot (#7500)
-- chore(l10n): New Crowdin updates @hay-kot (#7502)
-- chore(l10n): New Crowdin updates @hay-kot (#7506)
-- chore(l10n): New Crowdin updates @hay-kot (#7509)
-- chore(l10n): New Crowdin updates @hay-kot (#7515)
-- chore(l10n): New Crowdin updates @hay-kot (#7523)
-- chore(l10n): New Crowdin updates @hay-kot (#7526)
-- chore(l10n): New Crowdin updates @hay-kot (#7536)
-- chore(l10n): Crowdin locale sync @[mealie-actions[bot]](https://github.com/apps/mealie-actions) (#7541)
-- chore(l10n): New Crowdin updates @hay-kot (#7546)
-- chore(l10n): Crowdin locale sync @[mealie-actions[bot]](https://github.com/apps/mealie-actions) (#7569)
-- chore(l10n): New Crowdin updates @hay-kot (#7558)
+- chore(l10n): New Crowdin updates @hay-kot (#7571)
+- chore(l10n): Crowdin locale sync @[mealie-actions[bot]](https://github.com/apps/mealie-actions) (#7595)
+- chore(l10n): New Crowdin updates @hay-kot (#7589)
+- chore(l10n): New Crowdin updates @hay-kot (#7605)
+- chore(l10n): New Crowdin updates @hay-kot (#7608)
+- chore: update SECURITY.md for GitHub private vulnerability reporting @hay-kot (#7612)
+- chore(l10n): Crowdin locale sync @[mealie-actions[bot]](https://github.com/apps/mealie-actions) (#7637)
+- chore(l10n): New Crowdin updates @hay-kot (#7617)
 </details>
-
-## 📚 Documentation
-
-- docs: Update recipe creation docs @michael-genson (#7494)
-- docs: Enhance BASE_URL description in backend config @BadCo-NZ (#7449)
-- docs: document necessity of forwarded-allow-ips with OIDC behind reverse-proxy https in oidc-v2.md @aristaeus (#7424)
 
 ## ⬆️ Dependency updates
 
 <details>
-<summary>26 changes</summary>
+<summary>7 changes</summary>
 
-- chore(deps): update dependency mypy to v1.20.1 @[renovate[bot]](https://github.com/apps/renovate) (#7490)
-- fix(deps): update dependency pydantic to v2.13.0 @[renovate[bot]](https://github.com/apps/renovate) (#7492)
-- fix(deps): update dependency pydantic to v2.13.1 @[renovate[bot]](https://github.com/apps/renovate) (#7505)
-- fix(deps): update dependency openai to v2.32.0 @[renovate[bot]](https://github.com/apps/renovate) (#7507)
-- fix(deps): update dependency fastapi to v0.136.0 @[renovate[bot]](https://github.com/apps/renovate) (#7511)
-- chore(deps): update dependency ruff to v0.15.11 @[renovate[bot]](https://github.com/apps/renovate) (#7514)
-- fix(deps): update dependency lxml to v6.1.0 [security] @[renovate[bot]](https://github.com/apps/renovate) (#7513)
-- chore(deps): update node.js to 807109d @[renovate[bot]](https://github.com/apps/renovate) (#7516)
-- fix(deps): update dependency pydantic to v2.13.2 @[renovate[bot]](https://github.com/apps/renovate) (#7517)
-- chore(deps): update node.js to 91447bc @[renovate[bot]](https://github.com/apps/renovate) (#7519)
-- chore(deps): update node.js to e989123 @[renovate[bot]](https://github.com/apps/renovate) (#7520)
-- fix(deps): update dependency authlib to v1.7.0 @[renovate[bot]](https://github.com/apps/renovate) (#7525)
-- fix(deps): update dependency pydantic to v2.13.3 @[renovate[bot]](https://github.com/apps/renovate) (#7533)
-- fix(deps): update dependency psycopg2-binary to v2.9.12 @[renovate[bot]](https://github.com/apps/renovate) (#7539)
-- fix(deps): update dependency uvicorn to v0.45.0 @[renovate[bot]](https://github.com/apps/renovate) (#7543)
-- chore(deps): update dependency mypy to v1.20.2 @[renovate[bot]](https://github.com/apps/renovate) (#7544)
-- chore(deps): update dependency pre-commit to v4.6.0 @[renovate[bot]](https://github.com/apps/renovate) (#7547)
-- fix(deps): update dependency uvicorn to v0.46.0 @[renovate[bot]](https://github.com/apps/renovate) (#7553)
-- fix(deps): update dependency fastapi to v0.136.1 @[renovate[bot]](https://github.com/apps/renovate) (#7556)
-- chore(deps): update dependency ruff to v0.15.12 @[renovate[bot]](https://github.com/apps/renovate) (#7559)
-- fix(deps): update dependency tzdata to v2026.2 @[renovate[bot]](https://github.com/apps/renovate) (#7560)
-- fix(deps): update dependency apprise to v1.10.0 @[renovate[bot]](https://github.com/apps/renovate) (#7566)
-- fix(deps): update dependency python-multipart to v0.0.27 @[renovate[bot]](https://github.com/apps/renovate) (#7567)
-- fix(deps): update dependency openai to v2.33.0 @[renovate[bot]](https://github.com/apps/renovate) (#7570)
-- fix(deps): update dependency pydantic-settings to v2.14.0 @[renovate[bot]](https://github.com/apps/renovate) (#7534)
-- chore(deps): update dependency axios to v1.15.2 [security] @[renovate[bot]](https://github.com/apps/renovate) (#7579)
+- chore(deps): update dependency mypy to v2 @[renovate[bot]](https://github.com/apps/renovate) (#7584)
+- chore(deps): update dependency types-requests to v2.33.0.20260503 @[renovate[bot]](https://github.com/apps/renovate) (#7587)
+- chore(deps): update node.js to 34f0eb9 @[renovate[bot]](https://github.com/apps/renovate) (#7590)
+- chore(deps): update node.js to 050bf2b @[renovate[bot]](https://github.com/apps/renovate) (#7592)
+- fix(deps): update dependency authlib to v1.7.1 @[renovate[bot]](https://github.com/apps/renovate) (#7593)
+- fix(deps): update dependency openai to v2.34.0 @[renovate[bot]](https://github.com/apps/renovate) (#7594)
+- fix(deps): update dependency authlib to v1.7.2 @[renovate[bot]](https://github.com/apps/renovate) (#7606)
 </details>
-
-## 🙏 New Contributors
-
-* @BadCo-NZ made their first contribution in https://github.com/mealie-recipes/mealie/pull/7449
-* @aristaeus made their first contribution in https://github.com/mealie-recipes/mealie/pull/7424
-* @garlic-hub made their first contribution in https://github.com/mealie-recipes/mealie/pull/7563
 
 # 🍴🍴🍴🍴🍴🍴
