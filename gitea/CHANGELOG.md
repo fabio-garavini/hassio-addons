@@ -1,21 +1,61 @@
+* SECURITY
+  * fix(permissions): Fix reading permission (#37769)
+  * fix(actions): make artifact signature payloads unambiguous (#37707)
+  * fix: Unify public-only token filtering in API queries and repo access checks (#37118)
+  * fix: Add missed token scope checking (#37735)
+  * fix(oauth): bind token exchanges to the original client request (#37704)
+  * fix(oauth): strengthen PKCE validation and refresh token replay protection (#37706)
+  * fix(web): enforce token scopes on raw, media, and attachment downloads (#37698)
+  * fix(security): enforce wiki git writes and LFS token access at request time (#37695)
+  * feat(api): encrypt AWS creds (#37679)
+  * fix(deps): update dependency mermaid to v11.15.0 [security], add e2e test
+  * fix(packages): Add label for private and internal package and fix composor package source permission check (#37610)
+  * fix(git): Fix smart http request scope bug (#37583)
+  * Fix basic auth bug (#37503)
+  * Fix allow maintainer edit permission check (#37479) (#37484)
+  * Fix URL sanitization to handle schemeless credentials (#37440) (#37471)
+  * Fix attachment Content-Security-Policy (#37455) (#37464)
+  * chore(deps): bump go-git/go-git/v5 to 5.19.0 (#37608)
+
 * BUGFIXES
-  * Add event.schedule context for schedule actions task (#37320) (#37348)
-  * Fix an issue where changing an organization's visibility caused problems when users had forked its repositories. (#37324) (#37344)
-  * Use modern "git update-index --cacheinfo" syntax to support more file names (#37338) (#37343)
-  * Fix URL related escaping for oauth2 (#37334) (#37340)
-  * When the requested arch rpm is missing fall back to noarch (#37236) (#37339)
-  * Fix actions concurrency groups cross-branch leak (#37311) (#37331)
-  * Fix bug when accessing user badges (#37321) (#37329)
-  * Fix AppFullLink (#37325) (#37328)
-  * Fix container auth for public instance (#37290) (#37294)
-  * Enhance GetActionWorkflow to support fallback references (#37189) (#37283)
-  * Fix vite manifest update masking build errors (#37279) (#37310)
-  * Fix Mermaid diagrams failing when node labels contain line breaks (#37296) (#37299)
-  * Use TriggerEvent instead of Event in workflow runs API response for scheduled runs (#37288) #37360
-  * Add URL to Learn more about blocking a user. (#37355) #37367
-  * Fix button layout shift when collapsing file tree in editor (#37363) #37375
-  * Fix org team assignee/reviewer lookups for team member permissions (#37365) #37391
-  * Fix repo init README EOL (#37388) #37399
-  * Fix: dump with default zip type produces uncompressed zip (#37401)#37402
+  * fix(pull): handle empty pull request files view to allow reviews (#37783)
+  * fix(markup): make RenderString never fail (#37779)
+  * fix: add natural sort to sortTreeViewNodes (#37772)
+  * fix: package creation unique conflict (#37774)
+  * fix!: add DEFAULT_TITLE_SOURCE setting for pull request title default behavior (#37465)
+  * fix: Allow direct commits for unprotected files with push restrictions (#37657)
+  * fix(actions): wrong assumption that run id always >= job id (#37737)
+  * fix(auth): set User-Agent on avatar fetch and sync avatar on link-account register (#37564) (#37588)
+  * fix(actions): deadlock between PrepareRunAndInsert and UpdateTaskByState (#37692)
+  * fix(repo): /generate must sync the branch table for the new repo (#37693)
+  * build: Fix snap build (1.26)
+  * fix(actions): run TransferLogs on UpdateLog{Rows:[], NoMore:true} (#37631)
+  * fix show correct mergebase
+  * fix: make clone URL respect public URL detection setting (#37615)
+  * fix: "run as root" check (#37622)
+  * chore(deps): update dependency go to v1.26.3 (#37601)
+  * Compare dropdown fails when selecting branch with no common merge-base (#37470)
+  * fix: treat email addresses case-insensitively (#37600)
+  * fix(actions): fix blank lines after ::endgroup:: (#37597)
+  * fix(actions): report individual step status in workflow job API response (#37592)
+  * fix: Invalid UTF-8 commit messages in JSON API responses (#37542)
+  * fix: use consistent GetUser family functions (#37553)
+  * fix(api): return 409 message instead of empty JSON for wrong commit id (#37572)
+  * fix(actions): prevent panic when workflow contains null jobs (#37570)
+  * Make ServeSetHeaders default to download attachment if filename exists (#37552) (#37555)
+  * Fix(actions): validate workflow param to prevent 500 error (#37546) (#37554)
+  * Don't unblock run-level-concurrency-blocked runs in the resolver (#37461) (#37538)
+  * Fix(packages): use file names for generic web downloads (#37514) (#37520)
+  * Fix merge autodetect can't close other PRs but only the last one when multiple PRs are pushed at once (#37512) (#37516)
+  * Fix update branch protection order (#37508) (#37513)
+  * Fix mCaptcha broken after Vite migration (#37492) (#37509)
+  * Fix review submission from single-commit PR view (#37475) (#37485)
+  * Fix scheduled action panic with null event payload (#37459) (#37466)
+  * Make GetPossibleUserByID can handle deleted user (#37430) (#37431)
+  * Remove excessive quote from terraform instructions (#37424) (#37426)
+  * Fix color regressions, add `priority` color (#37417) (#37421)
+
+* MISC
+  * Add CurrentURL template variable back (#37444) (#37449)
 
 Instances on **[Gitea Cloud](https://cloud.gitea.com)** will be automatically upgraded to this version during the specified maintenance window.
