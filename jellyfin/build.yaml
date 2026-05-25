@@ -1,3 +1,3 @@
 build_from:
-  aarch64: jellyfin/jellyfin:10.11.9
-  amd64: jellyfin/jellyfin:10.11.9
+  aarch64: jellyfin/jellyfin:10.11.10
+  amd64: jellyfin/jellyfin:10.11.10
