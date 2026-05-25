@@ -1,52 +1,36 @@
 # 🍴🍴🍴🍴🍴🍴
 
+❗❗❗This release contains important security fixes in the query filter API. For more information, see: #7629
+
+## 🎉 Highlights
+
+This release adds more flexible, in-app management of AI providers. You can now add multiple AI providers for different tasks (e.g. one provider for general use, and one provider for importing recipes from videos). These providers can be mixed between completely unrelated services (e.g. OpenAI, Azure, locally-hosted via Ollama, etc.).
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/e740f213-5045-41f2-84d7-4cc2de81417e" />
+
+Existing settings configured via environment variables (e.g. `OPENAI_API_KEY`) will automatically be imported one time upon upgrading your instance. For more information, check out [the PR](https://github.com/mealie-recipes/mealie/pull/7650) or the in-app announcement!
+
 ## ✨ New features
 
-- feat: Improve new shopping list UI @michael-genson (#7600)
-- feat: Remember screen lock preference @michael-genson (#7609)
+- feat: In-app AI Provider Configuration @michael-genson (#7650)
 
 ## 🐛 Bug fixes
 
-- fix: Query Filter Builder "Advanced" bug @michael-genson (#7599)
-- fix: make PWA share target functional on Android Chrome @zdenek-stursa (#7468)
-- fix: redirect to login and validate input on password reset flow @zdenek-stursa (#7521)
-- fix: Update backend normalization to match search normalization logic @michael-genson (#7603)
-- fix: Update OpenAI recipe parse prompt to return the same number of ingredients as given @michael-genson (#7604)
-- fix: redirect to new slug URL after recipe rename @zdenek-stursa (#7522)
-- fix: prevent double-scaling of sub-recipe ingredients in shopping list @zdenek-stursa (#7537)
-- fix: Infinite API request loop on empty stores @michael-genson (#7613)
-- fix: downgrade OIDC missing-claims log from ERROR to DEBUG (#6801) @hay-kot (#7620)
-- fix: use locale for Recipe Created timeline event (#4497) @hay-kot (#7623)
-- fix: block scriptable asset extensions and force Content-Disposition: attachment (GHSA-gfwc-pjx4-mg9p) @hay-kot (#7626)
-- fix: enforce ownership check on recipe deletion (GHSA-x5v9-9jvh-7c7q) @hay-kot (#7625)
+- fix: Inconsistent "from an image" vs "from images" translation @michael-genson (#7642)
+- fix: Protect sensitive data in query filter API (GHSA-8m57-7cv5-rjp8) @michael-genson (#7629)
+- fix: enforce organize-group-data permission on food/tag/category mutations @hay-kot (#7651)
+- fix: Prevent swiping AND scrolling on shopping list @michael-genson (#7659)
 
 ## 🧰 Maintenance
 
 <details>
-<summary>8 changes</summary>
+<summary>6 changes</summary>
 
-- chore(l10n): New Crowdin updates @hay-kot (#7571)
-- chore(l10n): Crowdin locale sync @[mealie-actions[bot]](https://github.com/apps/mealie-actions) (#7595)
-- chore(l10n): New Crowdin updates @hay-kot (#7589)
-- chore(l10n): New Crowdin updates @hay-kot (#7605)
-- chore(l10n): New Crowdin updates @hay-kot (#7608)
-- chore: update SECURITY.md for GitHub private vulnerability reporting @hay-kot (#7612)
-- chore(l10n): Crowdin locale sync @[mealie-actions[bot]](https://github.com/apps/mealie-actions) (#7637)
-- chore(l10n): New Crowdin updates @hay-kot (#7617)
-</details>
-
-## ⬆️ Dependency updates
-
-<details>
-<summary>7 changes</summary>
-
-- chore(deps): update dependency mypy to v2 @[renovate[bot]](https://github.com/apps/renovate) (#7584)
-- chore(deps): update dependency types-requests to v2.33.0.20260503 @[renovate[bot]](https://github.com/apps/renovate) (#7587)
-- chore(deps): update node.js to 34f0eb9 @[renovate[bot]](https://github.com/apps/renovate) (#7590)
-- chore(deps): update node.js to 050bf2b @[renovate[bot]](https://github.com/apps/renovate) (#7592)
-- fix(deps): update dependency authlib to v1.7.1 @[renovate[bot]](https://github.com/apps/renovate) (#7593)
-- fix(deps): update dependency openai to v2.34.0 @[renovate[bot]](https://github.com/apps/renovate) (#7594)
-- fix(deps): update dependency authlib to v1.7.2 @[renovate[bot]](https://github.com/apps/renovate) (#7606)
+- chore(l10n): New Crowdin updates @hay-kot (#7643)
+- chore(l10n): New Crowdin updates @hay-kot (#7646)
+- chore(l10n): New Crowdin updates @hay-kot (#7649)
+- chore(l10n): New Crowdin updates @hay-kot (#7652)
+- chore(l10n): Crowdin locale sync @[mealie-actions[bot]](https://github.com/apps/mealie-actions) (#7655)
+- chore(l10n): New Crowdin updates @hay-kot (#7653)
 </details>
 
 # 🍴🍴🍴🍴🍴🍴
