@@ -1,25 +1,54 @@
-## [0.28.0](https://github.com/usememos/memos/compare/v0.27.1...v0.28.0) (2026-04-27)
 
-> This release improves SSO account handling by linking external provider identities to local Memos users instead of treating provider identifiers as local usernames. It also refreshes account and SSO management, adds memo time display controls, and includes several authentication and editor fixes.
+> This release adds richer link previews, notification email settings, shortcut and memo workflow improvements, and a set of security, media, and editor fixes. It also adds new instance statistics APIs and performance improvements for the initial screen.
 
-## Breaking Change
+## New Features
 
-- **Existing SSO users must link their identity again** - If you previously signed in through SSO, sign in once with your username and password after upgrading, then go to Account Settings to link your SSO identity. After the identity is linked, future SSO sign-ins will resolve to your existing Memos account.
+### Link Previews and Metadata
 
+- **Link metadata APIs** - Memos now includes endpoints for fetching and batching metadata for links attached to memos.
+- **Rendered link cards** - The web app can render metadata cards for shared links, making memo references easier to scan.
+- **DNS rebinding protection** - Link metadata fetching now rejects DNS rebinding attempts.
 
+### Notification and Transcription Settings
 
-### Features
+- **SMTP email settings** - Instance notification settings now include SMTP email configuration.
+- **Email test endpoint** - Admins can test notification email settings through the instance API.
+- **Explicit speech-to-text settings** - Transcription settings now expose provider, model, and prompt configuration.
 
-* **auth:** add SSO user identity linkage ([#5883](https://github.com/usememos/memos/issues/5883)) ([d688914](https://github.com/usememos/memos/commit/d688914b2864791eeadbf21c882608632875f17c))
-* **memos:** choose created or updated time for memos ([#5894](https://github.com/usememos/memos/issues/5894)) ([c268551](https://github.com/usememos/memos/commit/c268551a16929a2cbea6891951feff91926bba59))
-* redesign account and SSO management ([#5886](https://github.com/usememos/memos/issues/5886)) ([ee17998](https://github.com/usememos/memos/commit/ee1799851e88674a6920c7a56d93428fcf95e662))
+### Memo and Workspace Improvements
 
+- **Task list quick actions** - Memos with task lists now support faster task interactions.
+- **Calendar-aware memo creation** - Creating a memo from the calendar uses the selected calendar date.
+- **Dedicated shortcuts page** - Shortcut management is available from a dedicated page.
+- **About page and placeholder refresh** - The app includes a refreshed about page and new placeholder states.
 
-### Bug Fixes
+### Administration and Statistics
 
-* **auth:** harden authorization and username validation ([#5890](https://github.com/usememos/memos/issues/5890)) ([0fb83a7](https://github.com/usememos/memos/commit/0fb83a745dd5057ade45a3caad2c444af2239113))
-* disable modal prop on DropdownMenu to prevent scroll disappearing ([#5861](https://github.com/usememos/memos/issues/5861)) ([d98f665](https://github.com/usememos/memos/commit/d98f6659190b8d1a8252e64549d9120d85e05d33))
-* fix legacy username auth flows ([#5885](https://github.com/usememos/memos/issues/5885)) ([30c0611](https://github.com/usememos/memos/commit/30c0611a82f9254952a74650095105254f2940e4))
-* **markdown:** split mixed task and bullet lists ([e2c6084](https://github.com/usememos/memos/commit/e2c60845eaff9a78b8d8eb3ccc9a067ef5690976))
-* reduce list memo query overhead ([#5880](https://github.com/usememos/memos/issues/5880)) ([5063804](https://github.com/usememos/memos/commit/50638040f618b02b0c6d010e1d41554c75067517))
-* **web:** preserve task checkbox state ([#5867](https://github.com/usememos/memos/issues/5867)) ([b5863d7](https://github.com/usememos/memos/commit/b5863d76be3cfbf3e0f8237d8e762122b5a0a679))
+- **Instance resource statistics** - Admin instance stats now include resource statistics.
+- **Filtered all-user stats** - All-user statistics can be filtered for more focused administration views.
+- **Configurable log level** - The server now accepts a `--log-level` flag.
+
+## Bug Fixes
+
+- **Attachment ownership enforcement** - Memo updates now enforce attachment ownership.
+- **Comment visibility** - Comments now respect parent memo visibility.
+- **User response privacy** - User list responses omit internal settings.
+- **Memo creation events** - Creating memos with attachments no longer emits an extra update event.
+- **Avatar sync** - Profile avatar changes sync immediately after update.
+- **Release media handling** - HDR image metadata is preserved in thumbnails, and motion media payloads are preserved through S3 presigned uploads.
+- **Editor and markdown polish** - URL paste wrapping and task-list alignment are improved.
+- **Static cache and sitemap paths** - Frontend static cache headers and public memo sitemap paths are corrected.
+- **SSE refresh behavior** - Initial SSE responses stream correctly and refresh tokens are handled.
+
+## Performance Improvements
+
+- **Initial screen loading** - Heavy first-screen dependencies are lazy loaded.
+
+## New Contributors
+* @Moustafaa91 made their first contribution in https://github.com/usememos/memos/pull/5902
+* @wally-an made their first contribution in https://github.com/usememos/memos/pull/5903
+* @tokenicrat made their first contribution in https://github.com/usememos/memos/pull/5921
+* @mayanksaini18 made their first contribution in https://github.com/usememos/memos/pull/5934
+* @santoshyadavdev made their first contribution in https://github.com/usememos/memos/pull/5954
+
+**Full Changelog**: https://github.com/usememos/memos/compare/v0.28.0...v0.29.0
