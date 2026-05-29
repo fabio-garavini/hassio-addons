@@ -1,88 +1,85 @@
 ## What's Changed
 
-New self-hosted installations now print a **boot key** at startup that lets you log in as the install admin, with no pre-existing account needed. WebSocket connections now accept API keys, boot keys, and access tokens, not just session cookies, so consoles, scripts, and out-of-page custom widgets can talk to Grist over the same channel browsers use. The Pyodide sandbox jumped from 0.23.4 to 0.28.1. Airtable imports can update existing rows in place and bring choice colors with them. The `(Bulk)AddOrUpdateRecord` API hands back the IDs of the rows it added or updated, so upserts are easier to chain. Custom widgets now know whether they're a target or source of section linking. "Search in document" ignores accents. Team site owners on self-managed installations get a new Site Settings page for name, domain, and logo. And Grist can restart in place to apply config changes without dropping its listening socket.
+The first-run experience for self-hosted installations matures. The setup wizard previewed last release is now the default flow a fresh install lands on. It checks earlier which formula sandboxes are available, handles authentication changes more cleanly, and lets you edit the install-wide default permissions from the Admin Panel. Accessibility takes a big step forward too: screen-reader support and keyboard navigation now reach grid views, menus, and the page widget picker. There are also new date formats, a `POST /records/list` API endpoint for large queries, custom CSS inside widgets, and the usual dependency bumps and fixes. Two more features are under development in the full edition: **OAuth Apps** and an **MCP (Model Context Protocol) endpoint**. See "Full Grist edition extensions" below.
 
 ### New features
 
-* **Boot key login**. New installations generate a `GRIST_BOOT_KEY` and print it at startup. Visit `/boot`, paste the key, and you're logged in as the install admin and ready to set the admin email. No pre-existing account needed, and no window where the server is open to the world before authentication is configured. The key (and the related `GRIST_IN_SERVICE` flag) can also be set via env vars or managed from the Admin Panel. Existing installations are unaffected. ([commit](https://github.com/gristlabs/grist-core/commit/e6a3351d))
-* **Restart in place**. Grist can now apply config changes by restarting itself without dropping the listening socket. During the brief gap, `/status` keeps answering for liveness checks while readiness flips to 503. On by default for Linux under Node, off for Windows and Electron. Toggle with `GRIST_RESTART_SHELL=true/false` (#2265).
-* **Site Settings page**. Team site owners on self-managed installations can edit team name, domain, and logo from a new `/site-settings` page ([commit](https://github.com/gristlabs/grist-core/commit/0fcd2e90)).
-* **WebSocket auth for API keys, boot keys, and access tokens**. The WebSocket side now goes through the same identity-resolving code path as the REST API, so any auth method that works on one works on the other. Opens the door to console clients and out-of-page custom widgets. Also tidies up auth priority and unifies API rate-limiting between the two. ([commit](https://github.com/gristlabs/grist-core/commit/07c9617a))
+* **[Guided first-run setup wizard](https://support.getgrist.com/install/first-run-setup/)**. The setup wizard previewed in v1.7.13 is now the flow fresh self-hosted installations land on. Sign in with the boot key (the `GRIST_BOOT_KEY` admin secret printed at startup), and the wizard walks you through `/admin/setup` to configure your instance. The "Quick setup" entry is now active in the admin sidebar. Refinements this release:
+  * The wizard now checks which formula sandboxes are available as soon as it opens, not when you reach that step. No more waiting on a spinner (#2341)
+  * Smoother entry into the wizard: cleaner redirects after an authentication change and after signing in with the boot key (#2340)
+  * Set up "Sign in with getgrist.com" from the wizard, and returning from getgrist.com's registration page now brings you back into the wizard, not the main Admin Panel (#2310)
+  * Signed-out and non-admin users can no longer open the Quick setup page. They get the same "unavailable" card as the Admin Panel (#2323)
+  * Authentication changes are now staged like the wizard's other pending changes. Admins are sent back through sign-in after changing them (#2315, #2331)
+  * The four install-wide default permissions (team sites, personal sites, anonymous access, anonymous playground) can now be changed from the Admin Panel's Security Settings, not just during the wizard (#2314)
+* **`POST /records/list` endpoint**. A POST companion to the records endpoint. Large queries can be sent in the request body instead of the URL (#2321).
 
 ### Improvements
 
-* Airtable import
-  * Updates existing rows by default when the source has an Airtable ID column, and resolves references against rows already in the doc (#2216)
-  * Brings Airtable choice colors along for the ride (#2199)
-* API
-  * `(Bulk)AddOrUpdateRecord` now returns `id` / `recordIds` / `createdRecordIds` / `updatedRecordIds`, and `BulkAddOrUpdateRecord` accepts a `record`-shaped payload that can match different columns per row (#2193)
-  * Webhook API ignores empty action payloads, matching the other endpoints (#2308)
+* [Accessibility](https://support.getgrist.com/accessibility/) (contributed by @manuhabitela)
+  * Screen-reader support in grid views (#2114)
+  * Open the row and column menus via keyboard shortcuts in a grid view (#2230)
+  * Open the context menu via keyboard shortcuts when in widgets (#2226)
+  * Page widget picker now works with keyboard and screen readers (#2273)
 * Custom widgets
-  * New `linking` field on `InteractionOptions` tells a widget whether it's an incoming-link target (`asTarget`) or used as a source by other sections (`asSource`) (#2259)
-* Sandboxing
-  * Pyodide updated from 0.23.4 to 0.28.1 (#1754)
-* Suggestions
-  * The number-of-suggestions badge is now a status dot, removing counting ambiguity ([commit](https://github.com/gristlabs/grist-core/commit/c2cdb8a1))
-  * Per-document unsubscribe link for row-change notifications ([commit](https://github.com/gristlabs/grist-core/commit/e9113b8b))
-* Admin Panel
-  * Authentication section rebuilt with a status-coded hero card, getgrist.com Reconfigure / Deactivate, and a collapsible "other methods" list (#2227)
-* UI/UX
-  * "Search in document" now ignores accents (#2221)
-  * Forms scroll like a normal page, fixing Tab not appearing to do anything on first press in Firefox (#2179)
-  * Account settings split into Profile and Developer subpages, in preparation for OAuth Apps ([commit](https://github.com/gristlabs/grist-core/commit/6dc22174))
-  * Clearer error messages when personal orgs are disabled (#2285)
+  * A custom CSS file configured with `APP_STATIC_INCLUDE_CUSTOM_CSS` is now also applied inside widgets, not just the main app. Contributed by @manuhabitela (#2089)
+  * The built-in calendar widget now loads from the copy bundled with Grist instead of the one hosted on GitHub. The GitHub copy pulled in external CDN files that ad blockers and privacy extensions sometimes blocked (#2262)
+* Localization
+  * New date formats (#2347)
+  * Improved locale guessing and locale fallback logic (#2313)
+* API
+  * Action summaries (the change summaries used by features such as webhooks) now mark which cell values are genuinely unknown. Before, merging two summaries could replace a known value with a wildcard. Now it keeps the real value where it has one (#2361)
 * Internal / infrastructure
-  * New eslint rule makes sure `makeT(...)` calls match their filename, with autofix (#2237)
-  * Rebalanced nbrowser CI groups and added guards so silently skipped tests don't sneak through (#2267)
-* Documentation
-  * Cleaned up style inconsistencies in the README (#2200)
+  * Added a filesystem-based document storage backend for tests, enabled with `GRIST_FS_STORAGE_DIR`. It implements Grist's external storage interface, normally backed by S3-compatible object storage ([commit](https://github.com/gristlabs/grist-core/commit/a1515c26)). It also gets a (test-only) card in the Admin Panel backups section ([commit](https://github.com/gristlabs/grist-core/commit/a1db24bf))
 
 ### Fixes
 
-* Fix wrong active section in the creator panel after duplicating a page with collapsed widgets (#2298)
-* Fix CORS handling for opaque (`"null"`) origins, eliminating spurious 500s for `https://` widgets on `http://` hosted sites (#2299)
-* Fix padded checkboxes so the border and tick line up inside padded wrappers (#2300)
-* Fix `SELF_HYPERLINK()` returning a share-key URL when a doc was first opened via a share link ([commit](https://github.com/gristlabs/grist-core/commit/c32c74c9))
-* Wrapped row height is preserved after modifying a cell in suggestions, removing a flicker from unwrapped to wrapped ([commit](https://github.com/gristlabs/grist-core/commit/99b174b3))
-* Airtable import UI translations are picked up properly (#2236)
-* Bump handlebars from 4.7.7 to 4.7.9 (#2208)
+* Edit a document from the assistant popup, and Grist now copies (forks) it first if it is a template or an unsaved scratch document ("fiddle"). The original is no longer changed in place ([commit](https://github.com/gristlabs/grist-core/commit/69e26019))
+* Fixed a case where editing through the assistant could slip past access checks. It happened while previewing a document as owner, before the fork was made, and could leave the data engine in a bad state ([commit](https://github.com/gristlabs/grist-core/commit/b4a90b10))
+* Prevent anonymous users from forking documents (#2319)
+* On first startup, the `/status` health check now returns "starting" (HTTP 503) until the server is ready. Before, it could report healthy too early (#2322)
+* Prevent a console error when pressing ctrl+alt+o on the homepage (#2343)
 
-### In progress: admin setup wizard
+### Documentation
 
-Work is under way on a new `/admin/setup` page, a guided first-run flow for self-hosted operators covering sandbox choice, base URL and edition, authentication, default permissions, and backups. It is not wired up by default this release, but the building blocks are in and you can preview by visiting `/admin/setup` directly. We expect this to be the official first-run experience next release.
-
-Landed so far:
-* Sandbox setup card that auto-detects available sandbox flavors and recommends one (#2272)
-* Server section with a Test-URL-then-Confirm flow for the base URL, plus an edition picker (#2280)
-* Backups section that shows external storage status and lists how to enable each backend (#2283)
-* Final step with three permission presets (Locked, Recommended, Open) for `GRIST_ORG_CREATION_ANYONE`, `GRIST_PERSONAL_ORGS`, `GRIST_FORCE_LOGIN`, `GRIST_ANON_PLAYGROUND` (#2293)
-* Harmonized card styling, headers, and apply-and-restart flow across the steps (#2307)
-* Several Grist server settings (`APP_HOME_URL`, `GRIST_SANDBOX_FLAVOR`, `GRIST_FORCE_LOGIN`, `GRIST_ANON_PLAYGROUND`, `GRIST_ORG_CREATION_ANYONE`, `GRIST_PERSONAL_ORGS`, `GRIST_BOOT_KEY`, `GRIST_IN_SERVICE`, `GRIST_ADMIN_EMAIL`, `GRIST_DEFAULT_EMAIL`) can now be read from the home DB as well as the environment, so they can be edited from the browser during setup ([commit](https://github.com/gristlabs/grist-core/commit/c73044a0))
-* Placeholder setup page and stepper component ([commit](https://github.com/gristlabs/grist-core/commit/8eafcb7b))
+* New [accessibility documentation](https://support.getgrist.com/accessibility/) covering keyboard navigation, screen reader support, and the high-contrast theme. Contributed by @manuhabitela
+* Document how to run the browser-based end-to-end (nbrowser) tests locally (#2214)
 
 ### Full Grist edition extensions
 
-* Automations
-  * Emails are now grouped by action ID rather than subject (so test runs that reuse a subject still send each email). Padding restored on the automation page, name preserved when created with Enter, description converted to a text area, and scroll issues in the action log fixed ([commit](https://github.com/gristlabs/grist-core/commit/515c4b15))
+These features are under development in the full edition.
+
+* **OAuth Apps**. A way to register and manage OAuth apps, with a developer UI and REST API. Users can authorize an app, limit it to specific organizations, workspaces, or documents, and later review or revoke that access.
+* **MCP (Model Context Protocol) endpoint**. Lets external clients such as Claude or ChatGPT talk to Grist over JSON-RPC.
+
+### Dependency bumps
+
+Thanks to the grist.gouv team for monitoring Grist dependencies.
+
+* Bump @gristlabs/grist-widget to 0.0.6 (#2329), file-type to 22.0.0 (#2209), uuid to 14.0.0 (#2290)
+* Bump axios (#2260, #2333), webpack-dev-server (#2357), ws (#2359), multiparty (#2355), fast-uri (#2342), basic-ftp (#2274, #2338), node-forge (#2210), postcss (#2316), lodash (#2238), fast-xml-parser (#2257), svgo (#2149), flatted (#2192), follow-redirects (#2264), dompurify (#2270), @xmldom/xmldom (#2289)
 
 ## Contributions
 
-* fflorent: server tests for session-store API key isolation (#2246), eslint rule enforcing `makeT` filename match (#2237), Airtable import UI translation fix (#2236), test fixes (#2232, #2248)
-* OdysseyOfTheDragons: accent-insensitive search in document (#2221)
-* manuhabitela: form page scrolling fix for Firefox Tab navigation (#2179), flaky form view test (#2276)
+* Grist Labs: @berhalak, @dsagal, @paulfitz, @Spoffy
+* @manuhabitela: screen-reader support in grid views (#2114), keyboard access for row/column menus (#2230), keyboard access for the widget context menu (#2226), keyboard and screen-reader support in the page widget picker (#2273), custom CSS applied inside widgets (#2089), fine-tuning the experimental "New record" button (#2312), locale guessing and fallback improvements (#2313), console error fix on ctrl+alt+o (#2343)
+* @fflorent: prevent anonymous users forking documents (#2319), bump file-type (#2209), document running the browser-based (nbrowser) tests locally (#2214)
+* @cbontemps: add new date formats (#2347)
+* @wvengen: include package.json and yarn.lock for the Pyodide worker (#2297)
+* @machinelearningprodigy: tighten ISandbox types and resolve sort-spec lint/type-safety issues (#2211)
 
 ### Translations
 
-* Barna Kovács
-* Grégoire Cutzach
+* Arif Budiman
 * Igor Freire Rodrigues
-* Markus Spitzer
+* Kévin DUPOND
 * Martin Harari Thuresson
+* Paul Janzen
 * Renato Portela
-* Theo Heller
-* Xavi Montero
+* René Neumann
+* ssantos
 * xabirequejo
+* younger
 
-**Full Changelog**: https://github.com/gristlabs/grist-core/compare/v1.7.12...v1.7.13
+**Full Changelog**: https://github.com/gristlabs/grist-core/compare/v1.7.13...v1.7.14
 
 [Join our Discord Community](https://discord.gg/MYKpYQ3fbP) if you'd like to get into development of Grist.

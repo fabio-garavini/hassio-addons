@@ -1,5 +1,5 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=gristlabs/grist-oss:1.7.13
+ARG BUILD_FROM=gristlabs/grist-oss:1.7.14
 
 FROM ${BUILD_FROM}
 
