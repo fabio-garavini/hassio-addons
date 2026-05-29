@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/mealie-recipes/mealie:v3.19.1
+ARG BUILD_FROM=ghcr.io/mealie-recipes/mealie:v3.19.2
 
 FROM ${BUILD_FROM}
 
