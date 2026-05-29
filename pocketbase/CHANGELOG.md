@@ -1,10 +1,16 @@
 > _To update the prebuilt executable you can run `./pocketbase update`._
 
-- Added `RealtimeConnectRequestEvent.MaxTimeout` field to specify the absolute max duration a realtime connection can remain open (default to 30mins).
-    _This is in addition to the `IdeTimeout` of 5mins in order to prevent misuse and to allow the GC to run more regularly._
+- Added new "SQL console" section under _Settings > Debug_ allowing executing any raw SQL query from the UI ([#2236](https://github.com/pocketbase/pocketbase/issues/2236); [#7638](https://github.com/pocketbase/pocketbase/discussions/7638)).
+    _Note that this is intended for one-off analytic queries, the occasional `VACUUM`/`PRAGMA optimize` or debug purposes and not as the primary interface for interacting with your PocketBase data because it can break your application if not used with proper care!_
 
-- Added extra checks for the connected user IP in the realtime APIs to prevent bruteforce guest subscription update attempts and to serve as an extra protection for the "all-in-one" OAuth2 realtime handler.
+- Send system email alerts to superusers in case of an error with the automated backups ([#7698](https://github.com/pocketbase/pocketbase/issues/7698)).
 
-- Don't reset the records list pagination on record update ([#7694](https://github.com/pocketbase/pocketbase/issues/7694)).
-
-- Updated all `golang.org/x/` packages to cover the recent [security fixes](https://groups.google.com/g/golang-announce/c/PdiGK3xulk4) _(none of them should be a critical issue in PocketBase but nonetheless it is advised to update)_.
+- Various minor improvements and fixes:
+    - fixed logs bulk selection export error
+    - optimized logs and records list rendering
+    - allowed word breaking in labels
+    - text contrast improvements
+    - registered missing `oidc2` and `oidc3` option fields
+    - updated default email template texts for consistency
+    - updated `modernc.org/sqlite` to v1.51.0
+    - etc.
