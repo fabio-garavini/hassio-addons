@@ -1,43 +1,9 @@
-- **\[Breaking\]**
-    - Amounts are grouped using the default currency when axis/category or series is set to amount or transfer in amount in insights explorer
-
-- **\[Features\]**
-    - Support batch edit / delete transactions in insights explorer
-    - Add treemap / sunburst / heatmap / calendar heatmap charts in insights explorer
-    - Display year-over-year and period-over-period growth rates in insights explorer
-    - Display year-over-year and period-over-period growth rates in account balance trends chart in account reconciliation statements on desktop version
-    - Add transaction gallery mode in transaction list page
-    - Support setting last reconciled time for account
-    - Support daily and yearly intervals for scheduled transactions
-    - Support filtering transactions by time zone minute offset, day of week, day of month, month of year and transaction hour of day in insights explorer
-    - Add National Bank of Kazakhstan exchange rates data source (#564, #565, thanks @vigdail)
-
 - **\[Enhancements\]**
-    - Improved German translation (#540, thanks @1270o1)
-    - Improved Spanish translation (#562, thanks @abrugues)
-    - Support credit card billing cycles as a time granularity option in the account balance trend chart on the account reconciliation statements page
-    - Support filtering transaction description using regular expressions in insights explorer
-    - Support "Not in" options for transaction type, transaction category and account filters in insights explorer
-    - Add amount range to axis / category / series in insights explorer
-    - Add active transaction days, transactions per active day, total income, total expense, net income, expense / income ratio, savings rate, Q1/Q3 amount, 10th/95th/99th percentile amount, mean absolute deviation, median absolute deviation, maximum amount share, top 5 amount sum, top 5 amount share, transactions for 80% of amount, skewness and kurtosis to value metric in insights explorer
-    - Support setting the last 1 to 3 days of the month to scheduled transaction frequency
-    - Support configuring the default behavior of the reconciliation statement button and the default time range for the reconciliation statement page
-    - Improve action button rendering performance on desktop version (#547)
-    - Scroll page to bottom automatically when creating a new tag
+    - Improved Ukrainian translation (#577, thanks @grid-pilot)
+    - Add transaction picture upload resolution setting
+    - Support auto uploading AI recognition image as transaction picture
     - Other user interface optimization
 
-- **\[Development\]**
-    - Upgrade Golang to 1.26.2
-    - Upgrade Node.js to 24.15.0
-    - Upgrade Alpine base image to 3.23.4
-    - Replace Jest with Vitest
-
 - **\[Bug Fixes\]**
-    - Fix the transfer in transactions are not included when exporting transactions under some conditions (#550)
-    - Fix cannot switch between hours, minutes and seconds by pressing the tab (#554)
-    - Fix the page navigation did not work correctly when clicking page numbers above 1000
-    - Fix incorrect calculations of median and quartiles in some cases
-    - Fix amounts on some pages were not formatted using the account currency
-    - Fix incorrect top 5 amount share calculation in insights explorer
-    - Fix cannot change explorer display order when fewer than two items are visible on the insights explorer page
-    - Check whether every transactions are editable when moving all transactions in an account
+    - Fix incorrect toggle styling when the title is too long
+    - Fix tapping outside the popover no longer closes it after tapping a template once and then opening another popover
