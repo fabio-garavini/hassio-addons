@@ -1,7 +1,7 @@
 source:
   type: docker
   repo: docker.io/owncloud/server
-  current_version: 10.16.2
+  current_version: 10.16.3
   version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"

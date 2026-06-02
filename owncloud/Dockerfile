@@ -1,5 +1,5 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=docker.io/owncloud/server:10.16.2
+ARG BUILD_FROM=docker.io/owncloud/server:10.16.3
 
 FROM ${BUILD_FROM}
 
