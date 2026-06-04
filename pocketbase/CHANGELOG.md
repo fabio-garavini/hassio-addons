@@ -1,16 +1,9 @@
 > _To update the prebuilt executable you can run `./pocketbase update`._
 
-- Added new "SQL console" section under _Settings > Debug_ allowing executing any raw SQL query from the UI ([#2236](https://github.com/pocketbase/pocketbase/issues/2236); [#7638](https://github.com/pocketbase/pocketbase/discussions/7638)).
-    _Note that this is intended for one-off analytic queries, the occasional `VACUUM`/`PRAGMA optimize` or debug purposes and not as the primary interface for interacting with your PocketBase data because it can break your application if not used with proper care!_
+- Fixed multiple select options wrapping ([#7720](https://github.com/pocketbase/pocketbase/issues/7720)).
 
-- Send system email alerts to superusers in case of an error with the automated backups ([#7698](https://github.com/pocketbase/pocketbase/issues/7698)).
+- Return the hidden record data fields for superusers realtime subscribers ([#7721](https://github.com/pocketbase/pocketbase/issues/7721)).
 
-- Various minor improvements and fixes:
-    - fixed logs bulk selection export error
-    - optimized logs and records list rendering
-    - allowed word breaking in labels
-    - text contrast improvements
-    - registered missing `oidc2` and `oidc3` option fields
-    - updated default email template texts for consistency
-    - updated `modernc.org/sqlite` to v1.51.0
-    - etc.
+- Added default panic-recover handling for the cron jobs to avoid terminating the server on panic.
+
+- Bumped the min Go GitHub action version to 1.26.4 as it includes some [minor security fixes](https://github.com/golang/go/issues?q=milestone%3AGo1.26.4).
