@@ -2,6 +2,11 @@ name: paperless-amd64
 services:
   paperless-amd64:
     image: fabioogaravini/hassio-paperless:${VERSION:-latest}-amd64
+    build:
+      context: ..
+      args:
+        BUILD_ARCH: amd64
+        BUILD_VERSION: ${VERSION:-latest}
     container_name: paperless-amd64
     ports:
       - 8000:8000

@@ -43,7 +43,7 @@ ENV \
     POSTGRES_SEARCH_PATH="postgres, public, vectors"
 
 # renovate: datasource=github-releases packageName=hassio-addons/bashio
-ARG BASHIO_VERSION="v0.17.5"
+ARG BASHIO_VERSION="v0.18.0"
 # renovate: datasource=github-releases packageName=home-assistant/tempio
 ARG TEMPIO_VERSION="2024.11.2"
 RUN \
@@ -136,7 +136,7 @@ RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends libnss-wrapper lsb-release; \
     curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc; \
-    sh -c 'echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt noble-pgdg main" > /etc/apt/sources.list.d/pgdg.list'; \
+    sh -c 'echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
         logrotate \

@@ -45,7 +45,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 #---------------------------------------------- bashio & tempio ------------------------------------------------------------#
 
 # renovate: datasource=github-releases packageName=hassio-addons/bashio
-ARG BASHIO_VERSION="v0.17.5"
+ARG BASHIO_VERSION="v0.18.0"
 # renovate: datasource=github-releases packageName=home-assistant/tempio
 ARG TEMPIO_VERSION="2024.11.2"
 RUN \
@@ -176,11 +176,11 @@ RUN \
     # Credits:
     # https://github.com/arachnys/athenapdf/blob/master/cli/Dockerfile.
     # https://help.accusoft.com/PrizmDoc/v12.1/HTML/Installing_Asian_Fonts_on_Ubuntu_and_Debian.html.
-    curl -o ./ttf-mscorefonts-installer_3.8.1_all.deb http://httpredir.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.8.1_all.deb &&\
+    curl -o ./ttf-mscorefonts-installer.deb http://httpredir.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.8.1_all.deb &&\
     apt-get update -qq &&\
     apt-get upgrade -yqq &&\
     DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends \
-    ./ttf-mscorefonts-installer_3.8.1_all.deb \
+    ./ttf-mscorefonts-installer.deb \
     culmus \
     fonts-beng \
     fonts-hosny-amiri \
@@ -214,7 +214,7 @@ RUN \
     fonts-noto-ui-core \
     fonts-sil-gentium \
     fonts-sil-gentium-basic &&\
-    rm -f ./ttf-mscorefonts-installer_3.8.1_all.deb &&\
+    rm -f ./ttf-mscorefonts-installer.deb &&\
     # Add Color and Black-and-White Noto emoji font.
     # Credits:
     # https://github.com/gotenberg/gotenberg/pull/325.
