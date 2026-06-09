@@ -2,6 +2,11 @@ name: paperless-aarch64
 services:
   paperless-aarch64:
     image: fabioogaravini/hassio-paperless:${VERSION:-latest}-aarch64
+    build:
+      context: ..
+      args:
+        BUILD_ARCH: aarch64
+        BUILD_VERSION: ${VERSION:-latest}
     container_name: paperless-aarch64
     ports:
       - 8000:8000
