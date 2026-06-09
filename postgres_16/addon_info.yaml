@@ -1,0 +1,17 @@
+source:
+  type: docker
+  repo: pocketbase/pocketbase
+  current_version: 16-vectorchord0.3.0-pgvectors0.3.0
+  version_template: regex:^(?<major>\d+)-vectorchord0.3.0-pgvectors0.3.0$
+config:
+  version_template: "pg{{major}}-0.3.0"
+  patch: 0
+  image: fabioogaravini/hassio-postgres-16-pgvectors
+build:
+  image: ghcr.io/immich-app/postgres
+  version_template: 16-vectorchord0.3.0-pgvectors0.3.0
+changelog:
+  source: none
+  version_template: "pg{{major}} v0.3.0"
+test:
+  enable: true
