@@ -2,7 +2,7 @@ source:
   type: docker
   repo: ghcr.io/immich-app/postgres
   current_version: 16-vectorchord0.3.0-pgvectors0.3.0
-  version_template: regex:^16-vectorchord0.3.0-pgvectors0.3.0$
+  version_template: regex:^(?<major>\d+)-vectorchord0\.3\.0-pgvectors0\.3\.0$
 config:
   version_template: pg16-0.3.0
   patch: 2
