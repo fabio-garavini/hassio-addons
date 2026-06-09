@@ -1,5 +1,5 @@
 name: Postgres 16
-version: pg16-0.3.0-v1
+version: pg17-0.3.0
 slug: postgres_16
 description: Postgres 16 with VectorChord (and pgvecto.rs for legacy support)
 url: https://www.postgresql.org/about/news/postgresql-16-released-2715
