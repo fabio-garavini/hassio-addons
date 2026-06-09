@@ -3,7 +3,7 @@ ARG BUILD_FROM=ghcr.io/immichframe/immichframe:v1.0.33.0
 
 FROM ${BUILD_FROM}
 
-ARG BUILD_VERSION=1.0.33.0
+ARG BUILD_VERSION=1.0.33.0-v1
 
 # Container Environment variables
 ENV \
@@ -31,7 +31,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Install base system
 ARG BUILD_ARCH=amd64
 # renovate: datasource=github-releases packageName=hassio-addons/bashio
-ARG BASHIO_VERSION="v0.17.5"
+ARG BASHIO_VERSION="v0.18.0"
 # renovate: datasource=github-releases packageName=just-containers/s6-overlay versioning=regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)\.(?<other>\d+)$
 ARG S6_OVERLAY_VERSION="3.2.1.0"
 # renovate: datasource=github-releases packageName=home-assistant/tempio
