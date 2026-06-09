@@ -1,0 +1,18 @@
+source:
+  type: github-releases
+  repo: monica/releases
+  current_version: v5.0.0-beta.5
+  version_template: regex:^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)-beta\.(?<beta>\d+)$
+config:
+  version_template: "{{major}}.{{minor}}.{{patch}}-beta.{{beta}}"
+  patch: 3
+  image: fabioogaravini/hassio-monica
+build:
+  image: library/monica
+  version_template: "{{major}}.{{minor}}.{{patch}}-beta.{{beta}}-apache"
+changelog:
+  source: github-releases
+  repo: monicahq/monica
+  version_template: v{{major}}.{{minor}}.{{patch}}-beta.{{beta}}
+test:
+  enable: true
