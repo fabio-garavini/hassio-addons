@@ -1,6 +1,6 @@
-## [2.23.4](https://github.com/n8n-io/n8n/compare/n8n@2.23.3...n8n@2.23.4) (2026-06-05)
+## [2.25.6](https://github.com/n8n-io/n8n/compare/n8n@2.25.5...n8n@2.25.6) (2026-06-08)
 
 
 ### Bug Fixes
 
-* **core:** Polyfill DOMMatrix when parsing PDFs in Data Loader ([#31700](https://github.com/n8n-io/n8n/issues/31700)) ([f80c96a](https://github.com/n8n-io/n8n/commit/f80c96aa6b14994f7c2781eaf99ad5eafbd93c11))
+* **editor:** Copy only selected markdown editor text ([#31891](https://github.com/n8n-io/n8n/issues/31891)) ([7627351](https://github.com/n8n-io/n8n/commit/7627351cd53c718cea95634d7f343763dac73273))
