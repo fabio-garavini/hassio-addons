@@ -13,7 +13,7 @@ ENV \
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # renovate: datasource=github-releases packageName=hassio-addons/bashio
-ARG BASHIO_VERSION="v0.18.0"
+ARG BASHIO_VERSION="v0.18.1"
 # renovate: datasource=github-releases packageName=home-assistant/tempio
 ARG TEMPIO_VERSION="2024.11.2"
 RUN \
