@@ -114,7 +114,7 @@ RUN \
     && rm -rf /tmp/*
 
 # renovate: datasource=github-releases packageName=n8n-io/task-runner-launcher
-ARG LAUNCHER_VERSION=1.4.6
+ARG LAUNCHER_VERSION=1.4.7
 
 RUN set -e; \
     case "$BUILD_ARCH" in \
