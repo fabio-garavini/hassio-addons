@@ -1,6 +1,6 @@
 source:
   type: github-releases
-  repo: monica/releases
+  repo: monicahq/monica
   current_version: v5.0.0-beta.5
   version_template: regex:^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)-beta\.(?<beta>\d+)$
 config:
