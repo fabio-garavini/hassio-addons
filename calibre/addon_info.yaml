@@ -1,11 +1,11 @@
 source:
   type: github-releases
   repo: linuxserver/docker-calibre
-  current_version: v9.9.0-ls406
+  current_version: v9.9.0-ls407
   version_template: regex:^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)-ls(?<build>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
-  patch: 4
+  patch: 5
   image: fabioogaravini/hassio-calibre
 build:
   image: lscr.io/linuxserver/calibre
