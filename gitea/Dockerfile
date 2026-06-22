@@ -1,5 +1,5 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=gitea/gitea:1.26.3
+ARG BUILD_FROM=gitea/gitea:1.26.4
 
 FROM $BUILD_FROM
 
