@@ -30,23 +30,26 @@ ENV \
 # hadolint ignore=DL3002
 USER root
 
-# renovate: datasource=repology depName=alpine_3_23/apk-tools-static versioning=loose
-ARG APK_TOOLS_VERSION=3.0.6-r0
-ARG ALPINE_VERSION=v3.23
+# renovate: datasource=repology depName=alpine_3_22/apk-tools-static versioning=loose
+ARG APK_TOOLS_VERSION=2.14.10-r0
+ARG ALPINE_VERSION=v3.22
 
 # hadolint global ignore=DL4001
 RUN \
     set -eux; \
     cd /tmp; \
     wget -nv https://dl-cdn.alpinelinux.org/alpine/${ALPINE_VERSION}/main/$(uname -m)/apk-tools-static-${APK_TOOLS_VERSION}.apk; \
-    tar -xzf apk-tools-static-*.apk; \
-    ls -al sbin; \
-    ./sbin/apk.static -X https://dl-cdn.alpinelinux.org/alpine/${ALPINE_VERSION}/main --initdb add apk-tools; \
+    tar -xzf apk-tools-static-*.apk -C /; \
     rm -rf /tmp/*
+
+# Configure repositories (standard Alpine 3.22)
+RUN mkdir -p /etc/apk/repositories; \
+    echo "https://dl-cdn.alpinelinux.org/alpine/${ALPINE_VERSION}/main" > /etc/apk/repositories; \
+    echo "https://dl-cdn.alpinelinux.org/alpine/${ALPINE_VERSION}/community" >> /etc/apk/repositories
 
 RUN \
     set -eux; \
-    apk add --no-cache \
+    apk.static add --no-cache \
         shadow \
         bash \
         curl \
@@ -75,7 +78,7 @@ ARG S6_OVERLAY_VERSION="3.2.1.0"
 # renovate: datasource=github-releases packageName=home-assistant/tempio
 ARG TEMPIO_VERSION="2024.11.2"
 RUN \
-    apk add --no-cache --virtual .build-dependencies \
+    apk.static add --no-cache --virtual .build-dependencies \
         tar \
         xz \
     \
@@ -110,7 +113,7 @@ RUN \
         "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" \
     && chmod a+x /usr/bin/tempio \
     \
-    && apk del --no-cache --purge .build-dependencies \
+    && apk.static del --no-cache --purge .build-dependencies \
     && rm -rf /tmp/*
 
 # renovate: datasource=github-releases packageName=n8n-io/task-runner-launcher
