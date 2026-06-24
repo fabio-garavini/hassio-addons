@@ -50,6 +50,7 @@ RUN mkdir -p /etc/apk/repositories; \
 RUN \
     set -eux; \
     apk.static add --no-cache \
+        openssl \
         shadow \
         bash \
         curl \
