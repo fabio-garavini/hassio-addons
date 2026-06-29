@@ -1,7 +1,7 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/n8n-io/n8n:2.27.3
+ARG BUILD_FROM=ghcr.io/n8n-io/n8n:2.27.5
 
-ARG BUILD_VERSION=2.27.3
+ARG BUILD_VERSION=2.27.5
 
 FROM ghcr.io/n8n-io/runners:${BUILD_VERSION%-v*} AS runner
 
@@ -39,17 +39,14 @@ RUN \
     set -eux; \
     cd /tmp; \
     wget -nv https://dl-cdn.alpinelinux.org/alpine/${ALPINE_VERSION}/main/$(uname -m)/apk-tools-static-${APK_TOOLS_VERSION}.apk; \
-    tar -xzf apk-tools-static-*.apk -C /; \
+    tar -xzf apk-tools-static-*.apk; \
+    ls -al sbin; \
+    ./sbin/apk.static add --no-cache apk-tools; \
     rm -rf /tmp/*
-
-# Configure repositories (standard Alpine 3.22)
-RUN mkdir -p /etc/apk/repositories; \
-    echo "https://dl-cdn.alpinelinux.org/alpine/${ALPINE_VERSION}/main" > /etc/apk/repositories; \
-    echo "https://dl-cdn.alpinelinux.org/alpine/${ALPINE_VERSION}/community" >> /etc/apk/repositories
 
 RUN \
     set -eux; \
-    apk.static add --no-cache \
+    apk add --no-cache \
         openssl \
         shadow \
         bash \
@@ -79,7 +76,7 @@ ARG S6_OVERLAY_VERSION="3.2.1.0"
 # renovate: datasource=github-releases packageName=home-assistant/tempio
 ARG TEMPIO_VERSION="2024.11.2"
 RUN \
-    apk.static add --no-cache --virtual .build-dependencies \
+    apk add --no-cache \
         tar \
         xz \
     \
@@ -114,7 +111,6 @@ RUN \
         "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" \
     && chmod a+x /usr/bin/tempio \
     \
-    && apk.static del --no-cache --purge .build-dependencies \
     && rm -rf /tmp/*
 
 # renovate: datasource=github-releases packageName=n8n-io/task-runner-launcher
