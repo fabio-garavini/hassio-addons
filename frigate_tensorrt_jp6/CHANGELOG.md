@@ -1,76 +1,59 @@
-This is a maintenance release for Frigate 0.17 that includes bugfixes and minor changes.
+This is a maintenance release for Frigate 0.17 that includes fixes and minor changes.
 
 ## Images
 
-- [ghcr.io/blakeblackshear/frigate:0.17.1](https://github.com/blakeblackshear/frigate/pkgs/container/frigate/746059848?tag=0.17.1)
-- [ghcr.io/blakeblackshear/frigate:0.17.1-standard-arm64](https://github.com/blakeblackshear/frigate/pkgs/container/frigate/746055204?tag=0.17.1-standard-arm64)
-- [ghcr.io/blakeblackshear/frigate:0.17.1-tensorrt](https://github.com/blakeblackshear/frigate/pkgs/container/frigate/746069732?tag=0.17.1-tensorrt)
-- [ghcr.io/blakeblackshear/frigate:0.17.1-rk](https://github.com/blakeblackshear/frigate/pkgs/container/frigate/746093696?tag=0.17.1-rk)
-- [ghcr.io/blakeblackshear/frigate:0.17.1-rocm](https://github.com/blakeblackshear/frigate/pkgs/container/frigate/746079109?tag=0.17.1-rocm)
-- [ghcr.io/blakeblackshear/frigate:0.17.1-tensorrt-jp6](https://github.com/blakeblackshear/frigate/pkgs/container/frigate/746064399?tag=0.17.1-tensorrt-jp6)
-- [ghcr.io/blakeblackshear/frigate:0.17.1-synaptics](https://github.com/blakeblackshear/frigate/pkgs/container/frigate/746087341?tag=0.17.1-synaptics)
+- [ghcr.io/blakeblackshear/frigate:0.17.2](https://github.com/blakeblackshear/frigate/pkgs/container/frigate/982004562?tag=0.17.2)
+- [ghcr.io/blakeblackshear/frigate:0.17.2-standard-arm64](https://github.com/blakeblackshear/frigate/pkgs/container/frigate/981112840?tag=0.17.2-standard-arm64)
+- [ghcr.io/blakeblackshear/frigate:0.17.2-tensorrt](https://github.com/blakeblackshear/frigate/pkgs/container/frigate/982014308?tag=0.17.2-tensorrt)
+- [ghcr.io/blakeblackshear/frigate:0.17.2-rk](https://github.com/blakeblackshear/frigate/pkgs/container/frigate/981127205?tag=0.17.2-rk)
+- [ghcr.io/blakeblackshear/frigate:0.17.2-rocm](https://github.com/blakeblackshear/frigate/pkgs/container/frigate/982027592?tag=0.17.2-rocm)
+- [ghcr.io/blakeblackshear/frigate:0.17.2-tensorrt-jp6](https://github.com/blakeblackshear/frigate/pkgs/container/frigate/981119391?tag=0.17.2-tensorrt-jp6)
+- [ghcr.io/blakeblackshear/frigate:0.17.2-synaptics](https://github.com/blakeblackshear/frigate/pkgs/container/frigate/981125957?tag=0.17.2-synaptics)
 
 ## What's Changed
 
-### Security Fixes
-* Restrict raw config endpoint to admin role by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22523
-* Fix cross-camera auth in timeline and media endpoints by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22522
+### Security Advisories
+
+These advisories impact users with publicly exposed instances with no authentication and users with viewer roles where it is important to restrict access to some cameras.
+
+- [go2rtc WebSocket live stream camera access bypass (role-restricted users)](https://github.com/blakeblackshear/frigate/security/advisories/GHSA-hh3j-7g2f-43j2)
+- [Incomplete patch of CVE-2025-62382: `image_path` backslash-separator bypass of `pathvalidate.sanitize_filepath` + `startswith(CLIPS_DIR)` reaches `shutil.copy` arbitrary host-file read](https://github.com/blakeblackshear/frigate/security/advisories/GHSA-pqfr-m69j-4mq2)
+- [Incomplete patch of CVE-2026-25643: go2rtc exec:/echo:/expr: prefix block is bypassed when a stream value is a YAML mapping with a `url` key (RCE + container escape)](https://github.com/blakeblackshear/frigate/security/advisories/GHSA-r57j-5jm9-hpcc)
+- [RTSP credentials leak to viewer role via nginx proxy_cache](https://github.com/blakeblackshear/frigate/security/advisories/GHSA-4vfc-hxpj-f7x7)
+- [Authenticated Admin Can Achieve RCE via go2rtc Stream API — exec: Filter Not Enforced at API Layer](https://github.com/blakeblackshear/frigate/security/advisories/GHSA-wwww-5h25-jf98)
+- [Authenticated viewer can read /api/logs/frigate and /api/logs/nginx, exposing the auto-generated admin password and camera RTSP/ONVIF credentials (viewer-to-admin privilege escalation)](https://github.com/blakeblackshear/frigate/security/advisories/GHSA-c4qf-xxq4-vf55)
+- [Camera ACL bypass via Nginx static locations allows authenticated users to access recordings from unauthorized cameras](https://github.com/blakeblackshear/frigate/security/advisories/GHSA-74x4-gw64-2mq5)
+- [Viewer-Role User Can Access go2rtc Internal API to obtain sensitive information](https://github.com/blakeblackshear/frigate/security/advisories/GHSA-mgh5-cr9h-g6hr)
+- [WebSocket Missing Authorization — Viewer Can Execute Admin-Only Operations](https://github.com/blakeblackshear/frigate/security/advisories/GHSA-r5fm-h944-8chq)
 
 ### Notable Changes
-* Fix/rknn arcface input format master by @begetan in https://github.com/blakeblackshear/frigate/pull/22319
-* Don't try to run storage cleanup if frigate is in safe mode by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22492
 
-## Other Changes
-* docs: fix image address by @ZhaiSoul in https://github.com/blakeblackshear/frigate/pull/22067
-* docs: fix hailo setup numbering error by @ZhaiSoul in https://github.com/blakeblackshear/frigate/pull/22066
-* Fix script for downloading RF-DETR by @f0ff886f in https://github.com/blakeblackshear/frigate/pull/22083
-* docs: Add frame selection and clean copy details to snapshots docs by @webmasterkai in https://github.com/blakeblackshear/frigate/pull/21946
-* Update line breaks in video_pipeline.md diagram by @GrumpyMeow in https://github.com/blakeblackshear/frigate/pull/21919
-* docs: Add detail to face recognition MQTT update docs by @webmasterkai in https://github.com/blakeblackshear/frigate/pull/21942
-* Update HA docs with MQTT example by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22098
-* Docs: fix YOLOv9 onnx export by @tremby in https://github.com/blakeblackshear/frigate/pull/22107
-* Docs updates by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22131
-* updates for yolov9 coral support by @blakeblackshear in https://github.com/blakeblackshear/frigate/pull/22136
-* 0.17 Release by @blakeblackshear in https://github.com/blakeblackshear/frigate/pull/19787
-* Fix link to Coral YOLOv9 Frigate+ models by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22164
-* Fix go2rtc stream alias auth by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22097
-* Birdseye fixes by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22166
-* Fix genai by @NickM-27 in https://github.com/blakeblackshear/frigate/pull/22203
-* Docs updates by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22222
-* Fix menu display conditions by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22237
-* docs: updated the guides detectors section by @ZhaiSoul in https://github.com/blakeblackshear/frigate/pull/22241
-* Docs update by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22251
-* Update docs for new HA language by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22258
-* Update docs for AVX2 CPU requirement by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22305
-* Improve playback of videos in Tracking Details by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22301
-* Fix broken link to Home Assistant apps page by @ARandomGitHubUser in https://github.com/blakeblackshear/frigate/pull/22320
-* Fix preview retrieval to handle missing previews gracefully by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22331
-* Fix thumbnail encoding logic by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22329
-* Environment variable fixes by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22335
-* Fix go2rtc config handling by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22346
-* Save detect dimensions to config on add camera wizard save by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22349
-* docs: add highlight magic comments by @ZhaiSoul in https://github.com/blakeblackshear/frigate/pull/22367
-* Various Fixes by @NickM-27 in https://github.com/blakeblackshear/frigate/pull/22376
-* Filter push notifications by user role camera access by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22385
-* Keep Tracked Object Details nav buttons visible by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22384
-* Add handler for license plate which is not expected to be stationary by @NickM-27 in https://github.com/blakeblackshear/frigate/pull/22416
-* Consistently sort class names by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22415
-* Update dev contrib docs with Python checks by @leccelecce in https://github.com/blakeblackshear/frigate/pull/22419
-* UI tweak by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22420
-* Hide set password menu option when native auth is disabled by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22439
-* Disable pip for animated event cards by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22438
-* Sync Tracking Details timeline with keyframe-snapped vod clip start by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22454
-* Add Strix to third party extensions by @eduard256 in https://github.com/blakeblackshear/frigate/pull/22488
-* Fix audio event maintainer by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22495
-* docs: remove onvif host environment variable by @ZhaiSoul in https://github.com/blakeblackshear/frigate/pull/22517
-* Validate preview filename and camera access by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22530
+- Exports can optionally include recording segment information as chapters in mp4 metadata
+- Performance improvements when displaying previews in the live page
+
+### All Commits
+* Update docs for DEIMv2 support by @NickM-27 in https://github.com/blakeblackshear/frigate/pull/22598
+* Add role-based auth to websocket message handler by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22710
+* Update MemryX section documentation by @abinila4 in https://github.com/blakeblackshear/frigate/pull/22712
+* Memryx docs update by @abinila4 in https://github.com/blakeblackshear/frigate/pull/22746
+* Docs update by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22864
+* Update restream.md docs and clarify output config by @Feni85 in https://github.com/blakeblackshear/frigate/pull/22860
+* Fix broken docs links with hash fragments that resolve wrong on reload by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22925
+* Fix yolonas colab notebook by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/22936
+* Fixes by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/23235
+* Add metadata for creation time in recordings / exports by @NickM-27 in https://github.com/blakeblackshear/frigate/pull/23239
+* Fix admin response cache leak to non-admin users via nginx proxy_cache by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/23261
+* Docs update by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/23280
+* Docs update by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/23282
+* Filter motion review by allowed cameras by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/23294
+* Add ability to control chapters set on MP4 Export by @NickM-27 in https://github.com/blakeblackshear/frigate/pull/23310
+* Chapter tweaks by @NickM-27 in https://github.com/blakeblackshear/frigate/pull/23440
+* Catch edge cases in security protections by @NickM-27 in https://github.com/blakeblackshear/frigate/pull/23493
+* Offload preview encoding and Plus upload off the API event loop by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/23552
+* Fix cache control header for current hour preview mp4s by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/23553
+* Allow non-admin users to use PTZ controls for cameras they have access to by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/23578
 
 ## New Contributors
-* @f0ff886f made their first contribution in https://github.com/blakeblackshear/frigate/pull/22083
-* @webmasterkai made their first contribution in https://github.com/blakeblackshear/frigate/pull/21946
-* @tremby made their first contribution in https://github.com/blakeblackshear/frigate/pull/22107
-* @begetan made their first contribution in https://github.com/blakeblackshear/frigate/pull/22319
-* @ARandomGitHubUser made their first contribution in https://github.com/blakeblackshear/frigate/pull/22320
-* @eduard256 made their first contribution in https://github.com/blakeblackshear/frigate/pull/22488
+* @Feni85 made their first contribution in https://github.com/blakeblackshear/frigate/pull/22860
 
-**Full Changelog**: https://github.com/blakeblackshear/frigate/compare/v0.17.0...v0.17.1
+**Full Changelog**: https://github.com/blakeblackshear/frigate/compare/v0.17.1...v0.17.2
