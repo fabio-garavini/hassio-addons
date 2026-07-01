@@ -1,15 +1,33 @@
 #!/usr/bin/dumb-init /bin/sh
 
-exec /redis_exporter &
-
 ### docker entrypoint script, for starting redis stack
 BASEDIR=/opt/redis-stack
 cd ${BASEDIR}
 
 CMD=${BASEDIR}/bin/redis-server
+CONFFILE=/etc/redis.conf
+OPTIONS=/data/options.json
+
+: > "${CONFFILE}"
+
 if [ -f /redis-stack.conf ]; then
-    CONFFILE=/redis-stack.conf
+    echo "include /redis-stack.conf" >> "${CONFFILE}"
 fi
+
+if [ -f /config/redis.conf ]; then
+    cat /config/redis.conf >> "${CONFFILE}"
+    echo >> "${CONFFILE}"
+fi
+
+if [ -f "${OPTIONS}" ]; then
+    jq -r '.redis_config[]?' "${OPTIONS}" >> "${CONFFILE}"
+fi
+
+# redis_exporter authenticates with the same password
+REDIS_PASSWORD="$(sed -n 's/^requirepass[[:space:]][[:space:]]*//p' "${CONFFILE}" | tail -n1 | tr -d '"')"
+[ -n "${REDIS_PASSWORD}" ] && export REDIS_PASSWORD
+
+exec /redis_exporter &
 
 if [ -z "${REDIS_DATA_DIR}" ]; then
     REDIS_DATA_DIR=/data
