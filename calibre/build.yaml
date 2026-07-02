@@ -1,3 +1,3 @@
 build_from:
-  aarch64: lscr.io/linuxserver/calibre:v9.10.0-ls409
-  amd64: lscr.io/linuxserver/calibre:v9.10.0-ls409
+  aarch64: lscr.io/linuxserver/calibre:v9.10.0-ls410
+  amd64: lscr.io/linuxserver/calibre:v9.10.0-ls410
