@@ -1,34 +1,58 @@
-## What's Changed
+# 📦 ImmichFrame Release v1.0.34.0 – July 2, 2026
 
-  ### ✨ New Features                                                                                                                                                                                                                                                                                                                                                                                                                               
-   
-  #### 🔄 Auto-Refresh on Connection Error                                                                                                                                                                                                                                                                                                                                                                                                          
-  **PR [#579](https://github.com/immichFrame/ImmichFrame/pull/579) by @3rob3**
+  <!-- Release notes generated using configuration in .github/release.yml at v1.0.34.0 -->
 
-  When ImmichFrame can't reach your Immich server, the error screen now shows a pulsing message and automatically reloads the page every 30 seconds until the connection is restored. Previously the frame would just sit on the error screen indefinitely — now it recovers on its own as soon as your server comes back online.                                                                                                                   
-   
-  ---                                                                                                                                                                                                                                                                                                                                                                                                                                               
-                  
-  ### 📓 Documentation
+  This release brings ImmichFrame up to date with **Immich v3**, adds a new per-asset faces API
+  for richer previews, and fixes long-standing video stall and slideshow transition freezes.
 
-  #### 📖 Major Rewrite: Frameo Installation Guide
-  **PR [#593](https://github.com/immichFrame/ImmichFrame/pull/593) by @Torstein-Eide**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-  The Frameo digital photo frame setup instructions have been completely rewritten from the ground up. The guide is now clearer, better structured, and includes new screenshots for both the default app and WebView setup flows — making it much easier to get ImmichFrame running on Frameo devices.                                                                                                                                             
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-  ---                                                                                                                                                                                                                                                                                                                                                                                                                                               
-                  
+  ---
+
+  ## What's Changed
+
+  ### ⚠️  Breaking Changes
+
+  #### 💥 Update to Immich v3
+  **PR [#654](https://github.com/immichFrame/ImmichFrame/pull/654) by @JW-CH**
+
+  ImmichFrame now targets the **Immich v3 API**. This is a major migration that updates the
+  OpenAPI spec, standardizes asset identifiers to GUIDs across all selection, filtering, and
+  paging flows, and switches album loading (including excluded albums) to paginated metadata
+  searches so large libraries are handled reliably. It also adds a new **Asset Faces** endpoint
+  that fetches per-asset face details for richer home-page previews, with faces now loaded
+  only on zoom/pan and skipped for videos. Make sure your Immich server is running **v3 or 
+  newer** before upgrading.
+
+  ---
+
+  ### ⚡ Fixes
+
+  #### 🐛 Asset transition & video stall freezes
+  **PR [#637](https://github.com/immichFrame/ImmichFrame/pull/637) by @3rob3**
+
+  Fixes cases where the slideshow could lock up mid-transition or freeze on a stalled video
+  (closes [#601](https://github.com/immichFrame/ImmichFrame/issues/601)). Auto-skip now detects
+  stalled videos and asset load errors and escalates with throttling, a watchdog recovers from
+  hangs, and transition locking plus resource teardown were hardened to avoid stuck states. A
+  new asset-error callback lets the frame react cleanly to media load/playback failures.
+
+  ---
+
+  #### 🐛 Memories date
+  **PR [#632](https://github.com/immichFrame/ImmichFrame/pull/632) by @3rob3**
+
+  Corrects the date handling for the Memories feature so memory-based assets are selected and
+  displayed against the right day.
+
+  ---
+
   ### 🔨 Maintenance
 
-  #### 🔧 Dependency Updates (ImmichFrame & Docusaurus)                                                                                                                                                                                                                                                                                                                                                                                             
-  **PR [#624](https://github.com/immichFrame/ImmichFrame/pull/624) by @JW-CH**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-  Frontend (`immichFrame.Web`) and documentation (`docs`) dependencies have been updated to their latest compatible versions.                                                                                                                                                                                        
-   
+  #### 🔧 Update NPM packages
+  **PR [#658](https://github.com/immichFrame/ImmichFrame/pull/658) by @JW-CH**
+
+  Routine dependency bump for the frontend and docs npm packages to keep the build current and
+  pick up upstream security and bug fixes.
+
   ---
-  New Contributors
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-  - 🎉 @Torstein-Eide made their first contribution in #593 — welcome!
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-  ---             
-  Full Changelog: https://github.com/immichFrame/ImmichFrame/compare/v1.0.32.0...v1.0.33.0
+
+  **Full Changelog**: https://github.com/immichFrame/ImmichFrame/compare/v1.0.33.0...v1.0.34.0
