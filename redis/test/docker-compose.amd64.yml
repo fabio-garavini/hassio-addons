@@ -2,7 +2,16 @@ name: redis-amd64
 services:
   redis-amd64:
     image: fabioogaravini/hassio-redis-stack:${VERSION:-latest}-amd64
+    build:
+      context: ..
+      args:
+        BUILD_ARCH: amd64
+        BUILD_VERSION: ${VERSION:-latest}
     container_name: redis-amd64
+    ports:
+      - 6379:6379
+      - 8001:8001
+      - 9121:9121
     volumes:
       - data:/data
       - ./options.json:/data/options.json:ro

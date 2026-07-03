@@ -10,6 +10,11 @@ ENV REDIS_DATA_DIR="/config" \
 COPY --from=redis-exporter /redis_exporter /redis_exporter
 COPY --from=redis-exporter /etc/ssl/certs /etc/ssl/certs
 
+# jq: read the redis_config option list from /data/options.json at startup
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends jq \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY rootfs/ /
 
 EXPOSE 9121

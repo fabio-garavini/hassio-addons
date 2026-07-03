@@ -1,1 +1,6 @@
-{}
+{
+  "redis_config": [
+    "maxmemory 256mb",
+    "maxmemory-policy allkeys-lru"
+  ]
+}
