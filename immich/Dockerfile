@@ -1,5 +1,5 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/imagegenius/immich:2.7.5
+ARG BUILD_FROM=ghcr.io/imagegenius/immich:3.0.1
 
 FROM ${BUILD_FROM}
 
