@@ -3,6 +3,8 @@
 
 set -e
 
+bashio::log.info "[init-nginx] Initializing NGINX config"
+
 OPTIONS_SOURCE=${ADDON_DATA_FOLDER:-"/data"}/options.json
 
 service_port=${SERVICE_PORT:-80}
@@ -25,7 +27,7 @@ if jq -e '.ssl == true' $OPTIONS_SOURCE > /dev/null; then
 
     # If certfile or keyfile does not exist, generate self-signed cert
     if [ ! -f "$certfile" ] || [ ! -f "$keyfile" ]; then
-        bashio::log.warning "SSL is enabled, but either certfile, keyfile or both are missing. Falling back to a self-signed certificate..."
+        bashio::log.warning "[init-nginx] SSL is enabled, but either certfile, keyfile or both are missing. Falling back to a self-signed certificate..."
 
         certfile="/data/ssl/fullchain.pem"
         keyfile="/data/ssl/privkey.pem"

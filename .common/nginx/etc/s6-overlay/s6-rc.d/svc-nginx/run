@@ -3,7 +3,10 @@
 
 set -e
 
+bashio::log.info "[svc-nginx] Waiting for service ..."
+
 bashio::net.wait_for "$SERVICE_PORT" localhost 900
 
-bashio::log.info "Starting NGinx..."
+bashio::log.info "[svc-nginx] Starting NGinx..."
+
 exec nginx

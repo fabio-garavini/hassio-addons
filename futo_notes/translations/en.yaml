@@ -1,0 +1,44 @@
+configuration:
+  FUTO_NOTES_PASSWORD:
+    name: FUTO Notes Admin Password
+    description: >-
+      Admin password for the FUTO Notes sync server. Enter the same password
+      in the FUTO Notes app under **Settings → Sync**. The add-on hashes it
+      at startup with scrypt using the server's own `hash` helper; the
+      plaintext is never written to disk.
+  TRUST_PROXY:
+    name: Trust Proxy
+    description: >-
+      Trust the `X-Forwarded-For` header for the login rate-limiter. Leave
+      on when Home Assistant or another reverse proxy fronts the add-on;
+      only turn off if you expose port 3005 directly to clients.
+  AUTH_RATE_LIMIT:
+    name: Login Rate Limit
+    description: >-
+      Max login attempts per client per window. `0` disables rate limiting.
+  AUTH_RATE_LIMIT_WINDOW_MS:
+    name: Login Rate Limit Window (ms)
+    description: >-
+      Length of the rate-limit window in milliseconds.
+  MAX_BLOB_BYTES:
+    name: Max Blob Size (bytes)
+    description: >-
+      Maximum accepted note blob upload size, in bytes (default 104857600
+      = 100 MiB).
+  BLOB_RETENTION_DAYS:
+    name: Blob Retention (days)
+    description: >-
+      Optional blob garbage-collection retention window in days.
+  ssl:
+    name: SSL
+    description: >-
+      Cosmetic SSL toggle for the add-on web UI link. FUTO Notes itself
+      speaks HTTP — use a reverse proxy for HTTPS.
+  certfile:
+    name: SSL Certificate File
+    description: >-
+      Name of the SSL certificate file located under the `/ssl/` directory.
+  keyfile:
+    name: SSL Private Key File
+    description: >-
+      Name of the SSL private key file located under the `/ssl/` directory.

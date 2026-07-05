@@ -1,0 +1,35 @@
+#!/command/with-contenv bash
+# shellcheck shell=bash
+
+set -Eeo pipefail
+
+if [ -z "${FUTO_NOTES_PASSWORD:-}" ]; then
+  echo "[init-futo-notes] FATAL: FUTO_NOTES_PASSWORD is required." >&2
+  exit 1
+fi
+if [ -z "${POSTGRES_PASSWORD:-}" ]; then
+  echo "[init-futo-notes] FATAL: POSTGRES_PASSWORD is required." >&2
+  exit 1
+fi
+
+echo "[init-futo-notes] Generating FUTO Notes admin password hash..."
+
+# `bun dist/index.js hash <pw>` is the server's own subcommand (scrypt).
+HASH="$(cd /app && bun dist/index.js hash "${FUTO_NOTES_PASSWORD}")"
+HASH="${HASH%$'\n'}"
+
+printf '%s' "$HASH" \
+  > /var/run/s6/container_environment/FUTO_NOTES_PASSWORD_HASH
+
+# Append `?options=-csearch_path=public` to force every connection's
+# schema search path to `public`. Without it, Kysely's auto-migration on
+# boot fails with "no schema has been selected to create in" on fresh
+# PG16+ where the role has no implicit schema privileges.
+DATABASE_URL="postgres://${POSTGRES_USER:-futo_notes}:${POSTGRES_PASSWORD}@127.0.0.1:5432/${POSTGRES_DB:-futo_notes}?options=-csearch_path=public"
+printf '%s' "$DATABASE_URL" \
+  > /var/run/s6/container_environment/DATABASE_URL
+
+mkdir -p "${BLOB_DIR:-/data/blobs}"
+chown -R bun:bun "${BLOB_DIR:-/data/blobs}" /app
+
+echo "[init-futo-notes] FUTO Notes ready to start"

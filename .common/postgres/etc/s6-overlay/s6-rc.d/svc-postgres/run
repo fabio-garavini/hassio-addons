@@ -1,15 +1,20 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
 
+# Start PostgreSQL server. Plain-bash version (no bashio::log.*) for the same
+# reason as init-postgres/run: bashio's `set -u` bootstrap is unreliable
+# across s6-rc startup shapes. The `s6-notifyoncheck` + `pg_isready` probe
+# satisfies `notification-fd: 11`, so downstream services (e.g. svc-app)
+# gate on the DB being ready via dependency tracking.
+
 set -Eeo pipefail
 
-# Start PostgreSQL server
-bashio::log.info "Starting PostgreSQL server..."
+bashio::log.info "[svc-postgres] Starting PostgreSQL..."
 
-s6-notifyoncheck -s 5000 -n 300 -w 1000 -c "pg_isready -U $POSTGRES_USER" \
+s6-notifyoncheck -s 5000 -n 300 -w 1000 -c "pg_isready -U ${POSTGRES_USER:-postgres}" \
   postgres-entrypoint.sh postgres \
-    -c timezone="$TZ" \
-    -c log_timezone="$TZ" \
-    -c config_file="/etc/postgresql/postgresql.conf" \
-    -c shared_preload_libraries="$POSTGRES_SHARED_PRELOAD_LIBRARIES" \
-    -c search_path="$POSTGRES_SEARCH_PATH"
+    -c timezone="${TZ:-Etc/UTC}" \
+    -c log_timezone="${TZ:-Etc/UTC}" \
+    -c config_file=/etc/postgresql/postgresql.conf \
+    -c shared_preload_libraries="${POSTGRES_SHARED_PRELOAD_LIBRARIES:-}" \
+    -c search_path="${POSTGRES_SEARCH_PATH:-}"

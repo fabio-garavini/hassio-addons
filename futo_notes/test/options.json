@@ -1,0 +1,9 @@
+{
+  "TZ": "Etc/UTC",
+  "ssl": false,
+  "certfile": "fullchain.pem",
+  "keyfile": "privkey.pem",
+  "FUTO_NOTES_PASSWORD": "test-password-not-for-production",
+  "TRUST_PROXY": true,
+  "DB_STORAGE_TYPE": "HDD"
+}

@@ -5,10 +5,18 @@ if ${DELETE_DB:-false} && ${RESTORE_BACKUP:-false}; then
   rm -rf $PGDATA
 fi
 
+# Initialize the bundled PostgreSQL data directory on first boot (or skip if
+# already initialized). Plain-bash version (no bashio::log.* calls) so this
+# works in any base image that ships s6-overlay v3 without a working bashio
+# bootstrap. Bash helpers come from /usr/local/bin (postgres-entrypoint.sh)
+# via COPY .common/postgres. DB_STORAGE_TYPE tunes HDD/SSD planner.
+
 set -Eeo pipefail
 
-# Source the PostgreSQL entrypoint functions
-source /usr/local/bin/postgres-entrypoint.sh
+# `.` the helpers under bash rather than via the bashio bootstrap. _is_sourced
+# uses FUNCNAME which is bash-only.
+# shellcheck source=/dev/null
+. /usr/local/bin/postgres-entrypoint.sh
 
 # Set up environment and check if initialization is needed
 docker_setup_env
@@ -20,20 +28,18 @@ mkdir -p "/data/logs/postgres"
 chown postgres:postgres -R "/data/logs/postgres"
 chmod 750 -R "/data/logs/postgres"
 
-# load postgres config file
-case "${DB_STORAGE_TYPE^^}" in
-  SSD|HDD)
-    bashio::log.info "Using ${DB_STORAGE_TYPE^^} storage"
-    cp --update=all "/etc/postgresql/postgresql.${DB_STORAGE_TYPE,,}.conf" "/etc/postgresql/postgresql.conf"
-    ;;
-  *)
-    cp --update=all "/etc/postgresql/postgresql.hdd.conf" "/etc/postgresql/postgresql.conf"
-    ;;
+# Pick a postgresql.conf profile based on DB_STORAGE_TYPE. Default to HDD.
+# Uses parameter expansion (`${VAR:-default}`) — which keeps this runnable
+# under `set -u` if DB_STORAGE_TYPE is unset.
+case "${DB_STORAGE_TYPE:-HDD}" in
+  SSD) DB_CFG="postgresql.ssd.conf" ;;
+  *)   DB_CFG="postgresql.hdd.conf" ;;
 esac
+cp -f "/etc/postgresql/${DB_CFG}" /etc/postgresql/postgresql.conf
 
-/usr/local/bin/docker-ensure-initdb.sh postgres \
-  -c timezone="$TZ" \
-  -c log_timezone="$TZ" \
-  -c config_file="/etc/postgresql/postgresql.conf" \
-  -c shared_preload_libraries="$POSTGRES_SHARED_PRELOAD_LIBRARIES" \
-  -c search_path="$POSTGRES_SEARCH_PATH" &> /dev/null
+exec /usr/local/bin/docker-ensure-initdb.sh postgres \
+  -c timezone="${TZ:-Etc/UTC}" \
+  -c log_timezone="${TZ:-Etc/UTC}" \
+  -c config_file=/etc/postgresql/postgresql.conf \
+  -c shared_preload_libraries="${POSTGRES_SHARED_PRELOAD_LIBRARIES:-}" \
+  -c search_path="${POSTGRES_SEARCH_PATH:-}"
