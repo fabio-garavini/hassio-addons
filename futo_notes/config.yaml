@@ -1,8 +1,8 @@
 name: FUTO Notes (Server)
 version: 0.5.1
 slug: futo_notes
-description: Self-hosted end-to-end encrypted sync server for FUTO Notes server
-url: https://gitlab.futo.org/futo-notes/futo-notes-server
+description: Self-hosted end-to-end encrypted sync server for FUTO Notes
+url: https://notes.futo.tech
 arch:
   - aarch64
   - amd64

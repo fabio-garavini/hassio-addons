@@ -59,6 +59,10 @@ _All-in-one_
 
 ![screenshot](https://raw.githubusercontent.com/wiki/mayswind/ezbookkeeping/img/desktop/en.png)
 
+# 📒 FUTO Notes (Server)
+
+**FUTO Notes** is an end-to-end encrypted notes app.
+
 ### 📹 Frigate NVR
 
 [Frigate NVR](https://frigate.video) with realtime local object detection for IP cameras (ROCm version)

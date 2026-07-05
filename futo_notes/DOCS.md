@@ -1,4 +1,4 @@
-# Home Assistant add-on: FUTO Notes  by Fabio Garavini
+# Home Assistant add-on: FUTO Notes (Server) 📒 by Fabio Garavini
 
 **FUTO Notes** is an end-to-end encrypted notes app. This add-on runs the self-hosted **sync server**: it stores opaque encrypted blobs of your notes and never sees plaintext content.
 
