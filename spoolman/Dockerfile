@@ -1,5 +1,5 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/donkie/spoolman:0.23.1
+ARG BUILD_FROM=ghcr.io/donkie/spoolman:0.24.0
 
 FROM ${BUILD_FROM}
 
