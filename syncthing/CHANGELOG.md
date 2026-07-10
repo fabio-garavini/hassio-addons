@@ -20,23 +20,33 @@ This release is also available as:
 
 * APT repository: https://apt.syncthing.net/
 
-* Docker image: `docker.io/syncthing/syncthing:2.1.1` or `ghcr.io/syncthing/syncthing:2.1.1`
+* Docker image: `docker.io/syncthing/syncthing:2.1.2` or `ghcr.io/syncthing/syncthing:2.1.2`
   (`{docker,ghcr}.io/syncthing/syncthing:2` to follow just the major version)
 
 ## What's Changed
 ### Fixes
-* fix(syncthing): properly upgrade via REST when Syncthing is running (fixes #10697) by @calmh in https://github.com/syncthing/syncthing/pull/10699
-* fix(versioner): ensure user read/write/execute on archived dirs (fixes #10532) by @calmh in https://github.com/syncthing/syncthing/pull/10696
-* fix(discover): only announce wildcard for TCP punching when listening on wildcard address (fixes #10503) by @calmh in https://github.com/syncthing/syncthing/pull/10691
-* fix(stcrashreceiver): close source loader responses on errors by @mattn in https://github.com/syncthing/syncthing/pull/10704
-* fix(protocol): handle zero-size requests (fixes #10709) by @calmh in https://github.com/syncthing/syncthing/pull/10710
+* fix: on Windows don't allocate console if not opened inside one by @Shablone in https://github.com/syncthing/syncthing/pull/10726
+* fix(connections): do not report connection metrics for self (ref #10509) by @calmh in https://github.com/syncthing/syncthing/pull/10724
+* fix: let umask do the thing by @calmh in https://github.com/syncthing/syncthing/pull/10723
+* fix(fs, model): improve symlink resilience in file shortcut by @calmh in https://github.com/syncthing/syncthing/pull/10739
+* fix(protocol): always expect & validate block hash in requests by @calmh in https://github.com/syncthing/syncthing/pull/10738
+* fix(protocol): be more stringent about blocks in non-file entries by @calmh in https://github.com/syncthing/syncthing/pull/10737
+* fix(protocol): loosen restriction on size of directory entries by @calmh in https://github.com/syncthing/syncthing/pull/10743
+* fix(folder): check if context canceled when scanning (fixes #10363) by @henriksb1 in https://github.com/syncthing/syncthing/pull/10757
+* fix(config): remove extraneous defaults setting while unmarshalling folder options (fixes #10746, fixes #10389) by @calmh in https://github.com/syncthing/syncthing/pull/10763
+* fix(sqlite): update last migration to set schema version, counts by @calmh in https://github.com/syncthing/syncthing/pull/10768
 ### Other
-* build: be explicit about workflow permissions by @calmh in https://github.com/syncthing/syncthing/pull/10690
-* chore(syncthing): include runtime context in GC crashes by @calmh in https://github.com/syncthing/syncthing/pull/10702
-* build(deps): x/net for govulncheck by @calmh in https://github.com/syncthing/syncthing/pull/10703
-* chore: use path/filepath for local file system paths by @mattn in https://github.com/syncthing/syncthing/pull/10705
+* chore(syncthing): open URLs via Windows API instead via cmd.exe by @Shablone in https://github.com/syncthing/syncthing/pull/10712
+* chore(db, model): separate methods to drop a device vs its files by @imsodin in https://github.com/syncthing/syncthing/pull/10480
+* build(deps): update dependencies by @calmh in https://github.com/syncthing/syncthing/pull/10740
+* build: use Go 1.26 for Windows as well by @calmh in https://github.com/syncthing/syncthing/pull/10744
+* chore(osutil): fixup test for symlinked folder root by @calmh in https://github.com/syncthing/syncthing/pull/10758
+* chore(model): increase default value for num hashers by @calmh in https://github.com/syncthing/syncthing/pull/10761
+* chore: stop treating dirs as having size 128 by @imsodin in https://github.com/syncthing/syncthing/pull/10750
+* chore(versioner): attempt to prevent blatantly unsafe external versioner commands (fixes #10721) by @calmh in https://github.com/syncthing/syncthing/pull/10722
 
 ## New Contributors
-* @mattn made their first contribution in https://github.com/syncthing/syncthing/pull/10704
+* @Shablone made their first contribution in https://github.com/syncthing/syncthing/pull/10712
+* @henriksb1 made their first contribution in https://github.com/syncthing/syncthing/pull/10757
 
-**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.1.0...v2.1.1
+**Full Changelog**: https://github.com/syncthing/syncthing/compare/v2.1.1...v2.1.2
