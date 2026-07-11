@@ -1,58 +1,33 @@
-# 📦 ImmichFrame Release v1.0.34.0 – July 2, 2026
+# 📦 ImmichFrame Release v1.0.35.0 – July 8, 2026
 
-  <!-- Release notes generated using configuration in .github/release.yml at v1.0.34.0 -->
+  <!-- Release notes generated using configuration in .github/release.yml at v1.0.35.0 -->
 
-  This release brings ImmichFrame up to date with **Immich v3**, adds a new per-asset faces API
-  for richer previews, and fixes long-standing video stall and slideshow transition freezes.
+  This release fixes memories failing to load against newer Immich servers, along with a stale QR code/link bug in the info overlay.
 
   ---
 
   ## What's Changed
 
-  ### ⚠️  Breaking Changes
-
-  #### 💥 Update to Immich v3
-  **PR [#654](https://github.com/immichFrame/ImmichFrame/pull/654) by @JW-CH**
-
-  ImmichFrame now targets the **Immich v3 API**. This is a major migration that updates the
-  OpenAPI spec, standardizes asset identifiers to GUIDs across all selection, filtering, and
-  paging flows, and switches album loading (including excluded albums) to paginated metadata
-  searches so large libraries are handled reliably. It also adds a new **Asset Faces** endpoint
-  that fetches per-asset face details for richer home-page previews, with faces now loaded
-  only on zoom/pan and skipped for videos. Make sure your Immich server is running **v3 or 
-  newer** before upgrading.
-
-  ---
-
   ### ⚡ Fixes
 
-  #### 🐛 Asset transition & video stall freezes
-  **PR [#637](https://github.com/immichFrame/ImmichFrame/pull/637) by @3rob3**
+  #### 🐛 Fixed memories not loading on newer Immich servers
+  **PR [#660](https://github.com/immichFrame/ImmichFrame/pull/660) by @JW-CH**
 
-  Fixes cases where the slideshow could lock up mid-transition or freeze on a stalled video
-  (closes [#601](https://github.com/immichFrame/ImmichFrame/issues/601)). Auto-skip now detects
-  stalled videos and asset load errors and escalates with throttling, a watchdog recovers from
-  hangs, and transition locking plus resource teardown were hardened to avoid stuck states. A
-  new asset-error callback lets the frame react cleanly to media load/playback failures.
+  The "on this day" memories row could fail to load entirely against newer Immich servers, which now strictly require a timezone offset on the date sent to the memories endpoint. ImmichFrame was dropping that offset before sending the request, causing Immich to reject it. The request now correctly includes your local timezone offset, so memories load reliably again.
 
   ---
 
-  #### 🐛 Memories date
-  **PR [#632](https://github.com/immichFrame/ImmichFrame/pull/632) by @3rob3**
+  #### 🐛 Fixed stale QR code and "Open in Immich" link during slideshow
+  **PR [#666](https://github.com/immichFrame/ImmichFrame/pull/666) by @JoeRu**
 
-  Corrects the date handling for the Memories feature so memory-based assets are selected and
-  displayed against the right day.
-
-  ---
-
-  ### 🔨 Maintenance
-
-  #### 🔧 Update NPM packages
-  **PR [#658](https://github.com/immichFrame/ImmichFrame/pull/658) by @JW-CH**
-
-  Routine dependency bump for the frontend and docs npm packages to keep the build current and
-  pick up upstream security and bug fixes.
+  The QR code and "Open in Immich" link in the info overlay could get stuck pointing at the first photo shown, even after the slideshow moved on to new images. Opening the info overlay now always shows the QR code and link for the photo currently on screen.
 
   ---
 
-  **Full Changelog**: https://github.com/immichFrame/ImmichFrame/compare/v1.0.33.0...v1.0.34.0
+  ## New Contributors
+
+  - 🎉 @JoeRu made their first contribution in [#666](https://github.com/immichFrame/ImmichFrame/pull/666) — welcome!
+
+  ---
+
+  **Full Changelog**: https://github.com/immichFrame/ImmichFrame/compare/v1.0.34.0...v1.0.35.0
