@@ -1,6 +1,6 @@
 #include <tunables/global>
 
-profile immich-cuda flags=(attach_disconnected,mediate_deleted) {
+profile immich_cuda flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
   capability,

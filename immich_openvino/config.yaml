@@ -1,6 +1,6 @@
 name: Immich (OpenVINO)
 version: 3.0.1
-slug: immich-openvino
+slug: immich_openvino
 description: High performance self-hosted photo and video management solution
 url: https://immich.app
 webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"
