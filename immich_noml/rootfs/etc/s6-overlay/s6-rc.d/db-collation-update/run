@@ -1,0 +1,18 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+
+set -e
+
+output=$(psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -t -c \
+  "ALTER DATABASE immich REFRESH COLLATION VERSION;" 2>&1)
+
+if echo "$output" | grep -q "version has not changed"; then
+  bashio::log.info "No collation change"
+elif echo "$output" | grep -qi "error"; then
+  bashio::log.error "Error running command:"
+  bashio::log.error "$output"
+  exit 1
+else
+  bashio::log.info "Version changed → reindexing"
+  psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "REINDEX DATABASE immich;"
+fi

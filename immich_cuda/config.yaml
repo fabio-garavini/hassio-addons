@@ -1,0 +1,189 @@
+name: Immich (Cuda)
+version: 3.0.1
+slug: immich-cuda
+description: High performance self-hosted photo and video management solution
+url: https://immich.app
+webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"
+arch:
+  - aarch64
+  - amd64
+init: false
+map:
+  - type: addon_config
+    read_only: false
+  - type: share
+    read_only: false
+  - type: media
+    read_only: false
+  - type: ssl
+backup: cold
+backup_exclude:
+  - "**/cache"
+  - "**/logs"
+tmpfs: true
+video: true
+usb: true
+udev: true
+privileged:
+  - SYS_ADMIN
+  - DAC_READ_SEARCH
+devices:
+  - /dev/ttyUSB0
+  - /dev/kfd
+  - /dev/dri
+  - /dev/dxg
+  - /dev/dri/renderD128
+  - /dev/vchiq
+  - /dev/video0
+  - /dev/video1
+  - /dev/video10
+  - /dev/mmcblk
+  - /dev/fuse
+  - /dev/nvme
+  - /dev/nvme0
+  - /dev/nvme0n1
+  - /dev/nvme0n1p1
+  - /dev/nvme0n1p2
+  - /dev/nvme0n1p3
+  - /dev/nvme1
+  - /dev/nvme1n1
+  - /dev/nvme1n1p1
+  - /dev/nvme1n1p2
+  - /dev/nvme1n1p3
+  - /dev/nvme2
+  - /dev/nvme2n1
+  - /dev/nvme2n1p1
+  - /dev/nvme2n1p2
+  - /dev/nvme2n3p3
+  - /dev/nvme3
+  - /dev/nvme3n1
+  - /dev/nvme3n1p1
+  - /dev/nvme3n1p2
+  - /dev/nvme3n3p3
+  - /dev/nvme4
+  - /dev/nvme4n1
+  - /dev/nvme4n1p1
+  - /dev/nvme4n1p2
+  - /dev/nvme4n3p3
+  - /dev/sda
+  - /dev/sda1
+  - /dev/sda2
+  - /dev/sda3
+  - /dev/sda4
+  - /dev/sdb
+  - /dev/sdb1
+  - /dev/sdb2
+  - /dev/sdb3
+  - /dev/sdb4
+  - /dev/sdc
+  - /dev/sdc1
+  - /dev/sdc2
+  - /dev/sdc3
+  - /dev/sdc4
+  - /dev/sdd
+  - /dev/sdd1
+  - /dev/sdd2
+  - /dev/sdd3
+  - /dev/sdd4
+  - /dev/sde
+  - /dev/sde1
+  - /dev/sde2
+  - /dev/sde3
+  - /dev/sde4
+  - /dev/sdf
+  - /dev/sdf1
+  - /dev/sdf2
+  - /dev/sdf3
+  - /dev/sdf4
+  - /dev/vda
+  - /dev/vda1
+  - /dev/vda2
+  - /dev/vda3
+  - /dev/vda4
+  - /dev/vdb
+  - /dev/vdb1
+  - /dev/vdb2
+  - /dev/vdb3
+  - /dev/vdb4
+  - /dev/vdc
+  - /dev/vdc1
+  - /dev/vdc2
+  - /dev/vdc3
+  - /dev/vdc4
+  - /dev/vdd
+  - /dev/vdd1
+  - /dev/vdd2
+  - /dev/vdd3
+  - /dev/vdd4
+  - /dev/vde
+  - /dev/vde1
+  - /dev/vde2
+  - /dev/vde3
+  - /dev/vde4
+  - /dev/vdf
+  - /dev/vdf1
+  - /dev/vdf2
+  - /dev/vdf3
+  - /dev/vdf4
+schema:
+  TZ: str?
+  IMMICH_LOG_LEVEL: list(verbose|debug|log|warn|error)
+  ssl: bool
+  certfile: str?
+  keyfile: str?
+  DB_STORAGE_TYPE: list(SSD|HDD)
+  MACHINE_LEARNING_WORKERS: int(0,)?
+  MACHINE_LEARNING_MODEL_TTL: int(0,)?
+  MACHINE_LEARNING_WORKER_TIMEOUT: int(0,)?
+  MACHINE_LEARNING_PRELOAD__CLIP__TEXTUAL: str?
+  MACHINE_LEARNING_PRELOAD__CLIP__VISUAL: str?
+  MACHINE_LEARNING_PRELOAD__FACIAL_RECOGNITION__RECOGNITION: str?
+  MACHINE_LEARNING_PRELOAD__FACIAL_RECOGNITION__DETECTION: str?
+  IMMICH_TRUSTED_PROXIES: str?
+  IMMICH_PROCESS_INVALID_IMAGES: bool?
+  storage_mounts:
+    - path: str
+      type: list(local|smb|cifs|nfs)
+      mount: str
+      options: str?
+      auto_format: bool?
+      erase: bool?
+      username: str?
+      password: password?
+  IMMICH_MEDIA_LOCATION: match(^/config/library$|^/(media|share|mnt)(/.*)?$)
+  PUID: int(0,)
+  PGID: int(0,)
+  clean_redis: bool?
+  APPLY_PERMISSIONS: bool
+  backup_location: str?
+  restore_backup: bool
+  delete_db: bool?
+  env_vars:
+    - key: match(^[A-Za-z0-9_-]+$)
+      value: str
+options:
+  TZ: Etc/UTC.common
+  IMMICH_LOG_LEVEL: log
+  ssl: false
+  certfile: fullchain.pem
+  keyfile: privkey.pem
+  DB_STORAGE_TYPE: HDD
+  MACHINE_LEARNING_MODEL_TTL: 300
+  MACHINE_LEARNING_WORKER_TIMEOUT: 300
+  IMMICH_TRUSTED_PROXIES: 172.30.32.0/23
+  storage_mounts: []
+  IMMICH_MEDIA_LOCATION: /media/immich
+  PUID: 0
+  PGID: 0
+  APPLY_PERMISSIONS: false
+  restore_backup: false
+  env_vars: []
+ports:
+  8080/tcp: 8080
+  5432/tcp: null
+  6379/tcp: null
+ports_description:
+  8080/tcp: Immich
+  5432/tcp: Postgresql DB
+  6379/tcp: Redis DB
+image: fabioogaravini/hassio-immich-cuda

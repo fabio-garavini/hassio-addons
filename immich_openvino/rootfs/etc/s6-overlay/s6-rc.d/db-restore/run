@@ -1,0 +1,27 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+
+set -e
+
+OPTIONS_SOURCE=/data/options.json
+
+if jq -e '.restore_backup == false' $OPTIONS_SOURCE > /dev/null; then
+  exit 0
+fi
+
+bashio::log.info "Starting Postgres dump restore..."
+
+backup_location="$(jq -r '.backup_location' $OPTIONS_SOURCE)"
+
+if [ ! -f "$backup_location" ]; then
+  bashio::log.error "$backup_location doesn't exist!"
+  exit 1
+fi
+
+bashio::log.info "Postgres restore:"
+
+gunzip --stdout "$backup_location" \
+| sed "s/SELECT pg_catalog.set_config('search_path', '', false);/SELECT pg_catalog.set_config('search_path', 'public, pg_catalog', true);/g" \
+| psql --dbname="$POSTGRES_DB" --username="$POSTGRES_USER" --single-transaction --set ON_ERROR_STOP=on
+
+bashio::log.info "Postgres restore complete"

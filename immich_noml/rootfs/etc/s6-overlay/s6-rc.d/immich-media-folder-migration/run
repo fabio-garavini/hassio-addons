@@ -1,0 +1,47 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+
+set -e
+
+CONFIG_FILE="/config/immich.json"
+
+if [ ! -f "$CONFIG_FILE" ]; then
+  echo '{}' > "$CONFIG_FILE"
+fi
+
+current_media_dir=$(jq -r ".media_location // empty" "${CONFIG_FILE}")
+
+if [ -z "$current_media_dir" ]; then
+  jq --arg path "$IMMICH_MEDIA_LOCATION" '.media_location = $path' "$CONFIG_FILE" > "${CONFIG_FILE}.tmp" && mv "${CONFIG_FILE}.tmp" "$CONFIG_FILE"
+  exit 0
+fi
+
+if [ ! -d "$current_media_dir" ] || [ ! -f "$current_media_dir/library/.immich" ]; then
+  if [ ! -d "$IMMICH_MEDIA_LOCATION" ] || [ ! -f "$IMMICH_MEDIA_LOCATION/library/.immich" ]; then
+    if [ "$current_media_dir" != "$IMMICH_MEDIA_LOCATION" ]; then
+      bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+      bashio::log.error "Unable to find a media library in source ($current_media_dir) and destination ($IMMICH_MEDIA_LOCATION). Unknown media location"
+      bashio::log.error "-----------------------------------------------------------------------------------------------------------------------"
+      bashio::log.error "This is expected if you manually moved the Immich Media folder somewhere else"
+      bashio::log.error "Make shure that 'Media Library' config point to your folder"
+      bashio::log.error "Read the DOCUMENTATION page for more information on how to migrate the Immich Media folder"
+      bashio::log.error "Ask for help: https://github.com/fabio-garavini/hassio-addons/issues"
+      bashio::addon.stop
+    else
+      bashio::log.warning "-----------------------------------------------------------------------------------------------------------------------"
+      bashio::log.warning "Unable to find a media library in ($current_media_dir)."
+      bashio::log.warning "-----------------------------------------------------------------------------------------------------------------------"
+      bashio::log.warning "This can happend if you interrupted Immich before completing the initial setup"
+    fi
+  else
+    bashio::log.warning "-----------------------------------------------------------------------------------------------------------------------"
+    bashio::log.warning "Old media location ($current_media_dir) is empty but detected existing Media library in $IMMICH_MEDIA_LOCATION"
+    bashio::log.warning "-----------------------------------------------------------------------------------------------------------------------"
+    bashio::log.warning "Skipping file migration"
+    bashio::log.warning "Setting ($IMMICH_MEDIA_LOCATION) as new media location"
+  fi
+else
+  /usr/local/bin/storage-folder-migration.sh "$current_media_dir" "$IMMICH_MEDIA_LOCATION"
+fi
+
+jq --arg path "$IMMICH_MEDIA_LOCATION" '.media_location = $path' "$CONFIG_FILE" > "${CONFIG_FILE}.tmp" && mv "${CONFIG_FILE}.tmp" "$CONFIG_FILE"
