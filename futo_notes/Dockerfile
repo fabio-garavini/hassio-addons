@@ -5,8 +5,8 @@
 ARG BUILD_FROM=oven/bun:alpine
 ARG BUILD_VERSION=0.5.1
 
-# renovate: datasource=gitlab-releases depName=futo-notes/futo-notes-server registryUrl=https://gitlab.futo.org
-ARG FUTO_NOTES_VERSION=0.5.1
+# renovate: datasource=gitlab-tags depName=futo-notes/futo-notes-server registryUrl=https://gitlab.futo.org
+ARG FUTO_NOTES_VERSION=v0.5.1
 
 #---------------------------------------------- Stage 1: build FUTO Notes from source ------------------------------------------------------------#
 FROM ${BUILD_FROM} AS futo-notes-builder
@@ -20,7 +20,7 @@ WORKDIR /app
 # Clone the pinned upstream tag shallowly and build the production bundle.
 # esbuild inlines migrations into the bundle (static imports), so we do NOT
 # need to keep src/ at runtime.
-RUN git clone --depth 1 --branch "v${FUTO_NOTES_VERSION}" https://gitlab.futo.org/futo-notes/futo-notes-server.git .; \
+RUN git clone --depth 1 --branch "${FUTO_NOTES_VERSION}" https://gitlab.futo.org/futo-notes/futo-notes-server.git .; \
     bun install --frozen-lockfile; \
     bun run build; \
     ls dist/index.js

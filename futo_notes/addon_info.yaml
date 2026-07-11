@@ -1,8 +1,8 @@
 source:
-  type: gitlab-releases
+  type: gitlab-tags
   repo: futo-notes/futo-notes-server
   current_version: 0.5.1
-  version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
+  version_template: regex:^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
   patch: 0
