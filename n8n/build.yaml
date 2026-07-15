@@ -1,3 +1,3 @@
 build_from:
-  aarch64: ghcr.io/n8n-io/n8n:2.29.10
-  amd64: ghcr.io/n8n-io/n8n:2.29.10
+  aarch64: ghcr.io/n8n-io/n8n:2.30.4
+  amd64: ghcr.io/n8n-io/n8n:2.30.4
