@@ -35,7 +35,7 @@ services:
       - TZ=Etc/UTC
     volumes:
       - immich-data:/data
-      - ./immich-options.json:/data/immich-options.json:ro
+      - ./immich-options.json:/data/options.json:ro
       - immich-config:/config
       - ssl:/ssl
       - media:/media
