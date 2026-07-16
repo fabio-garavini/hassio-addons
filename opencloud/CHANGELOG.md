@@ -1,4 +1,7 @@
-## [7.3.0](https://github.com/opencloud-eu/opencloud/releases/tag/v7.3.0) - 2026-07-14
+> [!NOTE]
+> This is a rolling release. Learn here about the [release types and lifecycle](https://docs.opencloud.eu/docs/admin/resources/lifecycle#release-types).
+
+# Release Notes OpenCloud 7.3.0
 
 ## 🎨 A Calmer, More Focused Web Interface
 
