@@ -2,6 +2,11 @@ name: monica-amd64
 services:
   monica-amd64:
     image: fabioogaravini/hassio-monica:${VERSION:-latest}-amd64
+    build:
+      context: ..
+      args:
+        BUILD_ARCH: amd64
+        BUILD_VERSION: ${VERSION:-latest}
     container_name: monica-amd64
     ports:
       - 80:80

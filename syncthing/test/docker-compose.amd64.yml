@@ -2,6 +2,11 @@ name: syncthing-amd64
 services:
   syncthing-amd64:
     image: fabioogaravini/hassio-syncthing:${VERSION:-latest}-amd64
+    build:
+      context: ..
+      args:
+        BUILD_ARCH: amd64
+        BUILD_VERSION: ${VERSION:-latest}
     container_name: syncthing-amd64
     ports:
       - "8384:8384"

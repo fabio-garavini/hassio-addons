@@ -2,6 +2,11 @@ name: gitea-aarch64
 services:
   gitea-aarch64:
     image: fabioogaravini/hassio-gitea:${VERSION:-latest}-aarch64
+    build:
+      context: ..
+      args:
+        BUILD_ARCH: aarch64
+        BUILD_VERSION: ${VERSION:-latest}
     container_name: gitea-aarch64
     ports:
       - 3000:3000

@@ -2,6 +2,11 @@ name: memos-amd64
 services:
   memos-amd64:
     image: fabioogaravini/hassio-memos:${VERSION:-latest}-amd64
+    build:
+      context: ..
+      args:
+        BUILD_ARCH: amd64
+        BUILD_VERSION: ${VERSION:-latest}
     container_name: memos-amd64
     ports:
       - 5230:5230
