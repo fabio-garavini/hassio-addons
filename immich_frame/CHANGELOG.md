@@ -1,33 +1,43 @@
-# 📦 ImmichFrame Release v1.0.35.0 – July 8, 2026
+# 📦 ImmichFrame Release v1.0.36.0 – July 14, 2026
 
-  <!-- Release notes generated using configuration in .github/release.yml at v1.0.35.0 -->
+  <!-- Release notes generated using configuration in .github/release.yml at v1.0.36.0 -->
 
-  This release fixes memories failing to load against newer Immich servers, along with a stale QR code/link bug in the info overlay.
+  This release adds a startup guard that fails fast when ImmichFrame is pointed at an incompatible Immich server, logs each server's version, and cleans up how settings are handled internally.
 
   ---
 
   ## What's Changed
 
-  ### ⚡ Fixes
+  ### ✨ New Features
 
-  #### 🐛 Fixed memories not loading on newer Immich servers
-  **PR [#660](https://github.com/immichFrame/ImmichFrame/pull/660) by @JW-CH**
+  #### 🚦 Startup version check enforces Immich v3
+  **PR [#676](https://github.com/immichFrame/ImmichFrame/pull/676) by @JW-CH**
 
-  The "on this day" memories row could fail to load entirely against newer Immich servers, which now strictly require a timezone offset on the date sent to the memories endpoint. ImmichFrame was dropping that offset before sending the request, causing Immich to reject it. The request now correctly includes your local timezone offset, so memories load reliably again.
+  ImmichFrame already targets the Immich **v3** API — this release now **enforces** it at startup. On boot, it checks the version of every configured Immich server and refuses to start if any server is older than v3, is unreachable, or its version can't be determined. Previously, an incompatible (older) server would let ImmichFrame start but then fail later with a cryptic
+  deserialization error — for example, Immich changed an asset's `duration` from a string like `"0:00:00.00000"` to integer milliseconds, which broke image loading. Now you get a clear critical log message naming the affected server, and the container stops instead of silently misbehaving.
 
-  ---
+  **What you need to do:** Make sure your Immich server(s) are on **v3.0 or newer**. If ImmichFrame won't start, check the logs for the offending server.
 
-  #### 🐛 Fixed stale QR code and "Open in Immich" link during slideshow
-  **PR [#666](https://github.com/immichFrame/ImmichFrame/pull/666) by @JoeRu**
+  > 💡 Tip: In Docker, pair this with a restart policy (e.g. `restart: unless-stopped`) so ImmichFrame retries automatically if an Immich server is still coming up during boot.
 
-  The QR code and "Open in Immich" link in the info overlay could get stuck pointing at the first photo shown, even after the slideshow moved on to new images. Opening the info overlay now always shows the QR code and link for the photo currently on screen.
-
-  ---
-
-  ## New Contributors
-
-  - 🎉 @JoeRu made their first contribution in [#666](https://github.com/immichFrame/ImmichFrame/pull/666) — welcome!
+  The bundled Immich OpenAPI spec was also bumped to **3.0.2** as part of this change.
 
   ---
 
-  **Full Changelog**: https://github.com/immichFrame/ImmichFrame/compare/v1.0.34.0...v1.0.35.0
+  #### 📋 Immich server version logging
+  **PR [#673](https://github.com/immichFrame/ImmichFrame/pull/673) by @JW-CH**
+
+  ImmichFrame now logs the version of each configured Immich server at startup, so you can confirm compatibility at a glance. Previous startup log noise was trimmed at the same time, making the logs easier to read.
+
+  ---
+
+  ### 🔨 Maintenance
+
+  #### 🔧 Simplified settings handling
+  **PR [#667](https://github.com/immichFrame/ImmichFrame/pull/667) by @JW-CH**
+
+  Settings are now split into dedicated **client** and **server** interfaces. As a result, the `/api/Config` endpoint is structurally limited to client-safe values only — server-only secrets such as API keys, the webhook URL, the authentication secret, and web-calendar URLs can no longer reach the client. This change also makes the per-account asset tracker (BloomFilter) thread-safe and reworks how the account-selection strategy is constructed for more reliable multi-account setups.
+
+  ---
+
+  **Full Changelog**: https://github.com/immichFrame/ImmichFrame/compare/v1.0.35.0...v1.0.36.0
