@@ -2,6 +2,11 @@ name: grist-amd64
 services:
   grist-amd64:
     image: fabioogaravini/hassio-grist:${VERSION:-latest}-amd64
+    build:
+      context: ..
+      args:
+        BUILD_ARCH: amd64
+        BUILD_VERSION: ${VERSION:-latest}
     container_name: grist-amd64
     ports:
       - 8080:8080

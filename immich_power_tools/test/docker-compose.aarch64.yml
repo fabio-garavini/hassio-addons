@@ -2,6 +2,11 @@ name: immich_power_tools-aarch64
 services:
   immich_power_tools-aarch64:
     image: fabioogaravini/hassio-immich-power-tools:${VERSION:-latest}-aarch64
+    build:
+      context: ..
+      args:
+        BUILD_ARCH: aarch64
+        BUILD_VERSION: ${VERSION:-latest}
     container_name: immich_power_tools-aarch64
     ports:
       - 8080:8080

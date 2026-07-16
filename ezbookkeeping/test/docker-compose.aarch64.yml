@@ -2,6 +2,11 @@ name: ezbookkeeping-aarch64
 services:
   ezbookkeeping-aarch64:
     image: fabioogaravini/hassio-ezbookkeeping:${VERSION:-latest}-aarch64
+    build:
+      context: ..
+      args:
+        BUILD_ARCH: aarch64
+        BUILD_VERSION: ${VERSION:-latest}
     container_name: ezbookkeeping-aarch64
     ports:
       - 8080:8080

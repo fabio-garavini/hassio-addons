@@ -38,7 +38,7 @@
   },
   "Accounts": [
     {
-      "ImmichServerUrl": "http://3b88f413-immich:2283",
+      "ImmichServerUrl": "http://immich:2283",
       "ApiKey": "hkQkAy8A1RV8jt9bfZUMdVRHyyYC0NnlzyFwamH4kPo",
       "ShowMemories": false,
       "ShowFavorites": false,
