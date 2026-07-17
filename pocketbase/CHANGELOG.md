@@ -1,9 +1,14 @@
 > _To update the prebuilt executable you can run `./pocketbase update`._
 
-- Added `Cc` and `Bcc` recipients to the dev `sendmail` command for consistency with the SMTP mailer.
+> [!IMPORTANT]
+> This release includes a security fix related to [#7762](https://github.com/pocketbase/pocketbase/discussions/7762).
 
-- Added extra hardening options to the Microsoft OAuth2 provider allowing developers to specify the preferred safe email extraction method ([#7756](https://github.com/pocketbase/pocketbase/discussions/7756)).
+- Replaced `github.com/go-ozzo/ozzo-validation` with the fork `github.com/pocketbase/ozzo-validation` since the original library has recently changed ownership and the new maintainer cannot be trusted.
+  _There are plans to create eventually a new validation library from scratch more suited for our needs in PocketBase because ozzo-validation is known to have some minor performance and obscure regex issues, but until then we'll stick with the fork (and if you use `ozzo-validation` in your own Go code, I'd suggest to swap the imports with the fork)_.
 
-- Updated goja and the related `golang.org/x/*` dependencies _(`WeakMap` regression fixes)_.
+- Fixed missing import collection `fields` property access ([#7760](https://github.com/pocketbase/pocketbase/issues/7760)).
 
-- Bumped the min Go GitHub action version to 1.26.5 as it includes some [minor security fixes](https://github.com/golang/go/issues?q=milestone%3AGo1.26.5).
+- Fixed View collection `*` validator and added more friendly error messages ([#7761](https://github.com/pocketbase/pocketbase/issues/7761)).
+
+- ⚠️ Security fix for unhandled panic in internal worker goroutines ([#7762](https://github.com/pocketbase/pocketbase/discussions/7762)).
+    _To prevent this from showing again, all existing internal worker functions were wrapped with [`routine.SafeWrap(f)`](https://pkg.go.dev/github.com/pocketbase/pocketbase/tools/routine#SafeWrap) (auto recovers and returns any eventual panic as regular error)._
