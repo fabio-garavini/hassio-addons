@@ -1,4 +1,4 @@
-ARG BUILD_FROM=mayswind/ezbookkeeping:1.6.0
+ARG BUILD_FROM=mayswind/ezbookkeeping:1.6.1
 
 FROM ${BUILD_FROM}
 
@@ -98,7 +98,7 @@ COPY rootfs/ /
 
 ENTRYPOINT ["/init"]
 
-ARG BUILD_VERSION=1.6.0
+ARG BUILD_VERSION=1.6.1
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION
 ARG BUILD_NAME
