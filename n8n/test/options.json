@@ -2,5 +2,15 @@
   "N8N_LOG_LEVEL": "info",
   "ssl": true,
   "certfile": "fullchain.pem",
-  "keyfile": "privkey.pem"
+  "keyfile": "privkey.pem",
+  "env_vars": [
+    {
+      "key": "NODE_ENV",
+      "value": "production"
+    },
+    {
+      "key": "DB_TYPE",
+      "value": "postgresdb"
+    }
+  ]
 }

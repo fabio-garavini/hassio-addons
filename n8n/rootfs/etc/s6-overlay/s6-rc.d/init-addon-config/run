@@ -7,16 +7,16 @@ echo "  Loading env variables:"
 
 OPTIONS_SOURCE=/data/options.json
 
-jq -r 'keys[]' "${OPTIONS_SOURCE}" | while read -r KEY; do
-    # export key
-    value=$(jq -r --arg key "$KEY" '.[$key]' "${OPTIONS_SOURCE}")
+# Process substitution avoids a subshell so exports persist.
+# env_vars array entries are unpacked into individual KEY=value pairs.
+while IFS="=" read -r KEY VALUE; do
+    [ -z "$KEY" ] && continue
 
-    # Continue for single values
-    line="${KEY}=${value}"
+    line="${KEY}=${VALUE}"
 
     # log redacted config
     case "$KEY" in
-        *PASS*|*SECRET*|*KEY*)
+        *PASS*|*SECRET*|*KEY*|*TOKEN*)
             echo "    ${KEY}=******"
             ;;
         *)
@@ -24,7 +24,8 @@ jq -r 'keys[]' "${OPTIONS_SOURCE}" | while read -r KEY; do
             ;;
     esac
 
-    export line
+    # shellcheck disable=SC2163
+    export "$line"
 
     # set .env
     echo "$line" >> /.env || true
@@ -34,10 +35,20 @@ jq -r 'keys[]' "${OPTIONS_SOURCE}" | while read -r KEY; do
 
     # For s6
     if [ -d /var/run/s6/container_environment ]; then
-        printf "%s" "$value" > /var/run/s6/container_environment/"${KEY}"
+        printf "%s" "$VALUE" > /var/run/s6/container_environment/"${KEY}"
     fi
     echo "export $line" >> ~/.bashrc
-done
+done < <(
+    jq -r '
+        to_entries[]
+        | if .key == "env_vars" then
+            .value[]? | "\(.key)=\(.value|tostring)"
+          else
+            select(.value | type != "object" and type != "array")
+            | "\(.key)=\(.value|tostring)"
+          end
+    ' "${OPTIONS_SOURCE}"
+)
 
 if [ -n "$TZ" ] && [ -f /etc/localtime ]; then
     if [ -f /usr/share/zoneinfo/"$TZ" ]; then
