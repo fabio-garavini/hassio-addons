@@ -1,11 +1,7 @@
 > _To update the prebuilt executable you can run `./pocketbase update`._
 
-- Properly reset JSVM global `$app` overwrite so that pooled executors always get a clean state.
+- Fixed `Shift + Click` range bulk selection not working in Firefox ([#7771](https://github.com/pocketbase/pocketbase/issues/7771))
 
-- Minor UI improvements:
-    - prevent resetting number inputs with leading 0 while still typing (normalized in `onchange`)
-    - added support for `Shift + Click` range bulk selection ([#7759](https://github.com/pocketbase/pocketbase/issues/7759))
+- Updated goja and its related dependencies _(fixes for TypedArray and regexp2 dep regression for the reported empty string match with lookahead patterns)_.
 
-- Bumped `golang.org/x/*` indirect dependencies as there are some minor security fixes.
-
-- Updated `modernc.org/sqlite` to v1.54.0 ([SQLite 3.53.3](https://sqlite.org/src/timeline?from=version-3.53.2&to=version-3.53.3&to2=branch-3.53)).
+- Minor filter (fexpr) improvements _(optimization for large string literals and fix for control characters handling)_.
