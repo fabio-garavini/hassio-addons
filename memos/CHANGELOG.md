@@ -1,10 +1,63 @@
-## Bug Fixes
+Memos 0.30 refreshes how you capture, write, and browse your notes. It introduces the Memos Web Clipper, a rebuilt Markdown editor, richer memo detail views, flexible multi-column feeds, faster rendering, and stronger authentication and sharing boundaries.
 
-* Task list layout - Task item content now stays in one grid column, so multi-line task items keep their text aligned with the task body.
-* Link preview descriptions - Link previews now support standard `<meta name="description">` tags, improving metadata cards for sites without Open Graph descriptions.
-* Mobile video posters - Video attachments now render poster thumbnails on mobile attachment views.
+## Introducing Memos Web Clipper
+
+Save page details, selected text, and images directly to Memos from Chromium-based browsers and Firefox. The clipper converts links, lists, code, and tables to Markdown, uploads images as attachments, and lets you review and edit every clip before saving.
+
+Choose Private, Protected, or Public visibility, customize the output with local templates, or save selected text and images as private memos from the browser context menu. Connect through usememos.com, or connect directly with your Memos instance URL and a personal access token.
+
+[Install for Chrome](https://chromewebstore.google.com/detail/memos-web-clipper/nebaoebnljalfegiidibihhkebeiklbl) · [Install for Firefox](https://addons.mozilla.org/en-US/firefox/addon/memos-web-clipper/) · [Visit website](https://usememos.com/web-clipper) · [GitHub](https://github.com/usememos/web-clipper)
+
+## Writing and browsing
+
+- **A new Markdown editor:** The editor has been rebuilt as a single CodeMirror 6 decorated-source experience. Your Markdown stays visible and unchanged while headings, formatting, tags, and mentions are styled in place. Tag completion, list indentation, focus mode, improved keyboard shortcuts, and a toggleable formatting toolbar make longer writing sessions smoother. ([5a73d7](https://github.com/usememos/memos/commit/5a73d7d3e56f853a965207ac709e8f5e84918959)) ([e3c231f](https://github.com/usememos/memos/commit/e3c231fcac5691f9590a5d685bdebec23b73be35))
+- **Richer memo details:** The memo detail page now uses a property rail for quick actions, visibility, metadata, attachments, relations, and a scroll-aware outline. When you return to a feed, Memos restores your previous scroll position. ([d4b5a16](https://github.com/usememos/memos/commit/d4b5a1695b9acf4da3ef72f600789a4a0f90e4d5)) ([e497895](https://github.com/usememos/memos/commit/e497895bf3b72cdae92e5bab6cd5b691c8eedc15))
+- **Feeds that fit your workflow:** Choose one, two, three, or automatically fitted columns, then control compact rendering and link previews. Preferences are saved, multi-column layouts stay balanced as cards resize, and newly created memos remain easy to find above pinned content. ([177d65a](https://github.com/usememos/memos/commit/177d65a90e321fa975a7cf19bd3c075143af5c10)) ([e3e4ae1](https://github.com/usememos/memos/commit/e3e4ae10512f514f71729779b5096d0d591c8cf4)) ([cafa56f](https://github.com/usememos/memos/commit/cafa56f1a8c9091062a4b220284e8ca697b050e8))
+- **Better Markdown and conversations:** GFM footnotes now render with navigation, file paste and drag-and-drop behavior is more reliable, task-list expansion is preserved, and comment pagination can load the full conversation. ([1020060](https://github.com/usememos/memos/commit/10200606db24e3d70fb8efefee99c7b0a369ddea)) ([#6076](https://github.com/usememos/memos/issues/6076)) ([ecbe2ab](https://github.com/usememos/memos/commit/ecbe2ab7977fcd3521aeae1226e816a9dc2a6a40))
+
+## Personalization and interface
+
+- **More capable filters:** Shortcut filters now support string matching, regular expressions, collection predicates, timestamp accessors, set operations, and an untagged-memos recipe. ([f0e4a56](https://github.com/usememos/memos/commit/f0e4a5624f4371e08fb0c41510891c9f8cce6ba0)) ([b787bfa](https://github.com/usememos/memos/commit/b787bfa75f74d8ee5ec271bd308c2e5a0389ed35))
+- **Personal tag settings:** Tag colors and content-blur rules now belong to each user. Existing instance-level settings are copied to current users during migration. Tags inside links are no longer misidentified, literal tags can be escaped with a backslash, and names support Unicode combining marks. ([#6017](https://github.com/usememos/memos/issues/6017)) ([a50ce09](https://github.com/usememos/memos/commit/a50ce09e8159836aed1a97fa717488283378200f)) ([#6051](https://github.com/usememos/memos/issues/6051))
+- **Clearer settings and access tokens:** Settings navigation has been refreshed, while the access-token page now includes practical guidance, a copyable API example, safety notes, and last-used timestamps. New access tokens default to no expiration. ([715306e](https://github.com/usememos/memos/commit/715306ea66306a91765d3f7c3ede8bc815d2def5)) ([cc20327](https://github.com/usememos/memos/commit/cc20327b8a1d595de6fe8915be303eddc8816756))
+- **A more consistent interface:** Sign-in, sign-up, About, mobile controls, loading states, radio indicators, tooltip arrows, and long location labels have all been refined. The locale picker is now searchable, European language coverage has expanded, and missing Japanese and Simplified Chinese translations have been completed. ([564da94](https://github.com/usememos/memos/commit/564da949cb87491ca8e493d2f7aedcd2ef9545a1)) ([4183985](https://github.com/usememos/memos/commit/418398587cef90151745ba0dbc51cef4762045ca)) ([a47d049](https://github.com/usememos/memos/commit/a47d04954e75c54491138601c72f1c0cbe140f3c))
+
+## Integrations and self-hosting
+
+- **A rebuilt MCP integration:** Memos now exposes a curated, OpenAPI-driven MCP toolset that uses the same authentication and authorization as the public API. It covers memos, comments, relations, reactions, shortcuts, identities, and attachments, including uploads, with more reliable resource routing and tool schemas. ([777d227](https://github.com/usememos/memos/commit/777d227eb992c4feccd5d78c781cf8e9094e38de)) ([0e1d821](https://github.com/usememos/memos/commit/0e1d821fb84310feff40b90d899403d45bced596)) ([390126f](https://github.com/usememos/memos/commit/390126f1cd5f6aca55a17faf031655da4354b60b))
+- **Signed, editable webhooks:** Webhooks can now use Standard Webhooks HMAC-SHA256 signing secrets. You can edit webhooks, see their signing status, and reveal a generated secret again when needed. Invalid secrets are rejected before saving. ([#6013](https://github.com/usememos/memos/issues/6013)) ([#6027](https://github.com/usememos/memos/issues/6027))
+- **File-backed deployment settings:** Identity providers and supported instance settings can be supplied as validated JSON files under `/etc/secrets`. These files act as runtime overrides and keep the corresponding settings read-only in the UI and API until removed. ([0038295](https://github.com/usememos/memos/commit/0038295bbc772b38425b6c7f9ca814e4d1e44260))
+- **More flexible S3-compatible storage:** Self-hosted deployments using self-signed certificates can opt into `insecure_skip_tls_verify`. ([#6039](https://github.com/usememos/memos/issues/6039))
+
+## Performance, reliability, and security
+
+- **Faster feeds and Explore:** Memos now caches fingerprinted assets, defers media and rich renderers until needed, renders feed content near the viewport, and shares user and memo lookups across creators, reactions, comments, mentions, and relations. This reduces startup work, rendering cost, and bandwidth. ([88c6ee8](https://github.com/usememos/memos/commit/88c6ee8ebcc341aa1d2e2ae38638a518f4745de1)) ([6c1055f](https://github.com/usememos/memos/commit/6c1055f483c92c2a95193bea07110b6775359651)) ([249b331](https://github.com/usememos/memos/commit/249b331596fd1c9ceceb4e72da8e422499be683f))
+- **Safer authentication and SSO:** SSO option loading is more stable, OAuth client authentication can be detected automatically, and first-time SSO provisioning is atomic across SQLite, MySQL, and PostgreSQL. Concurrent first sign-ins no longer leave orphaned users, and valid SSO identifiers are used as local usernames when possible. ([6c17e87](https://github.com/usememos/memos/commit/6c17e87cf61cd9c62ea4ef4e25d4adb5603ffc88)) ([96cb653](https://github.com/usememos/memos/commit/96cb65320b714ef8d7993ddb7c9182350ee9da4c)) ([019f4f9](https://github.com/usememos/memos/commit/019f4f9adcfcfca73fc9e2a966d0569fac888a2c))
+- **Cleaner and more compatible APIs:** Legacy UUID-based identifiers remain supported while new resource names follow AIP conventions. User-facing errors no longer expose internal RPC prefixes, bearer-token cross-origin requests work without weakening same-origin cookie protection, and user lists paginate consistently. ([84776cc](https://github.com/usememos/memos/commit/84776cc106745278371e5a8c8d43abca6d38e8b5)) ([b7d5d09](https://github.com/usememos/memos/commit/b7d5d09f8a7445076811d6f53b98d3445ce3afac)) ([0bfeb91](https://github.com/usememos/memos/commit/0bfeb91d50fdd4bafd15c13bb02b3e2810d4b2e4)) ([385fa22](https://github.com/usememos/memos/commit/385fa22056c51a42a0eb99fd08a8876009c2c52d))
+- **Deployment polish:** The container entrypoint no longer restarts indefinitely when `MEMOS_UID=0`, and the demo instance now uses representative public and protected memos to showcase tags, references, comments, mentions, reactions, locations, attachments, and rich Markdown. ([#6061](https://github.com/usememos/memos/issues/6061)) ([469c995](https://github.com/usememos/memos/commit/469c995cc04b5e7de259156d28c58b948e85d111))
+
+## Before upgrading
+
+The following changes affect instance configuration, saved filters, shared-memo API clients, or existing MCP clients:
+
+- **Public and private instances:** Instances without `--instance-url` or `MEMOS_INSTANCE_URL` now run in private mode. Anonymous visitors are sent to sign-in, anonymous API access is limited to setup, authentication, and shared-memo routes, and RSS feeds are unavailable. Set the instance URL to keep the previous public behavior. ([d1cef7a](https://github.com/usememos/memos/commit/d1cef7a9ab23e8c93f76b2f32661c720c733536d)) ([415a3ec](https://github.com/usememos/memos/commit/415a3ec73d7abee4496eab39b4d135a89387cdc6))
+- **Shared memo API:** `GetMemoByShare` and `GET /api/v1/shares/{share_id}` have been replaced by `GetSharedMemo` and `GET /api/v1/shares/{share_token}/memo`. Share-token responses now contain only the shared memo and its attachments, without the surrounding parent, comments, or relation graph. ([0d2cbd4](https://github.com/usememos/memos/commit/0d2cbd4f5a410a8edc2093b8834f8f13f6ca9ad6)) ([415a3ec](https://github.com/usememos/memos/commit/415a3ec73d7abee4496eab39b4d135a89387cdc6))
+- **Saved time filters:** `now()` has been replaced by the `now` timestamp variable, and time fields now use CEL timestamps. Update shortcuts to expressions such as `created_ts >= now - duration("24h")` or `timestamp(<epoch>)` instead of comparing time fields with bare epoch values. ([26f4b73](https://github.com/usememos/memos/commit/26f4b73cb9a996f9232daad2b5daa34360742697))
+- **MCP clients:** The MCP server is now a stateless, tools-only endpoint at `/mcp` with service-prefixed tool names. Prompts, resources, tool-filtering headers, route aliases, and unprefixed names have been removed. Tool errors now use `isError` with text content instead of `structuredContent.error`. ([#6026](https://github.com/usememos/memos/issues/6026)) ([03e34bd](https://github.com/usememos/memos/commit/03e34bd0da2f225addbd00d6a7bb5a472c83aed8))
 
 ## New Contributors
-* @goingforstudying-ctrl made their first contribution in https://github.com/usememos/memos/pull/6000
+* @ay5399 made their first contribution in https://github.com/usememos/memos/pull/6016
+* @YigesMx made their first contribution in https://github.com/usememos/memos/pull/6013
+* @manjieqi made their first contribution in https://github.com/usememos/memos/pull/6033
+* @mahirhir made their first contribution in https://github.com/usememos/memos/pull/6048
+* @lukas346 made their first contribution in https://github.com/usememos/memos/pull/6050
+* @santhoshtr made their first contribution in https://github.com/usememos/memos/pull/6051
+* @blackflytech made their first contribution in https://github.com/usememos/memos/pull/6058
+* @grandpig made their first contribution in https://github.com/usememos/memos/pull/6060
+* @archit-goyal made their first contribution in https://github.com/usememos/memos/pull/6065
+* @weifanglab made their first contribution in https://github.com/usememos/memos/pull/6069
+* @TowyTowy made their first contribution in https://github.com/usememos/memos/pull/6083
+* @WindLX made their first contribution in https://github.com/usememos/memos/pull/6084
+* @harpchad made their first contribution in https://github.com/usememos/memos/pull/6108
 
-**Full Changelog**: https://github.com/usememos/memos/compare/v0.29.0...v0.29.1
+**Full Changelog**: https://github.com/usememos/memos/compare/v0.29.1...v0.30.0
