@@ -1,64 +1,63 @@
 ## What's Changed
 
-Airtable imports of large schemas no longer time out. Forms can substitute the new record's ID into a redirect URL with `{{ID}}`. ACL condition editors no longer render blank in Firefox below 100% zoom. The Quick Setup flow gained a telemetry toggle and a recommendation to use getgrist.com authentication. Two new Admin Panel boot probes warn when document data may not survive a restart and report how outgoing requests are gated. Building grist-core from source now produces the full edition by default, with `yarn install:community` for the previous behavior. In the full edition, OAuth apps now support OAuth Dynamic Client Registration (RFC 7591), so OAuth and MCP (Model Context Protocol) clients can register without being pre-provisioned, and apps can manage webhooks with just the `doc:webhooks` permission instead of the broader `doc.schema:write`.
+### New features
+
+* **Row numbers, row IDs, or neither**. A new "Row numbers" setting on grid widgets, in Grid Options and in a menu at the grid's top-left corner. Choose Numbers (position in the current sort, as before), Row IDs (bracketed like `[15]`, matching how references render), or Hidden, which collapses the left-hand gutter. Addresses #220, open since 2022, and #1927. (#2448)
+* **Setup checklist for notifications and automations**. Notifications, automations, invite emails, and the AI assistant each need plumbing behind them (an email backend, a Redis queue, an AI provider, the full edition), and when a prerequisite is missing the feature simply isn't there. Document Settings now lists what's ready and what each unfinished feature is waiting on. Users can press "Ask the admin" to request a step; admins see the requests in a new Admin Panel item. ([commit](https://github.com/gristlabs/grist-core/commit/a29e94aa))
+* **Switch to the full edition from the Admin Panel**. Previously this meant changing Docker image. Now it's a button, in the Admin Panel or the first step of Quick Setup: the server downloads the extensions matching its own version, checks their SHA-256, and restarts in place. Offered on release builds only, not on `main`, nightlies, or dev checkouts. `GRIST_EXT_FULL_EDITION_BASE_URL` points it at a mirror, or turns it off for air-gapped installs. (#2450)
+* **"Help us improve" in Quick Setup**. First-time setup now ends with an optional card: how you heard about Grist, what kind of user you are, and a switch subscribing an email address to product and security updates. It appears during setup only, and if you leave it blank nothing is sent at all. What you fill in goes to Grist Labs, along with your installation ID. ([commit](https://github.com/gristlabs/grist-core/commit/5af0acb7))
 
 ### Improvements
 
-* Forms
-  * Redirect URLs can substitute the submitted record's ID with `{{ID}}`, so a form can send the user to a page about their own submission (#1831)
-* Airtable import
-  * Large schemas are imported by submitting `ModifyColumn` actions in batches of 25, avoiding gateway timeouts on bases with many columns ([commit](https://github.com/gristlabs/grist-core/commit/f8c45df3))
-* Custom widgets
-  * Reverted a restriction that disallowed same-origin custom-widget URLs, which had broken some unusual but legitimate setups ([commit](https://github.com/gristlabs/grist-core/commit/eb483ef5))
-* Quick Setup
-  * Telemetry can be turned on during the Quick Setup flow, instead of only from the Admin Panel or an environment variable (#2419)
-  * The authentication step recommends getgrist.com authentication with a hero card when no other provider is configured (#2410)
-* Admin Panel
-  * New "persist-data" boot probe warns when documents and the home DB sit on ephemeral storage and would be lost on restart (the Docker default with no volume at `/persist`, a RAM filesystem, or the container's root mount). Shown in the Admin Panel and as a banner on the Backups page; external storage or Postgres count as durable (#2396)
-  * New "Outgoing requests" boot probe and Security Settings entry report how user-triggered outgoing requests (`REQUEST()`, webhooks, Import from URL) are gated by `GRIST_PROXY_FOR_UNTRUSTED_URLS` (#2294)
-  * Edition is now its own card, the legacy Enterprise toggle is gone, switching edition clears the activation key, and the trial banner links to Admin Panel / Edition ([commit](https://github.com/gristlabs/grist-core/commit/3b2ee8e8))
-* Build / packaging
-  * `yarn install` in grist-core now builds the full edition by default, via a post-install hook that downloads the `ext` material from grist-ee. Use `yarn install:community` to skip it (the previous behavior) or `yarn install:full` to opt in explicitly. The chosen edition is saved to `.grist-edition`, `GRIST_EDITION` takes precedence, and `GRIST_SKIP_EXT_AUTOSETUP` skips the hook for contexts where extensions are installed manually (Docker builds, grist-desktop, grist-static) ([commit](https://github.com/gristlabs/grist-core/commit/b0fa5fb8))
-* Internal / infrastructure
-  * File uploading refactored so uploads route to the correct doc worker (doc-specific endpoints) or travel in the main request (imports), in preparation for simpler multi-server configuration ([commit](https://github.com/gristlabs/grist-core/commit/22343c37))
-  * Bump `@gristlabs/node-sqlite3` (#2392)
-  * Test database connection now verifies it points at the database the caller asked for, fixing `DocApiMisc` share tests that failed after certain other suites (#2402)
+* Accessibility
+  * Modals and popups are announced as dialogs by screen readers, and Tab is trapped inside an open modal. Fixes a Mousetrap bug that let keyboard focus wander behind a modal. Contributed by @manuhabitela (#2371). Keyboard focus now works from the tooltip-style popups inside modals as well ([commit](https://github.com/gristlabs/grist-core/commit/6e175355))
+* API
+  * Temporary row IDs are now translated inside RefList values, not just Ref values and row-ID positions. Rows that reference each other through RefList columns can be created in one bundle (#2477)
+* UI/UX
+  * The Grist edition and version show in the left panel footer, with links to compare editions and to release notes. Previously visible only in the Admin Panel (#2470)
+* Internationalization
+  * "Enable Access Rules", the form reset warning, and the color picker's `fill` / `text` / `default` / `none` labels are now translatable. Contributed by @fflorent (#2451)
+* Documentation
+  * `documentation/database.md` is back in sync with the schema, with a regenerated home DB diagram. Contributed by @fflorent (#2458)
+  * Freshened the comments that feed the generated reference on [support.getgrist.com](https://support.getgrist.com/), with formatting fixes and a broken link repaired (#2462)
+  * The README caught up with the last several releases: accessibility, Automations, OAuth apps, the MCP server, three new environment variables, and a table of full edition feature flags (#2443)
 
 ### Fixes
 
-* Duplicate document and Save Copy no longer fail with "Unknown Host" when both `GRIST_PROXY_FOR_UNTRUSTED_URLS` and `APP_DOC_INTERNAL_URL` are set, since trusted internal URLs now use a direct fetch instead of the untrusted-URL proxy (#2344)
-* ACL condition editors no longer render blank in Firefox at browser zoom below 100% (#2390)
-* Undo no longer fails for certain action bundles that combine a table or column rename with a column removal in the same step. Normal web-client editing was unaffected, since those happen as separate bundles (#2387)
-* Locale document setting description now correctly says it affects only number formatting and the default currency, not date formatting (#2397)
+* "View as" is preserved for attachment previews and whole-document exports, which previously resolved as the document owner (#2478)
+* An Airtable reference column holding a single value imported as unusable text rather than a working reference, leaving the raw Airtable ID behind as alt text (#2446)
+* Airtable count columns no longer error when the column they count was imported as a Ref rather than a RefList (#2447)
+* In Markdown cells at a max row height, wrapped list items could overlap the lines below (#2465)
+* Improved error reporting when comparing documents via the API (`/compare`) ([commit](https://github.com/gristlabs/grist-core/commit/b2145fe0))
+* The server could crash when a client disconnected part-way through a proxied request ([commit](https://github.com/gristlabs/grist-core/commit/723f7edd))
+* The "reachable" self-check reported a false failure whenever anonymous access was disabled (#2420)
+* Redirects when `GRIST_PERSONAL_ORGS` is disabled have been improved (#2420)
 
 ### Full Grist edition extensions
 
 * OAuth apps
-  * Dynamic Client Registration (RFC 7591): OAuth and MCP clients can register without being pre-provisioned, enabled with `GRIST_ENABLE_OIDC_DCR`. The `POST /oidc/reg` endpoint is rate-limited (`GRIST_OIDC_DCR_RATE_LIMIT`), clients can register without specifying scopes (common for MCP servers), and a Housekeeper job prunes clients with no grants or only expired ones ([commit](https://github.com/gristlabs/grist-core/commit/66c2a94f)). See the [OAuth apps](https://support.getgrist.com/oauth-apps/) and [Connected apps](https://support.getgrist.com/connected-apps/) docs.
-  * Apps can manage webhooks with just the `doc:webhooks` permission. Webhook changes used to count as editing document structure, which required `doc.schema:write`; they now go through a helper that only touches the webhooks table, so the narrower permission is enough ([commit](https://github.com/gristlabs/grist-core/commit/c8554ce4))
-* Assistant
-  * Conditional style tools are now part of the v2 AI assistant, and `set_table_conditional_styles` is no longer destructive: it changes styles only, with no data loss ([commit](https://github.com/gristlabs/grist-core/commit/42d1d441))
+  * Re-authorizing a client pre-selects the resources you granted before instead of resetting the grant to everything, and skips the account picker when it can identify the account. Switching accounts no longer invalidates the previous account's tokens ([commit](https://github.com/gristlabs/grist-core/commit/738cbd8b))
+  * A server without `GRIST_ENABLE_OIDC_SERVER` explains how to enable OAuth apps, instead of rendering UI over endpoints that 404 ([commit](https://github.com/gristlabs/grist-core/commit/738cbd8b))
 * MCP
-  * Telemetry added for MCP calls (`mcpToolCall` and `mcpSessionStart` events, full telemetry level only), counting tool calls and unique sessions per doc and per org. The server now reads client name and version on initialize ([commit](https://github.com/gristlabs/grist-core/commit/5c5b0c3e)). The [Grist MCP server](https://support.getgrist.com/mcp/) is now documented
-  * Further MCP tool work (hosted Grist only): `create_table` builds columns in one atomic transaction, new tools for widget field config (column width) and table conditional styles, `add_records`/`update_records` preserve unspecified fields across mixed-shape records, widget tools gained sort and per-column filter support, and a fix for self-referential `Ref` columns with a show column ([commit](https://github.com/gristlabs/grist-core/commit/8d96677d))
-* Automations and Audit Logs
-  * Dropped the "New" tag from Automations and Audit Logs, and changed the Audit Logs tag to "full Edition" ([commit](https://github.com/gristlabs/grist-core/commit/70e32cb4))
+  * A banner on the home page and a card on the OAuth apps page explain how to connect using MCP. See the [MCP docs](https://support.getgrist.com/mcp/) ([commit](https://github.com/gristlabs/grist-core/commit/ff644998))
+  * Clients passing a document's urlId in place of `doc_id` no longer get "Doc belongs to a different DocWorker" ([commit](https://github.com/gristlabs/grist-core/commit/96367798))
+  * Document calls now travel to the server holding the document through the same forwarding as the rest of the document API, rather than MCP's own, which means MCP works with Fleet ([commit](https://github.com/gristlabs/grist-core/commit/b2145fe0))
+* Grist Fleet
+  * New. Any Grist server in a pool of servers will now proxy WebSocket connections and document API calls to whichever peer server holds the document. Every server can then be deployed the same way behind a load balancer, with no separate home / static / doc worker configuration. Requires `GRIST_FLEET=true` and the `installationFleet` feature in an Enterprise activation key ([commit](https://github.com/gristlabs/grist-core/commit/2def9e86))
 
 ## Contributions
 
 * Grist Labs: @berhalak, @dsagal, @georgegevoian, @paulfitz, @Spoffy
-* @guillett: id substitution in form redirect URLs (#1831)
-* @eloupias: direct fetch for trusted URLs behind a proxy (#2344)
-* @fflorent: bump `@gristlabs/node-sqlite3` (#2392)
+* @manuhabitela: keyboard and screen-reader support in modals and popups (#2371)
+* @fflorent: refresh and expand the database documentation (#2458), localize remaining UI strings (#2451)
 
 ### Translations
 
-* Arif Budiman
 * Barna Kovács
-* Grégoire Cutzach
-* Kévin DUPOND
+* linke
 * Martin Harari Thuresson
+* npluto
 
-**Full Changelog**: https://github.com/gristlabs/grist-core/compare/v1.7.15...v1.7.16
+**Full Changelog**: https://github.com/gristlabs/grist-core/compare/v1.7.16...v1.7.17
 
 [Join our Discord Community](https://discord.gg/MYKpYQ3fbP) if you'd like to get into development of Grist.
