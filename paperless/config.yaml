@@ -1,5 +1,5 @@
 name: Paperless
-version: 2.20.15-v2
+version: 3.0.5
 slug: paperless
 description: Document management system that transforms your physical documents
   into a searchable online archive
@@ -130,7 +130,7 @@ schema:
   PAPERLESS_ADMIN_PASSWORD: password
   PAPERLESS_OCR_LANGUAGE: str?
   PAPERLESS_OCR_LANGUAGES: str?
-  PAPERLESS_SECRET_KEY: password?
+  PAPERLESS_SECRET_KEY: password
   PAPERLESS_CONSUMER_POLLING: int(0,)?
   PAPERLESS_TRUSTED_PROXIES: str?
   PAPERLESS_CONSUMPTION_DIR: str
@@ -161,6 +161,7 @@ options:
   PAPERLESS_MEDIA_ROOT: /share/paperless
   PAPERLESS_EXPORT_DIR: /share/paperless/export
   PAPERLESS_EMPTY_TRASH_DIR: /share/paperless/.trash
+  PAPERLESS_SECRET_KEY: secret-key
   storage_mounts: []
   env_vars: []
 ports:

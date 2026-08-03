@@ -7,5 +7,6 @@
   "PAPERLESS_TIME_ZONE": "Etc/UTC",
   "PAPERLESS_TRUSTED_PROXIES": "172.30.32.0/23",
   "storage_mounts": [],
-  "env_vars": []
+  "env_vars": [],
+  "PAPERLESS_SECRET_KEY": "secret-key"
 }
