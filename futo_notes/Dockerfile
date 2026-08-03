@@ -43,8 +43,8 @@ ENV \
     S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_READYTIME=50
 
-# hadolint ignore=DL3064
 # FUTO Notes runtime environment (consumed by `bun dist/index.js`).
+# hadolint ignore=DL3064
 ENV \
     NODE_ENV=production \
     SERVICE_PORT=3000 \
@@ -53,9 +53,9 @@ ENV \
     BLOB_DIR=/data/blobs \
     AUTH_MODE=password
 
-# hadolint ignore=DL3064
 # Bundled Postgres runtime environment (consumed by .common/postgres' s6
 # services: init-postgres/run reads PGDATA / POSTGRES_USER / POSTGRES_DB / PG_MAJOR).
+# hadolint ignore=DL3064
 ENV \
     PG_MAJOR=16 \
     PGDATA=/data/postgres \

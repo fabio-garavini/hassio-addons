@@ -7,8 +7,8 @@ FROM ghcr.io/n8n-io/runners:${BUILD_VERSION%-v*} AS runner
 
 FROM ${BUILD_FROM}
 
-# hadolint ignore=DL3064
 # n8n environment variables
+# hadolint ignore=DL3064
 ENV \
     NODE_ENV=production \
     N8N_EDITION="community" \
