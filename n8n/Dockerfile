@@ -8,6 +8,7 @@ FROM ghcr.io/n8n-io/runners:${BUILD_VERSION%-v*} AS runner
 FROM ${BUILD_FROM}
 
 # n8n environment variables
+# hadolint ignore=DL3064
 ENV \
     NODE_ENV=production \
     N8N_EDITION="community" \
@@ -27,7 +28,7 @@ ENV \
     N8N_NATIVE_PYTHON_RUNNER=true \
     N8N_RUNNERS_TASK_BROKER_URI="http://localhost:5679"
 
-# hadolint ignore=DL3002
+# hadolint ignore=DL3002,DL3066
 USER root
 
 # renovate: datasource=repology depName=alpine_3_22/apk-tools-static versioning=loose
