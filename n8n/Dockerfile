@@ -135,6 +135,7 @@ RUN set -e; \
 COPY --from=runner --chown=root:root /opt/runners/task-runner-javascript /opt/runners/task-runner-javascript
 COPY --from=runner --chown=root:root /opt/runners/task-runner-python /opt/runners/task-runner-python
 
+COPY .common/addon-config/ /
 COPY .common/redis/ /
 
 COPY rootfs/ /
