@@ -11,28 +11,9 @@ on:
       - dev
 
 env:
-  HADOLINT_VERSION: v1.17.2
   SHELLCHECK_OPTS: -e SC1008 -s bash
 
 jobs:
-  hadolint:
-    runs-on: ubuntu-latest
-    name: hadolint
-    steps:
-      - name: Check out the repository
-        uses: actions/checkout@v7
-
-      - name: Run linter
-        id: changed_files
-        run: |
-          shopt -s globstar
-          for dockerfile in **/Dockerfile; do
-            echo "Linting: $dockerfile"
-            docker run --rm -i \
-              -v $(pwd)/.github/hadolint.yaml:/.hadolint.yaml:ro \
-              hadolint/hadolint:latest < "$dockerfile"
-          done
-
   yamllint:
     runs-on: ubuntu-latest
     name: YAMLLint
@@ -96,6 +77,22 @@ jobs:
     steps:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v7
+      
+      - name: Check if Dockerfile exists
+        id: dockerfile
+        shell: bash
+        run: |
+          if [[ -f "./${{ matrix.path }}/Dockerfile" ]]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Hadolint
+        if: steps.dockerfile.outputs.exists == 'true'
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: ./${{ matrix.path }}/Dockerfile
 
       - name: 🚀 Run Home Assistant Add-on Lint
         uses: frenck/action-addon-linter@v2
