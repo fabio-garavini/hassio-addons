@@ -3,11 +3,6 @@
 
 set -Eeo pipefail
 
-if [ -z "${FUTO_NOTES_PASSWORD_HASH:-}" ]; then
-  echo "[svc-futo-notes] FATAL: FUTO_NOTES_PASSWORD_HASH is not set; init-futo-notes did not run." >&2
-  exit 1
-fi
-
 mkdir -p "${BLOB_DIR:-/data/blobs}"
 chown bun:bun "${BLOB_DIR:-/data/blobs}"
 
