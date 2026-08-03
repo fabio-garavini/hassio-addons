@@ -27,6 +27,7 @@ ENV PAPERLESS_PORT=8000 \
     PAPERLESS_TIKA_GOTENBERG_ENDPOINT="http://localhost:3000" \
     PAPERLESS_TIKA_ENDPOINT="http://localhost:9998"
 
+# hadolint ignore=DL3064
 ENV \
     REDIS_DATADIR="/config/redis" \
     PG_MAJOR=15 \

@@ -43,6 +43,7 @@ ENV \
     S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_READYTIME=50
 
+# hadolint ignore=DL3064
 # FUTO Notes runtime environment (consumed by `bun dist/index.js`).
 ENV \
     NODE_ENV=production \
@@ -52,6 +53,7 @@ ENV \
     BLOB_DIR=/data/blobs \
     AUTH_MODE=password
 
+# hadolint ignore=DL3064
 # Bundled Postgres runtime environment (consumed by .common/postgres' s6
 # services: init-postgres/run reads PGDATA / POSTGRES_USER / POSTGRES_DB / PG_MAJOR).
 ENV \
@@ -91,8 +93,6 @@ RUN apk add --no-cache \
     logrotate \
     postgresql-common
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
 # Addon base configuration
 ARG BUILD_ARCH=amd64
 # renovate: datasource=github-releases packageName=hassio-addons/bashio
@@ -102,9 +102,7 @@ ARG S6_OVERLAY_VERSION="3.2.1.0"
 # renovate: datasource=github-releases packageName=home-assistant/tempio
 ARG TEMPIO_VERSION="2024.11.2"
 RUN \
-    set -o pipefail \
-    \
-    && apk add --no-cache --virtual .build-dependencies \
+    apk add --no-cache --virtual .build-dependencies \
         tar \
         xz \
     \

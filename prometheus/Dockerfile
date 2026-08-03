@@ -1,7 +1,7 @@
 ARG BUILD_FROM=prom/prometheus:v3.13.1
 FROM ${BUILD_FROM}
 
-# hadolint ignore=DL3002
+# hadolint ignore=DL3002,DL3066
 USER root
 
 ARG BUILD_VERSION \
