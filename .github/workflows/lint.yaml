@@ -72,6 +72,7 @@ jobs:
     needs: find
     if: needs.find.outputs.changed == 'true'
     strategy:
+      fail-fast: false
       matrix:
         path: ${{ fromJson(needs.find.outputs.addons) }}
     steps:
