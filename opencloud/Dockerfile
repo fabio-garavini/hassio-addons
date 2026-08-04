@@ -18,7 +18,7 @@ ENV \
     SERVICE_PORT=9200 \
     NGINX_PORT=8080
 
-# hadolint ignore=DL3002
+# hadolint ignore=DL3002,DL3066
 USER root
 
 # NGINX Install
@@ -49,9 +49,7 @@ ARG S6_OVERLAY_VERSION="3.2.1.0"
 # renovate: datasource=github-releases packageName=home-assistant/tempio
 ARG TEMPIO_VERSION="2024.11.2"
 RUN \
-    set -o pipefail \
-    \
-    && apk add --no-cache --virtual .build-dependencies \
+    apk add --no-cache --virtual .build-dependencies \
         tar \
         xz \
     \

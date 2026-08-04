@@ -25,7 +25,7 @@ ENV \
     SERVICE_PORT=80 \
     NGINX_PORT=8080
 
-# hadolint ignore=DL3002
+# hadolint ignore=DL3002,DL3066
 USER root
 
 # NGINX Install

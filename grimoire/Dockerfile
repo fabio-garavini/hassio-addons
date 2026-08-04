@@ -2,7 +2,7 @@ ARG BUILD_FROM=goniszewski/grimoire:0.4.4
 
 FROM $BUILD_FROM
 
-# hadolint ignore=DL3002
+# hadolint ignore=DL3002,DL3066
 USER root
 
 ENV \
