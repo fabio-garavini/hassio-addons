@@ -3,7 +3,7 @@
 # Matches `build.yaml`'s `build_from` so the HA builder's --target resolves
 # to this base.
 ARG BUILD_FROM=oven/bun:alpine
-ARG BUILD_VERSION=0.5.1
+ARG BUILD_VERSION=0.6.0
 
 # renovate: datasource=gitlab-tags depName=futo-notes/futo-notes-server registryUrl=https://gitlab.futo.org
 ARG FUTO_NOTES_VERSION=v0.6.0
