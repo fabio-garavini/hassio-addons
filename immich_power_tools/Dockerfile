@@ -26,6 +26,7 @@ ENV \
     VERSION=${BUILD_VERSION%-v*} \
     HOSTNAME='0.0.0.0'
 
+# hadolint ignore=DL3064
 ENV \
     DB_USERNAME=immich \
     DB_PASSWORD=immich \
