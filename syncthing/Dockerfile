@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/linuxserver/syncthing:v2.1.2-ls226
+ARG BUILD_FROM=ghcr.io/linuxserver/syncthing:v2.1.3-ls227
 
 FROM ${BUILD_FROM}
 
