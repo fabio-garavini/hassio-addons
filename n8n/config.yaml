@@ -29,7 +29,11 @@ schema:
   keyfile: str?
   N8N_HOST: str?
   N8N_PATH: str?
-  WEBHOOK_URL: str?
+  N8N_WEBHOOK_URL: str?
+  N8N_UNVERIFIED_PACKAGES_ENABLED: bool?
+  N8N_RUNNERS_TASK_TIMEOUT: int(0,)?
+  N8N_COMPRESSION_NODE_MAX_DECOMPRESSED_SIZE_BYTES: int(0,)?
+  N8N_COMPRESSION_NODE_MAX_ZIP_ENTRIES: int(0,)?
   clean_redis: bool?
   env_vars:
     - key: match(^[A-Za-z0-9_-]+$)
