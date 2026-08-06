@@ -13,7 +13,7 @@ fi
 
 protocol="http"
 
-if ! port=$(bashio::addon.port 5678 2>/dev/null); then
+if ! port=$(bashio::app.port 5678 2>/dev/null); then
     port=5678
 fi
 

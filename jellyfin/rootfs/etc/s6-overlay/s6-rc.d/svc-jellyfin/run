@@ -9,7 +9,7 @@ if [ ! -v JELLYFIN_PublishedServerUrl ]; then
         ha_address="0.0.0.0/32"
     fi
 
-    export JELLYFIN_PublishedServerUrl="http://${ha_address%%/*}:$(bashio::addon.port 8080)"
+    export JELLYFIN_PublishedServerUrl="http://${ha_address%%/*}:$(bashio::app.port 8080)"
 fi
 
 cd /jellyfin || exit 1
