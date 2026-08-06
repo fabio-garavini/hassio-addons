@@ -1,4 +1,4 @@
-ARG BUILD_FROM=lscr.io/linuxserver/calibre:v9.12.0-ls414
+ARG BUILD_FROM=lscr.io/linuxserver/calibre:v9.12.0-ls415
 
 FROM ${BUILD_FROM}
 
