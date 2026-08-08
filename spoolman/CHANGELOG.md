@@ -1,30 +1,27 @@
-Spoolman has a new web client. It's a rewrite from scratch, and from this release on it's what you get by default. It's faster, much better phone compatibility, and it brings a pile of things the old client couldn't do:
-* New Library view, that combines the old manufacturer/filament/spool pages into a single unified view. Much better user experience, and no longer do you need to mess with wide column problems.
-* Much better support for adding and maintaining large number of spools. The library collapses unused spools, the add spool form lets you add many spools in an easier way, etc.
-* New unified spool adding flow, add both spool, filament and manufacturer info in one go.
-* Custom label designs, a new editor lets you design the labels in much better detail.
-* Free text search with color-similarity support.
-* Locations page has been renamed to "Dashboard" instead, and it can now group spools by not only Location, but any spool-based extra field. So it can be used to organize by status, etc.
-* Full mobile support, with proper button sizes and an UI that reshapes itself to fit any size of screen.
-* And many more small quality of life improvements throughout the frontend.
+Mostly updates to the frontend to fix issues that came in, enjoy!
 
-The old React client still ships in every image. If the new one misbehaves on your setup, set `SPOOLMAN_LEGACY_CLIENT=TRUE` to go back to it. Both talk to the same API, so your data is untouched either way. Please open an issue if you have to do that, so it can be fixed.
+## What's Changed
+* fix: last-used sort order and the phantom "in use" label by @Donkie in https://github.com/Donkie/Spoolman/pull/990
+* fix(add): let filament extra fields be filled in while creating a filament by @Donkie in https://github.com/Donkie/Spoolman/pull/997
+* client_v2: add delete for filaments and manufacturers by @Donkie in https://github.com/Donkie/Spoolman/pull/998
+* Show all filament and manufacturer fields in the library detail views by @Donkie in https://github.com/Donkie/Spoolman/pull/999
+* fix(library): make the group header's destinations findable by @Donkie in https://github.com/Donkie/Spoolman/pull/1001
+* Security: Unsafe JSON parsing of application settings by @tomaioo in https://github.com/Donkie/Spoolman/pull/1003
+* Distinguish the search result material tag from the match tag by @Donkie in https://github.com/Donkie/Spoolman/pull/1005
+* Allow reordering of extra field choices by @Donkie in https://github.com/Donkie/Spoolman/pull/1007
+* Offer a filament's spools in the search results by @Donkie in https://github.com/Donkie/Spoolman/pull/1006
+* fix(api): strip leading # from filament color codes by @Sanjays2402 in https://github.com/Donkie/Spoolman/pull/987
+* Reload on 401 so a forward-auth session can recover by @Donkie in https://github.com/Donkie/Spoolman/pull/1008
+* client_v2: let a spool's filament be changed by @Donkie in https://github.com/Donkie/Spoolman/pull/1014
+* client_v2: per-spool weight and spool weight overrides by @Donkie in https://github.com/Donkie/Spoolman/pull/1015
+* client_v2: file unused spools under their own filament by @Donkie in https://github.com/Donkie/Spoolman/pull/1016
+* client_v2: let a filament's manufacturer be changed by @Donkie in https://github.com/Donkie/Spoolman/pull/1020
+* ci: merge Weblate PRs instead of squashing them by @Donkie in https://github.com/Donkie/Spoolman/pull/1021
+* Show every unassigned spool when grouping by an extra field by @Donkie in https://github.com/Donkie/Spoolman/pull/1025
+* Point the translation workflows at client_v2, close the legacy client to translation by @Donkie in https://github.com/Donkie/Spoolman/pull/983
 
-The new frontend having been made from scratch does mean a lot of text needs to be translated again, but I've tried reusing old translations as much as possible.
+## New Contributors
+* @tomaioo made their first contribution in https://github.com/Donkie/Spoolman/pull/1003
+* @Sanjays2402 made their first contribution in https://github.com/Donkie/Spoolman/pull/987
 
-## Frontend
-* Brand new web client, served by default. Both clients ship in the image, `SPOOLMAN_LEGACY_CLIENT=TRUE` switches back to the old one.
-
-## Backend
-* New cross-entity search endpoint. Search now matches every whitespace-separated term, matches filaments by their vendor's name, and can also search by color similarity!
-* Rename a field value, location, material, and so on, across every spool at once.
-* The external filament library's display name is now configurable via `EXTERNAL_DB_NAME`.
-* Performance: extra fields load in a single extra query instead of a join, color similarity search scales with the number of matches rather than the catalog size, and editing a filament no longer fans out one websocket message per spool.
-* Security hardening: cross-origin writes and websockets are refused, CORS credentials are dropped under a wildcard origin, CSV export values are escaped against formula injection, extra-field sizes are bounded, and there's an opt-in host guard.
-* Backup rotation no longer deletes your restore history.
-* Fixed a 500 on `/info` when the external database name couldn't be resolved.
-* Malformed sort parameters return 400 instead of 500.
-* Extra field values can be cleared again.
-* Builds now run on Node 24 and Vite 8.
-
-**Full Changelog**: https://github.com/Donkie/Spoolman/compare/v0.25.0..https://github.com/Donkie/Spoolman/compare/v0.26.0
+**Full Changelog**: https://github.com/Donkie/Spoolman/compare/v0.26.0...v0.26.1
