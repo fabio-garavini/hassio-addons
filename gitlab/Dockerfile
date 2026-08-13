@@ -58,7 +58,7 @@ RUN { \
 
 RUN \
     set -e; \
-    if [[ "${BUILD_ARCH}" == "aarch64" ]]; then \
+    if [[ "${BUILD_ARCH}" = "aarch64" ]]; then \
         export DOWNLOAD_ARCH="arm64"; \
     else \
         export DOWNLOAD_ARCH=${BUILD_ARCH}; \
@@ -79,7 +79,7 @@ ENV PATH=/opt/gitlab/embedded/bin:/opt/gitlab/bin:/assets:$PATH
 CMD ["/assets/init-container"]
 
 HEALTHCHECK --interval=60s --timeout=30s --retries=5 \
-CMD /opt/gitlab/bin/gitlab-healthcheck --fail --max-time 10
+CMD ["/opt/gitlab/bin/gitlab-healthcheck", "--fail", "--max-time 10"]
 
 ARG BUILD_VERSION \
     BUILD_DATE \
