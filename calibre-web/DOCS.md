@@ -52,12 +52,12 @@ auto-login.
 
 | Option         | Type    | Required | Default          | Description                                                                                                                                                                  |
 | -------------- | ------- | -------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ssl`          | boolean | Yes      | `true`           | Serve the Web UI over HTTPS through the built-in NGINX front-end. If `certfile`/`keyfile` are not present in `/ssl/`, a self-signed certificate is generated automatically. |
-| `certfile`     | string  | No       | `fullchain.pem`  | Name of the SSL certificate file inside `/ssl/` (typically provided by the Let's Encrypt app). Only used when `ssl: true` and the files exist.                              |
+| `ssl`          | boolean | Yes      | `true`           | Serve the Web UI over HTTPS through the built-in NGINX front-end. If `certfile`/`keyfile` are not present in `/ssl/`, a self-signed certificate is generated automatically.  |
+| `certfile`     | string  | No       | `fullchain.pem`  | Name of the SSL certificate file inside `/ssl/` (typically provided by the Let's Encrypt app). Only used when `ssl: true` and the files exist.                               |
 | `keyfile`      | string  | No       | `privkey.pem`    | Name of the SSL private key file inside `/ssl/`. Only used together with `certfile`.                                                                                         |
 | `ingress_user` | string  | No       | `admin`          | Calibre Web username that will be automatically logged in when accessing through the Home Assistant Ingress sidebar panel. Leave as `admin` for first setup, then change it. |
 | `PUID`         | integer | Yes      | `1000`           | **User ID** under which Calibre Web runs. Match this to a real user on your host if you want files on mounted storage to be owned by that user.                              |
-| `PGID`         | integer | Yes      | `1000`           | **Group ID** under which Calibre Web runs. See `PUID` above.                                                                                                                  |
+| `PGID`         | integer | Yes      | `1000`           | **Group ID** under which Calibre Web runs. See `PUID` above.                                                                                                                 |
 | `TZ`           | string  | No       | `Etc/UTC`        | Timezone used by the app for logs and timestamps. Example: `Europe/Rome`.                                                                                                    |
 
 > [!TIP]
@@ -80,7 +80,7 @@ browser use. Only enable `8080/tcp` if:
 
 - you want to access Calibre Web from outside Home Assistant, or
 - you want external e-reader apps to reach the **OPDS catalog** at
-  `http://<home-assistant-ip>:<port>/opds`.
+  `https://<home-assistant-ip>:<port>/opds`.
 
 ---
 
@@ -95,11 +95,11 @@ The app maps the following Home Assistant folders inside the container:
 | Share                 | `/share`       | Shared files between apps                |
 
 > [!NOTE]
-> Unlike some other apps in this repository, `/ssl` is **not** mapped by
-> default. The built-in NGINX front-end generates and uses a self-signed
-> certificate automatically when `ssl: true` and no trusted certificate is
-> provided, so you don't need to manage certificates yourself unless you
-> want a trusted one (see *HTTPS / SSL* below).
+> This app does **not** use the Home Assistant `ssl` / `certfile` / `keyfile`
+> options. The Web UI is served over HTTPS by the LinuxServer base image
+> using its own self-signed certificate (that's why your browser shows a
+> warning). If you need a trusted certificate, place Calibre behind a
+> reverse proxy (the Cloudflared app from this repository works well).
 
 ### Pointing Calibre Web at your Calibre library
 
@@ -164,7 +164,7 @@ download books from your library. To use it:
 1. Enable the `8080/tcp` port in the app Configuration tab.
 2. Point your e-reader app to:
 
-   `http://<home-assistant-ip>:8080/opds`
+   `https://<home-assistant-ip>:8080/opds`
 
 3. Authenticate with a Calibre Web username and password (the default
    `admin`/`admin123` works but should be changed first).
@@ -190,11 +190,10 @@ that supports the OPDS 1.x protocol.
   `PGID` to a user that owns the target folder on the host.
 - **Ebook conversion fails** — a full Calibre is bundled with this app, so
   conversion should work out of the box. If it doesn't, check the app log
-  for missing library errors. The bundled Calibre binaries are installed
-  under `/app/calibre/`.
+  for missing library errors.
 - **OPDS feed not reachable from outside Home Assistant** — expose the
   `8080/tcp` port in the app configuration and access it via
-  `http://<home-assistant-ip>:<port>/opds`.
+  `https://<home-assistant-ip>:<port>/opds`.
 - **Certificate warning** — expected with the default self-signed
   certificate; see *HTTPS / SSL* above.
 

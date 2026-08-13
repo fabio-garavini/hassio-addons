@@ -19,6 +19,7 @@ map:
     read_only: false
   - type: media
     read_only: false
+  - type: ssl
 schema:
   ssl: bool
   certfile: str?

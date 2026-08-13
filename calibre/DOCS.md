@@ -42,15 +42,15 @@ no separate VNC client. Just install, start and point your browser at
 
 | Option              | Type    | Required | Default          | Description                                                                                                                                                                                          |
 | ------------------- | ------- | -------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `PUID`              | integer | Yes      | `0`              | **User ID** under which Calibre runs. Match this to a real user on your host if you want files on mounted storage to be owned by that user. Leave at `0` if unsure.                                   |
+| `PUID`              | integer | Yes      | `0`              | **User ID** under which Calibre runs. Match this to a real user on your host if you want files on mounted storage to be owned by that user. Leave at `0` if unsure.                                  |
 | `PGID`              | integer | Yes      | `0`              | **Group ID** under which Calibre runs. See `PUID` above.                                                                                                                                             |
-| `TZ`                | string  | No       | `Etc/UTC`        | Timezone used by Calibre for logs and metadata timestamps. Example: `Europe/Rome`.                                                                                                                  |
-| `FILE_MANAGER_PATH` | string  | No       | `/share/calibre` | Default folder Calibre opens when browsing for books. Must be a path the app can see (typically under `/media`, `/share` or a mounted storage device).                                              |
+| `TZ`                | string  | No       | `Etc/UTC`        | Timezone used by Calibre for logs and metadata timestamps. Example: `Europe/Rome`.                                                                                                                   |
+| `FILE_MANAGER_PATH` | string  | No       | `/share/calibre` | Default folder Calibre opens when browsing for books. Must be a path the app can see (typically under `/media`, `/share` or a mounted storage device).                                               |
 | `CUSTOM_USER`       | string  | No       | —                | Optional custom username for the Web UI. Not set by default — leave empty for the standard unauthenticated access (the setup wizard on first launch).                                                |
-| `PASSWORD`          | string  | No       | —                | Optional password for the Web UI. **Strongly recommended** if you expose the app outside your local network.                                                                                        |
+| `PASSWORD`          | string  | No       | —                | Optional password for the Web UI. **Strongly recommended** if you expose the app outside your local network.                                                                                         |
 | `CLI_ARGS`          | string  | No       | —                | Extra command-line arguments passed to Calibre at startup.                                                                                                                                           |
-| `storage_mounts`    | list    | No       | `[]`             | External storage mounts (USB disk, SMB/CIFS or NFS share) to mount inside the container. See the *Storage Mounts* section below.                                                                   |
-| `env_vars`          | list    | No       | `[]`             | Additional environment variables to inject into the container. Each entry has a `key` (must match `^[A-Za-z0-9_-]+$`) and a `value`.                                                                |
+| `storage_mounts`    | list    | No       | `[]`             | External storage mounts (USB disk, SMB/CIFS or NFS share) to mount inside the container. See the *Storage Mounts* section below.                                                                     |
+| `env_vars`          | list    | No       | `[]`             | Additional environment variables to inject into the container. Each entry has a `key` (must match `^[A-Za-z0-9_-]+$`) and a `value`.                                                                 |
 
 > [!NOTE]
 > This app does **not** use the Home Assistant `ssl` / `certfile` / `keyfile`
@@ -66,7 +66,7 @@ no separate VNC client. Just install, start and point your browser at
 | Port       | Protocol | Default host port | Description                                                                                          |
 | ---------- | -------- | ----------------- | ---------------------------------------------------------------------------------------------------- |
 | `8181/tcp` | TCP      | `8181`            | **Calibre Administration** — the KasmVNC Web UI where you use the desktop Calibre. This is the port opened by **OPEN WEB UI**. |
-| `8081/tcp` | TCP      | `null` (disabled)  | **Calibre web server** — Calibre's built-in content server, optional. Enable it only if you want to serve books to an e-reader app without the desktop UI. |
+| `8081/tcp` | TCP      | `null` (disabled) | **Calibre web server** — Calibre's built-in content server, optional. Enable it only if you want to serve books to an e-reader app without the desktop UI. |
 
 ---
 
@@ -77,7 +77,7 @@ The app maps several Home Assistant folders inside the container:
 | Home Assistant folder | Container path | Typical use                                 |
 | --------------------- | -------------- | ------------------------------------------- |
 | App config            | `/config`      | Calibre settings and metadata database      |
-| App data             | `/data`        | Persistent app data                         |
+| App data              | `/data`        | Persistent app data                         |
 | Media                 | `/media`       | Read/write access to your media library     |
 | Share                 | `/share`       | Shared files between apps                   |
 | SSL                   | `/ssl`         | (Mapped but not used by this app — see note) |
@@ -174,12 +174,6 @@ If you need to expose the app:
   Web UI is served over HTTPS with a self-signed certificate generated by
   the base image. Accept the warning locally, or put the app behind a
   reverse proxy with a trusted certificate.
-- **Black screen / loading forever** — give the VNC session a few seconds
-  to start on slow hardware, then refresh the page. Check the app log for
-  errors.
-- **GPU acceleration not working** — confirm the right device node exists on
-  your host (`/dev/dri/renderD128` for Intel, `/dev/kfd` for AMD, etc.) and
-  that the user Calibre runs as (`PUID`) has permission to access it.
 - **Files on USB disk show as read-only / wrong owner** — set `PUID` and
   `PGID` to a user that owns the files on the disk, and remount the disk.
 - **Can't see my NAS share** — double-check the `mount` path, credentials
