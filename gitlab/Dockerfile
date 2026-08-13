@@ -49,7 +49,7 @@ ARG BUILD_ARCH=amd64
 ARG UBUNTU_VERSION
 
 # renovate: datasource=docker depName=docker.io/gitlab/gitlab-ce versioning=regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)-ce\.(?<build>\d+)$
-ARG GITLAB_VERSION=19.2.1-ce.0
+ARG GITLAB_VERSION=19.2.2-ce.0
 
 RUN { \
     echo "RELEASE_PACKAGE=gitlab-ce"; \
@@ -58,7 +58,7 @@ RUN { \
 
 RUN \
     set -e; \
-    if [[ "${BUILD_ARCH}" == "aarch64" ]]; then \
+    if [ "${BUILD_ARCH}" = "aarch64" ]; then \
         export DOWNLOAD_ARCH="arm64"; \
     else \
         export DOWNLOAD_ARCH=${BUILD_ARCH}; \
@@ -79,7 +79,7 @@ ENV PATH=/opt/gitlab/embedded/bin:/opt/gitlab/bin:/assets:$PATH
 CMD ["/assets/init-container"]
 
 HEALTHCHECK --interval=60s --timeout=30s --retries=5 \
-CMD /opt/gitlab/bin/gitlab-healthcheck --fail --max-time 10
+CMD ["/opt/gitlab/bin/gitlab-healthcheck", "--fail", "--max-time 10"]
 
 ARG BUILD_VERSION \
     BUILD_DATE \
