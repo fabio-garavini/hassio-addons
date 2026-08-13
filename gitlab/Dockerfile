@@ -58,7 +58,7 @@ RUN { \
 
 RUN \
     set -e; \
-    if [[ "${BUILD_ARCH}" = "aarch64" ]]; then \
+    if [ "${BUILD_ARCH}" = "aarch64" ]; then \
         export DOWNLOAD_ARCH="arm64"; \
     else \
         export DOWNLOAD_ARCH=${BUILD_ARCH}; \
