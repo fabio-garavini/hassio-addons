@@ -1,8 +1,7 @@
 > _To update the prebuilt executable you can run `./pocketbase update`._
 
-- Reverted the auto panic recover handling for the cli commands to preserve the old behavior and allow panic to force exit with non-zero code ([#7781](https://github.com/pocketbase/pocketbase/issues/7781)).
-    _Proper command non-zero exit support will be available with the next v0.40/v0.41 release._
+- Fixed "API preview" examples ([#7782](https://github.com/pocketbase/pocketbase/issues/7782), [#7785](https://github.com/pocketbase/pocketbase/issues/7785)).
 
-- Minor UI improvements (added placeholder loader for the logs chart, npm dev deps update, etc.).
+- Other minor UI improvements (fixed sortable `dragend` event handling, allow ESC to workaround TAB trap for the rule fields, allow new duplicated collection to edit the collection of relation fields, updated shablon, updated npm dev dependencies, etc.).
 
-- Updated `modernc.org/sqlite` to v1.55.0 _(DSN query params compatibility and doc changes)_.
+- Bumped `golang.org/x/*` deps and the min Go GitHub action version to 1.26.6 because it comes with some [minor bug and security fixes](https://github.com/golang/go/issues?q=milestone%3AGo1.26.6).
