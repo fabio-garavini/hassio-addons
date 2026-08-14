@@ -5,6 +5,7 @@ FROM $BUILD_FROM
 
 ENV REDIS_SOCKET="/var/run/redis/redis.sock"
 
+# hadolint ignore=DL3064
 ENV MYSQL_ROOT_PASSWORD="nextcloud" \
     MYSQL_PASSWORD="nextcloud" \
     MYSQL_DATABASE="nextcloud" \
