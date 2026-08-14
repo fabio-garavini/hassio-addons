@@ -1,4 +1,8 @@
-## paperless-ngx 3.0.5
+## 3.0.5-v1
+
+### Home Assistant App
+
+- Fix: EML import fails ([#857](https://github.com/fabio-garavini/hassio-addons/issues/857))
 
 ### Bug Fixes
 
