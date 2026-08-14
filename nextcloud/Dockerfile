@@ -1,10 +1,11 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/linuxserver/nextcloud:34.0.2-ls445
+ARG BUILD_FROM=ghcr.io/linuxserver/nextcloud:34.0.3-ls446
 
 FROM $BUILD_FROM
 
 ENV REDIS_SOCKET="/var/run/redis/redis.sock"
 
+# hadolint ignore=DL3064
 ENV MYSQL_ROOT_PASSWORD="nextcloud" \
     MYSQL_PASSWORD="nextcloud" \
     MYSQL_DATABASE="nextcloud" \
