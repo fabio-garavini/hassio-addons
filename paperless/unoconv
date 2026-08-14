@@ -555,6 +555,7 @@ class Options:
     def __init__(self, args):
         self.connection = None
         self.debug = False
+        self.disablecalcheader = False
         self.doctype = None
         self.exportfilter = []
         self.exportfilteroptions = ""
@@ -591,7 +592,7 @@ class Options:
         # Get options from the commandline
         try:
             opts, args = getopt.getopt(args, 'c:Dd:e:F:f:hi:I:LlM:no:p:s:T:t:P:vV',
-                ['disable-update-indexes', 'disable-html-update-links', 'connection=', 'debug', 'doctype=', 'export=', 'field=', 'format=',
+                ['disable-calc-header', 'disable-update-indexes', 'disable-html-update-links', 'connection=', 'debug', 'doctype=', 'export=', 'field=', 'format=',
                  'help', 'import=', 'import-filter-name=', 'listener', 'meta=', 'no-launch',
                  'output=', 'outputpath', 'password=', 'pipe=', 'port=', 'preserve',
                  'server=', 'timeout=', 'user-profile=', 'show', 'stdin',
@@ -687,6 +688,8 @@ class Options:
                 self.updatehtmllinks = False
             elif opt in ['--disable-update-indexes']:
                 self.updateIndexes = False
+            elif opt in ['--disable-calc-header']:
+                self.disablecalcheader = True
             elif opt in ['-T', '--timeout']:
                 self.timeout = int(arg)
             elif opt in ['--unsafe-quiet-update']:
@@ -823,6 +826,7 @@ unoconv options:
   --disable-html-update-links         disables the recheck for updating links missed by libreoffice
   --user-profile=path                 use a custom user profile path
   --disable-update-indexes            disable the update of indexes before conversion
+  --disable-calc-header               disable the spreadsheet page header (avoids leaking the sheet name)
 ''', file=sys.stderr)
 
 
@@ -846,8 +850,6 @@ class Convertor:
         # And some more LibreOffice magic
         unosvcmgr = unocontext.ServiceManager
         self.desktop = unosvcmgr.createInstanceWithContext("com.sun.star.frame.Desktop", unocontext)
-        self.cwd = unohelper.systemPathToFileUrl(os.getcwd())
-
         # List all filters
         # self.filters = unosvcmgr.createInstanceWithContext("com.sun.star.document.FilterFactory", unocontext)
         # for filter in self.filters.getElementNames():
@@ -1013,7 +1015,7 @@ class Convertor:
                 inputprops += UnoProps(InputStream=inputStream)
                 inputurl = 'private:stream'
             elif os.path.exists(inputfn):
-                inputurl = unohelper.absolutize(self.cwd, unohelper.systemPathToFileUrl(inputfn))
+                inputurl = unohelper.systemPathToFileUrl(os.path.abspath(inputfn))
             else:
                 inputurl = inputfn
             document = self.desktop.loadComponentFromURL(inputurl, "_blank", 0, inputprops)
@@ -1027,7 +1029,7 @@ class Convertor:
                 if os.path.exists(op.template):
                     info(1, "Template file: %s" % op.template)
                     templateprops = UnoProps(OverwriteStyles=True)
-                    templateurl = unohelper.absolutize(self.cwd, unohelper.systemPathToFileUrl(op.template))
+                    templateurl = unohelper.systemPathToFileUrl(os.path.abspath(op.template))
                     document.StyleFamilies.loadStylesFromURL(templateurl, templateprops)
                 else:
                     print('unoconv: template file `%s\' does not exist.' % op.template, file=sys.stderr)
@@ -1114,6 +1116,23 @@ class Convertor:
             except AttributeError:
                 pass
 
+            # Disable the auto-generated page header for spreadsheets.
+            #
+            # A plain-text import (e.g. CSV) becomes a single sheet named after
+            # the input file, and Calc's default page style prints that sheet
+            # name as a centered header. Callers that feed documents under a
+            # temporary filename therefore leak that name into the rendered PDF.
+            # See https://github.com/gotenberg/gotenberg/issues/1568.
+            phase = "disable-calc-header"
+            if op.disablecalcheader:
+                try:
+                    if document.supportsService("com.sun.star.sheet.SpreadsheetDocument"):
+                        pagestyles = document.StyleFamilies.getByName("PageStyles")
+                        for i in range(pagestyles.getCount()):
+                            pagestyles.getByIndex(i).HeaderIsOn = False
+                except (AttributeError, UnoException):
+                    pass
+
             # Export phase
             phase = "export"
 
@@ -1168,18 +1187,23 @@ class Convertor:
                 else:
                     outputfn = realpath(inbase + os.extsep + outputfmt.extension)
 
-                outputurl = unohelper.absolutize(self.cwd, unohelper.systemPathToFileUrl(outputfn))
+                outputurl = unohelper.systemPathToFileUrl(os.path.abspath(outputfn))
 
             info(1, "Output file: %s" % outputurl)
 
             try:
                 document.storeToURL(outputurl, tuple(outputprops))
             except IOException as e:
-                raise UnoException("Unable to store document to %s (Error %s)\n\nProperties: %s" % (outputurl, e.value, outputprops), None)
+                # Every other handler reads .Message; .value does not exist on a
+                # UNO exception, and the AttributeError it raises is not caught
+                # by any except clause below, so it would escape as a traceback
+                # instead of an exit code.
+                raise UnoException("Unable to store document to %s (Error %s)\n\nProperties: %s" % (outputurl, e.Message, outputprops), None)
 
             phase = "dispose"
             document.dispose()
             document.close(True)
+            document = None
             if not op.stdout and op.preserve:
                 self.preserve(inputfn, outputfn)
 
@@ -1210,17 +1234,28 @@ class Convertor:
             exitcode = 4
 
         except UnoException as e:
+            # An ErrCode is diagnostic detail, never an exit status: sys.exit
+            # truncates it modulo 256, where it would collide with the codes
+            # above. Report it, then fall through to 5 or 2.
             if hasattr(e, 'ErrCode'):
                 error("unoconv: UnoException during %s phase in %s (ErrCode %d)" % (phase, repr(e.__class__), e.ErrCode))
-                exitcode = e.ErrCode
-                pass
+
             if hasattr(e, 'Message'):
                 error("unoconv: UnoException during %s phase:\n%s" % (phase, e.Message))
                 exitcode = 5
             else:
                 error("unoconv: UnoException during %s phase in %s" % (phase, repr(e.__class__)))
                 exitcode = 2
-                pass
+
+        finally:
+            # A failure anywhere above leaves the document loaded in the office
+            # process, which outlives this script and holds that memory until it
+            # is restarted. Release it on the error paths too.
+            if document is not None:
+                try:
+                    document.dispose()
+                except Exception as e:
+                    error("unoconv: failed to release the document after an unsuccessful conversion:\n%s" % e)
 
 
 class Listener:
