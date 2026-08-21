@@ -1,12 +1,10 @@
 ## Changes
 ### Added
-- Translations to German
-### Fixed
-- Back navigation issues in browser
-- Fix issues when pasting password on mobile devices
-- Fixed email notifications
+- Metrics endpoint for Prometheus integrations
+### Changed
+- Deployment: deploy beta releases on pushes to develop instead of main
 
 ## Docker Image
 ```bash
-docker pull ghcr.io/jofoerster/habitsync:0.19.2
+docker pull ghcr.io/jofoerster/habitsync:0.19.3
 ```
