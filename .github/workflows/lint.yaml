@@ -91,7 +91,7 @@ jobs:
 
       - name: Hadolint
         if: steps.dockerfile.outputs.exists == 'true'
-        uses: hadolint/hadolint-action@v3.4.0
+        uses: hadolint/hadolint-action@v3.5.0
         with:
           dockerfile: ./${{ matrix.path }}/Dockerfile
           config: ./.github/hadolint.yaml
