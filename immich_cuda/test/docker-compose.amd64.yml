@@ -1,13 +1,13 @@
-name: immich-amd64
+name: immich-cuda-amd64
 services:
-  immich-amd64:
-    image: fabioogaravini/hassio-immich:${VERSION:-latest}-amd64
+  immich-cuda-amd64:
+    image: fabioogaravini/hassio-immich-cuda:${VERSION:-latest}-amd64
     build:
       context: ..
       args:
         BUILD_ARCH: amd64
         BUILD_VERSION: ${VERSION:-latest}
-    container_name: immich-amd64
+    container_name: immich-cuda-amd64
     ports:
       - 8080:8080
     environment:
