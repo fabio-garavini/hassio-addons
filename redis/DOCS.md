@@ -28,11 +28,11 @@ redis_config:
 ### `/config/redis.conf` (file, optional)
 
 For larger configs, drop a `redis.conf` into the add-on's own config folder
-instead of typing many UI lines. With `map: addon_config` that folder is:
+instead of typing many UI lines. With `map: app_config` that folder is:
 
 - inside the container: `/config/redis.conf`
-- on the Home Assistant host: `/addon_configs/<slug>/redis.conf` (browse
-  `/addon_configs/` with the File Editor, Studio Code Server or Samba add-on;
+- on the Home Assistant host: `/app_configs/<slug>/redis.conf` (browse
+  `/app_configs/` with the File Editor, Studio Code Server or Samba add-on;
   the `<slug>` folder is prefixed, e.g. `xxxxxxxx_redis`)
 
 The same folder also holds the Redis data files (`dump.rdb`), since the data

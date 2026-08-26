@@ -12,7 +12,7 @@ hassio_api: true
 map:
   - type: data
     read_only: false
-  - type: addon_config
+  - type: app_config
     read_only: false
   - type: media
     read_only: false

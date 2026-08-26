@@ -7,7 +7,7 @@ arch:
   - amd64
 init: false
 map:
-  - type: addon_config
+  - type: app_config
     read_only: false
 schema:
   TUNNEL_NAME: str

@@ -13,7 +13,7 @@ map:
   - type: data
     read_only: false
     path: /prometheus
-  - type: addon_config
+  - type: app_config
     read_only: true
     path: /etc/prometheus
 ports:

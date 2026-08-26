@@ -9,7 +9,7 @@ arch:
 init: false
 backup: cold
 map:
-  - type: addon_config
+  - type: app_config
     read_only: false
     path: /config/.minetest
   - type: data

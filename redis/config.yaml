@@ -10,7 +10,7 @@ arch:
 init: false
 backup: cold
 map:
-  - type: addon_config
+  - type: app_config
     read_only: false
 ports:
   6379/tcp: null

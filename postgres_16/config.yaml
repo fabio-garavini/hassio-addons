@@ -8,7 +8,7 @@ arch:
   - aarch64
   - amd64
 map:
-  - type: addon_config
+  - type: app_config
     read_only: false
 backup: cold
 backup_exclude:

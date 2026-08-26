@@ -13,7 +13,7 @@ arch:
   - amd64
 init: false
 map:
-  - type: addon_config
+  - type: app_config
     read_only: false
     path: /var/opt/gitlab
   - type: data

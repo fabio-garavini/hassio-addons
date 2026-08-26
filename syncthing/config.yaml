@@ -14,11 +14,11 @@ arch:
 init: false
 backup: cold
 map:
-  - type: addon_config
+  - type: app_config
     read_only: false
   - type: addons
     read_only: false
-  - type: all_addon_configs
+  - type: all_app_configs
     read_only: false
   - type: backup
     read_only: false

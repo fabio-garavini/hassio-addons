@@ -15,4 +15,4 @@
 ## Advanced Configuration
 
 For any configuration follow the [official documentation](https://docs.gitlab.com/ee/install/next_steps.html)
-You can set all your configs inside the `gitlab.rb` file which you can find under the `addon_configs` folder of your Gitlab addon
+You can set all your configs inside the `gitlab.rb` file which you can find under the `app_configs` folder of your Gitlab addon

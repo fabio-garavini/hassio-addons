@@ -20,7 +20,7 @@ services:
       - share:/share
       - ssl:/ssl
     healthcheck:
-      test: ["CMD", "curl", "-skf", "https://127.0.0.1:8080"]
+      test: ["CMD", "curl", "-kf", "https://127.0.0.1:8080"]
       interval: 10s
       timeout: 5s
       retries: 5

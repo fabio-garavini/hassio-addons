@@ -10,7 +10,7 @@ arch:
 init: false
 hassio_api: true
 map:
-  - type: addon_config
+  - type: app_config
     read_only: false
     path: /home/app/.local/share/spoolman
   - type: ssl
