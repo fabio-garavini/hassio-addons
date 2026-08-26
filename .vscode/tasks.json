@@ -16,26 +16,9 @@
             "problemMatcher": []
         },
         {
-            "label": "Hassio Addon: build amd64 image",
+            "label": "Hassio Addon: build & test (amd64)",
             "type": "shell",
-            "command": "docker run --rm -it --privileged -v ./${input:addonName}:/data -v /var/run/docker.sock:/var/run/docker.sock:ro ghcr.io/home-assistant/amd64-builder -t /data --amd64 --test",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Hassio Addon: build arm64 image",
-            "type": "shell",
-            "command": "docker run --rm -it --privileged -v ./${input:addonName}:/data -v /var/run/docker.sock:/var/run/docker.sock:ro ghcr.io/home-assistant/amd64-builder -t /data --arm64 --test",
-            "group": "build",
-            "problemMatcher": []
-        },
-        {
-            "label": "Hassio Addon: build multi-arch image",
-            "type": "shell",
-            "command": "docker run --rm -it --privileged -v ./${input:addonName}:/data -v /var/run/docker.sock:/var/run/docker.sock:ro ghcr.io/home-assistant/amd64-builder -t /data --all --test",
+            "command": "cd ./${input:addonName}/test && docker compose -f docker-compose.amd64.yml up --build && docker compose -f docker-compose.amd64.yml down -v",
             "group": "build",
             "problemMatcher": []
         }
@@ -46,23 +29,48 @@
             "type": "pickString",
             "description": "Select the addon",
             "options": [
+                "audiobookshelf",
+                "bookorbit",
+                "calibre",
+                "calibre-web",
                 "cloudflared",
+                "collabora_code",
+                "ezbookkeeping",
+                "frigate_rk",
                 "frigate_rocm",
+                "frigate_tensorrt",
+                "frigate_tensorrt_jp6",
+                "futo_notes",
                 "gitea",
                 "gitlab",
+                "grimoire",
+                "grist",
+                "habitsync",
                 "immich",
+                "immich_cuda",
+                "immich_frame",
+                "immich_noml",
+                "immich_openvino",
                 "immich_power_tools",
                 "jellyfin",
                 "karakeep",
+                "luanti",
+                "mealie",
                 "memos",
+                "monica",
                 "n8n",
                 "nextcloud",
+                "nocodb",
+                "opencloud",
                 "openspeedtest",
+                "owncloud",
                 "paperless",
                 "pocketbase",
                 "postgres_16",
                 "prometheus",
                 "redis",
+                "spoolman",
+                "spoolman_sync",
                 "syncthing"
             ]
         }
