@@ -1,0 +1,11 @@
+{
+  "TZ": "Etc/UTC",
+  "ssl": true,
+  "certfile": "fullchain.pem",
+  "keyfile": "privkey.pem",
+  "BOOKS_HOST_PATH": "/media/bookorbit",
+  "LIBRARY_BROWSE_ROOT": "/books",
+  "PUID": 0,
+  "PGID": 0,
+  "env_vars": []
+}

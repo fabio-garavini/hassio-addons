@@ -1,0 +1,58 @@
+configuration:
+  PUID:
+    name: PUID
+    description: >-
+      User ID
+
+      If you're not sure, leave it as default.
+  PGID:
+    name: PGID
+    description: >-
+      Group ID
+
+      If you're not sure, leave it as default.
+  TZ:
+    name: Timezone
+    description: >-
+      Timezone used for displaying dates and times. (Default: `Etc/UTC`)
+
+      You can find your timezone identifier here:
+      https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  ssl:
+    name: SSL
+    description: >-
+      Enable HTTPS connections. If `SSL Certfile` and `SSL Private Key` files exist they are used to encrypt the connection, otherwise it'll generate a self-signed certificate
+  certfile:
+    name: SSL Certificate File
+    description: >-
+      Name of the SSL certificate file located under the `/ssl/` directory.
+  keyfile:
+    name: SSL Private Key File
+    description: >-
+      Name of the SSL private key file located under the `/ssl/` directory.
+  APP_URL:
+    name: App url
+    description: >-
+      External/public URL used by emails and Kobo endpoints
+  CLIENT_URL:
+    name: Client url
+    description: >-
+      CORS origin for the frontend when served from a different domain than App url
+  BOOKS_HOST_PATH:
+    name: Books Host Path
+    description: >-
+      Host folder that appears as /books in the BookOrbit app
+  BOOK_DOCK_PATH:
+    name: Books Dock Path
+    description: >-
+      Files land here first, BookOrbit extracts metadata and covers, optionally fetches provider metadata, and then you finalize them into a library
+  LIBRARY_BROWSE_ROOT:
+    name: Library Browse Root
+    description: >-
+      Folder used as the top of the library creation folder picker
+  BOOKORBIT_FIX_PERMISSIONS:
+    name: Fix Permissions
+    description: >-
+      Set to false only if your platform manages bind mount ownership externally
+network:
+  8080/tcp: BookOrbit

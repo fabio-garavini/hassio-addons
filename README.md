@@ -23,13 +23,21 @@ Audiobookshelf is a self-hosted audiobook and podcast server
 
 ![screenshot](https://github.com/advplyr/audiobookshelf/raw/master/images/DemoLibrary.png)
 
-# 📚 Calibre
+### 📚 BookOrbit
+
+_All-in-one_
+
+BookOrbit organizes your books and reads them back to you anywhere
+
+![screenshot](https://github.com/bookorbit/bookorbit/raw/main/docs/images/dashboard-overview.png)
+
+### 📚 Calibre
 
 _All-in-one_
 
 Calibre is a powerful and easy to use e-book manager
 
-# 📚 Calibre Web
+### 📚 Calibre Web
 
 _Calibre alternative web interface_
 
@@ -59,7 +67,7 @@ _All-in-one_
 
 ![screenshot](https://raw.githubusercontent.com/wiki/mayswind/ezbookkeeping/img/desktop/en.png)
 
-# 📒 FUTO Notes (Server)
+### 📒 FUTO Notes (Server)
 
 **FUTO Notes** is an end-to-end encrypted notes app.
 
