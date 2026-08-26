@@ -107,8 +107,16 @@ function normalizeString(match, template) {
 
 function updateBuildConfig() {
 
+  const buildFile = `${addonSlug}/build.yaml`;
+  const build = yaml.parse(fs.readFileSync(buildFile, 'utf8'));
+
   const buildVersion = info.build?.version_template != null ? normalizeString(match, info.build.version_template) : null;
   let buildFromImage = `${info.build?.image??info.source.image}` + (buildVersion != null ? `:${buildVersion}` : "");
+
+  build.build_from = {};
+  for (let arch of config.arch) {
+    build.build_from[arch] = buildFromImage.replace("{{arch}}", arch).replace("{arch}", arch);
+  }
 
   try {
     let dockerfile = fs.readFileSync(`${addonSlug}/Dockerfile`, 'utf8');
@@ -122,4 +130,6 @@ function updateBuildConfig() {
   } catch (err) {d
     console.error('❌ Error editing Dockerfile:', err);
   }
+
+  fs.writeFileSync(buildFile, yaml.stringify(build), 'utf8');
 }
