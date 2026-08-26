@@ -1,1 +1,1 @@
-# Home Assistant add-on: Syncthing 🔄 by Fabio Garavini
+# Home Assistant app: Syncthing 🔄 by Fabio Garavini

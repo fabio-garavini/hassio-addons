@@ -1,5 +1,7 @@
 # Home Assistant app: Calibre Web 📚 by Fabio Garavini
 
+[![](https://img.shields.io/static/v1?label=Support+me&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/fabio-garavini)
+
 [Calibre Web](https://github.com/janeczku/calibre-web) is a lightweight web
 app that provides a clean, browser-based reader for an **existing Calibre
 library** (`metadata.db`). Use it when you want to read and browse your

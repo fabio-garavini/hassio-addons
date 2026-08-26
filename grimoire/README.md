@@ -1,4 +1,6 @@
-# Home Assistant add-on: Grimoire 🧙 by Fabio Garavini
+# Home Assistant app: Grimoire 🧙 by Fabio Garavini
+
+[![](https://img.shields.io/static/v1?label=Support+me&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/fabio-garavini)
 
 ![logo](https://github.com/fabio-garavini/hassio-addons/raw/main/grimoire/icon.png)
 

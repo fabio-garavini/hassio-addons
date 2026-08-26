@@ -1,4 +1,6 @@
-# Home Assistant add-on: Nextcloud (all in one) ☁️ by Fabio Garavini
+# Home Assistant app: Nextcloud (all in one) ☁️ by Fabio Garavini
+
+[![](https://img.shields.io/static/v1?label=Support+me&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/fabio-garavini)
 
 [Nextcloud](https://nextcloud.com/) is the most popular open source content collaboration platform for tens of millions of users at thousands of organizations across the globe
 

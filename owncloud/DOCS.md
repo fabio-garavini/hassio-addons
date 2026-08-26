@@ -1,4 +1,4 @@
-# Home Assistant add-on: ownCloud ☁️
+# Home Assistant app: ownCloud ☁️
 
 ## Install
 

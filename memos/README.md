@@ -1,4 +1,6 @@
-# Home Assistant add-on: Memos 🦜 by Fabio Garavini
+# Home Assistant app: Memos 🦜 by Fabio Garavini
+
+[![](https://img.shields.io/static/v1?label=Support+me&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/fabio-garavini)
 
 An open-source, self-hosted note-taking solution designed for seamless deployment and multi-platform access. Experience effortless plain text writing with pain-free, complemented by robust Markdown syntax support for enhanced formatting.
 

@@ -1,4 +1,4 @@
-# Home Assistant add-on: Spoolman Sync 🧵
+# Home Assistant app: Spoolman Sync 🧵
 
 ## Install
 

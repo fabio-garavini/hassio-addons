@@ -1,4 +1,4 @@
-# Home Assistant add-on: Grimoire 🧙 by Fabio Garavini
+# Home Assistant app: Grimoire 🧙 by Fabio Garavini
 
 Bookmark manager for the wizards 🧙
 

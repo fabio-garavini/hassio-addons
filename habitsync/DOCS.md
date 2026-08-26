@@ -1,4 +1,4 @@
-# Home Assistant add-on: HabitSync 🦾
+# Home Assistant app: HabitSync 🦾
 
 # Install
 

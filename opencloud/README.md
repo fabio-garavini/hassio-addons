@@ -1,4 +1,6 @@
-# Home Assistant add-on: OpenCloud ☁️
+# Home Assistant app: OpenCloud ☁️
+
+[![](https://img.shields.io/static/v1?label=Support+me&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/fabio-garavini)
 
 OpenCloud is an open-source project that gives you a secure and private way to store, access, and share your files
 

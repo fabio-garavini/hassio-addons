@@ -1,1 +1,1 @@
-# Home Assistant add-on: Luanti 🌳 by Fabio Garavini
+# Home Assistant app: Luanti 🌳 by Fabio Garavini

@@ -1,4 +1,6 @@
-# Home Assistant Add-on: Frigate TensorRT (Nvidia Jetson)
+# Home Assistant app: Frigate TensorRT (Nvidia Jetson)
+
+[![](https://img.shields.io/static/v1?label=Support+me&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/fabio-garavini)
 
 > [!INFO]
 > Support for Nvidia Jetson TensorRT

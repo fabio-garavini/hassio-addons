@@ -1,4 +1,6 @@
-# Home Assistant add-on: Monica 🐼 by Fabio Garavini
+# Home Assistant app: Monica 🐼 by Fabio Garavini
+
+[![](https://img.shields.io/static/v1?label=Support+me&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/fabio-garavini)
 
 ![logo](https://user-images.githubusercontent.com/61099/242266547-63d98bd9-35f3-4dfe-92f4-a4a8dd75aa5c.png)
 

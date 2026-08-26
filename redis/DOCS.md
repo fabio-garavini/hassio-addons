@@ -1,4 +1,4 @@
-# Home Assistant add-on: Redis DB in-memory database
+# Home Assistant app: Redis DB in-memory database
 
 ## External access
 

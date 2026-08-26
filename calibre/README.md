@@ -1,5 +1,7 @@
 # Home Assistant app: Calibre 📚 by Fabio Garavini
 
+[![](https://img.shields.io/static/v1?label=Support+me&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/fabio-garavini)
+
 [Calibre](https://calibre-ebook.com/) is a powerful and easy-to-use e-book
 manager. This app packages the full Calibre desktop — library management,
 format conversion, metadata editor and e-book viewer — into a single Home

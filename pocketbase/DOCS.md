@@ -1,4 +1,4 @@
-# Home Assistant add-on: PocketBase 🗄️ by Fabio Garavini
+# Home Assistant app: PocketBase 🗄️ by Fabio Garavini
 
 [Pocketbase](https://pocketbase.io) is an open source backend consisting of embedded database (SQLite) with realtime subscriptions, built-in auth management, convenient dashboard UI and simple REST-ish API. It can be used both as Go framework and as standalone application.
 

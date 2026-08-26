@@ -1,11 +1,11 @@
-# Home Assistant add-on: OpenSpeedTest 🚀 by Fabio Garavini
+# Home Assistant app: OpenSpeedTest 🚀 by Fabio Garavini
 
 SpeedTest by [OpenSpeedTest™](https://openspeedtest.com/) is a Free and Open-Source HTML5 Network Performance Estimation Tool Written in Vanilla Javascript
 
 ## Installation
 
 The installation of this add-on is pretty straightforward and not different in
-comparison to installing any other Home Assistant add-on.
+comparison to installing any other Home Assistant app.
 
 1. Click the "Install" button to install the add-on.
 1. Start the add-on.

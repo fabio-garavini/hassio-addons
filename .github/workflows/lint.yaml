@@ -96,7 +96,7 @@ jobs:
           dockerfile: ./${{ matrix.path }}/Dockerfile
           config: ./.github/hadolint.yaml
 
-      - name: 🚀 Run Home Assistant Add-on Lint
+      - name: 🚀 Run Home Assistant app Lint
         uses: frenck/action-addon-linter@v2
         with:
           path: ./${{ matrix.path }}

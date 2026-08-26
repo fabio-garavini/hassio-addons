@@ -1,4 +1,6 @@
-# Home Assistant add-on: ![Logo](https://github.com/varun-raj/immich-power-tools/raw/main/public/favicon-32x32.png) Immich Power Tools by Fabio Garavini
+# Home Assistant app: ![Logo](https://github.com/varun-raj/immich-power-tools/raw/main/public/favicon-32x32.png) Immich Power Tools by Fabio Garavini
+
+[![](https://img.shields.io/static/v1?label=Support+me&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/fabio-garavini)
 
 A unofficial immich client to provide better tools to organize and manage your immich account. Building it to speed up your workflows in Immich to organize your people and albums.
 

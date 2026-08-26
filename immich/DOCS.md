@@ -1,4 +1,4 @@
-# Home Assistant add-on: Immich (all in one) 📷 by Fabio Garavini
+# Home Assistant app: Immich (all in one) 📷 by Fabio Garavini
 
 **Immich** is a high-performance self-hosted solution for managing personal photos and videos. This all-in-one addon bundles essential services for immediate use.
 

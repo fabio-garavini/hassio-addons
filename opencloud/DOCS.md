@@ -1,4 +1,4 @@
-# Home Assistant add-on: OpenCloud ☁️
+# Home Assistant app: OpenCloud ☁️
 
 ## Install
 

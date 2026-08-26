@@ -1,4 +1,6 @@
-# Home Assistant Add-on: Frigate ROCm (AMD)
+# Home Assistant app: Frigate ROCm (AMD)
+
+[![](https://img.shields.io/static/v1?label=Support+me&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/fabio-garavini)
 
 > [!INFO]
 > Frigate build for AMD GPUs

@@ -1,4 +1,6 @@
-# Home Assistant add-on: Mealie 🍜 by Fabio Garavini
+# Home Assistant app: Mealie 🍜 by Fabio Garavini
+
+[![](https://img.shields.io/static/v1?label=Support+me&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/fabio-garavini)
 
 Mealie is a self hosted recipe manager, meal planner and shopping list. Easily add recipes into your database by providing the URL and Mealie will automatically import the relevant data, or add a family recipe with the UI editor. Mealie also provides an API for interactions from 3rd party applications.
 

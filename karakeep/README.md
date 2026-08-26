@@ -1,4 +1,6 @@
-# Home Assistant add-on: Karakeep (all-in-one) 💾 by Fabio Garavini
+# Home Assistant app: Karakeep (all-in-one) 💾 by Fabio Garavini
+
+[![](https://img.shields.io/static/v1?label=Support+me&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/fabio-garavini)
 
 A self-hostable bookmark-everything app with a touch of AI for the data hoarders out there.
 

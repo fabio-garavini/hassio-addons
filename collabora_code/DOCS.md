@@ -1,4 +1,4 @@
-# Home Assistant add-on: Collabora CODE 📄 by Fabio Garavini
+# Home Assistant app: Collabora CODE 📄 by Fabio Garavini
 
 [Collabora CODE](https://www.collaboraonline.com/code/) is a powerful online document editing suite.
 

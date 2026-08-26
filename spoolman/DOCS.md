@@ -1,4 +1,4 @@
-# Home Assistant add-on: Spoolman 🧵
+# Home Assistant app: Spoolman 🧵
 
 # Install
 

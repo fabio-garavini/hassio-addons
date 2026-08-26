@@ -1,4 +1,6 @@
-# Home Assistant add-on: Luanti 🌳 by Fabio Garavini
+# Home Assistant app: Luanti 🌳 by Fabio Garavini
+
+[![](https://img.shields.io/static/v1?label=Support+me&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/fabio-garavini)
 
 Luanti (formerly [Minetest](https://blog.luanti.org/2024/10/13/Introducing-Our-New-Name/)) is a free and open-source voxel game engine with its own [distribution platform](https://docs.luanti.org/about/contentdb) and [client](https://docs.luanti.org/about/luanti). Players, creators, server hosts, and engine developers can find more information here about how to get started with Luanti.
 

@@ -1,18 +1,14 @@
-# Home Assistant add-on: Gitea 🍵 by Fabio Garavini
+# Home Assistant app: Gitea 🍵 by Fabio Garavini
 
-![Addon Stage][stable-badge]
+[![](https://img.shields.io/static/v1?label=Support+me&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/fabio-garavini)
+
+![App Stage][stable-badge]
 ![Supports aarch64 Architecture][aarch64-badge]
 ![Supports amd64 Architecture][amd64-badge]
-![Supports armv7 Architecture][armv7-badge]
-![Supports armhf Architecture][armhf-badge]
-![Supports i386 Architecture][i386-badge]
 
 [aarch64-badge]: https://img.shields.io/badge/aarch64-yes-green.svg?style=for-the-badge
 [amd64-badge]: https://img.shields.io/badge/amd64-yes-green.svg?style=for-the-badge
-[armhf-badge]: https://img.shields.io/badge/armhf-no-red.svg?style=for-the-badge
-[armv7-badge]: https://img.shields.io/badge/armv7-no-red.svg?style=for-the-badge
-[i386-badge]: https://img.shields.io/badge/i386-no-red.svg?style=for-the-badge
-[stable-badge]: https://img.shields.io/badge/Addon%20stage-stable-green.svg?style=for-the-badge
+[stable-badge]: https://img.shields.io/badge/App%20stage-stable-green.svg?style=for-the-badge
 
 ![screenshot](https://about.gitea.com/img/home-screenshot.png)
 

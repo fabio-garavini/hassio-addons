@@ -1,4 +1,4 @@
-# Home Assistant add-on: Gitea 🍵 by Fabio Garavini
+# Home Assistant app: Gitea 🍵 by Fabio Garavini
 
 [Gitea](https://about.gitea.com) is a lightweight Git service integrated with Home Assistant for self-hosted repository management.
 

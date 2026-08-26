@@ -1,4 +1,4 @@
-# Home Assistant add-on: Paperless (all-in-one) 📄 by Fabio Garavini
+# Home Assistant app: Paperless (all-in-one) 📄 by Fabio Garavini
 
 **Paperless-ngx** is a powerful document management system that digitizes your physical documents into a searchable archive. Features include:
 

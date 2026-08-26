@@ -1,4 +1,4 @@
-# Home Assistant add-on: Jellyfin 📷 by Fabio Garavini
+# Home Assistant app: Jellyfin 📷 by Fabio Garavini
 
 A user-friendly **Jellyfin Media Server** integration for Home Assistant, designed to simplify streaming your personal media library.
 

@@ -1,4 +1,4 @@
-# Home Assistant add-on: Prometheus 🔥 by Fabio Garavini
+# Home Assistant app: Prometheus 🔥 by Fabio Garavini
 
 > [!NOTE]
 >

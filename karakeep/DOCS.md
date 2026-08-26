@@ -1,4 +1,4 @@
-# Home Assistant add-on: Karakeep (all-in-one) 💾 by Fabio Garavini
+# Home Assistant app: Karakeep (all-in-one) 💾 by Fabio Garavini
 
 The Karakeep Addon is a bookmark-everything app with a touch of AI, designed specifically for data hoarders. This addon allows you to save and organize your favorite bookmarks, with features like AI-powered search and recommendation.
 

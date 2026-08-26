@@ -1,4 +1,6 @@
-# Home Assistant add-on: Immich OpenVINO (all in one) 📷 by Fabio Garavini
+# Home Assistant app: Immich OpenVINO (all in one) 📷 by Fabio Garavini
+
+[![](https://img.shields.io/static/v1?label=Support+me&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/fabio-garavini)
 
 **Immich** is a self-hosted photo and video backup solution designed to replace proprietary cloud services. This all-in-one addon provides a complete media management ecosystem with AI-powered features.
 
