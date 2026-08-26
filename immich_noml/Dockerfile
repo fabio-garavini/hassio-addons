@@ -32,6 +32,7 @@ ENV \
     TRANSFORMERS_CACHE="/data/cache"
 
 # Postgres environment variables
+# hadolint ignore=DL3064
 ENV \
     PG_MAJOR=16 \
     PGDATA="/config/postgres" \

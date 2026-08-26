@@ -17,6 +17,7 @@ ENV \
     S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_READYTIME=50
 
+# hadolint ignore=DL3064
 ENV \
     MEMOS_MODE="prod" \
     MEMOS_PORT="80" \
