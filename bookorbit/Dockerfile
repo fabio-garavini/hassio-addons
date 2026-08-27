@@ -11,7 +11,6 @@ ENV \
 
 # hadolint ignore=DL3064
 ENV \
-    JWT_SECRET=0eece8ccca5d0352a69d01241ee0cea5a473cd4f073216314fc28253cc2eb5ed \
     SETUP_BOOTSTRAP_TOKEN=bookorbit \
     PG_MAJOR=18 \
     PGDATA="/config/postgres" \

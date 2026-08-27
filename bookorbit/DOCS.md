@@ -44,7 +44,7 @@ Highlights:
 2. Navigate to **Settings → Apps → App Store**, search for **BookOrbit** and
    click **Install**.
 3. *(Optional)* Open the **Configuration** tab and adjust the options
-   described below — especially `BOOKS_HOST_PATH` if your books live on a
+   described below — especially `LIBRARY_BROWSE_ROOT` if your books live on a
    specific folder or NAS share.
 4. **Start** the app. The first start takes a little longer while PostgreSQL
    initializes.
@@ -53,8 +53,7 @@ Highlights:
    this is expected. Accept it and the **signup form** will appear.
 6. Fill in the **Setup token** (`bookorbit`) and create your administrator
    account. This is only asked once.
-7. Create your first library and point it at your books folder (by default
-   `/media/bookorbit`, which maps to the `media` folder of Home Assistant).
+7. Create your first library.
 
 ---
 
@@ -67,12 +66,12 @@ Highlights:
 | `keyfile`            | string  | No       | `privkey.pem`     | Name of the SSL private key file inside `/ssl/`. Only used together with `certfile`.                                                                                   |
 | `APP_URL`            | string  | No       | —                 | External/public URL used by emails and the Kobo endpoints (e.g. `https://books.example.com`). Leave empty for plain LAN access.                                        |
 | `CLIENT_URL`         | string  | No       | —                 | CORS origin for the frontend when it is served from a different domain than `APP_URL`. Leave empty in most setups.                                                     |
-| `BOOKS_HOST_PATH`    | string  | Yes      | `/media/bookorbit`| Host folder that appears as `/books` inside BookOrbit. Must be a path the app can see (typically under `/media`, `/share` or a mounted storage device).                 |
-| `LIBRARY_BROWSE_ROOT`| string  | Yes      | `/books`          | Folder used as the top of the library creation folder picker. The default `/books` is where `BOOKS_HOST_PATH` appears inside BookOrbit.                                 |
+| `LIBRARY_BROWSE_ROOT`| string  | Yes      | `/media/bookorbit`          | Folder used as the top of the library creation folder picker.                                                                                                |
 | `BOOKORBIT_FIX_PERMISSIONS` | boolean | Yes | `true`          | Automatically repair ownership of the app data folder (`/data`) at startup. Set to `false` only if your platform manages bind-mount ownership externally.               |
-| `BOOK_DOCK_PATH`     | string  | No       | `/data/book-dock` | Book Dock staging folder: uploaded files land here first, BookOrbit extracts metadata and covers, optionally fetches provider metadata, and then you finalize them into a library. |
+| `BOOK_DOCK_PATH`     | string  | No       | `/media/bookorbit/dock` | Book Dock staging folder: uploaded files land here first, BookOrbit extracts metadata and covers, optionally fetches provider metadata, and then you finalize them into a library. |
 | `PUID`               | integer | Yes      | `0`               | **User ID** under which BookOrbit runs. Match this to a real user on your host if your books live on mounted storage owned by that user. Leave at `0` if unsure.        |
 | `PGID`               | integer | Yes      | `0`               | **Group ID** under which BookOrbit runs. See `PUID` above.                                                                                                             |
+| `JWT_SECRET`         | string  | Yes      | random value               | **App secrets** should be set to a unique long random secret                                                                                                |
 | `TZ`                 | string  | No       | `Etc/UTC`         | Timezone used for displaying dates and times. Example: `Europe/Rome`.                                                                                                  |
 | `env_vars`           | list    | No       | `[]`              | Additional environment variables to inject into the container. Each entry has a `key` (must match `^[A-Za-z0-9_-]+$`) and a `value`. Useful for advanced settings. |
 
@@ -151,8 +150,7 @@ proxies…).
 
 - **Browser warns about an untrusted certificate** — expected with the
   default self-signed certificate; see *HTTPS / SSL* above.
-- **A scan finishes but finds no books** — check that your files are inside
-  `BOOKS_HOST_PATH` and that the formats are supported. Also verify
+- **A scan finishes but finds no books** — verify
   `LIBRARY_BROWSE_ROOT` doesn't exclude the folder you picked.
 - **Uploads fail / Book Dock cannot finalize files** — the books folder must
   be **writable** by `PUID`:`PGID`. Match them to the user that owns the

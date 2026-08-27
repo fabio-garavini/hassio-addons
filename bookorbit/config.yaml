@@ -1,5 +1,5 @@
 name: BookOrbit
-version: 2.7.0-v1
+version: 2.7.0-v2
 slug: bookorbit
 description: BookOrbit organizes your books and reads them back to you anywhere
 url: https://bookorbit.app/
@@ -28,12 +28,12 @@ schema:
   keyfile: str?
   APP_URL: str?
   CLIENT_URL: str?
-  BOOKS_HOST_PATH: str
-  BOOK_DOCK_PATH: str?
+  BOOK_DOCK_PATH: str
   LIBRARY_BROWSE_ROOT: str
   BOOKORBIT_FIX_PERMISSIONS: bool
   PUID: int(0,)
   PGID: int(0,)
+  JWT_SECRET: password
   env_vars:
     - key: match(^[A-Za-z0-9_-]+$)
       value: str
@@ -42,11 +42,12 @@ options:
   ssl: true
   certfile: fullchain.pem
   keyfile: privkey.pem
-  BOOKS_HOST_PATH: /media/bookorbit
-  LIBRARY_BROWSE_ROOT: /books
+  BOOK_DOCK_PATH: /media/bookorbit/dock
+  LIBRARY_BROWSE_ROOT: /media/bookorbit
   BOOKORBIT_FIX_PERMISSIONS: true
   PUID: 0
   PGID: 0
+  JWT_SECRET: "0eece8ccca5d0352a69d01241ee0cea5a473cd4f073216314fc28253cc2eb5ed"
   env_vars: []
 ports:
   8080/tcp: 3013

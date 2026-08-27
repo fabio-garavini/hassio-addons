@@ -38,10 +38,6 @@ configuration:
     name: Client url
     description: >-
       CORS origin for the frontend when served from a different domain than App url
-  BOOKS_HOST_PATH:
-    name: Books Host Path
-    description: >-
-      Host folder that appears as /books in the BookOrbit app
   BOOK_DOCK_PATH:
     name: Books Dock Path
     description: >-

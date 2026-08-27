@@ -3,9 +3,10 @@
   "ssl": true,
   "certfile": "fullchain.pem",
   "keyfile": "privkey.pem",
-  "BOOKS_HOST_PATH": "/media/bookorbit",
-  "LIBRARY_BROWSE_ROOT": "/books",
+  "BOOK_DOCK_PATH": "/media/bookorbit/dock",
+  "LIBRARY_BROWSE_ROOT": "/media/bookorbit",
   "PUID": 0,
   "PGID": 0,
+  "JWT_SECRET": "0eece8ccca5d0352a69d01241ee0cea5a473cd4f073216314fc28253cc2eb5ed",
   "env_vars": []
 }

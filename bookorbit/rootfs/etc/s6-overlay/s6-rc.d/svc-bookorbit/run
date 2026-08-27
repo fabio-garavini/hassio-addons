@@ -3,6 +3,8 @@
 
 set -e
 
+mkdir -p "$LIBRARY_BROWSE_ROOT/books" "$LIBRARY_BROWSE_ROOT/dock"
+
 cd /app
 
 log() {
