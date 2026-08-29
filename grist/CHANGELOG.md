@@ -1,63 +1,69 @@
 ## What's Changed
 
-### New features
-
-* **Row numbers, row IDs, or neither**. A new "Row numbers" setting on grid widgets, in Grid Options and in a menu at the grid's top-left corner. Choose Numbers (position in the current sort, as before), Row IDs (bracketed like `[15]`, matching how references render), or Hidden, which collapses the left-hand gutter. Addresses #220, open since 2022, and #1927. (#2448)
-* **Setup checklist for notifications and automations**. Notifications, automations, invite emails, and the AI assistant each need plumbing behind them (an email backend, a Redis queue, an AI provider, the full edition), and when a prerequisite is missing the feature simply isn't there. Document Settings now lists what's ready and what each unfinished feature is waiting on. Users can press "Ask the admin" to request a step; admins see the requests in a new Admin Panel item. ([commit](https://github.com/gristlabs/grist-core/commit/a29e94aa))
-* **Switch to the full edition from the Admin Panel**. Previously this meant changing Docker image. Now it's a button, in the Admin Panel or the first step of Quick Setup: the server downloads the extensions matching its own version, checks their SHA-256, and restarts in place. Offered on release builds only, not on `main`, nightlies, or dev checkouts. `GRIST_EXT_FULL_EDITION_BASE_URL` points it at a mirror, or turns it off for air-gapped installs. (#2450)
-* **"Help us improve" in Quick Setup**. First-time setup now ends with an optional card: how you heard about Grist, what kind of user you are, and a switch subscribing an email address to product and security updates. It appears during setup only, and if you leave it blank nothing is sent at all. What you fill in goes to Grist Labs, along with your installation ID. ([commit](https://github.com/gristlabs/grist-core/commit/5af0acb7))
-
 ### Improvements
 
-* Accessibility
-  * Modals and popups are announced as dialogs by screen readers, and Tab is trapped inside an open modal. Fixes a Mousetrap bug that let keyboard focus wander behind a modal. Contributed by @manuhabitela (#2371). Keyboard focus now works from the tooltip-style popups inside modals as well ([commit](https://github.com/gristlabs/grist-core/commit/6e175355))
-* API
-  * Temporary row IDs are now translated inside RefList values, not just Ref values and row-ID positions. Rows that reference each other through RefList columns can be created in one bundle (#2477)
+* Performance
+  * Lookups and summary tables now cost the Python data engine far less memory. Measured at 30% less on a large document ([commit](https://github.com/gristlabs/grist-core/commit/18653743))
+* Access rules
+  * A memo now shows only when it bears on the block you hit, either as the reason for it or as a remedy that would grant access, and is marked with a lock or a lightbulb accordingly. Memos follow the same precedence as permissions. Access itself is unchanged, only the explanation (#2479)
 * UI/UX
-  * The Grist edition and version show in the left panel footer, with links to compare editions and to release notes. Previously visible only in the Admin Panel (#2470)
-* Internationalization
-  * "Enable Access Rules", the form reset warning, and the color picker's `fill` / `text` / `default` / `none` labels are now translatable. Contributed by @fflorent (#2451)
+  * A Markdown cell cut off by a max row height now shows an ellipsis over a fade in its bottom right corner, as other cell types already did (#2502)
+* Custom widgets
+  * A widget can declare the columns it needs in its manifest, not only in `grist.ready()`. What `grist.ready()` sends still wins when both are set. `mapColumnNames()` now returns the record without the unmapped field rather than `null`, and the `columns` option is gone from `mapColumnNames()` and `mapColumnNamesBack()`. See the [plugin API reference](https://support.getgrist.com/code/modules/grist_plugin_api/) ([commit](https://github.com/gristlabs/grist-core/commit/dadcb247))
+* Admin Panel
+  * The Authentication and Sandboxing sections now present each option as a card. In the setup wizard they lead with a recommendation and the Continue button stays disabled until you pick one; in the Admin Panel they show what the server is currently using and pre-select nothing. The OIDC and SAML cards are marked "Requires activation key", and clicking one opens a request for that key. Sandboxing keeps the option you picked, including "No sandboxing", and switching to "No auth" always asks for confirmation ([commit](https://github.com/gristlabs/grist-core/commit/43e1e9af))
+  * The edition (community or full) is now recorded in the home database rather than in `config.json`, under the name `GRIST_SERVER_EDITION`, with a one-time migration for existing installations. `GRIST_FORCE_ENABLE_ENTERPRISE` still takes precedence ([commit](https://github.com/gristlabs/grist-core/commit/da352571))
+* Internal / infrastructure
+  * New `GRIST_ACTIVEDOC_TIMEOUT_SECONDS` sets how long a document stays open after the last client disconnects. Contributed by @fflorent (#2505)
+  * jQuery moves to 3.7.1, and jQuery-UI from the unmaintained `components-jqueryui` package to `jquery-ui` 1.14.2, so dependabot can keep it updated. Contributed by @fflorent (#2476)
+  * Dependency bumps: `shell-quote` 1.10.0 (fixes a denial of service in `parse`, GHSA-395f-4hp3-45gv) (#2525), `axios` 1.18.0 (#2472), `undici` 6.28.0 (#2510), `dompurify` 3.4.13 (#2516), `engine.io` 6.6.7 (#2475), `typeorm` 0.3.31 (#2484), `morgan` 1.11.0 (#2460), `js-yaml` 4.3.1 (#2519), `tar` 7.5.21 (#2491), `postcss` 8.5.25 (#2500), `fast-uri` 3.1.5 (#2511), `linkify-it` 5.0.2 (#2488), `svgo` 3.3.4 (#2485), `webpack-dev-server` 5.2.6 (#2486), `websocket-driver` 0.7.5 (#2469)
 * Documentation
-  * `documentation/database.md` is back in sync with the schema, with a regenerated home DB diagram. Contributed by @fflorent (#2458)
-  * Freshened the comments that feed the generated reference on [support.getgrist.com](https://support.getgrist.com/), with formatting fixes and a broken link repaired (#2462)
-  * The README caught up with the last several releases: accessibility, Automations, OAuth apps, the MCP server, three new environment variables, and a table of full edition feature flags (#2443)
+  * The reference for `NOW()` and `TODAY()` now explains when Grist recalculates them. See [Function reference](https://support.getgrist.com/functions/) ([commit](https://github.com/gristlabs/grist-core/commit/8bd355eb))
 
 ### Fixes
 
-* "View as" is preserved for attachment previews and whole-document exports, which previously resolved as the document owner (#2478)
-* An Airtable reference column holding a single value imported as unusable text rather than a working reference, leaving the raw Airtable ID behind as alt text (#2446)
-* Airtable count columns no longer error when the column they count was imported as a Ref rather than a RefList (#2447)
-* In Markdown cells at a max row height, wrapped list items could overlap the lines below (#2465)
-* Improved error reporting when comparing documents via the API (`/compare`) ([commit](https://github.com/gristlabs/grist-core/commit/b2145fe0))
-* The server could crash when a client disconnected part-way through a proxied request ([commit](https://github.com/gristlabs/grist-core/commit/723f7edd))
-* The "reachable" self-check reported a false failure whenever anonymous access was disabled (#2420)
-* Redirects when `GRIST_PERSONAL_ORGS` is disabled have been improved (#2420)
+* A browser tab whose network dropped, such as after a laptop wakes from sleep, showed "Error" and asked for a reload. It now reopens the document. Reconnect attempts also back off against a server that accepts connections and immediately drops them (#2501)
+* Documents containing a multi-line f-string formula became unusable on Python 3.12 and later, reporting `KeyError` or "'DocModel' object has no attribute 'tables'" for every action. That has affected the pyodide sandbox since v1.7.13, and source installs with a recent python3 (#2518)
+* Renaming a table or column could break the formulas that depend on it, either failing them with an AssertionError or leaving them silently no longer recalculating. Affects formulas returning a record or list of records into a column of type Any (#2540)
+* Under some path conditions, Grist could not open a document on Windows with the pyodide sandbox, because none of the sandbox's Python packages installed. The failure is now reported where it happens, rather than later as a missing import (#2517)
+* Under some path conditions, importing a file on Windows failed with a sandbox permission error on the temporary file (#2527)
+* Downloading a document still at an old schema version failed with a SQLite error (#2541)
+* Renaming an attachment failed in any document with access rules (#2514)
+* A dialog appeared a moment before it took the keyboard focus, so a key pressed in between went to whatever was focused beforehand. Closing a dialog opened from another dialog now hands the focus straight back to the first one (#2522)
+* Hiding fields on a card widget could throw JavaScript errors, for some column types such as Choice List (#2503)
+* Detaching a summary table grouped by a RefList column produced TypeError cells throughout ([commit](https://github.com/gristlabs/grist-core/commit/055025ae))
+* On a fresh install, applying getgrist.com authentication signed the admin out even when their only session came from the boot key ([commit](https://github.com/gristlabs/grist-core/commit/74d86be6))
+* Clearing sessions never worked on installs using Redis, so an authentication change left old logins in place ([commit](https://github.com/gristlabs/grist-core/commit/3901cbe0))
+
+### Update on OIDC/SAML support
+
+As of this release, Grist Labs will no longer be officially supporting SSO via OIDC/SAML outside of the full edition of Grist. If you're already running OIDC or SAML on a self-hosted Grist installation configured before this change, it should continue to work. If you're relying on OIDC/SAML in production, absolutely reach out to us, we want full Grist to work for your organization.
 
 ### Full Grist edition extensions
 
-* OAuth apps
-  * Re-authorizing a client pre-selects the resources you granted before instead of resetting the grant to everything, and skips the account picker when it can identify the account. Switching accounts no longer invalidates the previous account's tokens ([commit](https://github.com/gristlabs/grist-core/commit/738cbd8b))
-  * A server without `GRIST_ENABLE_OIDC_SERVER` explains how to enable OAuth apps, instead of rendering UI over endpoints that 404 ([commit](https://github.com/gristlabs/grist-core/commit/738cbd8b))
 * MCP
-  * A banner on the home page and a card on the OAuth apps page explain how to connect using MCP. See the [MCP docs](https://support.getgrist.com/mcp/) ([commit](https://github.com/gristlabs/grist-core/commit/ff644998))
-  * Clients passing a document's urlId in place of `doc_id` no longer get "Doc belongs to a different DocWorker" ([commit](https://github.com/gristlabs/grist-core/commit/96367798))
-  * Document calls now travel to the server holding the document through the same forwarding as the rest of the document API, rather than MCP's own, which means MCP works with Fleet ([commit](https://github.com/gristlabs/grist-core/commit/b2145fe0))
+  * New `get_custom_widget_settings` and `set_custom_widget_settings` tools read and write a widget's access level and column mapping, and `get_custom_widget_options` / `set_custom_widget_options` read and write the widget's own options, merging on write so one key can change without dropping the rest. Tool inputs validate a mapped column's type the same way the creator panel does, `doc_id` errors are more specific, and `grist_create_table` takes `skip_page` and reports the page it creates. The assistant's tool call limit went from 10 to 20 ([commit](https://github.com/gristlabs/grist-core/commit/dadcb247))
+* OAuth apps
+  * Popup-based OAuth flows work again. The Cross-Origin-Opener-Policy header is still set on login pages, so a popup flow started by a signed-out user stumbles once there and succeeds on retry ([commit](https://github.com/gristlabs/grist-core/commit/304fcbf8))
 * Grist Fleet
-  * New. Any Grist server in a pool of servers will now proxy WebSocket connections and document API calls to whichever peer server holds the document. Every server can then be deployed the same way behind a load balancer, with no separate home / static / doc worker configuration. Requires `GRIST_FLEET=true` and the `installationFleet` feature in an Enterprise activation key ([commit](https://github.com/gristlabs/grist-core/commit/2def9e86))
+  * A fleet comes up without a worker id or internal URL set on every server. Each server works out the URL its peers should reach it on from the network address it actually listens on, and takes its worker id from that. `GRIST_DOC_WORKER_ID`, `APP_DOC_INTERNAL_URL`, and `GRIST_ROUTER_URL` still override; `APP_DOC_URL` together with `GRIST_FLEET` is now refused at startup, and a server with no URL its peers can reach says so ([commit](https://github.com/gristlabs/grist-core/commit/ee28810b))
+* Automations
+  * Trigger options no longer appear in Document Settings for documents that do not support them ([commit](https://github.com/gristlabs/grist-core/commit/5d9bfe5c))
 
 ## Contributions
 
-* Grist Labs: @berhalak, @dsagal, @georgegevoian, @paulfitz, @Spoffy
-* @manuhabitela: keyboard and screen-reader support in modals and popups (#2371)
-* @fflorent: refresh and expand the database documentation (#2458), localize remaining UI strings (#2451)
+* Grist Labs: @berhalak, @dsagal, @georgegevoian, @paulfitz
+* @fflorent: a `GRIST_ACTIVEDOC_TIMEOUT_SECONDS` setting for how long documents stay open (#2505), jQuery and jQuery-UI upgrade (#2476)
 
 ### Translations
 
-* Barna Kovács
-* linke
-* Martin Harari Thuresson
-* npluto
+* Arif Budiman
+* Grégoire Cutzach
+* Kévin DUPOND
+* Martin Gerken
+* Vri
+* Петр Артюхов
 
-**Full Changelog**: https://github.com/gristlabs/grist-core/compare/v1.7.16...v1.7.17
+**Full Changelog**: https://github.com/gristlabs/grist-core/compare/v1.7.17...v1.7.18
 
 [Join our Discord Community](https://discord.gg/MYKpYQ3fbP) if you'd like to get into development of Grist.
