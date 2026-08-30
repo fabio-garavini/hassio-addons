@@ -1,3 +1,3 @@
 build_from:
-  aarch64: gitea/gitea:1.27.2
-  amd64: gitea/gitea:1.27.2
+  aarch64: gitea/gitea:1.27.3
+  amd64: gitea/gitea:1.27.3
