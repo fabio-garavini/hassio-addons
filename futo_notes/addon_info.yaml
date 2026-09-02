@@ -9,8 +9,8 @@ config:
   patch: 0
   image: fabioogaravini/hassio-futo_notes
 build:
-  image: oven/bun
-  version_template: "alpine"
+  image: debian
+  version_template: bookworm-slim
 changelog:
   source: none
   version_template: "{{major}}.{{minor}}.{{patch}}"

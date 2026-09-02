@@ -7,15 +7,8 @@ if [ -z "${FUTO_NOTES_PASSWORD:-}" ]; then
   echo "[init-futo-notes] FATAL: FUTO_NOTES_PASSWORD is required." >&2
   exit 1
 fi
-if [ -z "${POSTGRES_PASSWORD:-}" ]; then
-  echo "[init-futo-notes] FATAL: POSTGRES_PASSWORD is required." >&2
-  exit 1
-fi
-
-DATABASE_URL="postgresql:///${POSTGRES_DB:-futo_notes}?host=/var/run/postgresql&user=${POSTGRES_USER:-futo_notes}&password=${POSTGRES_PASSWORD}&options=-csearch_path=public"
-printf '%s' "$DATABASE_URL" > /var/run/s6/container_environment/DATABASE_URL
 
 mkdir -p "${BLOB_DIR:-/data/blobs}"
-chown -R bun:bun "${BLOB_DIR:-/data/blobs}" /app
+chown -R notes:notes "${BLOB_DIR:-/data/blobs}"
 
 echo "[init-futo-notes] FUTO Notes ready to start"

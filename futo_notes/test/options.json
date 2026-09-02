@@ -1,6 +1,6 @@
 {
   "TZ": "Etc/UTC",
-  "ssl": false,
+  "ssl": true,
   "certfile": "fullchain.pem",
   "keyfile": "privkey.pem",
   "FUTO_NOTES_PASSWORD": "test-password-not-for-production",

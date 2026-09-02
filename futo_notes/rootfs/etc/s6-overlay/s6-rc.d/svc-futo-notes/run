@@ -3,10 +3,6 @@
 
 set -Eeo pipefail
 
-mkdir -p "${BLOB_DIR:-/data/blobs}"
-chown bun:bun "${BLOB_DIR:-/data/blobs}"
-
 echo "[svc-futo-notes] Starting FUTO Notes server..."
 
-cd /app
-exec s6-setuidgid bun bun dist/index.js
+s6-setuidgid notes futo-notes-server
