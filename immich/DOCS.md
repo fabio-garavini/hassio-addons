@@ -1,115 +1,186 @@
 # Home Assistant app: Immich (all in one) 📷 by Fabio Garavini
 
-**Immich** is a high-performance self-hosted solution for managing personal photos and videos. This all-in-one addon bundles essential services for immediate use.
+[Immich](https://immich.app) is a high-performance self-hosted solution for
+managing personal photos and videos — automatic mobile backup, AI-powered
+search (object, scene and face recognition), timeline, shared albums and RAW
+support — packaged as a single Home Assistant app.
 
-## 🧩 All-in-One Components
+It's the **all-in-one** solution: no external database, no separate machine
+learning container. This monolithic package bundles:
 
-This monolithic package includes:
+* **Immich Core** — photo/video management server and web interface
+* **Machine Learning** — object/scene recognition & facial recognition
+* **PostgreSQL with VectorChord** — vector-optimized database
+* **Redis** — real-time notifications and caching
 
-* **Immich Core**: Photo/video management interface
-* **Machine Learning**: Object/scene recognition & facial recognition
-* **PostgreSQL with VectorChord**: Vector-optimized database
-* **Redis**: Real-time notifications and caching
+Connections from Immich to Postgres and Redis use Unix sockets, which
+**reduce overhead and improve performance**.
 
-Connections from Immich to Postgres and Redis use Unix sockets, which **reduce overhead and improve performance**
-
-[Official Immich Documentation](https://immich.app/docs)
+[Official Immich documentation](https://immich.app/docs)
 
 ---
 
-## 🛠 Installation Guide
+## 📥 Installation
 
-1. **Install the Add-on**:
+1. **Add this repository** to your Home Assistant app store (if you have not
+   already):
 
-   * Navigate to **Home Assistant Supervisor** → **Add-on Store**
-   * Search for "Immich" → Click **Install**
-1. **Initial Setup**:
+   [![Open your Home Assistant instance and show the app add repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Ffabio-garavini%2Fhassio-addons)
 
-   * (Optional) Edit the Configuration
-   * Start the add-on
-   * Click **OPEN WEB UI**
-   * follow first-run wizard
-1.  (optional) If you're already using the Home Assistant backup system, you can disable *Database Dumps*
-1.  (optional) **Checkout** the [post installation guide](https://immich.app/docs/install/post-install)
+1. Navigate to **Settings → Apps → App Store**, search for **Immich** and
+   click **Install**.
+1. *(Optional)* Open the **Configuration** tab and adjust the options
+   described below — especially `Media Location` if you want your library on
+   a specific folder, or `storage_mounts` to mount an external disk/NAS.
+1. **Start** the app.
+1. Click **OPEN WEB UI** and follow the **first-run wizard** to create your
+   admin account.
+   <br>Check out the [post installation guide](https://immich.app/docs/install/post-install).
 
 ---
 
 ## ⚙️ Configuration Options
 
-Below are all the configuration settings you can customize. Most users can leave defaults, but advanced users may fine-tune.
-
-| Parameter                                                   | Required | Default         | Description                                                                                                                       |
-| ----------------------------------------------------------- | -------- | --------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `PUID`                                                      | Yes      | `0`             | **User ID** used to run Immich. If you don’t know what this is, leave at default                                                  |
-| `PGID`                                                      | Yes      | `0`             | **Group ID** used to run Immich. Same as above—leave default if unsure                                                            |
-| `TZ`                                                        | Yes      | `Etc/UTC`       | **Timezone** for correct photo/video timestamps. Example: `Europe/London`                                                         |
-| `Log Level`                                                 | No       | `info`          | Sets how detailed Immich logs are (e.g., `verbose`, `debug`, `log`, `warn`, `error`). Useful for troubleshooting                  |
-| `ssl`                                                       | Yes      | `true`          | Enable HTTPS for secure connections. If `certfile` and `keyfile` are not specified, a self-signed certificate will be generated automatically |
-| `certfile`                                                  | No       | -               | Name of SSL certificate file stored in `/ssl/`. Example: `fullchain.pem`                                                          |
-| `keyfile`                                                   | No       | -               | Name of SSL private key file stored in `/ssl/`. Example: `privkey.pem`                                                            |
-| `Storage type`                                              | Yes      | `HDD`           | Type of storage Immich uses (`SSD` or `HDD`)                                                                                      |
-| `Media Location`                                            | Yes      | `/media/immich` | Path where Immich stores photos and videos. Must be a subfolder of `/media/` or `/share/` (the only persistent folders accessible inside the add-on) |
-| `Thumbnail processes invalid images`                        | No       | -               | When true, generate thumbnails for invalid images                                                                                 |
-| `Machine Learning Model TTL`                                | Yes      | `300`           | How long (in seconds) a machine learning model stays loaded in memory after not being used. `0` = always keep loaded              |
-| `Machine Learning Workers`                                  | No       | `1`             | Number of machine learning worker processes to spawn                                                                              |
-| `Machine Learning Worker Timeout`                           | No       | `300`           | If a machine learning worker doesn’t respond in this time (seconds), it will be restarted                                         |
-| `Preload CLIP Textual Models`                               | No       | -               | Preload text-based AI models for **Smart Search** (searching photos/videos by description). Use only if you want faster searches  |
-| `Preload CLIP Visual Models`                                | No       | -               | Preload image-based AI models for **Smart Search**. This helps Immich understand image content faster                             |
-| `Face Recognition Models`                                   | No       | -               | Preload face **recognition** models (used to match faces to known people). Preloading = faster results but uses more RAM          |
-| `Face Detection Models`                                     | No       | -               | Preload face **detection** models (used to find faces in images/videos). Same note about RAM applies                              |
-| `Trusted Proxies`                                           | No       | -               | List of proxy IP addresses Immich should trust (e.g., if using NGINX or another reverse proxy)                                    |
-| `Storage Mounts`                                            | No       | -               | List of external storage mounts to be mounted inside the addon check the `External Storage Mounts` section below                  |
-| `Clean Redis Cache`                                         | No       | `false`         | This will always start Redis with a clean new db.Use only if you are facing problems that needs cleaning Redis                    |
-| `Apply permissions`                                         | No       | `false`         | Apply permissions to all files inside the Immich Media location during boot, it can increase boot times                           |
-
-### 🔌 Network Ports
-
-* **8080/tcp** → Immich web interface
-* **5432/tcp** → PostgreSQL database
-* **6379/tcp** → Redis database
+| Option                                            | Type    | Required | Default          | Description                                                                                                                                         |
+| ------------------------------------------------- | ------- | -------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `PUID`                                            | integer | Yes      | `0`              | **User ID** under which Immich runs. Match this to a real user on your host if you want files on mounted storage to be owned by that user. Leave at `0` if unsure. |
+| `PGID`                                            | integer | Yes      | `0`              | **Group ID** under which Immich runs. See `PUID` above.                                                                                              |
+| `TZ`                                              | string  | No       | `Etc/UTC`        | Timezone used for correct photo/video timestamps. Example: `Europe/Rome`.                                                                             |
+| `Log Level`                                       | string  | No       | `log`            | How detailed the Immich logs are (`verbose`, `debug`, `log`, `warn`, `error`). Useful for troubleshooting.                                             |
+| `ssl`                                             | boolean | Yes      | `false`          | Enable HTTPS for the Web UI. If `certfile` and `keyfile` are not specified, a self-signed certificate will be generated automatically. See the *HTTPS/SSL* section. |
+| `certfile`                                        | string  | No       | `fullchain.pem`  | Name of the SSL certificate file stored in `/ssl/`.                                                                                                   |
+| `keyfile`                                         | string  | No       | `privkey.pem`    | Name of the SSL private key file stored in `/ssl/`.                                                                                                    |
+| `Storage type`                                    | string  | Yes      | `HDD`            | Type of storage the database runs on (`SSD` or `HDD`). Set it to match the underlying storage so PostgreSQL is tuned accordingly.                      |
+| `Media Location`                                  | string  | Yes      | `/media/immich`  | Path where Immich stores photos and videos. Must be a subfolder of `/media/` or `/share/` (or `/config/library` to include it in app backups).        |
+| `Thumbnail processes invalid images`              | boolean | No       | —                | When true, generate thumbnails for invalid images.                                                                                                     |
+| `Machine Learning Model TTL`                      | integer | Yes      | `300`            | How long (in seconds) a machine learning model stays loaded in memory after not being used. `0` = always keep loaded.                                  |
+| `Machine Learning Workers`                        | integer | No       | —                | Number of machine learning worker processes to spawn.                                                                                                   |
+| `Machine Learning Worker Timeout`                 | integer | No       | `300`            | If a machine learning worker doesn't respond in this time (seconds), it will be restarted.                                                              |
+| `Preload CLIP Textual Models`                     | string  | No       | —                | Preload text-based AI models for **Smart Search** (searching photos/videos by description). Use only if you want faster searches.                       |
+| `Preload CLIP Visual Models`                      | string  | No       | —                | Preload image-based AI models for **Smart Search**. This helps Immich understand image content faster.                                                  |
+| `Face Recognition Models`                         | string  | No       | —                | Preload face **recognition** models (used to match faces to known people). Preloading = faster results but uses more RAM.                                |
+| `Face Detection Models`                           | string  | No       | —                | Preload face **detection** models (used to find faces in images/videos). Same note about RAM applies.                                                    |
+| `Trusted Proxies`                                 | string  | No       | `172.30.32.0/23` | Comma-separated list of proxy IP addresses Immich should trust (e.g. if using NGINX or another reverse proxy).                                           |
+| `Storage Mounts`                                  | list    | No       | `[]`             | External storage mounts (USB disk, SMB/CIFS or NFS share) to mount inside the app. See the *Storage Mounts* section below.                              |
+| `Clean Redis Cache`                               | boolean | No       | `false`          | Always start Redis with a clean new db. Use only if you are facing problems that need cleaning Redis.                                                    |
+| `Apply permissions`                               | boolean | No       | `false`          | Apply permissions to all files inside the Immich media location during boot. It can increase boot times.                                                 |
+| `Backup location`                                 | string  | No       | —                | Path to the database dump to restore (e.g. `/media/immich/backups/backup-1700000000.sql.gz`). See the *Manual Dump Restore* section.                     |
+| `Restore backup`                                  | boolean | No       | `false`          | Enable to restore the database dump from `Backup location` on start. **Disable it again** after the restore completed.                                   |
+| `DELETE DB!`                                      | boolean | No       | `false`          | ⚠️ Delete the PostgreSQL database before restoring. Only used together with `Restore backup`.                                                            |
+| `env_vars`                                        | list    | No       | `[]`             | Additional environment variables to inject into the container. Each entry has a `key` (must match `^[A-Za-z0-9_-]+$`) and a `value`.                     |
 
 ---
 
-## 📚 Storage Management
+## 🔌 Ports
+
+| Port       | Protocol | Default host port | Description                                                                                     |
+| ---------- | -------- | ----------------- | ------------------------------------------------------------------------------------------------ |
+| `8080/tcp` | TCP      | `8080`            | **Immich Web UI** — the photo/video management interface. This is the port opened by **OPEN WEB UI**. |
+| `5432/tcp` | TCP      | `null` (disabled) | **PostgreSQL database** — internal use only (Immich connects over a Unix socket).                 |
+| `6379/tcp` | TCP      | `null` (disabled) | **Redis database** — internal use only (Immich connects over a Unix socket).                      |
+
+> [!NOTE]
+> The PostgreSQL and Redis ports are **disabled by default** and don't need to
+> be opened — everything communicates inside the app through Unix sockets.
+
+---
+
+## 💾 Storage
+
+The app maps several Home Assistant folders inside the container:
+
+| Home Assistant folder | Container path | Typical use                                            |
+| --------------------- | -------------- | ------------------------------------------------------- |
+| App config            | `/config`      | Immich settings and (if configured) the media library   |
+| Media                 | `/media`       | Read/write access to your media library (default)       |
+| Share                 | `/share`       | Shared files between apps                               |
+| SSL                   | `/ssl`         | SSL certificates (only used if `ssl` is enabled)        |
 
 ### Immich Library
 
-* By default, Immich stores everything inside `/media/immich` (set by `Media Location`)
-
-   If you want it to be included in the Addon backup and not in the Media folder, you can change it to `config/library`. Depending on your library size **this will increase the addon backup size by a lot!**
-
-* ⚠️ **Don't** manually move or change files inside this folder, always manage them via Immich UI.
-   Immich doesn't scan the media location folder looking for new or changed files, so editing files will lead to errors
+* By default, Immich stores everything inside `/media/immich` (set by
+  `Media Location`).
+* If you want the library to be included in the app backup and not in the
+  media folder, you can change it to `/config/library`. Depending on your
+  library size **this will increase the app backup size by a lot!**
+* ⚠️ **Don't** manually move or change files inside this folder — always
+  manage them via the Immich UI. Immich doesn't scan the media location
+  looking for new or changed files, so editing files on disk will lead to
+  errors.
 
 ### External Libraries
 
-* You can store photos/videos on external folders mounted under:
-
-  * `/media`
-  * `/share`
+* You can store photos/videos on external folders mounted under `/media` or
+  `/share` and add them as *external libraries* from the Immich UI.
 
 ---
 
 ## 📦 Storage Mounts
 
-You can also store your Immich library on an external storage device (like a usb hard disk or NAS)
+You can attach external storage directly from the app config — useful for a
+USB hard disk or a NAS share. You can specify as many storage mounts as you
+want.
 
-You can specify as many "storage mounts" as you want in the addon config
+```yaml
+storage_mounts:
+  # Local USB disk — auto-format and mount
+  - type: local
+    mount: sda                    # device name printed in the app log at boot
+    path: storage                 # mounted under /mnt/storage
+    auto_format: true             # create an ext4 partition
+    erase: true                   # ⚠️ wipe the disk first
 
-I strongly recommend storing your library on a NAS, which is usually more reliable. You can find how in the `NAS Storage Setup`
+  # SMB / Windows share
+  - type: smb
+    mount: //192.168.1.10/photos  # server and share
+    path: nas-photos              # mounted under /mnt/nas-photos
+    username: user                # optional, defaults to guest
+    password: secret              # optional
 
-### Mount Hard Disk
+  # NFS share
+  - type: nfs
+    mount: 192.168.1.10:/export/photos
+    path: nfs-photos              # mounted under /mnt/nfs-photos
+    options: "ro,soft"            # optional extra mount options
+```
 
-I will guide you through how to format the disk
+**Mount types:** `local`, `smb`, `cifs`, `nfs`.
 
-1. connect the hard disk to Home Assistant server
-1. start Immich and check the logs
+**Fields per mount:**
 
-   identify your hard disk, it should look something like this (maybe with a different device name)
-   if you're not shure, you can always double check with the drive serial printed on the disk
-   ```
+| Field         | Type    | Applies to          | Description                                                                             |
+| ------------- | ------- | ------------------- | ---------------------------------------------------------------------------------------- |
+| `path`        | string  | all                 | Name of the folder mounted under `/mnt/`.                                                |
+| `type`        | string  | all                 | One of `local`, `smb`, `cifs`, `nfs`.                                                    |
+| `mount`       | string  | all                 | Device name (local) or server/share path (SMB/NFS).                                      |
+| `options`     | string  | all                 | Optional extra mount options. For SMB you can pass things like `domain=WORKGROUP` here.  |
+| `auto_format` | boolean | `local`             | Create an ext4 primary partition on the disk.                                             |
+| `erase`       | boolean | `local`             | ⚠️ Wipe the disk before formatting.                                                       |
+| `username`    | string  | `smb`, `cifs`       | Username for the share. Defaults to `guest` if not set.                                    |
+| `password`    | string  | `smb`, `cifs`       | Password for the share.                                                                   |
+
+> [!TIP]
+> When formatting a local disk for the first time, set `auto_format: true`
+> and `erase: true`. On the next start the app will create the partition and
+> print the disk's UUID in the log. Replace `mount: sda` with
+> `mount: disk/by-uuid/<UUID>` and remove `auto_format` / `erase` to keep
+> the disk stable across reboots.
+
+I strongly recommend storing your library on a NAS, which is usually more
+reliable. See the *NAS Storage Setup* section below.
+
+### 🖴 Mount a Hard Disk
+
+Step-by-step guide to format and use a local disk:
+
+1. **Connect the hard disk** to the Home Assistant server.
+2. **Start Immich** and check the logs — identify your hard disk, it should
+   look something like this (maybe with a different device name; if you're
+   not sure, double-check with the drive serial printed on the disk):
+
+   ```text
    ════════════════════════════════════════════════════════════════════
-                        LOCAL STORAGE DEVICES
+                       LOCAL STORAGE DEVICES
    ════════════════════════════════════════════════════════════════════
    DEVICE   SIZE     MODEL                          PT TABLE   PARTITIONS SERIAL
    ────────────────────────────────────────────────────────────────────
@@ -117,67 +188,68 @@ I will guide you through how to format the disk
    ────────────────────────────────────────────────────────────────────
    ```
 
-1. **Erase and create a primary partition on your disk**
-
-   add to your `Storage Mounts` config this to let Immich know to format the disk
+3. **Erase and create a primary partition** — add this to your
+   `Storage Mounts` config to let Immich format the disk:
 
    ```yaml
    - type: local
      mount: sda         # your disk device name
-     path: storage      # name of the folder which will be mounted under /mnt/ (in this case /mnt/storage)
+     path: storage      # mounted under /mnt/ (in this case /mnt/storage)
      auto_format: true  # makes the primary partition ext4
      erase: true
    ```
 
-1. Start Immich and wait for the disk to be initialized
+4. **Start Immich** and wait for the disk to be initialized. You should see
+   in the logs something like:
 
-   Then you should see in the logs something like this
-   ```
+   ```text
    Disk partition created. Please update your storage_mounts config with:
    - type: local
      mount: disk/by-uuid/11c83a29-04e7-453d-8fd4-f3022ea3b0ca
      path: storage
    ```
 
-1. Copy it and replace your device storage mount config
+5. **Copy it and replace** your storage mount config — ⚠️ remove
+   `auto_format: true` and `erase: true` too.
+6. **Move your Immich library to the disk** — set
+   `Media Location` to `/mnt/<path>` (for this example `/mnt/storage`).
+7. Start Immich and check the logs to make sure everything is working fine.
 
-   ⚠️ replace also `auto_format: true` and `erase: true`
-
-1. (Optional) Move your Immich library to the external disk
-
-   you can now set `Media Location` to your `/mnt/<path>` (for this example `/mnt/storage`)
-
-1. Start Immich and check the logs to make shure everything is working fine
+> [!TIP]
+> You can set `path: storage/immich` to create a subdirectory in the root disk folder
+> and then change the `Media Location` to `/mnt/storage/immich`.
+> Or whatever other `storage` subfolder location
 
 ---
 
-## 💾 NAS Storage Setup
+## 🖥️ NAS Storage Setup
 
-There are two ways of connecting Immich to a NAS
+There are two ways of connecting Immich to a NAS.
 
-### Home Assistant Storage mount
+### Home Assistant Network Storage
 
-1. **Stop Immich**
-1. Navigate to **Supervisor** → **System** → **Storage**.
-1. Add a new network storage: ( ⚠️ don't mount the share on your `Media Location` path, default: `/media/immich`)
-   * **Name**: `immich` (name of the folder to mount share on)
+1. **Stop Immich**.
+2. Navigate to **Settings → System → Storage** and add a new **Network
+   storage** (⚠️ don't mount the share on your `Media Location` path —
+   default `/media/immich`):
+   * **Name**: `immich` (name of the folder to mount the share on)
    * **Usage**: `Share` (you can choose `Media` or `Share`)
-   * **Protocol**: SMB or NFS (enter login credentials if required).
-1. Update your addon `Media Location` configuration with `/<usage>/<name>` (for the example above `/share/immich`)
-1. **Start Immich**
-1. **Check logs** and wait for the migration to complete
+   * **Protocol**: SMB or NFS (enter login credentials if required)
+3. Update the app's `Media Location` configuration with `/<usage>/<name>`
+   (for the example above: `/share/immich`).
+4. **Start Immich** and wait for the migration to complete (see the
+   *Media Library Migration* section below).
 
-Check also `Media Library Migration` section to know more ⤵️
+### App Config Mount
 
-### Addon config
-
-1. add to your addon `storage mounts` config
+1. Add a storage mount to the app config:
 
    ```yaml
+   # SMB share
    - type: smb
      mount: //192.168.1.242/test # your smb server and shared folder
-     path: immich-test           # name of the folder which will be mounted under /mnt/
-     username: user              # optional default to guest
+     path: immich-test           # mounted under /mnt/ (in this case /mnt/immich-test)
+     username: user              # optional, defaults to guest
      password: password          # optional
      domain: WORKGROUP           # optional
      #options: <you can add additional smb options here>
@@ -186,19 +258,16 @@ Check also `Media Library Migration` section to know more ⤵️
    or
 
    ```yaml
+   # NFS share
    - type: nfs
      mount: 192.168.1.242:/storage/test   # your nfs server and path
-     path: nfs-test                       # name of the folder which will be mounted under /mnt/
+     path: nfs-test                       # mounted under /mnt/ (in this case /mnt/nfs-test)
      #options: <you can add additional nfs options here>
    ```
-1. update your `Media Location` (if you want to transfer your library to the external storage)
 
-   ```
-   /mnt/immich-test # or /mnt/nfs-test
-   ```
-1. restart Immich
-
-Check also `Media Library Migration` section to know more ⤵️
+2. *(Optional)* Update `Media Location` to transfer your library to the
+   external storage (e.g. `/mnt/immich-test` or `/mnt/nfs-test`).
+3. Restart Immich and check the logs.
 
 ---
 
@@ -206,38 +275,31 @@ Check also `Media Library Migration` section to know more ⤵️
 
 If you want Immich to move your media library to a new folder:
 
-1. **Prepare the New Folder**
-   * Ensure the new folder is either **empty** or **does not exist** (Immich will create it).
+1. **Prepare the new folder** — ensure the new folder is either **empty** or
+   **does not exist** (Immich will create it).
+2. **Update the configuration** — change `Media Location` to the new folder
+   (e.g. `/share/immich`).
+3. **Start Immich** — it will automatically perform checks and migrate all
+   media from the old location to the new one.
 
-2. **Update Configuration**
-   * Open the **Immich Add-on Configuration Page**.
-   * Change the `Media Location` to the new folder (e.g., `/share/immich`).
-
-3. **Start Immich**
-   * Immich will automatically perform checks and migrate all media from the old location to the new one.
-
-❕ **Important Notes**:
-* Only subfolders of `/media/` and `/share/` are supported for `Media Location` (or `/config/library` if you want to include your media library in the addon backup)
-* Migration may take time depending on your library size
-* Once complete, all new uploads will be stored in the new location
+> [!IMPORTANT]
+> * Only subfolders of `/media/` and `/share/` are supported for
+>   `Media Location` (or `/config/library` if you want to include your media
+>   library in the app backup).
+> * Migration may take time depending on your library size.
+> * Once complete, all new uploads will be stored in the new location.
 
 ---
 
 ## 🔒 Enabling HTTPS/SSL
 
-HTTPS is enabled **by default** (`ssl: true`).
-
-1. **Default (Self-Signed Certificate)**
-   * If you don’t specify `certfile` and `keyfile`, Immich will automatically generate and use a self-signed SSL certificate.
-   * You may see a browser warning the first time you connect—this is expected with self-signed certificates.
-
-2. **Using Trusted Certificates (Recommended)**
-   * If using Home Assistant’s **Let’s Encrypt add-on**, certificates will be stored in `/ssl/`.
-   * You should see two files:
-     * `fullchain.pem` (certificate)
-     * `privkey.pem` (private key)
-
-   Example configuration:
+1. **Default (self-signed certificate)** — enable `ssl` without specifying
+   `certfile`/`keyfile` and Immich will automatically generate and use a
+   self-signed certificate. You may see a browser warning the first time you
+   connect — this is expected with self-signed certificates.
+2. **Using trusted certificates (recommended)** — if you use Home
+   Assistant's **Let's Encrypt app**, the certificates are stored in `/ssl/`
+   (`fullchain.pem` certificate and `privkey.pem` private key):
 
    ```yaml
    ssl: true
@@ -245,54 +307,75 @@ HTTPS is enabled **by default** (`ssl: true`).
    keyfile: privkey.pem
    ```
 
-3. **Restart Immich**
-
-4. **Open Web UI**
+3. **Restart Immich** and open the Web UI.
 
 ---
 
-## ➡️ Immich manual dump restore
+## ➡️ Manual Dump Restore
 
-1. Make sure to backup everything by [triggering a dump](https://docs.immich.app/administration/backup-and-restore/#trigger-dump)
+1. Make sure to back up everything first by
+   [triggering a dump](https://docs.immich.app/administration/backup-and-restore/#trigger-dump).
 
-   If you are trying to migrate Immich from **any other source other than this addon**, make sure to use [**VectorChord** extension](https://docs.immich.app/administration/postgres-standalone/#migrating-to-vectorchord)
-
-1. Mount or Copy your Immich media library folder to Home Assistant (more information above)
-1. Open the `Configuration` tab
-
-   1. Edit `Backup location` to the database dump that you want to restore (ex: `/media/immich/backups/backup.sql.gz`)
-   1. Enable `Restore backup`
-   1. Enable `DELETE DB!` to delete Postgres db and `Clean Redis`
-
-1. Start Immich and check the logs
-1. Wait for Immich to start
-1. **DISABLE** `Restore backup`, `DELETE DB!` and `Clean Redis` and restart Immich
+   If you are migrating Immich from **any other source other than this app**,
+   make sure to use the
+   [VectorChord extension](https://docs.immich.app/administration/postgres-standalone/#migrating-to-vectorchord).
+2. Mount or copy your Immich media library folder to Home Assistant (more
+   information above).
+3. Open the **Configuration** tab:
+   * Set `Backup location` to the database dump you want to restore
+     (e.g. `/media/immich/backups/backup-1700000000.sql.gz`).
+   * Enable `Restore backup`.
+   * Enable `DELETE DB!` to delete the PostgreSQL database, and
+     `Clean Redis Cache`.
+4. **Start Immich** and check the logs.
+5. Wait for Immich to start and the restore to complete.
+6. **Disable** `Restore backup`, `DELETE DB!` and `Clean Redis Cache`, then
+   restart Immich.
 
 ---
 
 ## 🚨 Troubleshooting
 
-### Common Issues
-
-* **Uploads Failing**
-
-  * Check storage has enough free space
-  * Ensure storage permissions match `PUID`/`PGID`
-
-* **Slow AI Processing**
-
-  * Consider preloading machine learning models (but this may use more RAM)
-
-* **Web UI Not Loading**
-
-  * If using HTTPS, confirm your SSL certificate and key files are valid
-  * If using the self-signed default certificate, accept the browser warning
+- **Uploads failing** — check the storage has enough free space and that
+  permissions match `PUID`/`PGID` (you can enable `Apply permissions` once
+  to fix ownership on the media location).
+- **Slow AI processing** — usually caused by a machine learning model too
+  big for your machine, or by the time it takes to load the model: consider
+  preloading models (but this may use more RAM). If the database is the
+  bottleneck instead, check `Storage type` matches the storage the database
+  runs on.
+- **Web UI not loading** — if using HTTPS, confirm your SSL certificate and
+  key files are valid; if using the self-signed certificate, accept the
+  browser warning.
+- **Files on USB disk show as read-only / wrong owner** — set `PUID` and
+  `PGID` to a user that owns the files on the disk, and remount the disk.
+- **Can't see my NAS share** — double-check the `mount` path, credentials
+  and that the share is reachable from the Home Assistant host.
+- **App fails to start** — check the app log in Home Assistant
+  (*Apps → Immich → Log*). Common causes are a typo in `storage_mounts`, a
+  disk that doesn't exist, or an invalid `Media Location` (only subfolders
+  of `/media/` and `/share/` are supported).
 
 ---
 
 ## ❓ Support
 
-For assistance:
+- [Open an issue on GitHub](https://github.com/fabio-garavini/hassio-addons/issues)
+- [Immich documentation](https://immich.app/docs)
+- [Immich troubleshooting guide](https://immich.app/docs/install/post-install)
+- [Home Assistant Community Forum](https://community.home-assistant.io)
 
-* [GitHub Issues](https://github.com/fabio-garavini/hassio-addons/issues)
-* [Home Assistant Community Forum](https://community.home-assistant.io)
+---
+
+## 📚 Related apps
+
+- **[Immich OpenVINO](../immich_openvino/DOCS.md)** — GPU-accelerated machine
+  learning via Intel OpenVINO.
+- **[Immich Cuda](../immich_cuda/DOCS.md)** — GPU-accelerated machine
+  learning via NVIDIA CUDA.
+- **[Immich NoML](../immich_noml/DOCS.md)** — lightweight variant **without**
+  machine learning, for low-resource devices.
+- **[Immich Power Tools](../immich_power_tools/DOCS.md)** — companion tools
+  for bulk managing people, albums and duplicates.
+- **[ImmichFrame](../immich_frame/README.md)** — turn a spare screen into a
+  photo frame powered by your Immich library.
