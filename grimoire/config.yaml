@@ -1,5 +1,5 @@
 name: Grimoire
-version: 0.4.4-v5
+version: 1.1.0
 slug: grimoire
 description: Bookmark manager for the wizards 🧙
 url: https://github.com/goniszewski/grimoire
@@ -14,22 +14,22 @@ map:
     path: /app/data
   - type: data
     read_only: false
-  - type: ssl
+  - type: media
     read_only: false
+  - type: share
+    read_only: false
+  - type: ssl
 backup: cold
 schema:
-  PUBLIC_SIGNUP_DISABLED: bool
   ssl: bool
   certfile: str?
   keyfile: str?
-  PUBLIC_ORIGIN: str?
 options:
-  PUBLIC_SIGNUP_DISABLED: false
   ssl: true
   certfile: fullchain.pem
   keyfile: privkey.pem
 ports:
-  8080/tcp: 5173
+  8080/tcp: 3210
 ports_description:
   8080/tcp: Grimoire
 image: fabioogaravini/hassio-grimoire

@@ -1,4 +1,4 @@
-ARG BUILD_FROM=goniszewski/grimoire:0.4.4
+ARG BUILD_FROM=goniszewski/grimoire:1.1.0
 
 FROM $BUILD_FROM
 
@@ -6,9 +6,16 @@ FROM $BUILD_FROM
 USER root
 
 ENV \
-    PORT=5173 \
-    SERVICE_PORT=5173 \
+    PORT=3210 \
+    SERVICE_PORT=3210 \
     NIGNX_PORT=8080
+
+ENV \
+    HOST="0.0.0.0" \
+    DATA_DIR="/app/data" \
+    XDG_CONFIG_HOME="/app/data/config" \
+    HOME="/app/data" \
+    LITTLEIMP_IN_CONTAINER=1
 
 RUN \
 	apt-get update; \

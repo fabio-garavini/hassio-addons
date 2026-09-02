@@ -1,11 +1,11 @@
 source:
-  type: docker
+  type: github-releases
   repo: goniszewski/grimoire
-  current_version: 0.4.4
-  version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)(-hotfix\.(?<build>\d+))?$
+  current_version: v1.1.0
+  version_template: regex:^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
-  patch: 5
+  patch: 0
   image: fabioogaravini/hassio-grimoire
 build:
   image: goniszewski/grimoire
