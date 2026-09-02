@@ -136,6 +136,7 @@ ENV PATH="$PATH:/usr/lib/postgresql/$PG_MAJOR/bin:/usr/lib/bin"
 RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends libnss-wrapper lsb-release; \
+    mkdir -p /usr/share/postgresql-common/pgdg; \
     curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc; \
     codename="$(lsb_release -cs)"; \
     case "${BUILD_ARCH}" in \
