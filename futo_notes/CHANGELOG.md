@@ -1,14 +1,21 @@
-# v0.5.1
+# v0.6.0 — authoritative blob ledger, Mutation IDs, batch blob fetch
 
-Initial release of the FUTO Notes add-on.
+Blob lifetime is now tracked by an authoritative blob_ledger (staged/claimed/
+retained/purgeable), replacing the orphaned_blobs table. Object mutations are
+serialized collection-first in a single transaction that claims the staged
+blob, advances the cursor, and records the outcome.
 
-- Bundles the FUTO Notes sync server (`v0.5.1`) built from source with `bun`
-- Bundled PostgreSQL 16; data in `/data/postgres` (auto-provisioned on first boot)
-- Encrypted blobs in `/data/blobs`
-- The admin password from the add-on Configuration tab is hashed at startup
-  using the server's own scrypt helper, never written to disk
-- DB migrations auto-applied on every boot
-- Supports `amd64` and `aarch64`
-- Default host port `3005` → container port `3000`
-- `TRUST_PROXY` enabled by default so the login rate-limit keys on the real
-  client IP behind Home Assistant's proxy
+Optional client-supplied Mutation IDs make create/update/delete retry-safe for
+30 days; advertised via mutation_ids on the capability endpoint.
+
+Adds POST /api/blobs/batch for framed multi-blob fetch, and single-round-trip
+blob-object routes.
+
+Restores one vault per account, enforced in the route rather than by a UNIQUE
+constraint so existing multi-collection accounts keep their data.
+
+Sessions no longer slide: they hard-expire 7 days from issuance and return
+code=invalid_session so clients can silently reauthenticate.
+
+Password mode accepts a plaintext FUTO_NOTES_PASSWORD as an alternative to
+FUTO_NOTES_PASSWORD_HASH.

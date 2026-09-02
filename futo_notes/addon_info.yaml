@@ -11,5 +11,8 @@ config:
 build:
   image: oven/bun
   version_template: "alpine"
+changelog:
+  source: none
+  version_template: "{{major}}.{{minor}}.{{patch}}"
 test:
   enable: true
