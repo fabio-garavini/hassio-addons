@@ -6,7 +6,7 @@ ARG BUILD_FROM=oven/bun:alpine
 ARG BUILD_VERSION=0.6.0
 
 # renovate: datasource=gitlab-tags depName=futo-notes/futo-notes-server registryUrl=https://gitlab.futo.org
-ARG FUTO_NOTES_VERSION=v0.6.0
+ARG FUTO_NOTES_VERSION=v0.7.0
 
 #---------------------------------------------- Stage 1: build FUTO Notes from source ------------------------------------------------------------#
 FROM ${BUILD_FROM} AS futo-notes-builder
