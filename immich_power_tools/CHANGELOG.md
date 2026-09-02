@@ -1,34 +1,42 @@
-# ⚠️ Breaking Change: Immich V3 support
+## Highlights
 
-**v0.22.0 and above only support Immich V3.** Upgrade your Immich server to v3.0 before updating.
+### 🔀 Workflows
+- **New conditions for IF/SWITCH nodes** — tag (hierarchical, any/all/none), resolution (megapixels, short/long edge), and five library-cleanup conditions: file size, name/path, extension, face count, and time of day.
+- **Remove Tag action** to complement Add Tag.
+- **Workflow queries are now paginated** — the silent 10,000-asset cap is gone, so large libraries are fully scanned.
 
-## Immich V3 migration
+### 🗺️ Potential Albums
+- **New Trips view** that groups consecutive away-from-home days into suggested trip albums, with city filtering and pre-filled album names.
 
-The whole app has been migrated to Immich's V3 API and DB schema. This is a clean cutover — v2.x compatibility has been dropped.
+### 📦 Ente integration
+- Import your Ente library, including shared albums.
 
-**Highlights of what changed under the hood:**
+### 🔍 Smart Search fixes
+- Date-based searches ("photos from June 2011") no longer fail — dates are now sent as the full ISO datetimes the Immich API expects (#330).
+- Filter-only searches (a date range or a single `@person` with no search text) no longer error out — they now route to Immich's metadata search. Fixes #284.
 
-- **Albums** — album ownership moved from the `album` table to `album_user` rows; owner lookups now resolve via the `owner` role. Affects album list, merge, info, and people views.
-- **Assets** — `duration` is now an integer (milliseconds); the removed `deviceId` / `deviceAssetId` columns are no longer read anywhere.
-- **Import dedup** — the removed `/api/assets/exist` endpoint is replaced with checksum-based `/api/assets/bulk-upload-check`. Shared-link imports now dedup by checksum before download.
-- **Album enumeration** — shared album assets are now enumerated via the V3 timeline-bucket endpoints (`AlbumResponseDto` no longer embeds assets).
-- **Uploads** — the asset upload form drops the removed fields; archived assets now use `visibility: "archive"` instead of `isArchived`.
-
-## Fixes
-
-**Asset grid selection visual**
-Non-selected assets are now dimmed while you're in selection mode, making the current selection much easier to see.
-
-**Robust null/NaN handling for V3 data**
-Album thumbnails with no cover now render a clean placeholder instead of a broken image, and byte/duration formatting no longer shows `NaN` for empty albums.
-
-**Video duration overlays**
-Duration overlays are fixed for V3's millisecond-integer duration format (legacy `HH:MM:SS` strings still parse).
-
----
+### 🛠️ Other fixes
+- Correct API key permissions for Immich v3 (`albumAsset.*`, `tag.asset`) and honor "all" keys.
+- People page resets to page 1 when filters change.
+- `.env` files are excluded from the Docker build context.
+- Dependency upgrades and pruning of unused packages.
 
 ## What's Changed
-* fix(AssetGrid): dim non-selected siblings during selection mode by @dgilperez in https://github.com/immich-power-tools/immich-power-tools/pull/269
-* Prerelease by @sai80082 in https://github.com/immich-power-tools/immich-power-tools/pull/293
+* fix(people): reset page to 1 on filter change; drop stale onClick on sort menu by @dgilperez in https://github.com/immich-power-tools/immich-power-tools/pull/270
+* fix: API key permissions for Immich v3 (albumAsset.*, tag.asset) and honor "all" in key validation by @jonvdveen in https://github.com/immich-power-tools/immich-power-tools/pull/295
+* feat: five library-cleanup conditions — file size, name/path, extension, face count, time of day by @jonvdveen in https://github.com/immich-power-tools/immich-power-tools/pull/300
+* feat: Resolution condition for workflow IF/SWITCH nodes (megapixels, short/long edge) by @jonvdveen in https://github.com/immich-power-tools/immich-power-tools/pull/299
+* feat: Tag condition for workflow IF/SWITCH nodes (hierarchical, any/all/none) by @jonvdveen in https://github.com/immich-power-tools/immich-power-tools/pull/298
+* feat: paginate workflow asset queries — remove the silent 10,000-asset cap by @jonvdveen in https://github.com/immich-power-tools/immich-power-tools/pull/297
+* feat: add support for Ente platform integration by @sai80082 in https://github.com/immich-power-tools/immich-power-tools/pull/275
+* feat: Remove Tag workflow action to complement Add Tag by @jonvdveen in https://github.com/immich-power-tools/immich-power-tools/pull/301
+* feat(potential-albums): add Trips view that groups consecutive away days by @dgilperez in https://github.com/immich-power-tools/immich-power-tools/pull/268
+* fix: exclude .env files from the Docker build context by @jonvdveen in https://github.com/immich-power-tools/immich-power-tools/pull/304
+* fix(ai): send full ISO datetimes to Immich search API by @papajade55-debug in https://github.com/immich-power-tools/immich-power-tools/pull/330
+* fix: route filter-only AI searches to metadata search by @sai80082 in a3357d6
 
-**Full Changelog**: https://github.com/immich-power-tools/immich-power-tools/compare/v0.21.4...v0.22.0
+## New Contributors
+* @jonvdveen made their first contribution in https://github.com/immich-power-tools/immich-power-tools/pull/295
+* @papajade55-debug made their first contribution in https://github.com/immich-power-tools/immich-power-tools/pull/330
+
+**Full Changelog**: https://github.com/immich-power-tools/immich-power-tools/compare/v0.22.0...v0.23.0
