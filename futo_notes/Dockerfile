@@ -1,6 +1,6 @@
 # check=skip=SecretsUsedInArgOrEnv
 ARG BUILD_FROM=debian:bookworm-slim
-ARG BUILD_VERSION=0.7.0
+ARG BUILD_VERSION=0.7.0-v1
 
 # renovate: datasource=gitlab-tags depName=futo-notes/futo-notes-server registryUrl=https://gitlab.futo.org
 ARG FUTO_NOTES_VERSION=v0.7.0
