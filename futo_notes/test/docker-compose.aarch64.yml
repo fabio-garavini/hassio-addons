@@ -9,7 +9,7 @@ services:
         BUILD_VERSION: ${VERSION:-latest}
     container_name: futo-notes-aarch64
     ports:
-      - 3005:8080
+      - 8080:8080
     environment:
       - TZ=Etc/UTC
     volumes:
