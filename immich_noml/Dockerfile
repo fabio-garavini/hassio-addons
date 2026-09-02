@@ -137,7 +137,20 @@ RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends libnss-wrapper lsb-release; \
     curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc; \
-    sh -c 'echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'; \
+    codename="$(lsb_release -cs)"; \
+    case "${BUILD_ARCH}" in \
+        aarch64) pg_arch="arm64" ;; \
+        amd64) pg_arch="amd64" ;; \
+        *) echo "Unsupported BUILD_ARCH: ${BUILD_ARCH}" >&2; exit 1 ;; \
+    esac; \
+    printf '%s\n' \
+        "Types: deb deb-src" \
+        "URIs: https://apt.postgresql.org/pub/repos/apt" \
+        "Suites: ${codename}-pgdg" \
+        "Architectures: ${pg_arch}" \
+        "Components: main" \
+        "Signed-By: /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc" \
+    > /etc/apt/sources.list.d/pgdg.sources; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
         logrotate \
