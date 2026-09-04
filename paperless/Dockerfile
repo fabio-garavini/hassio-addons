@@ -1,5 +1,5 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/paperless-ngx/paperless-ngx:3.1.2
+ARG BUILD_FROM=ghcr.io/paperless-ngx/paperless-ngx:3.1.3
 
 ARG TIKA_VERSION=3.3.1
 ARG GOTENBERG_VERSION=8.35
