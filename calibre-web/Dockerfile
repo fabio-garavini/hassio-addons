@@ -1,5 +1,5 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=lscr.io/linuxserver/calibre-web:0.6.27-ls399
+ARG BUILD_FROM=lscr.io/linuxserver/calibre-web:0.6.27-ls400
 
 FROM ${BUILD_FROM}
 
