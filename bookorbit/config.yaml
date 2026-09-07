@@ -1,5 +1,5 @@
 name: BookOrbit
-version: 2.8.1
+version: 2.9.0
 slug: bookorbit
 description: BookOrbit organizes your books and reads them back to you anywhere
 url: https://bookorbit.app/
@@ -47,7 +47,7 @@ options:
   BOOKORBIT_FIX_PERMISSIONS: true
   PUID: 0
   PGID: 0
-  JWT_SECRET: "0eece8ccca5d0352a69d01241ee0cea5a473cd4f073216314fc28253cc2eb5ed"
+  JWT_SECRET: 0eece8ccca5d0352a69d01241ee0cea5a473cd4f073216314fc28253cc2eb5ed
   env_vars: []
 ports:
   8080/tcp: 3013
