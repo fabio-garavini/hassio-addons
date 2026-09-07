@@ -53,6 +53,10 @@
         ],
         "executionMode": "update"
       }
+    },
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
     }
   ]
 }
