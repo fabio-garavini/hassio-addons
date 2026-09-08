@@ -55,7 +55,12 @@
       }
     },
     {
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchUpdateTypes": ["minor"],
+      "automerge": true
+    },
+    {
+      "matchUpdateTypes": ["patch"],
+      "automergeType": "branch",
       "automerge": true
     }
   ]
