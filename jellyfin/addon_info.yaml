@@ -1,11 +1,11 @@
 source:
   type: github-releases
   repo: jellyfin/jellyfin
-  current_version: v10.11.11
+  current_version: v12.0
   version_template: regex:^v(?<major>\d+)\.(?<minor>\d+)(?<rest>\.(?<patch>\d+))?$
 config:
   version_template: "{{major}}.{{minor}}.{{patch|0}}-ha{{app_build}}"
-  build: 0
+  build: 1
   image: fabioogaravini/hassio-jellyfin
 build:
   image: jellyfin/jellyfin
