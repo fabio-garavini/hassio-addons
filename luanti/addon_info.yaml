@@ -9,7 +9,7 @@ config:
   image: fabioogaravini/hassio-luanti
 build:
   image: ghcr.io/linuxserver/luanti
-  version_template: v{{major}}.{{minor}}.{{patch}}-ls{{build}}
+  version_template: "{{major}}.{{minor}}.{{patch}}-ls{{build}}"
 changelog:
   source: github-releases
   repo: luanti-org/luanti
