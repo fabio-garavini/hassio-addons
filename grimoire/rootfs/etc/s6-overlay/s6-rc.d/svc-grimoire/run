@@ -5,8 +5,7 @@ set -e
 
 cd /app || exit 1
 
-# Run migrations first
-bun --bun run run-migrations
+# Database migrations run automatically on startup
 
 # Start the application
-bun ./build/index.js
+bun run daemon:start

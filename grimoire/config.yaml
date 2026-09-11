@@ -11,7 +11,6 @@ init: false
 map:
   - type: app_config
     read_only: false
-    path: /app/data
   - type: data
     read_only: false
   - type: media

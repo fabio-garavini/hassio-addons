@@ -1,6 +1,50 @@
-ARG BUILD_FROM=goniszewski/grimoire:1.1.0
+# todo: when an official docker image is available switch to it
+#ARG BUILD_FROM=goniszewski/grimoire:1.1.0
 
-FROM $BUILD_FROM
+#FROM $BUILD_FROM
+
+## ---------------------------------------------- ##
+
+# Build stage: frontend bundle + daemon dependencies
+FROM oven/bun:1 AS builder
+
+# renovate: datasource=github-releases packageName=goniszewski/grimoire versioning=regex:^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
+ARG GRIMOIRE_VERSION="v1.1.0"
+
+WORKDIR /app
+
+ADD "https://github.com/goniszewski/grimoire/archive/refs/tags/${GRIMOIRE_VERSION}.tar.gz" /tmp/grimoire-src.tar.gz
+
+RUN \
+    tar -xzf /tmp/grimoire-src.tar.gz --strip-components=1 -C /app \
+    && rm -f /tmp/grimoire-src.tar.gz \
+    && bun install --frozen-lockfile \
+    && cd daemon \
+    && bun install --frozen-lockfile
+
+RUN bun run build
+
+# Runtime stage
+FROM oven/bun:1-slim AS runtime
+
+RUN groupadd -r littleimp && useradd -r -g littleimp littleimp
+
+# Install necessary system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# todo: remove all 3 copy
+# Application
+COPY --from=builder /app/dist /app/dist
+COPY --from=builder /app/daemon /app/daemon
+COPY --from=builder /app/package.json /app/package.json
+
+## ---------------------------------------------- ##
 
 # hadolint ignore=DL3002,DL3066
 USER root
@@ -12,10 +56,15 @@ ENV \
 
 ENV \
     HOST="0.0.0.0" \
-    DATA_DIR="/app/data" \
-    XDG_CONFIG_HOME="/app/data/config" \
-    HOME="/app/data" \
+    DATA_DIR="/config" \
+    XDG_CONFIG_HOME="/config/config" \
+    HOME="/config" \
+    NODE_ENV=production \
+    LOG_FORMAT=json \
     LITTLEIMP_IN_CONTAINER=1
+
+# Create config directory
+RUN mkdir -p /config && chown littleimp:littleimp /config
 
 RUN \
 	apt-get update; \
