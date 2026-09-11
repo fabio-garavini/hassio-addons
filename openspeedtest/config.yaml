@@ -9,7 +9,6 @@ panel_admin: false
 ingress_port: 3000
 ingress_stream: true
 arch:
-  - i386
   - aarch64
   - amd64
 init: false
