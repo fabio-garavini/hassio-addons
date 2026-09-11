@@ -27,7 +27,10 @@ jobs:
           node-version: 24
 
       - name: Test Renovate custom regex managers
-        run: node .github/scripts/test-renovate-regex.js
+        run: node .github/scripts/tests/test-renovate-regex.js
+
+      - name: Test version format
+        run: node .github/scripts/tests/test-version-format.js
 
   yamllint:
     runs-on: ubuntu-latest

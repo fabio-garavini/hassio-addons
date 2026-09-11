@@ -2,7 +2,7 @@
  * Tests that the Renovate custom regex managers in .github/renovate.json
  * correctly parse every renovate annotation in this repository.
  *
- * Run: node .github/scripts/test-renovate-regex.js
+ * Run: node .github/scripts/tests/test-renovate-regex.js
  *
  * The regexes are loaded from the live config, so any future edit to
  * renovate.json is automatically validated against all current files.
@@ -21,7 +21,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const ROOT = path.resolve(__dirname, '..', '..');
+const ROOT = path.resolve(__dirname, '..', '..', '..');
 const CONFIG = path.join(ROOT, '.github', 'renovate.json');
 
 let failures = 0;
