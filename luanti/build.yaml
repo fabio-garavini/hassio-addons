@@ -1,3 +1,3 @@
 build_from:
-  aarch64: ghcr.io/linuxserver/luanti:5.15.2-ls36
-  amd64: ghcr.io/linuxserver/luanti:5.15.2-ls36
+  aarch64: ghcr.io/linuxserver/luanti:v5.17.0-ls45
+  amd64: ghcr.io/linuxserver/luanti:v5.17.0-ls45
