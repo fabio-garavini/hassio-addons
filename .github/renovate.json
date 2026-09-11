@@ -15,7 +15,7 @@
       "description": "Update Add-on versions",
       "managerFilePatterns": ["/(^|/)addon_info\\.ya?ml$/"],
       "matchStrings": [
-        "source:\\s*type:\\s(?<datasource>.*?)\\s*(?:registry:\\s(?<registryUrl>\\S+))?\\s*(?:repo|image):\\s(?<depName>.*?)\\s*current_version:\\s(?<currentValue>.*?)(?:\\s*version_template:\\s[\"']?(?<versioning>.*?)[\"']?)?\\s"
+        "source:\\s*type:\\s(?<datasource>\\S+)\\s*(?:registry:\\s(?<registryUrl>\\S+))?\\s*(?:repo|image):\\s(?<depName>.*?)\\s*current_version:\\s[\\\"|']?(?<currentValue>[^\\s\\\"']+)[\\\"|']?(?:\\s*version_template:\\s(?<versioning>\\S+))?"
       ],
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     },
@@ -27,7 +27,7 @@
         "/(^|/)Dockerfile\\.[^/]*$/"
       ],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>\\S+)(?:\\sdepName=(?<depName>\\S+))?(?:\\spackageName=(?<packageName>\\S+))?(?:\\sversioning=(?<versioning>\\S+))?(?:\\sregistryUrl=(?<registryUrl>\\S+))?\\s(?:ARG|ENV)\\s.+?_VERSION\\s*=\\s*(\"|')?(?<currentValue>.+)(\"|')?"
+        "# renovate: datasource=(?<datasource>\\S+)(?:\\sdepName=(?<depName>\\S+))?(?:\\spackageName=(?<packageName>\\S+))?(?:\\sversioning=(?<versioning>\\S+))?(?:\\sregistryUrl=(?<registryUrl>\\S+))?\\s+(?:ARG|ENV)\\s+[A-Za-z0-9_-]+?_VERSION\\s*=\\s*[\\\"|']?(?<currentValue>[^\\s\\\"']+)[\\\"|']?"
       ],
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     }

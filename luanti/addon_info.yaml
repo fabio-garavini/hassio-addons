@@ -2,7 +2,7 @@ source:
   type: github-releases
   repo: linuxserver/docker-luanti
   current_version: 5.15.2-ls36
-  version_template: regex:^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)-ls(?<build>\d+)$
+  version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)-ls(?<build>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}"
   patch: 3
