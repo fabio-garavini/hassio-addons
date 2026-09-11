@@ -52,7 +52,8 @@
           "*/Dockerfile"
         ],
         "executionMode": "update"
-      }
+      },
+      "maxMajorIncrement": 0
     },
     {
       "matchUpdateTypes": ["minor"],
