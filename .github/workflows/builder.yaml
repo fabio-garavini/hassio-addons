@@ -19,6 +19,7 @@ on:
     branches:
       - main
       - dev
+      - renovate/**
     paths:
       - "**/config.yaml"
       - "**/build.yaml"
@@ -26,6 +27,10 @@ on:
       - "**/apparmor.txt"
       - "**/rootfs/**"
       - '!.**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 defaults:
   run:
@@ -44,7 +49,19 @@ jobs:
 
       - name: 📄 Get changed files
         id: changed_files
-        uses: masesgroup/retrieve-changed-files@v4
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            basehead="${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}"
+          elif [[ "${{ github.ref_name }}" =~ ^renovate/ ]]; then
+            basehead="main...${{ github.sha }}"
+          else
+            basehead="${{ github.event.before }}...${{ github.sha }}"
+          fi
+          files=$(gh api "repos/${{ github.repository }}/compare/${basehead}" --jq '.files[].filename' | sort -u | tr '\n' ' ')
+          echo "Changed files: $files"
+          echo "all=$files" >> "$GITHUB_OUTPUT"
 
       - name: 🔍 Find apps
         id: addons
@@ -145,7 +162,7 @@ jobs:
           cp -r .common ${{ steps.info.outputs.target }}/.common
 
       - name: 🔑 Login to DockerHub
-        if: steps.check.outputs.build_arch == 'true' && github.event_name == 'push'
+        if: steps.check.outputs.build_arch == 'true' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev')
         uses: docker/login-action@v4
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
@@ -260,7 +277,7 @@ jobs:
           docker compose -f "docker-compose.${{ matrix.arch }}.yml" down -v
 
       - name: 🚀 Push
-        if: steps.check.outputs.build_arch == 'true' && github.event_name == 'push'
+        if: steps.check.outputs.build_arch == 'true' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev')
         # yamllint disable rule:line-length
         run: |
           docker push ${{ steps.info.outputs.image }}:${{ steps.version.outputs.version_name }}-${{ matrix.arch }}
@@ -285,7 +302,7 @@ jobs:
 
   manifest:
     name: 🚀 Deploy ${{ matrix.addon }} Multi Arch Manifest
-    if: always() && github.event_name == 'push' && needs.init.outputs.changed == 'true'
+    if: always() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev') && needs.init.outputs.changed == 'true'
     needs:
       - init
       - deploy

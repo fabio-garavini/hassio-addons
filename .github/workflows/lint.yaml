@@ -9,6 +9,11 @@ on:
     branches:
       - main
       - dev
+      - renovate/**
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   SHELLCHECK_OPTS: -e SC1008 -s bash
@@ -51,12 +56,24 @@ jobs:
       addons: ${{ steps.changed_addons.outputs.addons }}
       changed: ${{ steps.changed_addons.outputs.changed }}
     steps:
-      - name: ⤵️ Check out code from GitHub
+      - name: ⤵️ Check out the repository
         uses: actions/checkout@v7
 
       - name: 📄 Get changed files
         id: changed_files
-        uses: masesgroup/retrieve-changed-files@v4
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            basehead="${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}"
+          elif [[ "${{ github.ref_name }}" =~ ^renovate/ ]]; then
+            basehead="main...${{ github.sha }}"
+          else
+            basehead="${{ github.event.before }}...${{ github.sha }}"
+          fi
+          files=$(gh api "repos/${{ github.repository }}/compare/${basehead}" --jq '.files[].filename' | sort -u | tr '\n' ' ')
+          echo "Changed files: $files"
+          echo "all=$files" >> "$GITHUB_OUTPUT"
 
       - name: 🔍 Find apps
         id: addons
