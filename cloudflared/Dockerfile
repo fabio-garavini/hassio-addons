@@ -52,7 +52,7 @@ RUN \
     \
     && rm -rf /tmp/*
 
-ARG BUILD_VERSION=2026.9.0
+ARG BUILD_VERSION=2026.9.0-ha0
 
 RUN \
     case "$BUILD_ARCH" in \
@@ -61,7 +61,7 @@ RUN \
       amd64)   REMOTE_ARCH="amd64" ;; \
       *) echo "Unsupported architecture: $BUILD_ARCH" >&2; exit 1 ;; \
     esac; \
-    curl -fSL "https://github.com/cloudflare/cloudflared/releases/download/${BUILD_VERSION%-v*}/cloudflared-linux-${REMOTE_ARCH}" -o /usr/bin/cloudflared; \
+    curl -fSL "https://github.com/cloudflare/cloudflared/releases/download/${BUILD_VERSION%-ha*}/cloudflared-linux-${REMOTE_ARCH}" -o /usr/bin/cloudflared; \
     chmod +x /usr/bin/cloudflared; \
     cloudflared -v
 

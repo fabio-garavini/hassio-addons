@@ -1,8 +1,8 @@
 # check=skip=SecretsUsedInArgOrEnv
 ARG BUILD_FROM=alpine:latest
-ARG BUILD_VERSION=0.23.0-v1
+ARG BUILD_VERSION=0.23.0-ha0
 
-FROM ghcr.io/immich-power-tools/immich-power-tools:${BUILD_VERSION%-v*} AS immich_power_tools
+FROM ghcr.io/immich-power-tools/immich-power-tools:${BUILD_VERSION%-ha*} AS immich_power_tools
 
 FROM ${BUILD_FROM}
 
@@ -23,7 +23,7 @@ ENV \
     NODE_ENV=production \
     NODE_VERSION=18.20.8 \
     NEXT_TELEMETRY_DISABLED=1 \
-    VERSION=${BUILD_VERSION%-v*} \
+    VERSION=${BUILD_VERSION%-ha*} \
     HOSTNAME='0.0.0.0'
 
 # hadolint ignore=DL3064

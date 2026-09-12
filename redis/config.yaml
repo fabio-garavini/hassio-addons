@@ -1,5 +1,5 @@
 name: Redis DB
-version: 7.4.0-v3
+version: 7.4.0-ha0
 slug: redis
 description: Redis database
 url: https://redis.io

@@ -1,17 +1,17 @@
 source:
   type: docker
   repo: ghcr.io/immich-app/postgres
-  current_version: 16-vectorchord0.3.0-pgvectors0.3.0
-  version_template: regex:^(?<major>\d+)-vectorchord0\.3\.0-pgvectors0\.3\.0$
+  current_version: 16-vectorchord0.4.3-pgvectors0.3.0
+  version_template: regex:^(?<major>\d+)-vectorchord0\.4\.3-pgvectors0\.3\.0$
 config:
-  version_template: pg16-0.3.0-ha{{app_build}}
+  version_template: pg16-0.4.3-ha{{app_build}}
   build: 0
   image: fabioogaravini/hassio-postgres-16-pgvectors
 build:
   image: ghcr.io/immich-app/postgres
-  version_template: 16-vectorchord0.3.0-pgvectors0.3.0
+  version_template: 16-vectorchord0.4.3-pgvectors0.3.0
 changelog:
   source: none
-  version_template: pg16 v0.3.0
+  version_template: Postgres 16 (VectorChord 0.4.3)
 test:
   enable: true

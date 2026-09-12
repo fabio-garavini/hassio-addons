@@ -1,8 +1,8 @@
 # check=skip=SecretsUsedInArgOrEnv
 ARG BUILD_FROM=alpine:latest
-ARG BUILD_VERSION=0.30.0-v1
+ARG BUILD_VERSION=0.30.0-ha0
 
-FROM ghcr.io/usememos/memos:${BUILD_VERSION%-v*} AS memos
+FROM ghcr.io/usememos/memos:${BUILD_VERSION%-ha*} AS memos
 
 FROM ${BUILD_FROM}
 
