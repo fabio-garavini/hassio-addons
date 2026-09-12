@@ -6,7 +6,7 @@ An open-source, self-hosted note-taking solution designed for seamless deploymen
 
 To install the Mealie Addon, follow these steps:
 
-1. Open the Home Assistant UI and navigate to the Add-ons page
+1. Open the Home Assistant UI and navigate to the Apps page
 1. Click the "Mealie" addon
 1. Click the "Install" button
 1. Click the "Open Web UI" button

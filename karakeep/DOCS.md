@@ -33,7 +33,7 @@ The Karakeep Addon exposes the following ports:
 
 To install the Karakeep Addon, follow these steps:
 
-1. Open the Home Assistant UI and navigate to the Add-ons page.
+1. Open the Home Assistant UI and navigate to the Apps page.
 1. Click the "Karakeep" addon.
 1. Click the "Install" button.
 1. (Optional) under `Configuration` set `NEXTAUTH_URL` as specified above

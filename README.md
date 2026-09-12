@@ -1,4 +1,4 @@
-# Home Assistant 🏠 add-ons: by Fabio Garavini
+# Home Assistant 🏠 apps: by Fabio Garavini
 
 Collection of easy to use self-hosted services tuned for Home Assistant
 
@@ -8,9 +8,9 @@ Collection of easy to use self-hosted services tuned for Home Assistant
 
 ## Contributions
 
-Help me expand the documentation making it as easy as possible for anyone to use these add-ons
+Help me expand the documentation making it as easy as possible for anyone to use these apps
 
-## Add-ons
+## Apps
 
 > [!TIP]
 > _All-in-one_ addons are configured to work completely stand-alone, as they pack everything that they need

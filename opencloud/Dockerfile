@@ -146,7 +146,7 @@ LABEL \
     maintainer="Fabio Garavini <info@fabiogaravini.dev>" \
     org.opencontainers.image.title="${BUILD_NAME}" \
     org.opencontainers.image.description="${BUILD_DESCRIPTION}" \
-    org.opencontainers.image.vendor="Fabio Garavini Hassio Add-ons" \
+    org.opencontainers.image.vendor="Fabio Garavini Hassio Apps" \
     org.opencontainers.image.authors="Fabio Garavini <info@fabiogaravini.dev>" \
     org.opencontainers.image.licenses="MIT" \
     org.opencontainers.image.url="https://github.com/fabio-garavini" \

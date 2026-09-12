@@ -45,7 +45,7 @@ jobs:
           config: ".github/yamllint.yaml"
 
   find:
-    name: Find add-ons
+    name: Find apps
     runs-on: ubuntu-latest
     outputs:
       addons: ${{ steps.changed_addons.outputs.addons }}
@@ -58,11 +58,11 @@ jobs:
         id: changed_files
         uses: masesgroup/retrieve-changed-files@v4
 
-      - name: 🔍 Find add-ons
+      - name: 🔍 Find apps
         id: addons
         uses: home-assistant/actions/helpers/find-addons@master
 
-      - name: Get changed add-ons
+      - name: Get changed apps
         id: changed_addons
         run: |
           declare -a changed_addons
@@ -77,7 +77,7 @@ jobs:
           changed=$(echo ${changed_addons[@]} | rev | cut -c 2- | rev)
 
           if [[ -n ${changed} ]]; then
-            echo "Changed add-ons: $changed";
+            echo "Changed apps: $changed";
             echo "changed=true" >> $GITHUB_OUTPUT;
             echo "addons=[$changed]" >> $GITHUB_OUTPUT;
           else
