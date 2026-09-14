@@ -2,7 +2,6 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
   "baseBranchPatterns": ["main"],
-  "rebaseWhen": "behind-base-branch",
   "dependencyDashboard": false,
   "commitMessagePrefix": "⬆️",
   "commitMessageTopic": "{{depName}}",
@@ -56,12 +55,8 @@
       "maxMajorIncrement": 0
     },
     {
-      "matchUpdateTypes": ["minor"],
-      "automerge": true
-    },
-    {
-      "matchUpdateTypes": ["patch"],
-      "automergeType": "branch",
+      "matchUpdateTypes": ["minor", "patch"],
+      "automergeType": "pr",
       "automerge": true
     }
   ]

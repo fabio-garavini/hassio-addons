@@ -3,7 +3,7 @@ ARG BUILD_FROM=ghcr.io/immichframe/immichframe:v1.0.37.0
 
 FROM ${BUILD_FROM}
 
-ARG BUILD_VERSION=1.0.37.0-v1
+ARG BUILD_VERSION=1.0.37.0-ha0
 
 # Container Environment variables
 ENV \

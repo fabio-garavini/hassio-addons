@@ -1,5 +1,6 @@
 # todo: when an official docker image is available switch to it
-#ARG BUILD_FROM=goniszewski/grimoire:1.1.0
+# BUILD_FROM is kept in sync by addon-update.js but intentionally unused below
+ARG BUILD_FROM=goniszewski/grimoire:1.1.0
 
 #FROM $BUILD_FROM
 

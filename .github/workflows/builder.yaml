@@ -19,7 +19,6 @@ on:
     branches:
       - main
       - dev
-      - renovate/**
     paths:
       - "**/config.yaml"
       - "**/build.yaml"
@@ -27,10 +26,6 @@ on:
       - "**/apparmor.txt"
       - "**/rootfs/**"
       - '!.**'
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 defaults:
   run:
@@ -49,19 +44,7 @@ jobs:
 
       - name: 📄 Get changed files
         id: changed_files
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            basehead="${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}"
-          elif [[ "${{ github.ref_name }}" =~ ^renovate/ ]]; then
-            basehead="main...${{ github.sha }}"
-          else
-            basehead="${{ github.event.before }}...${{ github.sha }}"
-          fi
-          files=$(gh api "repos/${{ github.repository }}/compare/${basehead}" --jq '.files[].filename' | sort -u | tr '\n' ' ')
-          echo "Changed files: $files"
-          echo "all=$files" >> "$GITHUB_OUTPUT"
+        uses: masesgroup/retrieve-changed-files@v4
 
       - name: 🔍 Find apps
         id: addons

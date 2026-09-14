@@ -4,7 +4,7 @@ source:
   current_version: v5.0.0-beta.5
   version_template: regex:^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)-beta\.(?<beta>\d+)$
 config:
-  version_template: "{{major}}.{{minor}}.{{patch}}-beta.{{beta}}"
+  version_template: "{{major}}.{{minor}}.{{patch}}-beta.{{beta}}-ha{{app_build}}"
   build: 0
   image: fabioogaravini/hassio-monica
 build:
