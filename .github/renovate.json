@@ -58,6 +58,28 @@
       "matchUpdateTypes": ["minor", "patch"],
       "automergeType": "pr",
       "automerge": true
+    },
+    {
+      "description": "Group opencloud core with its web extensions into one PR",
+      "matchPackageNames": [
+        "docker.io/opencloudeu/opencloud-rolling",
+        "opencloud-eu/web-extensions"
+      ],
+      "groupName": "opencloud"
+    },
+    {
+      "description": "Group add-on base images into one PR",
+      "matchPackageNames": [
+        "hassio-addons/bashio",
+        "home-assistant/tempio",
+        "just-containers/s6-overlay"
+      ],
+      "groupName": "add-on base images"
+    },
+    {
+      "description": "Group n8n core with its task runner",
+      "matchPackageNames": ["n8n-io/n8n", "n8n-io/task-runner-launcher"],
+      "groupName": "n8n stack"
     }
   ]
 }
