@@ -1,22 +1,17 @@
-# 📦 ImmichFrame Release v1.0.37.0 – July 17, 2026
+<!-- Release notes generated using configuration in .github/release.yml at v1.0.38.0 -->
 
-  <!-- Release notes generated using configuration in .github/release.yml at v1.0.37.0 -->
+## What's Changed
+### ⚠️ Breaking Changes
+* Feat: Admin configuration UI by @JW-CH in https://github.com/immichFrame/ImmichFrame/pull/698
+### ✨ New Features
+* Send clientIdentifier with asset list and config requests by @dschmidt in https://github.com/immichFrame/ImmichFrame/pull/688
+### ⚡ Fixes
+* Fix: Docker build fix by @JW-CH in https://github.com/immichFrame/ImmichFrame/pull/701
+### 🚀 Other changes
+* Fix broken star history chart in README by @FaintFlower in https://github.com/immichFrame/ImmichFrame/pull/694
 
-  This release rolls back the memories timezone workaround now that Immich fixes memory date handling upstream.
+## New Contributors
+* @dschmidt made their first contribution in https://github.com/immichFrame/ImmichFrame/pull/688
+* @FaintFlower made their first contribution in https://github.com/immichFrame/ImmichFrame/pull/694
 
-  ---
-
-  ## What's Changed
-
-  ### ⚡ Fixes
-
-  #### 🐛 Revert memories timezone fix
-  **PR [#678](https://github.com/immichFrame/ImmichFrame/pull/678) by @JW-CH**
-
-  ImmichFrame previously appended a timezone offset to the Immich memories `for` query parameter ([#660](https://github.com/immichFrame/ImmichFrame/pull/660)) to work around inconsistent date handling. Immich has since fixed memory search date validation upstream
-  ([immich-app/immich#29907](https://github.com/immich-app/immich/pull/29907)), so that workaround is no longer needed and now conflicts with the server-side behavior. This release reverts it, restoring plain calendar-date filtering so your memories show up correctly again. The bundled Immich
-  OpenAPI spec was refreshed as part of the revert.
-
-  ---
-
-  **Full Changelog**: https://github.com/immichFrame/ImmichFrame/compare/v1.0.36.0...v1.0.37.0
+**Full Changelog**: https://github.com/immichFrame/ImmichFrame/compare/v1.0.37.0...v1.0.38.0
