@@ -1,13 +1,16 @@
-## [2.38.7](https://github.com/n8n-io/n8n/compare/n8n@2.38.6...n8n@2.38.7) (2026-09-11)
+## [2.39.5](https://github.com/n8n-io/n8n/compare/n8n@2.39.4...n8n@2.39.5) (2026-09-14)
 
 
 ### Bug Fixes
 
-* **core:** Execute MCP toolkit members on workers ([#38277](https://github.com/n8n-io/n8n/issues/38277)) ([1025dc7](https://github.com/n8n-io/n8n/commit/1025dc717d266f34f451eb152d71f66d6149ddbf))
-* **core:** Reuse an existing consent grant after the visitor authenticates mid-flow ([#38249](https://github.com/n8n-io/n8n/issues/38249)) ([52c8a72](https://github.com/n8n-io/n8n/commit/52c8a72ea16f3f23021e9fe3bb9daf66def7fd3d))
-* **core:** Trust the CA from GIT_SSL_CAINFO for source control HTTPS remotes ([#38297](https://github.com/n8n-io/n8n/issues/38297)) ([3234078](https://github.com/n8n-io/n8n/commit/32340787f6f04f20ece563fd36f871961ec5e77a))
+* **editor:** Fixes issue that prevented some users from revoking their end-user credentials ([#38455](https://github.com/n8n-io/n8n/issues/38455)) ([3d8f578](https://github.com/n8n-io/n8n/commit/3d8f578a390f196e22b0077aceff04cfbab28f6d))
+
+
+### Features
+
+* **core:** Add log streaming events for instance reports ([#38483](https://github.com/n8n-io/n8n/issues/38483)) ([6174e8e](https://github.com/n8n-io/n8n/commit/6174e8e375bdd20e2d6096a58a78286dad5a4e67))
 
 <!-- This is an auto-generated description by cubic. -->
-<a href="https://cubic.dev/pr/n8n-io/n8n/pull/38406?utm_source=github" target="_blank" rel="noopener noreferrer" data-no-image-dialog="true"><picture><source media="(prefers-color-scheme: dark)" srcset="https://www.cubic.dev/buttons/review-in-cubic-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://www.cubic.dev/buttons/review-in-cubic-light.svg"><img alt="Review in cubic" src="https://www.cubic.dev/buttons/review-in-cubic-dark.svg"></picture></a>
+<a href="https://cubic.dev/pr/n8n-io/n8n/pull/38564?utm_source=github" target="_blank" rel="noopener noreferrer" data-no-image-dialog="true"><picture><source media="(prefers-color-scheme: dark)" srcset="https://www.cubic.dev/buttons/review-in-cubic-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://www.cubic.dev/buttons/review-in-cubic-light.svg"><img alt="Review in cubic" src="https://www.cubic.dev/buttons/review-in-cubic-dark.svg"></picture></a>
 <!-- End of auto-generated description by cubic. -->
 
