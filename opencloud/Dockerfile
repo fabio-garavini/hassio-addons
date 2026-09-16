@@ -1,5 +1,5 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=docker.io/opencloudeu/opencloud-rolling:8.0.0
+ARG BUILD_FROM=docker.io/opencloudeu/opencloud-rolling:8.0.1
 
 FROM ${BUILD_FROM}
 
@@ -97,7 +97,7 @@ RUN \
 
 # Install web apps
 # renovate: datasource=github-releases packageName=opencloud-eu/web-extensions versioning=regex:^unzip-v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
-ARG APPS_UNZIP_VERSION="unzip-v2.1.0"
+ARG APPS_UNZIP_VERSION="unzip-v2.2.0"
 # renovate: datasource=github-releases packageName=opencloud-eu/web-extensions versioning=regex:^json-viewer-v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 ARG APPS_JSON_VERSION="json-viewer-v2.1.0"
 # renovate: datasource=github-releases packageName=opencloud-eu/web-extensions versioning=regex:^draw-io-v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
