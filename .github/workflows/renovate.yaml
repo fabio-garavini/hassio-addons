@@ -24,4 +24,5 @@ jobs:
           RENOVATE_EXPOSE_ALL_ENV: "true"
           RENOVATE_REPOSITORIES: ${{ github.repository }}
           RENOVATE_ALLOWED_COMMANDS: .*
+          RENOVATE_INTERNAL_HOST_ACCESS: "allow"
           LOG_LEVEL: debug
