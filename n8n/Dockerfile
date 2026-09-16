@@ -32,7 +32,7 @@ ENV \
 USER root
 
 # renovate: datasource=repology depName=alpine_3_22/apk-tools-static versioning=loose
-ARG APK_TOOLS_VERSION=2.14.10-r0
+ARG APK_TOOLS_VERSION=2.14.12-r0
 ARG ALPINE_VERSION=v3.22
 
 # hadolint global ignore=DL4001
