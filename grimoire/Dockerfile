@@ -1,6 +1,6 @@
 # todo: when an official docker image is available switch to it
 # BUILD_FROM is kept in sync by addon-update.js but intentionally unused below
-ARG BUILD_FROM=goniszewski/grimoire:1.1.0
+ARG BUILD_FROM=goniszewski/grimoire:1.2.0
 
 #FROM $BUILD_FROM
 
@@ -10,7 +10,7 @@ ARG BUILD_FROM=goniszewski/grimoire:1.1.0
 FROM oven/bun:1 AS builder
 
 # renovate: datasource=github-releases packageName=goniszewski/grimoire versioning=regex:^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
-ARG GRIMOIRE_VERSION="v1.1.0"
+ARG GRIMOIRE_VERSION="v1.2.0"
 
 WORKDIR /app
 
