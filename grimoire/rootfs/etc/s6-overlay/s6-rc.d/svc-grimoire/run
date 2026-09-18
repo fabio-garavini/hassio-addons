@@ -5,7 +5,5 @@ set -e
 
 cd /app || exit 1
 
-# Database migrations run automatically on startup
-
 # Start the application
 bun run daemon:start

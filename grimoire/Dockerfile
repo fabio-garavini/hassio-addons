@@ -19,9 +19,9 @@ ADD "https://github.com/goniszewski/grimoire/archive/refs/tags/${GRIMOIRE_VERSIO
 RUN \
     tar -xzf /tmp/grimoire-src.tar.gz --strip-components=1 -C /app \
     && rm -f /tmp/grimoire-src.tar.gz \
-    && bun install --frozen-lockfile \
+    && bun install \
     && cd daemon \
-    && bun install --frozen-lockfile
+    && bun install
 
 RUN bun run build
 
