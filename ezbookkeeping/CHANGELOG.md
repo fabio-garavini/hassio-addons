@@ -1,2 +1,52 @@
+- **\[Breaking\]**
+    - Upgrade Vuetify to v4
+    - Change the amount or balance field type in the JSON responses returned by `/transactions/reconciliation_statements.json`, `/transactions/statistics.json`, `/transactions/statistics/trends.json`, `/transactions/statistics/asset_trends.json`, `/transactions/amounts.json`, `/accounts/list.json` and `/accounts/get.json`, `/accounts/add.json` and `/accounts/modify.json` from `number` to `string`
+    - Invalidate two factor authentication passcodes after a single use
+    - API tokens no longer support access to services under `/avatar/`, `/pictures/`, `/proxy/` or `/_AMapService/`
+    - Automatically deselect any selected transactions that no longer match the new filter criteria after the filters are changed during the Check & Modify step during transaction import (#418)
+    - Keep the local time unchanged when updating the time zone during transaction import
+    - Use Accounts Included in Overview Statistics instead of Accounts Included in Total from the account list page when calculating amounts in the Asset Summary widget on the overview page
+    - `openai` type LLM provider now use the OpenAI Responses API protocol
+
+- **\[Features\]**
+    - Add Greek translation (#654, thanks @konet-gr)
+    - Redesigned desktop user interface and improved mobile user interface
+    - Support customizable layouts for the overview page (#588)
+    - Support Period Net Income and Savings Rate, Monthly Expense Progress, Net Assets Trends, Account Balance List, Expense Category Ranking, Recent Transactions, Transaction Calendar and Transaction Calendar Heatmap widgets in desktop overview page
+    - Support Period Net Income and Savings Rate, Monthly Expense Progress, Account Balance List, Expense Category Ranking, Recent Transactions and Transaction Calendar widgets in mobile overview page
+    - Support user custom icons for accounts and transaction categories (#462)
+    - Support custom colors for accounts and transaction categories
+    - Support credit limits for credit card accounts (#177)
+    - Add Total Assets By Currency and Total Liabilities By Currency in Statistics & Analysis (#663)
+    - Add Donut Chart and Nightingale Rose Chart to Insights Explorer
+    - Add Custom Chart to Insights Explorer to allows users to write JavaScript code to create custom charts
+    - Add Batch Apply Rules to the Check & Modify step during import, allowing valid or invalid data to be replaced based on specified conditions and remove the outdated‌ Batch Replace tools (#655)
+    - Object storage supports the S3 type using the official AWS SDK
+    - Add support for the OpenAI Responses API compatible provider in LLM providers
+
+- **\[Enhancements\]**
+    - Improved Japanese translation (#634, thanks @x0x0b)
+    - Improved Russian translation (#640, #646, thanks @zhugaru)
+    - Improved German translation (#665, thanks @marcelweikum)
+    - Increase the transaction amount limit to ±9,999,999,999,999.99
+    - Allow pressing ESC or clicking outside to close edit transaction / template / category / account dialog when nothing is modified
+    - Validate overly long transaction descriptions before import instead of aborting (#633, thanks @rhierlmeier)
+    - Support resizing the data export dialog
+    - Add support for windows-874, windows-1257 and windows-1258 in automatic file encoding detection
+    - Display the corresponding amount below each label in the treemap chart ([#658](https://github.com/mayswind/ezbookkeeping/discussions/658))
+    - Support multiple series in radar charts in Insights Explorer
+    - Add Average Amount per Active Day to value metric in Insights Explorer ([#669](https://github.com/mayswind/ezbookkeeping/discussions/669))
+    - Support smooth curves for line and area charts in Insights Explorer and Reconciliation Statement
+    - Use Monaco Editor for the custom script field during import and for the JSON data fields used for import and export
+    - Update the exchange rate data source URL for the National Bank of Romania
+    - Add more detailed descriptions for the amount field when creating transactions through AI image or text recognition, MCP, and API Tools Script
+    - Other user interface optimization
+
+- **\[Development\]**
+    - Upgrade Golang to 1.27.1
+    - Upgrade Node.js to 26.8.1
+
 - **\[Bug Fixes\]**
-    - Fix the application could not work properly in browsers based on Chromium v91.0 ~ v147.0 (#630)
+    - Fix an issue that prevented updating a transaction to the same second as a previously deleted transaction
+    - Fix an issue when moving colors in the chart color scheme list on mobile version
+    - Fix the app settings could not be opened when the numeral format was set to non Western Arabic numerals
