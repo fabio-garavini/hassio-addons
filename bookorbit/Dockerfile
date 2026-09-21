@@ -1,5 +1,5 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/bookorbit/bookorbit:2.10.0
+ARG BUILD_FROM=ghcr.io/bookorbit/bookorbit:3.0.0
 
 FROM ${BUILD_FROM}
 
