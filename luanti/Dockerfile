@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/linuxserver/luanti:5.17.0-ls45
+ARG BUILD_FROM=ghcr.io/linuxserver/luanti:5.17.0-ls46
 
 FROM ${BUILD_FROM}
 
