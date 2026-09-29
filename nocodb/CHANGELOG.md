@@ -1,103 +1,119 @@
-<img width="1865" height="1147" alt="Feature release - 2026 09 0-OSS (1)" src="https://github.com/user-attachments/assets/77f634b7-695a-4f98-88ed-dcaa9b75175b" />
+
+<img width="1865" height="1147" alt="image" src="https://github.com/user-attachments/assets/c97fae32-5349-432f-beaf-1e8559e60a2f" />
+
 
 ## Availability
 
 | Feature | Community Edition | Cloud Free Plan | Paid Plans In Cloud/On-Prem |
 | --- | :---: | :---: | :---: |
-| NocoDB in Claude Connectors | ✅ | ✅ | ✅ |
-| 1200% More MCP Tools | – | ✅ | ✅ |
-| Rich Text Emails in Workflows | – | – | ✅ |
+| Account-Wide MCP Connections | – | ✅ | ✅ |
+| Table Tools | ✅ | ✅ | ✅ |
+| Summarize in Timeline View | – | – | ✅ |
+| Track Specific Fields in Last Modified | ✅ | ✅ | ✅ |
+| YouTrack Sync | – | – | ✅ |
 
-Rich Text Emails require the Plus plan and above on NocoDB Cloud. In the Community Edition, the MCP server keeps its record tools.
+Timeline View requires the Business plan and above on NocoDB Cloud, and App Sync requires the Plus plan and above.
 
+## Account-Wide MCP Connections
 
-## NocoDB in Claude Connectors
+One MCP connection now reaches every base you pick, with the tools you allow and never more than your own role. The server now has 199 tools, 50 more than 2026.09.0, including member and team management, attachment upload, upsert, audit logs, trash restore, and publishing.
 
-NocoDB is now available in Claude Connectors, so a base can be connected to Claude from the connectors directory rather than adding the MCP URL manually. Once connected, Claude can use every MCP tool the connecting user's role allows, which as of this release is a set of 149 covering the whole workspace.
-
-<img width="1280" height="1102" alt="claude-connectors" src="https://github.com/user-attachments/assets/9a241a7f-c90d-4bde-b3c4-665914eeb13d" />
-
-## 1200% More MCP Tools
-
-The MCP server has gone from 11 tools to 149, covering the whole workspace, not just records. Claude, ChatGPT, Cursor, or any MCP client can now build in NocoDB: stand up a table, wire a workflow to a webhook, assemble an interface page, or lock down permissions, all in one conversation.
-
-Tools span tables, fields, views, filters, sorts, workflows, interfaces, dashboards, widgets, scripts, documents, webhooks, comments, permissions, Record-Level Security, row coloring, folders, members, and CSV import and export. Each wraps the same service as its REST API, so validation, permissions, and audit are identical, and every call respects the caller's role: viewers read, editors write, creators change schema.
-
-<img width="1008" height="868" alt="mcp-tools" src="https://github.com/user-attachments/assets/d61251cb-7e12-491e-9ca2-fb353087bc21" />
+<img width="2264" height="1566" alt="image" src="https://github.com/user-attachments/assets/6cfb0af9-0919-4810-a616-9c5252761860" />
 
 [Learn more about MCP →](https://nocodb.com/docs/apis-and-mcp/mcp)
 
-149 is just the start. We are already building the next set, and that is the one that changes business software for good.
+## Table Tools
 
-## Rich Text Emails in Workflows
+A single Tools button in the view toolbar opens fields, relations, permissions, webhooks, and every other table tool in one panel.
 
-Workflow emails can now be formatted. The Send Email, SMTP, Gmail, and Outlook nodes share a rich text editor that supports headings, text styling, lists, colors, and links with custom anchor text. Workflow variables can be inserted anywhere in the body.
+<img width="1922" height="500" alt="image" src="https://github.com/user-attachments/assets/570cdf6d-06d5-4ea0-8abc-b3350e2ae68b" />
 
-<img width="1137" height="781" alt="rich-text-email" src="https://github.com/user-attachments/assets/eb80d79a-974c-44c6-bb28-bffdfb1fcd71" />
-
-[Learn more about the Send Email node →](https://nocodb.com/docs/workflows/nodes/action-nodes/send-email)
-
-## Improvements
-
-- **Buttons across interface pages** - Buttons can now be placed on table page headers, record review toolbars, dashboard group headers, and field groups inside a record sheet. Page-level buttons run an automation without a record, and *Go to interface page* can open a page in any interface in the base. [Learn more](https://nocodb.com/docs/interfaces/elements#buttons)
-- **Drag and drop in List View** - Records in List View can be dragged across the hierarchy: drop one onto another to nest it, or onto a different parent to move it there. Sub-records travel with their parent, and the underlying links are updated for you. [Learn more](https://nocodb.com/docs/product/tables/views/view-types/list)
-- **Create a linked record field inline** - When List View levels or nested records need a link that does not exist yet, click *Create a linked record field* to create it on the spot, in both the base view and the interface builder. [Learn more](https://nocodb.com/docs/product/tables/views/view-types/list#nested-records)
-- **Date helpers in workflow expressions** - `$now()` returns the current time and `$dateAdd(date, amount, unit)` offsets it, for example `$dateAdd($now(), 3, 'days')`.
-- **Faster Kanban** - The optimized Kanban board, previously a feature preview, is now the default everywhere, including the Community Edition. Stacks load progressively as you scroll.
-- **Excel downloads of large tables** - Excel exports are streamed, so very large tables download reliably and produce smaller files.
-- **Task progress in long documents** - The task count of a checklist document follows you into the header once the title scrolls out of view.
-
-## What's Fixed
-
-- **Nested lookups** - A lookup of a lookup shows every value in the grid and resolves correctly over many-to-one links, on MySQL, SQL Server, and Oracle.
-- **Conditional rollups with Current User** - Rollup, lookup, and link fields whose conditions use Current User are computed for each user rather than served from a shared cache.
-- **Sync reliability** - A table sync now always completes rather than staying in the syncing state, and editing an app sync saves without error.
-- **Workflow record nodes** - Testing a Create record or Update record node reports any field key that does not match the target table, instead of writing a blank record.
-- **Interface record sheets** - Edits made while stepping through records appear in the grid immediately, link and unlink actions offer *Undo*, and a record created inside a group stays in that group.
-- **Interface keyboard navigation** - With a record sheet open, arrow keys move through the grid and the sheet follows, and Alt+Left and Alt+Right step between records.
-- **Interface builder** - Adding a sort keeps the dropdown open, grouping an embedded linked view leaves the page behind it in place, and a launched interface reflects changes published from another tab.
-- **Document checklists** - Ticking a task is reflected for every collaborator in realtime, and a new unchecked sub-item under a completed task renders without strikethrough.
-- **Integration permissions** - Attempting to edit an integration created by someone else shows a clear message instead of signing you out.
-- **MCP** - Sorting records works in the Community Edition, tokens without a base role receive a clear access denied response, and OAuth authorization completes from clients such as OpenAI's platform.
-- **External sources** - An oversized page of results explains how to reduce fields or page size instead of reporting the source as unreachable.
-- **Folders** - The *+* button on an external data source now offers *Folder* alongside *Table*, and a folder created from an item's *Move to* menu takes the item's position in the sidebar instead of the end of the list.
-
-## Self-Hosting Notes
-
-- **Community mode keeps Free features visible** - With *Show only community edition features* on, Workflows, Interfaces, and folders stay available, and plan-locked sub-features are hidden rather than shown as dead controls.
-- **Security hardening** - Disabled or expired API tokens are rejected in the Community Edition, hidden fields stay hidden behind row color rules on shared views, comments are scoped to their base, and table visibility is enforced on every route.
-- **Clearer PostgreSQL permission errors** - A schema change attempted without table ownership names the affected table in full, including quoted names with spaces or mixed case.
-- **Paid field types on unlicensed deployments** - Field types not included in the Community Edition (UUID, AutoNumber, Color, unique constraints, and lookup limits) are now rejected by the API as well as the UI.
-
-## Planned Breaking Change to API Datetime Format
-
-<Callout type="info">This change was first announced in 2026.08.2 and is still planned for an upcoming release. It is not part of 2026.09.0. We are keeping the notice here so integrations can be prepared.</Callout>
-
-On PostgreSQL and SQLite deployments, datetime values returned by NocoDB will move from second to millisecond precision:
-
-| Today | Upcoming release |
-| --- | --- |
-| `2026-07-25 12:34:56+00:00` | `2026-07-25 12:34:56.000+00:00` |
-
-- **Scope:** REST API responses, webhook payloads, and CSV/file exports. Values are formatted on read, so existing records are returned in the new format too. No data migration or backfill is required.
-- **What to check:** Consumers that parse datetimes with a strict or fixed format may need to accept the millisecond component. Tolerant parsers such as Day.js and most ISO 8601 parsers are unaffected.
-- **Filters:** Range filters and sorting are unaffected. Exact datetime equality filters compare at second precision, so they may not match values carrying non-zero milliseconds. Millisecond-aware filtering is planned as a follow-up.
-- **Not affected:** MySQL, SQL Server, and Oracle connections keep second precision, formula-rendered datetimes stay at second precision, and the datetime display in the app is unchanged.
 
 ---
 
-For more details on the features introduced in 2026.08.2, see the [2026.08.2 changelog](https://nocodb.com/docs/changelog/2026.08.2).
+<img width="2498" height="1564" alt="image" src="https://github.com/user-attachments/assets/c75842b4-dd8e-4ec2-970a-1b7e4ecff9bf" />
 
-## Closed issues
+[Learn more about Table Tools →](https://nocodb.com/docs/product/tables/table-operations/table-details)
 
-- [**closed**] 🐛 Bug:Knex Timeout acquiring a connection [#14467](https://github.com/nocodb/nocodb/issues/14467)
-- [**closed**] 🐛 Bug: Link record picker (compact/search view) shows raw table field order incl. system fields, ignoring shared Grid view config — expanded view is correct [#14448](https://github.com/nocodb/nocodb/issues/14448)
-- [**closed**] 🐛 Bug: Currency field silently drops the minus sign on paste (default en-US locale) [#14413](https://github.com/nocodb/nocodb/issues/14413)
-- [**closed**] Prevent loading 100+ administrative plugins on pub [#14392](https://github.com/nocodb/nocodb/issues/14392)
-- [**closed**] 🔦 Feature: Introduce Search + "Select All" and "Clear All" in Link records modal [#12108](https://github.com/nocodb/nocodb/issues/12108)
-- [**closed**] 🔦 Feature: List more field info in Link records modal [#12107](https://github.com/nocodb/nocodb/issues/12107)
-- [**closed**] 🔦 Feature: filter by relation with autocomplete [#11430](https://github.com/nocodb/nocodb/issues/11430)
-- [**closed**] 🔦 Feature: Make Link Filter Match Airtable [#11022](https://github.com/nocodb/nocodb/issues/11022)
-- [**🔦 Type: Feature**] 🔦 Feature: Add filtering to rollups or allow filtering table by properties of linked records [#9895](https://github.com/nocodb/nocodb/issues/9895)
-- [**🔦 Type: Feature**] 🔦 Feature: Link records -> Select all [#9589](https://github.com/nocodb/nocodb/issues/9589)
-- [**🔦 Type: Feature**][**🔭 Scope : Project**] 🔦 Feature: App integrations should be per-project [#3402](https://github.com/nocodb/nocodb/issues/3402)
+## Summarize in Timeline View
+
+Show a count, sum, average, or other summary under each day, week, or month of a Timeline.
+
+<img width="1924" height="1210" alt="image" src="https://github.com/user-attachments/assets/d94328a2-a098-43a6-8669-43b1172fdfa8" />
+
+[Learn more about Summarize →](https://nocodb.com/docs/product/tables/views/view-types/timeline#summarize)
+
+## Track Specific Fields in Last Modified
+
+Last modified time and Last modified by fields can watch only the fields you choose.
+
+<img width="2290" height="1188" alt="image" src="https://github.com/user-attachments/assets/e8c45986-7db4-4d18-92f5-73a1f44dda71" />
+
+
+[Learn more about tracking specific fields →](https://nocodb.com/docs/product/tables/fields/field-types/date-time-based/last-modified-time#track-specific-fields)
+
+## YouTrack Sync
+
+Sync [YouTrack](https://www.jetbrains.com/youtrack/) issues, comments, and users into NocoDB alongside the other ticketing sources.
+
+<img width="2554" height="1596" alt="image" src="https://github.com/user-attachments/assets/688a9a8f-3128-4123-b7e2-25088f5dbdf4" />
+
+[Learn more about YouTrack sync →](https://nocodb.com/docs/product/sync/app-sync/ticketing#youtrack)
+
+## Improvements
+
+- **Invite links** - Share one link to bring people into a base or workspace at the role you choose. [Learn more](https://nocodb.com/docs/product/collaboration/invite-links)
+- **Base settings as a modal** - Settings open over your current view, with search. [Learn more](https://nocodb.com/docs/product/bases/actions-on-base)
+- **Integrations page** - Your connections first, then one catalog grid with category filters. [Learn more](https://nocodb.com/docs/product/integrations)
+- **Webhook trigger fields** - Pick individual body, header, and query values in later steps. [Learn more](https://nocodb.com/docs/workflows/nodes/trigger-nodes/webhook)
+- **Variables in email links** - Send Email links can use workflow data as the address. [Learn more](https://nocodb.com/docs/workflows/nodes/action-nodes/send-email)
+- **Interface forms** - Mark fields *Required*, update the open record from a form, and manage a button's forms in place. [Learn more](https://nocodb.com/docs/interfaces/layouts/form)
+- **Interface filters** - Larger *Filter by* editor, with copy and paste between components.
+- **Large number abbreviation** - Number, Decimal, and Currency fields can display 1,234,567 as 1.2M. [Learn more](https://nocodb.com/docs/product/tables/fields/field-types/numerical/number#large-number-abbreviation)
+- **Excel exports** - Currency and Decimal export as real numbers. [Learn more](https://nocodb.com/docs/product/tables/table-operations/download)
+- **Faster menus** - Dropdowns open instantly.
+- **List View drag and drop** - Drops apply immediately.
+- **Bulk update** - Redesigned *Update selected records* panel.
+
+## What's Fixed
+
+- **Grouped grids** - Rows stay in the right group after realtime updates.
+- **Select options** - Adding a new option by paste or typing keeps existing options.
+- **Imports, snapshots, and duplication** - Large tables and synced tables copy completely, and User values carry across workspaces.
+- **Interfaces** - Link values, visibility rules, link pickers, attachment downloads, and overview cover images work as expected. Published pages keep working after a field is deleted, and pasted link values stay on new rows.
+- **Bulk Update** - Updating all records fires webhooks and workflow triggers.
+- **Kanban** - Reordering cards within a stack is saved.
+- **Workflows** - Steps inside an Iterate loop get the current record when tested, and fields that combine several variables resolve correctly.
+- **Views** - Calendar and Timeline views without a date range duplicate correctly, and shared List views open.
+- **Renamed tables** - Formula display values keep working after a table rename.
+- **Audit log** - Filtering by *Data* events returns results.
+- **Documents** - Markdown with empty table cells pastes correctly.
+- **API** - `null` for a v3 link field leaves links unchanged, v2 `in` filters with several dates return every match, and base-scoped tokens can list their bases.
+- **MCP** - Removing someone from a base revokes only that base's connections, write tools accept what their read tools return, and records created from a template keep their links.
+- **Invites** - Invite emails on self-hosted and Community Edition deployments sign people up correctly, workspace invites in the Community Edition send an email, and resending a base invite works.
+- **Sign-in** - Brief network errors no longer sign you out, and self-hosted SSO buttons show again.
+- **SQL Server** - Single-argument `CONCAT` works.
+- **Airtable import** - One failing item no longer stops the import, and one-way links and nested filters import correctly.
+
+## Self-Hosting Notes
+
+- **Faster loading** - Static files are cached and compressed, so first loads are about 3.6 times smaller.
+- **License server health** - Super admins see a warning with *Retry now* when the license server is unreachable. [Learn more](https://nocodb.com/docs/self-hosting/license-activation)
+- **v3 API field changes** - Currency options use `currency_code` and `currency_locale`, and form validators `minValue`, `maxValue`, and `custom` are rejected.
+- **CSV currency exports** - Currency values no longer include a thousands separator.
+- **Security hardening** - Stricter audit log access, sanitized filenames, and patched dependencies.
+
+---
+
+For more details on the features introduced in 2026.09.0, see the [2026.09.0 changelog](https://nocodb.com/docs/changelog/2026.09.0).
+
+-----------
+
+- [**closed**] 🐛 Bug: The web page loads incredibly slowly. [#14623](https://github.com/nocodb/nocodb/issues/14623)
+- [**closed**] 🐛 Bug: download CSV, JSON, XLSX must be downloaded to local disk not stored inside docker [#14617](https://github.com/nocodb/nocodb/issues/14617)
+- [**closed**] i18n: interpolation tokens translated or dropped in several locale strings (fr/it/pt/es) [#14573](https://github.com/nocodb/nocodb/issues/14573)
+- [**closed**] 🐛 Bug: Currency fields exported to Excel as text with U+202F thousands separator [#14563](https://github.com/nocodb/nocodb/issues/14563)
+- [**closed**] 🐛 Bug: [Docs] Private Base available in Business or Scale plan? [#14529](https://github.com/nocodb/nocodb/issues/14529)
+- [**closed**] Nocodb UI menus feels slow compared to competitors [#14499](https://github.com/nocodb/nocodb/issues/14499)
+- [**closed**] 🐛 Bug: Unable to delete or modify fields after creation [#14299](https://github.com/nocodb/nocodb/issues/14299)
+- [**closed**] 🐛 Bug: Random `ECONNREFUSED` to NocoDB Cloud API [#14279](https://github.com/nocodb/nocodb/issues/14279)
