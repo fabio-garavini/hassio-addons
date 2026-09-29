@@ -1,35 +1,19 @@
-Grimoire 1.2.0 adds browser Companion support, Homebrew installation, and fixes for everyday search and model setup.
+Grimoire 1.3.0 makes saved links easier to return to and organize.
 
 ## Highlights
 
-- Connect browser integrations with separately named, revocable tokens under **Settings → Browser Integration**.
-- Discover the versioned Companion protocol and capture pages or selected tabs with titles, notes, categories, tags, selected text, Pin, and Read Later.
-- Install with Homebrew and manage the daemon with `brew services`. The primary command is now `grimoire`; `littleimp` remains a compatibility alias.
-- Search defaults to **Relevance**, so AI and mixed searches no longer inherit the library's date ordering. Explicit search sorts remain available, and clearing a query restores the library sort.
-- Retry model-connection tests after a failed attempt.
-- Homebrew-managed installations use `brew upgrade grimoire` instead of the native updater.
+- **Later / Revisit:** Work through a small stack of saved bookmarks and resume a round later. Skip, mark read, postpone, remove from Later, move to recoverable Trash, or undo the last decision.
+- **Save several links at once:** Paste a list of URLs into Add Bookmark, optionally add them to Later, and see which links saved or failed. A single link can include a note.
+- **Collapsible sidebar folders:** Expand only the category branches you need.
 
-## Install
+## Fixes
 
-```sh
-brew trust --formula goniszewski/grimoire/grimoire
-brew tap goniszewski/grimoire https://github.com/goniszewski/grimoire.git
-brew install grimoire
-brew services start grimoire
-```
+- Browser bookmarklet capture works on pages whose content security policy blocked the previous embedded frame.
+- Failed AI enrichment responses can be retried.
+- Docker frontend lockfiles are aligned for builds.
 
-Native macOS and Linux archives are attached. Homebrew data lives under `$(brew --prefix)/var/little-imp`, separately from native data under `~/.local/share/littleimp`; changing installation methods does not automatically migrate a library.
+## Install and upgrade
 
-The archives include SHA-256 checksums and detached GPG signatures. Import the attached `grimoire-release-key.asc`; the expected fingerprint is:
+Signed macOS and Linux release archives, SHA-256 files, detached signatures, and the public release key are attached. The signing-key fingerprint is `DB04AD8F2F2CB7753F0DFA3FED72EFB58D928945`. Back up your library before upgrading. Native upgrades preserve data under `~/.local/share/littleimp`.
 
-`DB04 AD8F 2F2C B775 3F0D FA3F ED72 EFB5 8D92 8945`
-
-## Validation and limits
-
-Validated with frontend and daemon tests, Chromium E2E checks, native macOS installed-app smoke, macOS Homebrew install/reinstall and v1.1→v1.2 upgrade with data preservation, and Ubuntu 24.04/Debian 12 systemd installer checks. Production dependency audits reported no vulnerabilities at release preparation.
-
-AI and mixed searches rank indexed candidates; their result count can include the full indexed library. This release fixes ranking, not model-specific similarity thresholds.
-
-Companion distribution is tracked separately in [grimoire-web-extension](https://github.com/goniszewski/grimoire-web-extension). This release does not submit Chrome or Firefox store updates or include a signed Safari app. Docker Hub legacy rolling tags are not changed by this release; use the documented source Compose build for the current application.
-
-**Full Changelog**: https://github.com/goniszewski/grimoire/compare/v1.1.0...v1.2.0
+Homebrew users can run `brew upgrade grimoire`. The public macOS install, service, reinstall, and v1.2 to v1.3 upgrade paths passed with bookmark and configuration preservation. Linux Homebrew has not been verified; use the Linux archive or Docker there.
