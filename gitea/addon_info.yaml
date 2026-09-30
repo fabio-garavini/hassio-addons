@@ -1,11 +1,11 @@
 source:
   type: docker
   repo: gitea/gitea
-  current_version: 1.27.3
+  current_version: 28.0.0
   version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}-ha{{app_build}}"
-  build: 0
+  build: 1
   image: fabioogaravini/hassio-gitea
 build:
   image: gitea/gitea
