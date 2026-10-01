@@ -101,7 +101,7 @@ RUN apk add --no-cache bash logrotate postgresql${PG_MAJOR} postgresql${PG_MAJOR
     postgres --version
 
 # renovate: datasource=github-tags packageName=pgvector/pgvector
-ARG PGVECTOR_VERSION="v0.8.6"
+ARG PGVECTOR_VERSION="v0.8.7"
 
 ADD https://github.com/pgvector/pgvector.git#${PGVECTOR_VERSION} /tmp/pgvector
 
