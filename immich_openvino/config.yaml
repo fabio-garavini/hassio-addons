@@ -1,5 +1,5 @@
 name: Immich (OpenVINO)
-version: 3.2.4-ha3
+version: 3.2.4-ha4
 slug: immich_openvino
 description: High performance self-hosted photo and video management solution
 url: https://immich.app
@@ -179,10 +179,12 @@ options:
   env_vars: []
 ports:
   8080/tcp: 8080
+  3003/tcp: null
   5432/tcp: null
   6379/tcp: null
 ports_description:
   8080/tcp: Immich
+  3003/tcp: Machine Learning
   5432/tcp: Postgresql DB
   6379/tcp: Redis DB
 image: fabioogaravini/hassio-immich-openvino

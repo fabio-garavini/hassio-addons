@@ -129,5 +129,6 @@ configuration:
       Only works if also Restore backup is enabled
 network:
   8080/tcp: Immich
+  3003/tcp: Machine Learning
   5432/tcp: PostgreSQL DB
   6379/tcp: Redis DB
