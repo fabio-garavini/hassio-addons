@@ -71,7 +71,7 @@ RUN \
         /var/{cache,log}/* \
         /var/lib/apt/lists/*
 
-ARG MEILI_VERSION="v1.13.3"
+ARG MEILI_VERSION="v1.41.0"
 
 # Install Meilisearch
 RUN \
