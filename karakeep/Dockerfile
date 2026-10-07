@@ -31,7 +31,7 @@ RUN \
 	apt-get install -y --no-install-recommends \
         bash \
         openssl \
-	    nginx; \
+        nginx; \
     apt-get clean; \
     rm -rf /etc/nginx
 
@@ -71,7 +71,8 @@ RUN \
         /var/{cache,log}/* \
         /var/lib/apt/lists/*
 
-ARG MEILI_VERSION="v1.13.3"
+# renovate: datasource=github-releases packageName=meilisearch/meilisearch
+ARG MEILI_VERSION="v1.54.3"
 
 # Install Meilisearch
 RUN \
