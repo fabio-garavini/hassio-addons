@@ -11,6 +11,7 @@ The Karakeep Addon is a bookmark-everything app with a touch of AI, designed spe
 - `MAX_ASSET_SIZE_MB`: The maximum size of assets (e.g. images) that can be uploaded. Defaults to `4`.
 - `OCR_LANGS`: A comma-separated list of languages to use for optical character recognition (OCR). Defaults to `eng`.
 - `OCR_CONFIDENCE_THRESHOLD`: The minimum confidence threshold for OCR results. Defaults to `50`.
+- `LOG_LEVEL`: The log level of the Karakeep application (winston levels). One of `error`, `warn`, `info`, `http`, `verbose` or `debug`. Defaults to `debug` (Karakeep's own default). Note: Karakeep's upstream docs suggest `notice` or `warning`, but those are not valid winston levels and will silence all logs, including errors — use `warn` instead.
 - `OPENAI_API_KEY`: An API key for OpenAI. Optional.
 - `OPENAI_BASE_URL`: The base URL of the OpenAI API. Optional.
 - `OLLAMA_BASE_URL`: The base URL of the OLLAMA API. Optional.

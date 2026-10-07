@@ -71,6 +71,17 @@ RUN \
         /var/{cache,log}/* \
         /var/lib/apt/lists/*
 
+# bashio treats the global LOG_LEVEL as a numeric (syslog-style) level, while
+# Karakeep uses winston string levels (e.g. "warn"). A string value would crash
+# every bashio-based script ("unbound variable" in lib/log.sh), so fall back to
+# bashio's default when LOG_LEVEL is not numeric.
+RUN \
+    printf "%s\n" \
+    "if [[ ! \"${__BASHIO_LOG_LEVEL:-}\" =~ ^[0-9]+$ ]]; then" \
+    "    __BASHIO_LOG_LEVEL=\"${__BASHIO_DEFAULT_LOG_LEVEL}\"" \
+    "fi" \
+    >> /usr/lib/bashio/bashio.sh
+
 # renovate: datasource=github-releases packageName=meilisearch/meilisearch
 ARG MEILI_VERSION="v1.54.3"
 
