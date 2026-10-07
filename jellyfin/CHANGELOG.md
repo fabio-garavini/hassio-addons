@@ -1,56 +1,60 @@
-# :rocket: Jellyfin Server 12.1
+# :rocket: Jellyfin Server 12.2
 
-We are pleased to announce the latest stable release of Jellyfin, version 12.1! This minor release brings several bugfixes to improve your Jellyfin experience. As always, please ensure you take a full backup before upgrading!
+We are pleased to announce the latest stable release of Jellyfin, version 12.2! This minor release brings several bugfixes to improve your Jellyfin experience. As always, please ensure you take a full backup before upgrading!
 
-Discuss this release further [on our forums](https://forum.jellyfin.org/t-new-jellyfin-server-web-release-12-1).
+Discuss this release further [on our forums](https://forum.jellyfin.org/t-new-jellyfin-server-web-release-12-2).
 
-## Changelog (47)
+## Changelog (51)
 
 ### 📈 General Changes
-* Stop resolving items with every field where only stored columns are read [PR #18039], by @Shadowghost
-* Fix nested unnumbered season folders collapsing onto the first one [PR #18044], by @Shadowghost
-* Release a folder's children once its subtree has been scanned [PR #17884], by @Shadowghost
-* Enforce channel mediasource id [PR #18037], by @Shadowghost
-* Fix Norwegian ratings [PR #18017], by @theguymadmax
-* Stop the library monitor from refreshing against a disposed host [PR #18020], by @Shadowghost
-* Don't queue by-name items for playback and reject source requests for them [PR #17999], by @Shadowghost
-* Fix forced-only not overriding remembered subtitles [PR #17998], by @Shadowghost
-* Fix SyncPlay authentication error handling and limit group member wait time [PR #17938], by @Shadowghost
-* Fix /UserViews exhausting memory and reporting random child counts [PR #17881], by @Shadowghost
-* Fix device access revocation not logging out existing sessions [PR #18026], by @fmarcac
-* Fix database optimization memory use and pre-migration backup integrity [PR #17836], by @Shadowghost
-* Stop wrong-type alternate version cleanup from recursing [PR #18030], by @Shadowghost
-* Fix incorrect color range during CSC after VK tonemapping [PR #18025], by @nyanmisaka
-* Preserve active scans when requesting a background library refresh [PR #18006], by @orut34iop
-* Clean up orphaned people when deleting items [PR #17897], by @nintwentydo
-* Check Live TV access for a single user instead of enumerating all users [PR #18003], by @Shadowghost
-* Fix slashed rating handling [PR #18002], by @Shadowghost
-* Skip empty ZIP comments for ComicBookInfo [PR #17971], by @Shadowghost
-* Fix EPG issues [PR #17935], by @Shadowghost
-* Avoid full people scans and writes for unchanged credits [PR #18004], by @orut34iop
-* Clean up invalid data before running migrations [PR #17835], by @Shadowghost
-* Restore [JsonIgnore] on AggregateFolder.Children [PR #18011], by @Shadowghost
-* Correct SyncPlay sessions that report playback at a stale position [PR #17797], by @fmarcac
-* Don't let a torn-down WebSocket take down the request handler [PR #17958], by @Shadowghost
-* Fix SimilarItemsManager concurrency [PR #17982], by @Shadowghost
-* Delete the full ownership closure when deleting items [PR #17873], by @Shadowghost
-* Fix versions of a video still listing separately from their group and preserve manual merges [PR #17842], by @Shadowghost
-* Preserve library items when directory enumeration fails [PR #18007], by @orut34iop
-* Don't resample or sharpen images Skia isn't actually resizing [PR #17956], by @Shadowghost
-* Drop dead item data and fix query ordering and bound parameters [PR #17980], by @Shadowghost
-* Stop requesting unused credits when looking up a TMDb person [PR #17973], by @Shadowghost
-* Use thumbs for image tmdb image preview [PR #17924], by @enter-a-random-username
-* Fix playlist encoding recognition [PR #17930], by @Shadowghost
-* Populate missing tags array in Filters2 [PR #17898], by @Shadowghost
-* Fix collection creation when the collections library was just added [PR #17950], by @Shadowghost
-* Don't record a failed refresh as a completed one [PR #17947], by @Shadowghost
-* Fix Italian ratings [PR #17933], by @Shadowghost
-* Fix ContainsSubPath check [PR #17929], by @Shadowghost
-* Fix trickplay using the wrong video stream [PR #17883], by @crobibero
-* Fix metadata provider order needing a restart to apply [PR #17939], by @Shadowghost
-* Fix decimal point handling in version names [PR #17931], by @Shadowghost
-* Improve SeriesNameRegex [PR #17858], by @Shadowghost
-* Report image resolutions for TMDb images when no image size is configured [PR #17859], by @Shadowghost
-* Fix transcode throttling not enabling on supported systems (caused by race condition) [PR #17906], by @SimonvBez
-* Only group episodes as versions on a confident path parse [PR #17890], by @Shadowghost
-* Match parental ratings case-insensitively [PR #17844], by @Jellyfrog
+* Replace custom item display preferences in one transaction [PR #18266], by @martimarkov
+* Use hvc1 for Dolby Vision profile 8 [PR #18300], by @theopeuchlestrade
+* Make the OwnerId and ExtraType/OwnerId indexes partial so extras lookups keep using them [PR #18276], by @Shadowghost
+* Enhance internal search provider for multiple scripts [PR #18223], by @excelsior-dev
+* Dispose the database context in DeleteTrickplayDataAsync [PR #18269], by @martimarkov
+* Fix orphan ItemValues cleanup after deletion [PR #17892], by @nintwentydo
+* Fix off-by-one in the optimistic locking retry backoff [PR #18268], by @martimarkov
+* Upgrade ATL to 7.18.0 to fix malformed FLAC hangs [PR #18224], by @ScottishTapWater
+* Fix EPUB metadata and covers not loading on Windows [PR #18283], by @chino
+* Refuse to start a set-up server whose database is missing or empty [PR #18264], by @martimarkov
+* Compare local image dates with a one second tolerance [PR #18278], by @Shadowghost
+* Only propagate a changed rating to children that follow it [PR #18280], by @Shadowghost
+* Recognize numbered sample and trailer files as extras [PR #18255], by @HaraldNordgren
+* Recompute the parental rating score whenever an item is saved [PR #18279], by @Shadowghost
+* Compare person names without regard to case in the letter range filters [PR #18265], by @martimarkov
+* Fix video quality at low bitrates when reducing bit depth [PR #18261], by @nyanmisaka
+* Update episode season name after editing the season name [PR #18253], by @theguymadmax
+* Fix segment cleaner deleting segments ahead of playback when remuxing MKV [PR #18186], by @klizas
+* Fix user preferences when renaming libraries [PR #18236], by @z0rimo
+* Fix item display preferences item [PR #18259], by @martimarkov
+* Use XmlReader in encoder preset migration tests [PR #18237], by @maghuro
+* Don't advance rewatch Next Up past a barely started episode [PR #18202], by @Shadowghost
+* Keep an item's user data rows in agreement [PR #18001], by @Shadowghost
+* Stop rebuilding the inherited-tag set per row, and count only the people /Persons can return [PR #18093], by @Shadowghost
+* Never treat unresolvable libraries as grounds for deletion [PR #18102], by @Shadowghost
+* Don't let a failed shutdown cancel an in-process restart [PR #18063], by @Shadowghost
+* Match artist creation lookups using CleanName [PR #18005], by @orut34iop
+* Serve graphical subtitles as raw files with range support [PR #18168], by @Shadowghost
+* Use MusicBrainz artist name first [PR #18192], by @juxuanu
+* Skip statistics on an empty library and refresh them after every scan [PR #18196], by @Shadowghost
+* Check media directory write permission before generating trickplays [PR #18161], by @thedreaddpirate
+* Reconcile missing episodes by episode, not by number [PR #18090], by @Shadowghost
+* Apply stereo downmix filter consistently to progressive audio transcodes [PR #18195], by @Shadowghost
+* Fix transcoding settings migration failure caused by null EncoderPreset [PR #18059], by @scr4bble
+* Fix more rating systems [PR #18057], by @Shadowghost
+* Fix ChangeOwnerIdToGuid migration performance [PR #18073], by @Shadowghost
+* Retry MusicBrainz requests when the server is busy [PR #18095], by @Shadowghost
+* Fix playlist views [PR #18104], by @Shadowghost
+* Scope the music library cover image to that library's artists [PR #18148], by @Shadowghost
+* Read the image region when determining TMDb image language in `TmdbUtils` [PR #18150], by @mateusbandeiraa
+* Ignore Sample subfolders when resolving movie folders [PR #17964], by @panko
+* Don't apply the allowed tags filter to by-name items [PR #18138], by @Shadowghost
+* Only regenerate extra names that were generated by the scan [PR #18139], by @Shadowghost
+* Skip optimistic expressions when parsing series names [PR #18061], by @panko
+* Decode HTML entities in OMDb responses [PR #18096], by @Shadowghost
+* Fix the item type name of BaseItemKind.Channel [PR #18132], by @martimarkov
+* Log chapter image extraction once per video [PR #18107], by @Jellyfrog
+* update tw.json (rating) [PR #18134], by @allexjuang
+* Fix typo when parsing codec_tag_string [PR #18164], by @nyanmisaka
+* Fix test concurrency [PR #18058], by @Shadowghost
+* Fix formatting issue in PlayCommandQueueTests [PR #18079], by @theguymadmax
