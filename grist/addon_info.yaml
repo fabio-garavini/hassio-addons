@@ -1,11 +1,11 @@
 source:
   type: docker
   repo: gristlabs/grist-oss
-  current_version: 1.7.20
+  current_version: 1.7.21
   version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}-ha{{app_build}}"
-  build: 1
+  build: 2
   image: fabioogaravini/hassio-grist
 build:
   image: gristlabs/grist-oss
