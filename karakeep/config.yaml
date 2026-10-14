@@ -31,7 +31,7 @@ schema:
   NEXTAUTH_URL: str?
   OCR_LANGS: str?
   OCR_CONFIDENCE_THRESHOLD: int(0,100)?
-  LOG_LEVEL: list(error|warn|info|http|verbose|debug)?
+  LOG_LEVEL: list(error|warn|info|http|verbose|debug|silly)?
   AI:
     OPENAI_BASE_URL: str?
     OPENAI_API_KEY: password?
