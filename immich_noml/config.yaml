@@ -155,7 +155,7 @@ schema:
     - key: match(^[A-Za-z0-9_-]+$)
       value: str
 options:
-  TZ: Etc/UTC.common
+  TZ: Etc/UTC
   IMMICH_LOG_LEVEL: log
   ssl: false
   certfile: fullchain.pem
