@@ -1,15 +1,42 @@
 - **\[Breaking\]**
-    - API tokens no longer support creating / revoke other tokens, clearing data, updating user profile, configuring two-factor authentication, configuring external authentication or configuring application settings sync
+    - Rename the configuration section `llm` to `ai`
+    - The daily total amounts on the Transaction Calendar widget are displayed as total inflows and total outflows by default
+    - Not roll back the entire import if some transactions fail to be created during import
 
 - **\[Features\]**
-    - Add an Add Transaction Button widget on mobile version
+    - Add Polish translation (#698, #699, #718, thanks @mnowok)
+    - Support AI generated custom charts in Insights Explorer
+    - Add Account Unreconciled Transactions widget
+    - Add National Bank of Belarus, Bank of Italy and Central Bank of Malaysia exchange rates data source
+    - The monthly and daily total amounts on the Transaction List page can be set to total inflows and total outflows, or total income and total expenses (#690)
+    - The daily total amounts on the Transaction Calendar widget can be set to total inflows and total outflows, or total income and total expenses (#690)
+    - Support setting default transaction tag filter for the Overview page (#691)
+    - Provide FreeBSD prebuilt package
 
 - **\[Enhancements\]**
-    - Improved Italian translation (#685, thanks @albanobattistella)
-    - Improved Spanish translation (#693, #694, thanks @abrugues)
+    - Improved Spanish translation (#700, thanks @abrugues)
+    - The Transaction Calendar Heatmap widget supports a separate color for outliers (#682)
+    - Support configuring the button color and default action for the Add Transaction Button widget
+    - Allow custom charts in Insights Explorer to access the query associated with each transaction
+    - Allow clicking dates in the Transaction Calendar when they contain only transfer transactions in these dates
+    - Show detailed error information during importing transactions
+    - Not allow to save as a CSV file when the user has set the decimal separator to a comma
+    - Automatically set the default tag separator based on the column separator when importing DSV files
+    - Focus the filter field when a two-column select opens (#708, thanks @rhierlmeier)
+    - Support arrow key navigation in two-column select ([#721](https://github.com/mayswind/ezbookkeeping/discussions/721))
+    - Allow to show selected tags on top of the tag picker on mobile version (#723)
+    - Disable time skew for TOTP
     - Other user interface optimization
 
+- **\[Development\]**
+    - Upgrade Node.js to 26.10.0
+    - Upgrade Alpine base image to 3.24.2
+    - Add language configuration preview tool
+
 - **\[Bug Fixes\]**
-    - Fix the OAuth 2.0 sign in button not appearing on the mobile sign in page when only OAuth 2.0 sign in is enabled and username sign in is disabled (#680, thanks @quentinmarois)
-    - Fix an issue where scheduled transactions set to the nth last day of each month might not be created when the transaction time zone differs from the server time zone (#677, thanks @LudwigJMarx)
-    - Fix the edit scope boundary unit tests failing in some time zones (#678, thanks @LudwigJMarx)
+    - Fix incorrect transaction dates for scheduled transactions in time zones that observe daylight saving time (#566, Existing scheduled transactions MUST be saved again for the fix to take effect)
+    - Fix TOTP passcodes could be used concurrently
+    - Fix geographic coordinates not being formatted using the decimal separator specified in the user settings
+    - Fix geographic coordinates using a comma as the decimal separator not being imported correctly from DSV files
+    - Fix incorrect Y axis label display in the Income and Expense Trends widget
+    - Fix an error when retrieving balance modification transactions through the `/transactions/get.json` API (#715)
