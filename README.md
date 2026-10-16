@@ -126,6 +126,12 @@ Transform your daily routines into lasting habits while connecting with friends 
   <img src="https://github.com/jofoerster/habitsync/raw/main/images/6.gif" width="30%" style="margin: 5px;">
 </div>
 
+### 🏠 HomeLogger
+
+_All-in-one_
+
+[HomeLogger](https://github.com/FrancisLaboratories/homelogger) is an open source self-hosted home maintenance and asset tracker: it centralizes appliances, repairs, and maintenance tasks so you can record work, receipts, and schedules for things around your home
+
 ### 📷 Immich
 
 _All-in-one_

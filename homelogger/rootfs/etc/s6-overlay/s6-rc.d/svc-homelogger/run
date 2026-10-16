@@ -1,0 +1,19 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+
+set -e
+
+bashio::log.info "[svc-homelogger] Preparing data folder"
+
+# Persistent data folder (app_config)
+mkdir -p /config/homelogger
+
+# Link the app data folder to the persistent location
+rm -rf /root/data
+ln -s /config/homelogger /root/data
+
+bashio::log.info "[svc-homelogger] Starting HomeLogger"
+
+cd /root || exit 1
+
+exec /usr/local/bin/main
