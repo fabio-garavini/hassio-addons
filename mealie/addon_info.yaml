@@ -1,11 +1,11 @@
 source:
   type: docker
   repo: ghcr.io/mealie-recipes/mealie
-  current_version: v3.28.0
+  current_version: v3.29.0
   version_template: regex:^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}-ha{{app_build}}"
-  build: 3
+  build: 4
   image: fabioogaravini/hassio-mealie
 build:
   image: ghcr.io/mealie-recipes/mealie
