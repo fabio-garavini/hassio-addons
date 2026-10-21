@@ -1,9 +1,6 @@
 
 ## Nextcloud 35.0.2
 
-* Fix nginx failing to start (`ssl_dhparam` referencing a missing `dhparams.pem`) after the linuxserver.io base image dropped dhparams support
-* Update bundled nginx SSL configuration template to the version shipped by the linuxserver.io base image (TLSRef/Mozilla intermediate profile, no dhparams, HSTS enabled)
-
 ### [server](https://github.com/nextcloud/server)
 * [Fix\(sharing\): Use link\_defaultExpDays for default expiration in web UI (server#64322)](https://github.com/nextcloud/server/pull/64322)
 * [Fix\(files\_sharing\): name the parent folder in inherited unshare actions (server#64349)](https://github.com/nextcloud/server/pull/64349)
