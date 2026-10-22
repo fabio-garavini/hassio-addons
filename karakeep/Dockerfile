@@ -1,5 +1,5 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/karakeep-app/karakeep:0.34.0
+ARG BUILD_FROM=ghcr.io/karakeep-app/karakeep:0.34.1
 
 FROM ${BUILD_FROM}
 
