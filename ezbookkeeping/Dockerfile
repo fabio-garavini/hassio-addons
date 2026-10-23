@@ -1,4 +1,4 @@
-ARG BUILD_FROM=mayswind/ezbookkeeping:2.1.0
+ARG BUILD_FROM=mayswind/ezbookkeeping:2.1.1
 
 FROM ${BUILD_FROM}
 
