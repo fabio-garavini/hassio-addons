@@ -83,7 +83,7 @@ RUN \
     >> /usr/lib/bashio/bashio.sh
 
 # renovate: datasource=github-releases packageName=meilisearch/meilisearch
-ARG MEILI_VERSION="v1.55.0"
+ARG MEILI_VERSION="v1.56.0"
 
 # Install Meilisearch
 RUN \
