@@ -45,8 +45,14 @@ RUN \
     ./sbin/apk.static add --no-cache apk-tools; \
     rm -rf /tmp/*
 
+# The n8n images are built on a Docker Hardened Image base whose
+# /etc/apk/repositories lists the dhi.io repo alongside the upstream Alpine
+# repos. Mixing both makes apk unable to select a consistent
+# python3/py3-pip/python3-dev set ("unable to select packages", exit 4), so
+# drop dhi.io and install from the upstream Alpine repos only.
 RUN \
     set -eux; \
+    sed -i '/dhi\.io/d' /etc/apk/repositories; \
     apk add --no-cache \
         openssl \
         shadow \
