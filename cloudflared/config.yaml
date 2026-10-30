@@ -1,5 +1,5 @@
 name: Cloudflared
-version: 2026.10.6-ha9
+version: 2026.10.7-ha10
 slug: cloudflared
 description: Cloudflare tunneling and Zero Trust service
 arch:
