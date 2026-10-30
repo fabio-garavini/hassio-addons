@@ -1,10 +1,13 @@
-## [2.44.7](https://github.com/n8n-io/n8n/compare/n8n@2.44.6...n8n@2.44.7) (2026-10-26)
+## [2.45.7](https://github.com/n8n-io/n8n/compare/n8n@2.45.6...n8n@2.45.7) (2026-10-30)
 
 
 ### Bug Fixes
 
-* **core:** Start sub-workflow error workflow when a pre-run check fails ([#41978](https://github.com/n8n-io/n8n/issues/41978)) ([67d0e65](https://github.com/n8n-io/n8n/commit/67d0e65f5d5d01d49b1d14ea2c26a6b803bf058b))
-* **Email Trigger (IMAP) Node:** Back off reconnects when the server drops each new connection ([#41927](https://github.com/n8n-io/n8n/issues/41927)) ([10a9518](https://github.com/n8n-io/n8n/commit/10a9518f0d9d470e619b500383b5b76fc1870662))
-* **Microsoft SharePoint Node:** Fix the column mapper 403 and empty items in Map Automatically ([#41906](https://github.com/n8n-io/n8n/issues/41906)) ([e67d278](https://github.com/n8n-io/n8n/commit/e67d278ef0ae3c15493e74813ecce972e384ff1b))
-* Update certifi to 2026.10.19 in task runner ([#41967](https://github.com/n8n-io/n8n/issues/41967)) ([2858cfb](https://github.com/n8n-io/n8n/commit/2858cfb935487b1554f415c848623652da2af5d7))
-* Update certifi to 2026.10.23 in task runner ([#41994](https://github.com/n8n-io/n8n/issues/41994)) ([6187237](https://github.com/n8n-io/n8n/commit/6187237e974b4a92cfb9f9f09d0d1506160ff72c))
+* **core:** Require execution:read when workflow-scoped routes read execution data ([#42446](https://github.com/n8n-io/n8n/issues/42446)) ([93638f4](https://github.com/n8n-io/n8n/commit/93638f48718d8b03ab0b8ae6e81f110f90e0e3a5))
+* **core:** Resolve IMAP trigger expressions after activation ([#42611](https://github.com/n8n-io/n8n/issues/42611)) ([50ef902](https://github.com/n8n-io/n8n/commit/50ef902a730dfd0d1b0962a60dd23a753c2a6db5))
+* **core:** Return user data with an __isError key as data in expressions ([#42491](https://github.com/n8n-io/n8n/issues/42491)) ([c422a6c](https://github.com/n8n-io/n8n/commit/c422a6cc82fce12b135b5b1b2f80508c38ef09fa))
+
+<!-- This is an auto-generated description by cubic. -->
+<a href="https://cubic.dev/pr/n8n-io/n8n/pull/42666?utm_source=github" target="_blank" rel="noopener noreferrer" data-no-image-dialog="true"><picture><source media="(prefers-color-scheme: dark)" srcset="https://www.cubic.dev/buttons/review-in-cubic-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://www.cubic.dev/buttons/review-in-cubic-light.svg"><img alt="View guided diff" src="https://www.cubic.dev/buttons/review-in-cubic-light.svg"></picture></a> <a href="https://www.cubic.dev/action/auto-fix/pr/n8n-io/n8n/42666?returnTo=https%3A%2F%2Fgithub.com%2Fn8n-io%2Fn8n%2Fpull%2F42666&source=description" target="_blank" rel="noopener noreferrer" data-no-image-dialog="true"><picture><source media="(prefers-color-scheme: dark)" srcset="https://www.cubic.dev/buttons/turn-on-auto-fix-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://www.cubic.dev/buttons/turn-on-auto-fix-light.svg"><img alt="Turn on auto-fix" src="https://www.cubic.dev/buttons/turn-on-auto-fix-light.svg"></picture></a>
+<!-- End of auto-generated description by cubic. -->
+
