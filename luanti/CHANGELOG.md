@@ -1,4 +1,3 @@
-Check the changelog **[here](https://docs.luanti.org/about/changelog/#5160--5170)**.
-
-> [!WARNING]
-> **This release fixes critical security vulnerabilities affecting both the client and server. We advise everyone to upgrade immediately**.
+Check the changelog **[here](https://docs.luanti.org/about/changelog/#5170--5180)**.
+Forum post: https://forum.luanti.org/viewtopic.php?t=32742
+Blog post: TODO
