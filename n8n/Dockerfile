@@ -1,7 +1,7 @@
 # check=skip=SecretsUsedInArgOrEnv
 ARG BUILD_FROM=ghcr.io/n8n-io/n8n:2.46.4
 
-ARG BUILD_VERSION=2.46.4-ha30
+ARG BUILD_VERSION=2.46.4-ha31
 
 FROM ghcr.io/n8n-io/runners:${BUILD_VERSION%-ha*} AS runner
 
@@ -32,7 +32,7 @@ ENV \
 USER root
 
 # renovate: datasource=repology depName=alpine_3_22/apk-tools-static versioning=loose
-ARG APK_TOOLS_VERSION=2.14.12-r0
+ARG APK_TOOLS_VERSION=2.14.13-r0
 ARG ALPINE_VERSION=v3.22
 
 # hadolint global ignore=DL4001
