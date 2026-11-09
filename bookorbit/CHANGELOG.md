@@ -1,136 +1,182 @@
 ## Highlights
 
-- **First-class comic and manga library support**: Use the one-folder-per-series layouts familiar from Kavita and Komga to identify series automatically for new and existing books. <!-- icon: LibraryBig -->
+- **Merge duplicate books and link editions**: Fold duplicate copies of a book into one record, within a library or across several, with files, progress, highlights and notes carried over after a reviewed plan. Or link an ebook and its audiobook so they show as one title, each keeping its own files. <!-- icon: Merge -->
 
-<img width="600" alt="8" src="https://github.com/user-attachments/assets/32b6f913-f225-45ac-b95b-eebf8e1d1da4" />
-
-<hr>
-
-- **Create Read Aloud books in BookOrbit**: Turn an EPUB and its audiobook into a synchronized Read Aloud edition, with background progress, guided review, and easy re-syncing. <!-- icon: Headphones -->
-
-<img width="600" height="747" alt="32" src="https://github.com/user-attachments/assets/d69b78ee-7042-4efd-a9fc-eb9e828fd1f2" />
-<img width="600" height="663" alt="34" src="https://github.com/user-attachments/assets/27db215f-4703-4df1-a6f3-1c94cb1cefe1" />
-<img width="600" height="393" alt="33" src="https://github.com/user-attachments/assets/991ba37d-18e0-4ec2-a237-721f59d2e541" />
-<img width="300" alt="31" src="https://github.com/user-attachments/assets/2fa5a0f0-3034-4a81-8ac2-46da2e79a330" />
+<img width="600" alt="Merge or link a book from its menu" src="https://github.com/user-attachments/assets/e1eb5602-b54c-47d8-85f2-7133f1720d20" />
+<img width="600" alt="Choose which book to keep" src="https://github.com/user-attachments/assets/7fec96ee-e527-48ce-b88f-9cc8a2dbb2c7" />
 
 <hr>
 
-- **First-class audiobook chapter editing**: Edit chapter titles and timing, find chapter data from Audible or the ebook, snap cuts to nearby pauses, restore earlier versions, and update the audio files. <!-- icon: ListMusic -->
+- **Your reading year as a story on iOS**: Year in Review turns the year into a story of books finished, time read and listened, streaks, top authors and genres, the reading clock and a reading personality, in six styles and ready to share. Needs BookOrbit 3.7.0 or later. <!-- icon: CalendarHeart -->
 
-<img width="600" alt="1" src="https://github.com/user-attachments/assets/501f3676-2348-4085-8d8a-e092e86bfb53" />
-<img width="600" alt="2" src="https://github.com/user-attachments/assets/47d5e0b4-3b26-4f17-aea9-063a0c028350" />
-
-<hr>
-
-- **Colour widgets and more reading pets on KOReader**: Colour e-readers gain richer Home widgets, six new pets, and redrawn pet artwork, while black-and-white screens remain unchanged. <!-- icon: Palette -->
-
-<img width="300" alt="9" src="https://github.com/user-attachments/assets/8c095c33-ba70-43c3-b269-044b1cd1f9d7" />
-<img width="300" alt="11" src="https://github.com/user-attachments/assets/f23ca0df-efe0-4c8a-9551-4099f69cfeb7" />
-<img width="300" alt="10" src="https://github.com/user-attachments/assets/771e5672-553c-4dc8-aa0d-2a03aee06000" />
-<img width="300" alt="12" src="https://github.com/user-attachments/assets/ff809207-3d73-45da-b20f-901759ff554f" />
-<img width="300" alt="13" src="https://github.com/user-attachments/assets/ea747753-1f2d-42de-8d47-5560a3421714" />
-<img width="300" alt="14" src="https://github.com/user-attachments/assets/e3878ffb-caca-408e-aa59-b3443b338e42" />
-<img width="300" alt="15" src="https://github.com/user-attachments/assets/980cc9fc-cc63-4eb6-a830-12b5b8efef8b" />
+<img width="600" alt="Year in Review in the Orbit style" src="https://github.com/user-attachments/assets/4202fa6d-9d09-485b-9042-50594d9ca192" />
+<img width="600" alt="Year in Review in the Folio style" src="https://github.com/user-attachments/assets/6fe09117-7219-4463-ae04-cca071990c43" />
+<img width="600" alt="Year in Review in the Checkout style" src="https://github.com/user-attachments/assets/8bb7451b-fdbe-4c64-894d-d16fe2c959fc" />
+<img width="600" alt="Year in Review in the Riot style" src="https://github.com/user-attachments/assets/5a3d63a6-556c-4df1-a80b-11958f5a8620" />
+<img width="600" alt="Year in Review in the Signal style" src="https://github.com/user-attachments/assets/337efa33-cf8f-49fa-9a29-10bea618db7b" />
+<img width="600" alt="Year in Review in the Aurora style" src="https://github.com/user-attachments/assets/9167abc7-9959-4201-95c2-4187bb89083a" />
 
 <hr>
 
-- **Bring your own metadata providers**: Add ready-made or custom metadata sources and use them throughout search, Book Dock, automatic matching, and library refreshes. <!-- icon: Plug -->
+- **Scan covers and whole shelves on iOS**: Point the camera at a book cover or a shelf to see which books are in the library, which are read or in progress, and request the missing ones in a tap. Cover and Shelf modes read the text on the device and need BookOrbit 3.7.0 or later. <!-- icon: ScanSearch -->
 
-<img width="600" alt="7" src="https://github.com/user-attachments/assets/dfdd5dc8-a352-4c38-a40d-74a6065cb53a" />
-
-<hr>
-
-- **A complete history of every finished read**: Browse every completed read and reread with totals, ratings, notes, monthly cover walls, sharing, and export on the web and iOS. <!-- icon: History -->
-
-<img width="600" alt="3" src="https://github.com/user-attachments/assets/bc3fb500-f605-4096-bd30-c5dfecb88222" />
-<img width="600" alt="4" src="https://github.com/user-attachments/assets/cecd0e31-72a3-4bfe-be11-01375e1033f1" />
-<img width="600" alt="5" src="https://github.com/user-attachments/assets/86fcda40-f887-42b4-8ffd-9b7f70518996" />
+<img width="300" alt="A scanned cover found in the library" src="https://github.com/user-attachments/assets/c7830819-d75f-411f-ade3-4e2522b9dce5" />
+<img width="300" alt="A scanned cover with an ebook and an audiobook edition" src="https://github.com/user-attachments/assets/2f27a16b-6223-4279-9659-28348dda519a" />
+<img width="300" alt="A photographed shelf with a badge on each spine" src="https://github.com/user-attachments/assets/798f1794-237d-4615-9866-c77f8f01f0d2" />
 
 <hr>
 
-- **Paper-like page turning on iOS**: Choose Curl for natural page turns that follow the book's reading direction and work smoothly across spreads and chapter boundaries. <!-- icon: BookOpen -->
+- **Constellations and Story Recap on iOS**: Constellations lists the people, places and terms met so far, cut off at the page on screen so nothing ahead is spoiled, and its Sky shows who appears with whom. Story Recap adds a Previously in card when a book is reopened after a break. Corrections sync with BookOrbit 3.7.0 or later. <!-- icon: Telescope -->
 
-<img width="300" alt="29" src="https://github.com/user-attachments/assets/e4d46874-80dc-4bb2-ae76-31f83e8e1f91" />
-<img width="300" height="1200" alt="30" src="https://github.com/user-attachments/assets/634b2e49-4432-4b4d-a207-bd0eb74a4ca0" />
-
-<hr>
-
-- **Native support for iPhone Duo**: The iOS app gains fold-aware layouts that keep reading, navigation, and controls clear on both sides of the open display. <!-- icon: PanelsTopLeft -->
-
-<img width="300" alt="18" src="https://github.com/user-attachments/assets/7cbf8c2f-77f9-440c-8f62-20625ab9892a" />
-<img width="300" alt="28" src="https://github.com/user-attachments/assets/b50086e4-e370-41c6-a6a5-a090bf95e520" />
-<img width="600" alt="19" src="https://github.com/user-attachments/assets/62f3689e-baf9-43a6-b422-66cd1fe29372" />
-<img width="600" height="2007" alt="20" src="https://github.com/user-attachments/assets/85e3c6ed-4058-4913-9452-5d646a477fc7" />
-<img width="600" height="2007" alt="23" src="https://github.com/user-attachments/assets/9bac756c-bb84-4695-9d2b-c8beeefc99d6" />
-<img width="600" height="2007" alt="24" src="https://github.com/user-attachments/assets/70e55dec-8760-4905-801c-860a26e3d233" />
-<img width="600" height="2007" alt="25" src="https://github.com/user-attachments/assets/cf84e31f-68f5-46b0-bcf5-bd2ccb909c27" />
-<img width="600" height="2007" alt="27" src="https://github.com/user-attachments/assets/557a5444-c528-489d-885f-5bedfbddca3b" />
+<img width="300" alt="The story so far and where reading stopped" src="https://github.com/user-attachments/assets/7ebd9599-7dd7-488c-82a4-33229c5b3230" />
+<img width="300" alt="The people on the current page" src="https://github.com/user-attachments/assets/89b431b6-4480-48d3-b0c2-9a703d193609" />
+<img width="300" alt="A character entry with where it comes up" src="https://github.com/user-attachments/assets/aa71d838-738b-474a-859c-4042ca28fd5a" />
+<img width="300" alt="The Sky showing who appears with whom" src="https://github.com/user-attachments/assets/f1cd2d58-fa57-4532-8c72-df0a460ff7c4" />
+<img width="300" alt="A question answered from the pages already read" src="https://github.com/user-attachments/assets/a23c3711-d96b-4454-83fa-aacec0279267" />
 
 <hr>
 
-- **Richer book timelines on iOS**: Timeline gains a dedicated row with recent reading activity and session counts, while book facts and ratings become clearer and better balanced. <!-- icon: ChartNoAxesColumnIncreasing -->
+- **Reading Insights redrawn on iOS**: Insights opens on the year as a dial with the goal, then the shelf of finished books, what is open now, this week against last, five weeks coloured by book and the hours of the day. A day opens as a ruler of its sessions, and the iPad Summary uses two columns. <!-- icon: Orbit -->
 
-- **Overhauled folder picker**: Find and select folders from a searchable tree, then preview what BookOrbit will import and how the library will be organized before saving. <!-- icon: FolderTree -->
-
-- **Safer reading progress across devices**: BookOrbit keeps the newest reading position when multiple devices, including an offline iPhone or iPad, update the same book. <!-- icon: RefreshCw -->
-
-- **A new achievement trophy cabinet on iOS**: Achievements become distinctive medals with recent unlocks, rarity shelves, progress hints, and richer award details. <!-- icon: Trophy -->
-
-- **Seamless audiobook and Read Along playback on iOS**: Books resume in the format last played, downloaded audiobooks keep their chapters offline, and Read Along bookmarks mark the spoken sentence. <!-- icon: AudioLines -->
-
-- **KOReader 2.1 for every e-reader**: The interface now adapts cleanly to different screens and interface sizes, including D-pad devices and reMarkable. Large series stay complete, manual matches are more reliable, and downloads preserve their configured names. <!-- icon: PanelsTopLeft -->
+<img width="300" alt="The year as a dial with the reading goal" src="https://github.com/user-attachments/assets/32289417-d69b-4848-8f94-6393c484a862" />
+<img width="300" alt="The shelf of finished books and the books open now" src="https://github.com/user-attachments/assets/10948c28-43c7-42bf-bbe2-61ac6e3ad3fb" />
+<img width="300" alt="This week against last, and five weeks coloured by book" src="https://github.com/user-attachments/assets/279c6fc1-5061-40a4-9f67-6ede49db5a18" />
+<img width="300" alt="A day opened as a ruler of its sessions" src="https://github.com/user-attachments/assets/45bebb28-5746-4095-af56-b111a44917d1" />
 
 <hr>
+
+- **Bulk reading state, square grids and rTorrent**: Set the reading status and dates for many books at once, choose tall or square cells for smart scopes and collections so an audiobook shelf shows audiobook covers, and add rTorrent as a Book Requests download client beside qBittorrent, Transmission and Deluge. <!-- icon: LayoutGrid -->
+
+<img width="600" alt="Update the reading state for several selected books" src="https://github.com/user-attachments/assets/a6b6ba3b-38c5-413d-961a-19ab0a015c38" />
+<img width="600" alt="Choose tall or square cells in a smart scope" src="https://github.com/user-attachments/assets/49b1116a-2465-4ef2-b477-3b8ad7dea0ba" />
+<img width="300" alt="Add an rTorrent download client" src="https://github.com/user-attachments/assets/f2fa706f-cb54-4b2a-ab1e-d9e82a179b76" />
+
+<hr>
+
+- **Guided View for comics on iOS**: Read comics and manga panel by panel on iPhone and iPad. Panels are found on the device and framed one at a time, right to left for manga, and a splash page or an unusual layout shows whole. Works offline on downloaded comics. <!-- icon: Frame -->
+
+<img width="300" alt="A single panel framed on iPhone" src="https://github.com/user-attachments/assets/1c5f1102-bdd7-4d65-aa43-1fdfeae1e0c9" />
+<img width="300" alt="The panel count under the page" src="https://github.com/user-attachments/assets/d736adb8-6316-4b7d-b4e8-c8137ed81977" />
+<img width="300" alt="The whole page on iPhone" src="https://github.com/user-attachments/assets/3980e547-4aae-4722-b7aa-ef05b11e9034" />
+<img width="300" alt="A manga panel read right to left" src="https://github.com/user-attachments/assets/bdc9f00a-f44a-4cce-93bb-2c6e33da82af" />
+
+<hr>
+
+- **Find your page from a paper copy on iOS**: Point the camera at a page of a printed book, or pick a photo, and the ebook opens at the same passage, with a Return point to go back. Works with EPUB and KEPUB books and needs BookOrbit 3.7.0 or later. <!-- icon: ScanText -->
+
+<img width="300" alt="Find Your Page in the book menu" src="https://github.com/user-attachments/assets/6d593062-361b-4551-ab06-d396c0b188a5" />
+<img width="300" alt="The matching passage found" src="https://github.com/user-attachments/assets/52f7aee2-0e64-4152-bab1-24cc23cf6770" />
+
+<hr>
+
+- **Dictionaries and a vocabulary list on iOS**: Look words up in StarDict dictionaries imported into the app, Wikipedia or Wiktionary without leaving the page, keep them in a Vocabulary list, and review them with Forgot and Got It flashcards. <!-- icon: BookA -->
+
+<img width="300" alt="Dictionaries imported into the app" src="https://github.com/user-attachments/assets/fdede672-5c6f-4f2b-86c0-9bc2377fe85e" />
+<img width="300" alt="Looking a word up in an imported dictionary" src="https://github.com/user-attachments/assets/c3d991ce-3040-405e-9998-3451707cc08a" />
+<img width="300" alt="Looking a word up in Wikipedia" src="https://github.com/user-attachments/assets/aea52abc-8b60-426d-b900-93a7f0f576df" />
+<img width="300" alt="Looking a word up in Wiktionary" src="https://github.com/user-attachments/assets/32a0ce88-9227-4b6d-b7b8-49afa40a5f0d" />
+<img width="300" alt="The Vocabulary list" src="https://github.com/user-attachments/assets/270e3b69-d3f2-4dff-a0f8-2ab42825e122" />
+<img width="300" alt="Reviewing a word as a flashcard" src="https://github.com/user-attachments/assets/fc649fe5-6c24-45e1-bd4a-4983b8804a47" />
+
+<hr>
+
+- **Bedtime mode for audiobooks on iOS**: Switched on by the Sleep Focus, it darkens the reader, starts a sleep timer on Play and asks "Still listening?" every 15 minutes. With no answer the audiobook fades out, pauses and bookmarks the last answer, and the player shows where sleep came, with Undo. <!-- icon: MoonStar -->
+
+<img width="300" alt="The Still listening check-in" src="https://github.com/user-attachments/assets/df957c13-0fc2-4672-9ee4-c0368b67558d" />
+<img width="300" alt="The player showing where listening stopped, with Undo" src="https://github.com/user-attachments/assets/23c95c1a-5927-4c28-8521-018b9d28ccfe" />
+<img width="300" alt="Bedtime Mode settings" src="https://github.com/user-attachments/assets/d804c7d8-5ff3-447b-bf92-9381841290d1" />
+
+<hr>
+
+- **Books and highlights in Spotlight and Siri on iOS**: Find books and highlights from the Home Screen search and open them in the reader at the passage. Siri and Shortcuts gain Open Book, Show Book Highlights and Open Highlight actions. <!-- icon: Spotlight -->
+
+<img width="300" alt="A book and a highlight in Spotlight results" src="https://github.com/user-attachments/assets/1eb15cb7-d05d-4cdb-84d3-e44db2b58fb3" />
+<img width="300" alt="A highlight opened in the reader" src="https://github.com/user-attachments/assets/6878680c-a390-47e3-b591-a8c4df123c94" />
+<img width="300" alt="BookOrbit actions in Shortcuts" src="https://github.com/user-attachments/assets/0c509a01-7bbe-4bb2-a94d-0911ab373e79" />
+
+<hr>
+
 
 ### Features
 
-* **books:** add an audiobook chapter editor ([d21c68d](https://github.com/bookorbit/bookorbit/commit/d21c68d13cedbc96489da0e6c2d35f929a61a429)) by @neonsolstice, closes [#1120](https://github.com/bookorbit/bookorbit/issues/1120)
-* **books:** add read-aloud generation ([992224f](https://github.com/bookorbit/bookorbit/commit/992224f2e86eaba85947cb28be078991ac210623)) by @neonsolstice
-* **books:** filter read-along titles ([edc5e41](https://github.com/bookorbit/bookorbit/commit/edc5e4110598964c1838dd9da464ed7a9ac75b38)) by @neonsolstice, closes [#1583](https://github.com/bookorbit/bookorbit/issues/1583)
-* **books:** remember a default read-aloud narration language ([8810d47](https://github.com/bookorbit/bookorbit/commit/8810d476583bef1af9c200ef51c2f455c2b79255)) by @neonsolstice
-* **koreader:** colour the widget board on colour screens ([267f53f](https://github.com/bookorbit/bookorbit/commit/267f53fccd909cc05dbb8edca88b698a439b8a9e)) by @neonsolstice
-* **koreader:** draw the reading pets in colour and add six more ([0752319](https://github.com/bookorbit/bookorbit/commit/07523196475e920702f25b4e3822c37c8acb75d7)) by @neonsolstice
-* **library:** read series from folders for comics and manga ([946855c](https://github.com/bookorbit/bookorbit/commit/946855cd307b4996731e7b9ae588fb3ace2b91d5)) by @neonsolstice, closes [#1167](https://github.com/bookorbit/bookorbit/issues/1167) [#1918](https://github.com/bookorbit/bookorbit/issues/1918) [#839](https://github.com/bookorbit/bookorbit/issues/839)
-* **library:** rebuild the folder picker as a tree with a live plan ([faee783](https://github.com/bookorbit/bookorbit/commit/faee78370d84fdb3fdec15cb085000262a3c2e27)) by @neonsolstice
-* **metadata:** add external HTTP metadata providers ([b50b8da](https://github.com/bookorbit/bookorbit/commit/b50b8da56c64ef63958a4dad74fa5a4ec9a12730)) by @neonsolstice, closes [#1405](https://github.com/bookorbit/bookorbit/issues/1405)
-* **metadata:** clean pasted identifiers instead of truncating them ([fbd7a2e](https://github.com/bookorbit/bookorbit/commit/fbd7a2e125a71ca29e6aa791400e8804937ba618)) by @neonsolstice, closes [#1624](https://github.com/bookorbit/bookorbit/issues/1624)
-* **reader:** add grouped reading progress routes ([9e49f49](https://github.com/bookorbit/bookorbit/commit/9e49f496f1e2c3a9aef464d07f73ddae9caf33c0)) by @neonsolstice
-* **smart-scope:** add rolling older-than date filters ([d1cc18d](https://github.com/bookorbit/bookorbit/commit/d1cc18dc513d4f04ad8a524acd870bddcc0f7145)) by @neonsolstice, closes [#1751](https://github.com/bookorbit/bookorbit/issues/1751)
-* **stats:** add a reading history of every finished read ([1c593d7](https://github.com/bookorbit/bookorbit/commit/1c593d740387b202910b93fadaa453136494b5f7)) by @neonsolstice, closes [#1630](https://github.com/bookorbit/bookorbit/issues/1630)
-* **types:** advertise reading history to clients ([d444448](https://github.com/bookorbit/bookorbit/commit/d44444823f66a6bbd35da9906ae4f9cb40e6d480)) by @neonsolstice, closes [#1630](https://github.com/bookorbit/bookorbit/issues/1630)
+* **achievements:** answer in the language the client asks for ([199ba68](https://github.com/bookorbit/bookorbit/commit/199ba687c37ab1c65915f5bce7fdec89323955c7)) by @neonsolstice, closes [bookorbit/bookorbit-ios-support#79](https://github.com/bookorbit/bookorbit/issues/79)
+* **books:** add bulk reading state editor ([701b7ee](https://github.com/bookorbit/bookorbit/commit/701b7ee5b32e848d69b7b262f5af72b0d4d0a372)) by @neonsolstice, closes [#2092](https://github.com/bookorbit/bookorbit/issues/2092)
+* **books:** add format badge styles for multi-format covers ([388d9d7](https://github.com/bookorbit/bookorbit/commit/388d9d7e95360b36d0c7bfdace91f0c0c6986dab)) by @neonsolstice
+* **books:** match photographed covers to library books ([52e0a53](https://github.com/bookorbit/bookorbit/commit/52e0a5323f2f377e7fff9a80f418dd3cbc73b1df)) by @neonsolstice
+* **books:** match the spines of a photographed shelf to library books ([bb2887f](https://github.com/bookorbit/bookorbit/commit/bb2887f812783afe0a72828c4b5f7bf82a518d08)) by @neonsolstice
+* **books:** merge duplicate records and link editions of one book ([1aecc4b](https://github.com/bookorbit/bookorbit/commit/1aecc4b577bd358b8efce17e5e03a6814d00a401)) by @neonsolstice, closes [#758](https://github.com/bookorbit/bookorbit/issues/758) [#2094](https://github.com/bookorbit/bookorbit/issues/2094) [#689](https://github.com/bookorbit/bookorbit/issues/689) [#1094](https://github.com/bookorbit/bookorbit/issues/1094)
+* **books:** show read-along chapters and hide audiobook request ([82608db](https://github.com/bookorbit/bookorbit/commit/82608dbafd9be1e8bc1b5f77035376e203a890e3)) by @neonsolstice, closes [#2032](https://github.com/bookorbit/bookorbit/issues/2032)
+* **container:** add container metadata labels ([#1964](https://github.com/bookorbit/bookorbit/issues/1964)) ([6ad1445](https://github.com/bookorbit/bookorbit/commit/6ad1445dab35757164ed3bf31e83caeb6ba24ad2)) by @beisenherz
+* **reader:** locate photographed page text in an EPUB ([87d6488](https://github.com/bookorbit/bookorbit/commit/87d648844a49dc7da302e2758072ce73b9984343)) by @neonsolstice
+* **reader:** sync corrections to a book's people, places and terms ([191e39a](https://github.com/bookorbit/bookorbit/commit/191e39a86bddfba8a610437d4699cc27365c4af6)) by @neonsolstice
+* **server:** add rTorrent as a Book Requests download client ([d51478d](https://github.com/bookorbit/bookorbit/commit/d51478de922a43394661e4e0e1083246acee0aed)) by @neonsolstice, closes [#1352](https://github.com/bookorbit/bookorbit/issues/1352)
+* **smart-scope:** let smart scopes and collections set their grid shape ([6be62e0](https://github.com/bookorbit/bookorbit/commit/6be62e036365d20acc758874166be2df28745966)) by @neonsolstice, closes [#1926](https://github.com/bookorbit/bookorbit/issues/1926)
+* **stats:** add a reading year summary endpoint ([f20aa2b](https://github.com/bookorbit/bookorbit/commit/f20aa2b5a3a446f2f26f497c6041f374657c1eb8)) by @neonsolstice
 
 
 ### Bug Fixes
 
-* **auth:** restore metadata editing lost to the 3.5.0 library roles ([d29b06c](https://github.com/bookorbit/bookorbit/commit/d29b06c6e85cb4076e1c8bb4523950de3f289914)) by @neonsolstice, closes [#1902](https://github.com/bookorbit/bookorbit/issues/1902)
-* **books:** deliver plain EPUBs that fail text-only inspection ([6b6b662](https://github.com/bookorbit/bookorbit/commit/6b6b662e79563c686cf838f374f509936e2e9231)) by @neonsolstice, closes [#1888](https://github.com/bookorbit/bookorbit/issues/1888)
-* **books:** stop the Files tab header overlapping its stats ([5ba5352](https://github.com/bookorbit/bookorbit/commit/5ba5352e3e1e97bc4a0f08469ad04ef0722745bd)) by @neonsolstice
-* **client:** keep the sidebar dock inside a narrow sidebar ([834da8c](https://github.com/bookorbit/bookorbit/commit/834da8c954401e727689efda6ec129f94607543b)) by @neonsolstice, closes [#1873](https://github.com/bookorbit/bookorbit/issues/1873)
-* **cover:** keep a cover staged in a slot that is locked again before save ([cf09a71](https://github.com/bookorbit/bookorbit/commit/cf09a71be6117f92bc1553926f7b5dab1f72fbab)) by @neonsolstice, closes [#1915](https://github.com/bookorbit/bookorbit/issues/1915)
-* **koreader:** keep each device's layout at every interface size ([e28f454](https://github.com/bookorbit/bookorbit/commit/e28f45452d2781156d87d81f5cbcb052fb6cbc53)) by @neonsolstice
-* **koreader:** keep manual links to a different copy matched and suggest links ([1c27e5d](https://github.com/bookorbit/bookorbit/commit/1c27e5dd05791e9851518b1cd870e19a28cdc946)) by @neonsolstice, closes [#1872](https://github.com/bookorbit/bookorbit/issues/1872) [#1919](https://github.com/bookorbit/bookorbit/issues/1919)
-* **koreader:** keep the configured file name on downloads ([b9e5fe3](https://github.com/bookorbit/bookorbit/commit/b9e5fe3a29ca8926162f961fed63ddf5f930af04)) by @neonsolstice, closes [#1893](https://github.com/bookorbit/bookorbit/issues/1893)
-* **koreader:** open the dashboard on reMarkable's 16-bit screen ([70376ad](https://github.com/bookorbit/bookorbit/commit/70376ad8667d5961ecf6b1bd209e96af19217724)) by @neonsolstice, closes [#1909](https://github.com/bookorbit/bookorbit/issues/1909)
-* **reader:** discard unmatched lifecycle entries ([d31bf39](https://github.com/bookorbit/bookorbit/commit/d31bf392f44d13ba6c48a3691c369a18b5a9ff87)) by @neonsolstice, closes [#1886](https://github.com/bookorbit/bookorbit/issues/1886)
-* **reader:** enable D-pad dashboard setup ([9ba0149](https://github.com/bookorbit/bookorbit/commit/9ba01498cf911bca46e2e6e3f49bc3596c787f46)) by @neonsolstice, closes [#1880](https://github.com/bookorbit/bookorbit/issues/1880)
-* **reader:** preserve KOReader covers in night mode ([9d1319e](https://github.com/bookorbit/bookorbit/commit/9d1319ef8b49139a46fa34f196db72f399e76a78)) by @neonsolstice, closes [#1885](https://github.com/bookorbit/bookorbit/issues/1885)
-* **reader:** preserve third-party KOReader menu entries ([99aa7dc](https://github.com/bookorbit/bookorbit/commit/99aa7dce705986eac29a8f73aa65331de5f50680)) by @neonsolstice, closes [#1878](https://github.com/bookorbit/bookorbit/issues/1878)
-* say which download client is not responding ([0320210](https://github.com/bookorbit/bookorbit/commit/0320210767b43f82c11cbb2ddaeac1cd315de28b)) by @neonsolstice
-* **series:** count duplicate formats as one volume ([0b89e5a](https://github.com/bookorbit/bookorbit/commit/0b89e5a4a1ef3070540a989162aac982c8559db4)) by @neonsolstice, closes [#1871](https://github.com/bookorbit/bookorbit/issues/1871)
-* **series:** load complete KOReader series lists ([8f289c2](https://github.com/bookorbit/bookorbit/commit/8f289c295a012dd91e5b0939f75d5412e837d4f7)) by @neonsolstice, closes [#1883](https://github.com/bookorbit/bookorbit/issues/1883)
+* **annotations:** save highlights on PDFs that deny text extraction ([5e2e7fe](https://github.com/bookorbit/bookorbit/commit/5e2e7fe5f73276cd055070b0a02696b23a52054c)) by @neonsolstice, closes [#2093](https://github.com/bookorbit/bookorbit/issues/2093)
+* **books:** show audiobook fields when an ebook is the primary file ([618bfb1](https://github.com/bookorbit/bookorbit/commit/618bfb1a8f967d92b0862301dc5d75d76c219cee)) by @neonsolstice, closes [#2073](https://github.com/bookorbit/bookorbit/issues/2073)
+* **client:** bound book request metadata sources ([60f2ba3](https://github.com/bookorbit/bookorbit/commit/60f2ba3fd5ab8e527d5b955b70f310f42506a621)) by @neonsolstice, closes [#2062](https://github.com/bookorbit/bookorbit/issues/2062)
+* **collections:** page the KOReader Shelves list instead of squeezing rows ([2bfd4d1](https://github.com/bookorbit/bookorbit/commit/2bfd4d1ff45f4b66b67b1c7c7b6cba0c25b82ed8)) by @neonsolstice, closes [#2042](https://github.com/bookorbit/bookorbit/issues/2042)
+* **kobo:** keep the public port behind a forwarding proxy ([d9031a3](https://github.com/bookorbit/bookorbit/commit/d9031a33cd04f25a3fe648885f4a73fdc5518123)) by @neonsolstice, closes [#2036](https://github.com/bookorbit/bookorbit/issues/2036)
+* **metadata:** fall back to a full rewrite for ambiguous epub archives ([bb51358](https://github.com/bookorbit/bookorbit/commit/bb51358c27f13ca753856aca8457a5a091d24101)) by @neonsolstice, closes [#2074](https://github.com/bookorbit/bookorbit/issues/2074)
+* **metadata:** fetch complete Audible descriptions ([3a33aab](https://github.com/bookorbit/bookorbit/commit/3a33aab0797c06bd318cd084c8058d00b57939af)) by @neonsolstice, closes [#2097](https://github.com/bookorbit/bookorbit/issues/2097)
+* **metadata:** match titles and authors in every script ([38af4ea](https://github.com/bookorbit/bookorbit/commit/38af4ea7e1765783625211a6dcced2729769151a)) by @neonsolstice, closes [#2091](https://github.com/bookorbit/bookorbit/issues/2091)
+* **metadata:** omit unknown page counts from file writes ([60a303a](https://github.com/bookorbit/bookorbit/commit/60a303ac1f45e94a2c7ee8469cc7fc15b2535acb)) by @neonsolstice, closes [#2040](https://github.com/bookorbit/bookorbit/issues/2040)
+* **metadata:** preserve MP3 chapter timestamps on rewrite ([f1979f4](https://github.com/bookorbit/bookorbit/commit/f1979f40499928e71ae2764bf0f2affedf44ed6b)) by @neonsolstice, closes [#2034](https://github.com/bookorbit/bookorbit/issues/2034)
+* **metadata:** read Opus and Ogg tags from the audio stream ([0e5f758](https://github.com/bookorbit/bookorbit/commit/0e5f758a57d76dc0bd5b0431eb0b41e914dcfe3c)) by @neonsolstice, closes [#1447](https://github.com/bookorbit/bookorbit/issues/1447)
+* **metadata:** stop duplicating moved provider IDs ([1beb17d](https://github.com/bookorbit/bookorbit/commit/1beb17d218aefe2169144d70890958da7fb24b81)) by @neonsolstice, closes [#1997](https://github.com/bookorbit/bookorbit/issues/1997)
+* **metadata:** stop Hardcover sync linking unrelated books by title ([8c70ffb](https://github.com/bookorbit/bookorbit/commit/8c70ffbc64d35fa148a501b626edf55339bbd666)) by @neonsolstice, closes [#2106](https://github.com/bookorbit/bookorbit/issues/2106)
+* prevent KOReader Android night-mode corner inversion ([768d0a1](https://github.com/bookorbit/bookorbit/commit/768d0a1c20156026e507a978779fcb856a7175dc)) by @neonsolstice, closes [#2064](https://github.com/bookorbit/bookorbit/issues/2064)
+* **reader:** accept underscores in KOReader device IDs ([305b608](https://github.com/bookorbit/bookorbit/commit/305b6087b0afce62edff75da33dd9de7069c19ed)) by @neonsolstice, closes [#1928](https://github.com/bookorbit/bookorbit/issues/1928)
+* **reader:** add KOReader file browser exit ([14caaa5](https://github.com/bookorbit/bookorbit/commit/14caaa58b99ade0c58fcb19bd81e6102c09793f6)) by @neonsolstice, closes [#2013](https://github.com/bookorbit/bookorbit/issues/2013)
+* **reader:** keep comic archives out of server memory ([895b2e1](https://github.com/bookorbit/bookorbit/commit/895b2e17f3df8ad04859c5235af576212c31b175)) by @neonsolstice, closes [#2107](https://github.com/bookorbit/bookorbit/issues/2107)
+* **reader:** keep the book's own centred and right-aligned text ([31a9c35](https://github.com/bookorbit/bookorbit/commit/31a9c35df0f0f637059abe8cba77f58c4fa482bc)) by @neonsolstice, closes [#2103](https://github.com/bookorbit/bookorbit/issues/2103)
+* **reader:** let quick PageDown presses turn several PDF pages ([effb2e0](https://github.com/bookorbit/bookorbit/commit/effb2e01a915e030ebed4879b6d4b8d60cddfff5)) by @neonsolstice, closes [#1673](https://github.com/bookorbit/bookorbit/issues/1673)
+* **reader:** preserve valid EPUB side clicks ([fd1aac3](https://github.com/bookorbit/bookorbit/commit/fd1aac3074379563e2fe8b179d4c23730dd47557)) by @neonsolstice, closes [#1992](https://github.com/bookorbit/bookorbit/issues/1992)
+* **reader:** show EPUB footnotes ([778dd06](https://github.com/bookorbit/bookorbit/commit/778dd0694f5cd16ba505228ed5edd10911770bc1)) by @neonsolstice, closes [#2025](https://github.com/bookorbit/bookorbit/issues/2025)
+* **reader:** sort comic names before their extensions ([9b85393](https://github.com/bookorbit/bookorbit/commit/9b853935bb3a793bd1ec73ba8ab50f921d29511a)) by @neonsolstice, closes [#2035](https://github.com/bookorbit/bookorbit/issues/2035)
+* **reader:** stop links near the page edge from also turning the page ([ab4b234](https://github.com/bookorbit/bookorbit/commit/ab4b234de70012a1f92eaeabdcfa1f52e27de8fc)) by @neonsolstice, closes [#2102](https://github.com/bookorbit/bookorbit/issues/2102)
+* **scanner:** close the source handle when a generated copy fails ([6f8f5f4](https://github.com/bookorbit/bookorbit/commit/6f8f5f4818eb737dc4d78fc5b5294fc3adb26860)) by @neonsolstice
+* **scanner:** preserve books during partial track moves ([57ed053](https://github.com/bookorbit/bookorbit/commit/57ed0539b031e2fc4a899df651e596cf89ab4fb2)) by @neonsolstice, closes [#2052](https://github.com/bookorbit/bookorbit/issues/2052)
+* **series:** add KOReader series sorting ([ee29744](https://github.com/bookorbit/bookorbit/commit/ee2974459a05eb958a74a8e9a54a95312f9fee22)) by @neonsolstice, closes [#2015](https://github.com/bookorbit/bookorbit/issues/2015)
+* **series:** count every volume of series longer than the ladder cap ([0206a98](https://github.com/bookorbit/bookorbit/commit/0206a98ccc6f72554c99c9c54d55fabb997ee488)) by @neonsolstice, closes [#1987](https://github.com/bookorbit/bookorbit/issues/1987)
+* **series:** draw each media group's cards as that medium ([23e385e](https://github.com/bookorbit/bookorbit/commit/23e385e9af00615ad98f9d52de48fb43d6ee44a9)) by @neonsolstice, closes [#2066](https://github.com/bookorbit/bookorbit/issues/2066)
+* **series:** keep loading series books after returning to the page ([e8e3f4d](https://github.com/bookorbit/bookorbit/commit/e8e3f4df19aacec17b7e41ceb41f7ae48f7daeac)) by @neonsolstice, closes [#1988](https://github.com/bookorbit/bookorbit/issues/1988)
+* **series:** prevent wrong-volume request matches ([cfcd4ca](https://github.com/bookorbit/bookorbit/commit/cfcd4ca5290a1b531325105332ae724f95416133)) by @neonsolstice, closes [#2037](https://github.com/bookorbit/bookorbit/issues/2037)
+* **series:** show selected books in KOReader series views ([63e16ad](https://github.com/bookorbit/bookorbit/commit/63e16ad757e4990cf09506b3b513289c2aa494dc)) by @neonsolstice, closes [#1956](https://github.com/bookorbit/bookorbit/issues/1956)
+* **server:** recover Torznab magnets from oversized links ([4c8b0c4](https://github.com/bookorbit/bookorbit/commit/4c8b0c4cf6b4893b8b5bbdc6f321022425a1384d)) by @neonsolstice, closes [#2053](https://github.com/bookorbit/bookorbit/issues/2053)
+* **server:** respect Prowlarr indexer categories ([36a0496](https://github.com/bookorbit/bookorbit/commit/36a04965b92c60b891f84b982a32220bdec8ba83)) by @neonsolstice, closes [#2068](https://github.com/bookorbit/bookorbit/issues/2068)
+* **smart-scope:** include public collections in filters ([ba315c7](https://github.com/bookorbit/bookorbit/commit/ba315c77182f0f28030140e342d93294cc512637)) by @neonsolstice, closes [#2010](https://github.com/bookorbit/bookorbit/issues/2010)
+* **stats:** make history years accessible when overflowing ([62e8690](https://github.com/bookorbit/bookorbit/commit/62e8690b30bd8b55dc86bf9c7c755bfb335d74cc)) by @neonsolstice, closes [#1959](https://github.com/bookorbit/bookorbit/issues/1959)
+* **stats:** save reading history share images ([a9e63a6](https://github.com/bookorbit/bookorbit/commit/a9e63a60e1129eed57fdf9da3fd65233bf863647)) by @neonsolstice, closes [#1967](https://github.com/bookorbit/bookorbit/issues/1967)
 
 
-### Security
+### Internationalization
 
-* **deps:** resolve container scan findings ([a96ff0c](https://github.com/bookorbit/bookorbit/commit/a96ff0c85a4c25e9126dfa4c71ea87537a3baf7a)) by @neonsolstice
-* **docker:** move both images to node 26.12.1 ([569cc8c](https://github.com/bookorbit/bookorbit/commit/569cc8c84bec4c1f35180964dcf366c5f7e13d84)) by @neonsolstice, closes [#1912](https://github.com/bookorbit/bookorbit/issues/1912)
+* **client:** sync translations from Crowdin ([#1881](https://github.com/bookorbit/bookorbit/issues/1881)) ([9e1db36](https://github.com/bookorbit/bookorbit/commit/9e1db36df059f0f55ca9ab10eaac53254e8a35e3)) by @neonsolstice
+* **client:** sync translations from Crowdin ([#2051](https://github.com/bookorbit/bookorbit/issues/2051)) ([7b7c09d](https://github.com/bookorbit/bookorbit/commit/7b7c09d18d02155e957cd9a36c3b968d83315bb8)) by @neonsolstice
+
+
+### Performance
+
+* **client:** load icons, charts and languages on demand ([2ee24d9](https://github.com/bookorbit/bookorbit/commit/2ee24d973ee0e61db66cf7a8c0eb457ac6b8fb42)) by @neonsolstice, closes [#2101](https://github.com/bookorbit/bookorbit/issues/2101)
+* **koreader:** check md5 before bcrypt when authenticating plugin requests ([f798743](https://github.com/bookorbit/bookorbit/commit/f79874317d07c42ec0a6a6d4a395c62f187666aa)) by @neonsolstice, closes [#1983](https://github.com/bookorbit/bookorbit/issues/1983) [#2037](https://github.com/bookorbit/bookorbit/issues/2037)
 
 ---
 
 **Docker**
 
 ```bash
-docker pull ghcr.io/bookorbit/bookorbit:3.6.0
+docker pull ghcr.io/bookorbit/bookorbit:3.7.0
 ```
 
 Multi-arch: `linux/amd64` and `linux/arm64`.
+
+
+<!-- release-metadata -->
+
+[Full diff](https://github.com/bookorbit/bookorbit/compare/v3.6.0...v3.7.0)
+
