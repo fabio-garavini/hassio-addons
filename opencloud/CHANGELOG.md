@@ -1,423 +1,226 @@
-> [!CAUTION]
-> Action required: Follow the [upgrade instructions](https://docs.opencloud.eu/docs/next/admin/maintenance/upgrade/upgrade-9.x.x) before upgrading to this release.
-
 > [!IMPORTANT]
 > This is a rolling release. Learn here about the [release types and lifecycle](https://docs.opencloud.eu/docs/admin/resources/lifecycle#release-types).
 
-## 🌍 Guest access: share with anyone by email
-
-Share files, folders and spaces with people who have no account on your OpenCloud. Enter their email address in the share dialog, pick a role, done. The guest gets an email with a link and starts working right away.
-
-Guest access is built for external collaboration where you must know who accessed what.
-
-- **Passwordless:** no account to set up, no password to forget or reset. The guest proves who they are by receiving the email.
-- **Identified:** every guest access is logged with the email address. A public link cannot tell you who used it, a guest is always a known person.
-- **Same roles as internal users:** from viewer to editor, on files, folders and spaces.
-
-How it works:
-
-- **Personal links:** every link is single-use and valid for 30 minutes. A used or expired link stops working, the guest requests a new one and gets it instantly.
-- **Sessions:** a guest session lasts 24 hours. 15 minutes before it ends, the web client warns the guest, who renews it with a PIN sent by email.
-- **Expiry:** like any share, guest access can have an expiry date. After that date, no new links are issued.
-- **Admin settings:** session lifetime, link and PIN lifetime and rate limits for renewals are configurable.
-
-
-
-**Sharing options compared**
-
-
-|                           | Public link                                      | Guest access                                    | Full account                  |
-| ------------------------- | ------------------------------------------------ | ----------------------------------------------- | ----------------------------- |
-| **Best for**              | One-time sending or collecting files from anyone | Ongoing work with a named external partner      | Daily work of your own team   |
-| **Needs password**        | No (optional)                                    | No                                              | Yes                           |
-| **Authentication factor** | One link for all                                 | Personal, single-use links in the guest's inbox | Password / MFA                |
-| **Who is identified**     | Nobody                                           | The guest's email address                       | The user, via the directory   |
-| **Expiration**            | None (optional)                                  | Link 30 min, session 24 h, renewable by email   | None                          |
-| **Restrictions**          | Web only, no desktop or mobile sync              | Web only, no desktop or mobile sync             | None                          |
-| **Personal data needed**  | None                                             | Email address only                              | Profile data in the directory |
-
-
-**Why guest access and not public links**
-A public link is anonymous. Anyone who holds it has access, and nobody can say who that is. A guest is a known person, identified by their email address. Sharers and admins see who has access, can revoke it and can show it in an audit.
-
-## 🔎 Tags in search
-
-Search now covers tags: a search term matches tag names as well as file names and content, and tags are a filter in the search results, next to the other filters.
-
-- **Filter by tag:** the filter lists all your tags, so you can show only files tagged "Private" or "Work".
-- **Search for a tag:** typing a tag name finds files with that tag, even if file name and content do not match.
-
-The matching tag is shown below each result, so you see why a file was found.
-
-## 📂 Folders first, for every sort order
-
-Folders stay at the top of the file list when you sort by name, size or modified date, in both directions. A new option "Folders first" lets you turn this off and sort files and folders together. It is on by default, so nothing changes unless you switch it off.
-
-## 🔄 Live updates for shares
-
-When someone shares a folder with you, it appears in "Shared with me" right away, without a reload. Revoked shares disappear the same way. This also works for guests.
-
-## 🔍 Search results show the match
-
-When you open a file from the search results, the matching text is now shown in the middle of the preview, so it does not scroll out of view. The details view shows why the file was found, either the matching text or the tag.
-
-## 🖼️ Redesigned App Store
-
-- **Grid or list:** switch between both views, like in the Files app.
-- **Official badge:** apps maintained by OpenCloud are marked, so you see at a glance which apps are supported.
-- **Tags and filter:** apps have tags, for example "File Actions", and you can filter by them.
-- **Download button:** now prominent in the app details.
-
-## ✅ Apps show version compatibility
-
-Find out at a glance why an app stopped working after an update.
-
-- **Version range:** each app can declare a minimum and a maximum OpenCloud version.
-- **Admin overview:** the compatible range is shown next to each installed app.
-- **Mismatch warning:** if an app does not match your OpenCloud version, its status turns red and a short hint explains the likely cause.
-
-## 🖼️ Preview support for HEIC, HEIF and AVIF
-
-Preview HEIC, HEIF and AVIF images directly in the web client. Requires additional configuration.
-
-## 📐 Apollon: UML diagrams
-
-Apollon is a new app for UML and modeling diagrams. It supports 13 diagram types, including class, component, activity and BPMN.
-
-- **Create:** choose "UML Diagram" from the "New" menu.
-- **Edit together:** diagrams sync in real time, and you see the cursors of the other people in the diagram.
-
-## ↔️ Full right-to-left support
-
-For languages read from right to left, such as Arabic and Hebrew, the whole interface is now mirrored. Previously only parts were, for example the settings but not the spaces view.
-
-## ✉️ New email design
-
-Notification emails have a new look based on the OpenCloud Design System.
-
-- **Layout:** OpenCloud logo, a heading and a button that opens the shared item, space or link.
-- **Dark mode:** logo and colors follow the mode of mail clients that support it.
-- **Guest links:** the PIN is shown in a highlighted box.
-- **Daily and weekly summaries:** events appear as a timeline with their time and a link to each shared item or space. Times are in UTC, because OpenCloud does not know the time zone of the recipient.
-- **Compatibility:** the templates reach 94 percent in an HTML email client check, well above the usual result for HTML emails.
-
-Plain-text emails and all existing translations stay the same.
-
-**Custom templates:** the HTML email now consists of `layout.html.tmpl`, `message.html.tmpl` and `digest.html.tmpl` in `templates/html/`. Existing custom template folders that only contain `email.html.tmpl` keep working as before. See the notifications service README for the new template values.
-
-## 🚢 OpenCloud runs on OpenShift
-
-The Helm chart supports OpenShift, based on customer feedback, and the setup is documented. The chart test suite simulates an OpenShift cluster and checks its security restrictions on every run, for allowed and for rejected workloads.
-
-## 🧪 146 bug fixes from more testing
-
-Before every rolling release, we run upgrade tests, exploratory tests and the existing API and UI tests. AI-supported exploratory testing found many issues nobody had reported. The latest web release contains 146 bug fixes, most of them found this way.
-
-
-
-## [9.0.0](https://github.com/opencloud-eu/opencloud/releases/tag/v9.0.0) - 2026-10-27
+## [9.1.0](https://github.com/opencloud-eu/opencloud/releases/tag/v9.1.0) - 2026-11-11
 
 ### ❤️ Thanks to all contributors! ❤️
 
-@aduffeck, @AlexAndBear, @BloomyInDev, @butonic, @dragonchaser, @dschmidt, @eriktews, @fredrikblau, @fschade, @jay23606, @JammingBen, @junkerderprovinz, @kulmann, @LetsDrinkSomeTea, @maki5, @micbar, @NickWalters, @pbleser-oc, @rhafer, @saw-jan, @Svanvith, @tammi-23, @tbsbdr, @v-scharf, @VicDeo
+@aduffeck, @AlexAndBear, @andrewyager, @butonic, @dragotin, @dschmidt, @JammingBen, @kulmann, @maki5, @micbar, @pascalwengerter, @pbleser-oc, @rhafer, @RyoKusnadi, @saw-jan, @tammi-23, @v-scharf, @VicDeo
 
-## Opencloud:
-### 💥 Breaking changes
+## Opencloud
 
-- Push based thumbnailer architecture [[#3397](https://github.com/opencloud-eu/opencloud/pull/3397)]
-- feat(guestlinks)!: auth-guest service [[#3609](https://github.com/opencloud-eu/opencloud/pull/3609)]
+### 🔒 Security
+
+- fix(chore): upd deprecated chi RealIP middelware [[#3464](https://github.com/opencloud-eu/opencloud/pull/3464)]
+- Add files for the Anthropic OSS-Scanner to run [[#3865](https://github.com/opencloud-eu/opencloud/pull/3865)]
 
 ### 🐛 Bug Fixes
 
-- Skip extraction for directories before checking the size limit [[#3832](https://github.com/opencloud-eu/opencloud/pull/3832)]
-- log errors when a personal space is deleted [[#3710](https://github.com/opencloud-eu/opencloud/pull/3710)]
-- fix(cli): detect storage driver from storage path in revisions and trash commands [[#3776](https://github.com/opencloud-eu/opencloud/pull/3776)]
-- fix(idp): show keyboard focus on every control [[#3732](https://github.com/opencloud-eu/opencloud/pull/3732)]
-- fix: show the lilac logo on the login page [[#3773](https://github.com/opencloud-eu/opencloud/pull/3773)]
-- fix(frontend): report content search only when full-text search is enabled [[#3760](https://github.com/opencloud-eu/opencloud/pull/3760)]
-- fix: allow guests to list role definitions [[#3729](https://github.com/opencloud-eu/opencloud/pull/3729)]
-- fix: nats checks were missing the configured auth [[#3724](https://github.com/opencloud-eu/opencloud/pull/3724)]
-- fix(collaboration): answer a wopi lock in a read-only session with 200 instead of locking [[#3711](https://github.com/opencloud-eu/opencloud/pull/3711)]
-- fix(collaboration): show the secure view watermark only for view-only tokens [[#3712](https://github.com/opencloud-eu/opencloud/pull/3712)]
-- fix: add restart command output [[#3706](https://github.com/opencloud-eu/opencloud/pull/3706)]
+- fix(proxy): allow blob: in media-src for motion and live photo playback [[#3896](https://github.com/opencloud-eu/opencloud/pull/3896)]
+- fix(middleware): do not build the XFF middleware without trusted proxies [[#3937](https://github.com/opencloud-eu/opencloud/pull/3937)]
+- fix(auth-guest): add missing guest link logout endpoint [[#3932](https://github.com/opencloud-eu/opencloud/pull/3932)]
+- Remove redis-sentinel from store descriptions [[#3936](https://github.com/opencloud-eu/opencloud/pull/3936)]
+- Bound the memory of bleve indexing [[#3900](https://github.com/opencloud-eu/opencloud/pull/3900)]
+- fix: filter health checks from the pod ip [[#3914](https://github.com/opencloud-eu/opencloud/pull/3914)]
+- fix: keep the health checks out of the access log [[#3908](https://github.com/opencloud-eu/opencloud/pull/3908)]
+- fix(tracing): set the global text map propagator [[#3906](https://github.com/opencloud-eu/opencloud/pull/3906)]
+- fix(proxy): answer 403 instead of 500 when the role claim is missing [[#3894](https://github.com/opencloud-eu/opencloud/pull/3894)]
+- fix(webdav): stream announced types without a converter to the generator [[#3884](https://github.com/opencloud-eu/opencloud/pull/3884)]
+- fix(search): normalize KQL path once [[#3516](https://github.com/opencloud-eu/opencloud/pull/3516)]
+- fix(search): report rejected documents when indexing to OpenSearch [[#3142](https://github.com/opencloud-eu/opencloud/pull/3142)]
+- fix(graph): expose allowedValues on driveItem children [[#3476](https://github.com/opencloud-eu/opencloud/pull/3476)]
+- fix(search): index resources with out-of-range coordinates without a geopoint [[#3496](https://github.com/opencloud-eu/opencloud/pull/3496)]
+- perf(search): skip unchanged facet keys when storing metadata [[#3682](https://github.com/opencloud-eu/opencloud/pull/3682)]
 
 ### 📈 Enhancement
 
-- feat: new mail notifications based on design system [[#3789](https://github.com/opencloud-eu/opencloud/pull/3789)]
-- feat(search): configurable query filter, leaves the personal space root and .space out by default [[#3787](https://github.com/opencloud-eu/opencloud/pull/3787)]
-- feat: expose the default project space quota in the capabilities [[#3719](https://github.com/opencloud-eu/opencloud/pull/3719)]
-- feat(collaboration): close the CheckFileInfo gaps for the office apps [[#3730](https://github.com/opencloud-eu/opencloud/pull/3730)]
-- fix(proxy): allow guest link auth for app open and new endpoints [[#3737](https://github.com/opencloud-eu/opencloud/pull/3737)]
-- feat: make space2share migration repeatable [[#3669](https://github.com/opencloud-eu/opencloud/pull/3669)]
-- feat: run the decomposed drivers on foreign metadata via metadata_prefix [[#3670](https://github.com/opencloud-eu/opencloud/pull/3670)]
-- feat: add more cli options to unified roles [[#3658](https://github.com/opencloud-eu/opencloud/pull/3658)]
-- feat(web): use the OpenCloud brand colors for the primary color role [[#3631](https://github.com/opencloud-eu/opencloud/pull/3631)]
-
-### ✅ Tests
-
-- ci: disable async uploads for litmus tests [[#3777](https://github.com/opencloud-eu/opencloud/pull/3777)]
-- tests: add acceptance tests for renewing guest links [[#3753](https://github.com/opencloud-eu/opencloud/pull/3753)]
-- tests: check that a guest can only access the shared resource [[#3752](https://github.com/opencloud-eu/opencloud/pull/3752)]
-- tests: add acceptance tests for sharing with guests via email [[#3751](https://github.com/opencloud-eu/opencloud/pull/3751)]
-- Bump reva and add some tests for new features [[#3715](https://github.com/opencloud-eu/opencloud/pull/3715)]
-- api-test: check PROPFIND/REPORT has-preview [[#3714](https://github.com/opencloud-eu/opencloud/pull/3714)]
-- test(api): simply HTTP request retry conditions [[#3696](https://github.com/opencloud-eu/opencloud/pull/3696)]
-- test: retry acceptance requests while share manager is migrating [[#3681](https://github.com/opencloud-eu/opencloud/pull/3681)]
-- api-test: extend search tests [[#3634](https://github.com/opencloud-eu/opencloud/pull/3634)]
+- ability to disable http and/or event consumer for user log service [[#3285](https://github.com/opencloud-eu/opencloud/pull/3285)]
 
 ### 📚 Documentation
 
-- docs: update unified Roles [[#3738](https://github.com/opencloud-eu/opencloud/pull/3738)]
-- fix(proxy): make metrics table MDX-compatible [[#3680](https://github.com/opencloud-eu/opencloud/pull/3680)]
+- docs: add audit logging ADR [[#3855](https://github.com/opencloud-eu/opencloud/pull/3855)]
+
 
 ## Web
-### 📈 Enhancement
+### 🔒 Security
 
-- feat(preview): open heic, heif and avif images [[#4009](https://github.com/opencloud-eu/web/pull/4009)]
-- fix(preview): truncate long file names in the photo roll [[#4018](https://github.com/opencloud-eu/web/pull/4018)]
-- Zoom images in the preview app with ctrl/cmd + mouse wheel [[#3996](https://github.com/opencloud-eu/web/pull/3996)]
-- feat: disable guest sharing on spaces [[#3994](https://github.com/opencloud-eu/web/pull/3994)]
-- fix: improve readability of the archive and vault icons [[#3991](https://github.com/opencloud-eu/web/pull/3991)]
-- set folder color to blue 587DAB [[#3972](https://github.com/opencloud-eu/web/pull/3972)]
-- feat: open permanent links as a guest [[#3908](https://github.com/opencloud-eu/web/pull/3908)]
-- feat: list all shares for guest users [[#3829](https://github.com/opencloud-eu/web/pull/3829)]
-- feat(extension-sdk): add the base element in unit tests [[#3800](https://github.com/opencloud-eu/web/pull/3800)]
-- feat(web-pkg): allow following users in the yjs collaborators list [[#3803](https://github.com/opencloud-eu/web/pull/3803)]
-- feat(app-store): add sorting and release dates [[#3825](https://github.com/opencloud-eu/web/pull/3825)]
-- feat: accept route locations in buildUrl [[#3798](https://github.com/opencloud-eu/web/pull/3798)]
-- Handle SSEs for resources in incoming shares [[#3898](https://github.com/opencloud-eu/web/pull/3898)]
-- feat: resolve guest links into file listing [[#3816](https://github.com/opencloud-eu/web/pull/3816)]
-- feat: renew expired guest sessions [[#3811](https://github.com/opencloud-eu/web/pull/3811)]
-- feat: Guest auth [[#3338](https://github.com/opencloud-eu/web/pull/3338)]
-- feat: folder first sorting [[#3792](https://github.com/opencloud-eu/web/pull/3792)]
-- feat: custom font size and type [[#3649](https://github.com/opencloud-eu/web/pull/3649)]
-- [full-ci] feat: support Apple Live Photos [[#3548](https://github.com/opencloud-eu/web/pull/3548)]
-- feat: add norwegian nynorsk [[#3623](https://github.com/opencloud-eu/web/pull/3623)]
-- feat(web-runtime): show the status of app tokens [[#3607](https://github.com/opencloud-eu/web/pull/3607)]
-- feat(external): close the app via the collabora back button [[#3612](https://github.com/opencloud-eu/web/pull/3612)]
-- feat: support image icons for apps and extensions [[#3580](https://github.com/opencloud-eu/web/pull/3580)]
-- feat: add whiteboard icon for excalidraw files [[#3584](https://github.com/opencloud-eu/web/pull/3584)]
-- feat: search for tags in the global search and enhance the visually reasoning for matching results [[#3558](https://github.com/opencloud-eu/web/pull/3558)]
-- feat: add app version compatibility checks [[#3568](https://github.com/opencloud-eu/web/pull/3568)]
-- feat(app-store): redesign the app store [[#3534](https://github.com/opencloud-eu/web/pull/3534)]
-- feat: apply the OpenCloud brand colors to the CTA [[#3521](https://github.com/opencloud-eu/web/pull/3521)]
-- feat(preview): preload next and previous image [[#3529](https://github.com/opencloud-eu/web/pull/3529)]
-- feat(preview): add support for mkv video files [[#3564](https://github.com/opencloud-eu/web/pull/3564)]
-- feat: filter favorites by tags and always show the tag filter [[#3554](https://github.com/opencloud-eu/web/pull/3554)]
-- feat: remove condensed list view and switch view modes with toggle buttons [[#3538](https://github.com/opencloud-eu/web/pull/3538)]
-- perf: load group memberships only on the account page [[#3553](https://github.com/opencloud-eu/web/pull/3553)]
-- chore: use line icons for all sidebar panel actions [[#3539](https://github.com/opencloud-eu/web/pull/3539)]
-- feat: add font and app illustrations to the empty states [[#3556](https://github.com/opencloud-eu/web/pull/3556)]
-- feat(rclone-crypt): use the password generator and policy for vault passwords [[#3537](https://github.com/opencloud-eu/web/pull/3537)]
+- [main] fix: port security fixes from web-internal [[#4433](https://github.com/opencloud-eu/web/pull/4433)]
+- fix: render svg previews as images instead of inlining them [[#4298](https://github.com/opencloud-eu/web/pull/4298)]
+- fix: only accept delegated tokens from the embedding host [[#4297](https://github.com/opencloud-eu/web/pull/4297)]
+- fix: verify the sender of postMessage events in picker modals and external apps [[#4289](https://github.com/opencloud-eu/web/pull/4289)]
 
 ### 🐛 Bug Fixes
 
-- fix(editor): patch y-tiptap crash when typing into a new heading [[#4032](https://github.com/opencloud-eu/web/pull/4032)]
-- fix(editor): open non-UTF-8 text files read-only in editors [[#4022](https://github.com/opencloud-eu/web/pull/4022)]
-- fix: improve a11y semantics across files, sharing, editor and forms [[#3970](https://github.com/opencloud-eu/web/pull/3970)]
-- Keep the file extension attached to a wrapping resource name [[#4017](https://github.com/opencloud-eu/web/pull/4017)]
-- fix: save unsaved changes before deleting the open file [[#3783](https://github.com/opencloud-eu/web/pull/3783)]
-- fix: announce search results to screen readers [[#3990](https://github.com/opencloud-eu/web/pull/3990)]
-- fix(yjs): keep debounced keystrokes when a peer's recovery lands [[#3582](https://github.com/opencloud-eu/web/pull/3582)]
-- fix: show a cancel button in confirmations of destructive actions [[#3958](https://github.com/opencloud-eu/web/pull/3958)]
-- fix: revert the share role dropdown when the role change fails [[#3909](https://github.com/opencloud-eu/web/pull/3909)]
-- fix: use the secondary color for markdown links and sync the default primary color [[#3974](https://github.com/opencloud-eu/web/pull/3974)]
-- fix: sort space members and managers by name within a role [[#3927](https://github.com/opencloud-eu/web/pull/3927)]
-- fix: check the matching actions before keyboard copy, cut and paste [[#3925](https://github.com/opencloud-eu/web/pull/3925)]
-- fix: handle sse share events for guests [[#3981](https://github.com/opencloud-eu/web/pull/3981)]
-- fix: let collaborator names use the full row width [[#3926](https://github.com/opencloud-eu/web/pull/3926)]
-- fix: send isMobile information to server for collaboration service [[#3971](https://github.com/opencloud-eu/web/pull/3971)]
-- fix(yjs): renew expired token [[#3966](https://github.com/opencloud-eu/web/pull/3966)]
-- fix: keyboard focus and space handling from accessibility audit [[#3824](https://github.com/opencloud-eu/web/pull/3824)]
-- fix: re-root unlocked vault engines when a vault or its parent folder is renamed [[#3964](https://github.com/opencloud-eu/web/pull/3964)]
-- fix: keep filter values from the URL that no longer exist [[#3951](https://github.com/opencloud-eu/web/pull/3951)]
-- fix: show a not found message for links to inaccessible project spaces [[#3953](https://github.com/opencloud-eu/web/pull/3953)]
-- fix: update tab title and search location chip on language change [[#3923](https://github.com/opencloud-eu/web/pull/3923)]
-- fix: drop the search app's /search/list route [[#3965](https://github.com/opencloud-eu/web/pull/3965)]
-- fix: address partly fixed accessibility audit findings [[#3939](https://github.com/opencloud-eu/web/pull/3939)]
-- fix: update the current folder when changing a resource field [[#3948](https://github.com/opencloud-eu/web/pull/3948)]
-- fix: show a no results message in share views when only filters match nothing [[#3919](https://github.com/opencloud-eu/web/pull/3919)]
-- fix: only undo the latest deletion with Ctrl+Z [[#3949](https://github.com/opencloud-eu/web/pull/3949)]
-- fix: filter and search all shares before paginating the share views [[#3875](https://github.com/opencloud-eu/web/pull/3875)]
-- fix: only change sync for the shares that need it in a mixed selection [[#3906](https://github.com/opencloud-eu/web/pull/3906)]
-- fix: scale SVG previews to fit the preview stage [[#3911](https://github.com/opencloud-eu/web/pull/3911)]
-- fix: address attribute-only accessibility audit findings [[#3823](https://github.com/opencloud-eu/web/pull/3823)]
-- fix: reject a whitespace-only password when editing a user [[#3907](https://github.com/opencloud-eu/web/pull/3907)]
-- fix: copy link without ClipboardItem and keep the clipboard when there is no single link [[#3871](https://github.com/opencloud-eu/web/pull/3871)]
-- fix: show a clear message when a file drop link was deleted [[#3905](https://github.com/opencloud-eu/web/pull/3905)]
-- Fix Guest SVG previews across Web and API origins [[#3835](https://github.com/opencloud-eu/web/pull/3835)]
-- fix: deselect hidden files when they get hidden [[#3870](https://github.com/opencloud-eu/web/pull/3870)]
-- fix: show an error when the user details can't be loaded in admin Users [[#3775](https://github.com/opencloud-eu/web/pull/3775)]
-- fix: give the search list its own task so the preview can't cancel it [[#3869](https://github.com/opencloud-eu/web/pull/3869)]
-- fix: normalize shortcut URLs without HTML sanitization [[#3814](https://github.com/opencloud-eu/web/pull/3814)]
-- fix: keep Save as in folder edit links after a reload [[#3784](https://github.com/opencloud-eu/web/pull/3784)]
-- fix: keep search scope in sync across reloads and view changes [[#3703](https://github.com/opencloud-eu/web/pull/3703)]
-- fix: offer only keep both and skip for upload conflicts between file and folder [[#3735](https://github.com/opencloud-eu/web/pull/3735)]
-- fix: distinguish default and unlimited space quotas [[#3728](https://github.com/opencloud-eu/web/pull/3728)]
-- fix: follow the current folder when it is moved [[#3873](https://github.com/opencloud-eu/web/pull/3873)]
-- fix: show errors for failed drag and drop moves [[#3872](https://github.com/opencloud-eu/web/pull/3872)]
-- Make archiver work with guest link auth [[#3900](https://github.com/opencloud-eu/web/pull/3900)]
-- Fix background flash with automatic theme [[#3843](https://github.com/opencloud-eu/web/pull/3843)]
-- Keep Preview photo-roll icons centered when the sidebar opens [[#3840](https://github.com/opencloud-eu/web/pull/3840)]
-- fix: don't confirm a modal while its confirm button is disabled [[#3880](https://github.com/opencloud-eu/web/pull/3880)]
-- fix: leave a space when it gets disabled or deleted [[#3774](https://github.com/opencloud-eu/web/pull/3774)]
-- fix: only renew the login when admins rename themselves [[#3882](https://github.com/opencloud-eu/web/pull/3882)]
-- fix: wrap long names in notifications and keep placeholders in activity names [[#3892](https://github.com/opencloud-eu/web/pull/3892)]
-- fix: show epub content in dark theme in chromium [[#3888](https://github.com/opencloud-eu/web/pull/3888)]
-- fix: keep notifications and show an error when marking all as read fails [[#3886](https://github.com/opencloud-eu/web/pull/3886)]
-- fix: show the no results message for a tag-only search [[#3885](https://github.com/opencloud-eu/web/pull/3885)]
-- fix(preview): show an error for a deep link to a file that can't be previewed [[#3773](https://github.com/opencloud-eu/web/pull/3773)]
-- fix: avoid batch name collisions when keeping both on paste and upload [[#3697](https://github.com/opencloud-eu/web/pull/3697)]
-- fix: skip the conflict when closing the resource conflict modal [[#3742](https://github.com/opencloud-eu/web/pull/3742)]
-- fix: let space toggle a focused checkbox in lists [[#3752](https://github.com/opencloud-eu/web/pull/3752)]
-- fix: refresh files list and quota after cancelling uploads [[#3701](https://github.com/opencloud-eu/web/pull/3701)]
-- fix: follow the search term in the admin users route query [[#3753](https://github.com/opencloud-eu/web/pull/3753)]
-- fix: keep create user and group dialogs open while the name check runs and on errors [[#3694](https://github.com/opencloud-eu/web/pull/3694)]
-- fix: address small optional accessibility audit findings [[#3822](https://github.com/opencloud-eu/web/pull/3822)]
-- fix: address small accessibility audit findings [[#3821](https://github.com/opencloud-eu/web/pull/3821)]
-- fix: only show the link copied message after a successful clipboard write [[#3763](https://github.com/opencloud-eu/web/pull/3763)]
-- fix: use a separate upload endpoint per file in public file drops [[#3762](https://github.com/opencloud-eu/web/pull/3762)]
-- fix: don't add a tag when only spaces are entered [[#3764](https://github.com/opencloud-eu/web/pull/3764)]
-- fix: keep the public link token in the preferences link [[#3778](https://github.com/opencloud-eu/web/pull/3778)]
-- Fix small WCAG accessibility failures [[#3820](https://github.com/opencloud-eu/web/pull/3820)]
-- Fix modal Escape handling after focus loss [[#3805](https://github.com/opencloud-eu/web/pull/3805)]
-- fix: name the existing item's type in the conflict dialog [[#3776](https://github.com/opencloud-eu/web/pull/3776)]
-- fix: share the clicked folder from the breadcrumb menu, not the selection [[#3813](https://github.com/opencloud-eu/web/pull/3813)]
-- fix: link space notifications once the space is loaded [[#3777](https://github.com/opencloud-eu/web/pull/3777)]
-- fix: open the parent folder when a folder url points to a file [[#3779](https://github.com/opencloud-eu/web/pull/3779)]
-- fix: show app not found for app store links with a percent sign [[#3787](https://github.com/opencloud-eu/web/pull/3787)]
-- fix: show an error when the app store apps can't be loaded [[#3789](https://github.com/opencloud-eu/web/pull/3789)]
-- fix: show and hide hidden search results without searching again [[#3716](https://github.com/opencloud-eu/web/pull/3716)]
-- fix: keep shift-click ranges contiguous in admin settings lists [[#3744](https://github.com/opencloud-eu/web/pull/3744)]
-- fix: ignore spaces around search terms [[#3730](https://github.com/opencloud-eu/web/pull/3730)]
-- fix: start on the first page after a new search or filter change [[#3708](https://github.com/opencloud-eu/web/pull/3708)]
-- fix: no unhandled error when the server rejects a link password [[#3712](https://github.com/opencloud-eu/web/pull/3712)]
-- fix: reject whitespace-only public link names [[#3731](https://github.com/opencloud-eu/web/pull/3731)]
-- fix: show a space's size in the details only inside the space [[#3715](https://github.com/opencloud-eu/web/pull/3715)]
-- fix: sort unrestricted spaces as largest total quota [[#3729](https://github.com/opencloud-eu/web/pull/3729)]
-- fix: show the last page instead of an empty list when the page is out of range [[#3711](https://github.com/opencloud-eu/web/pull/3711)]
-- fix: close the notifications drop when a notification is clicked [[#3734](https://github.com/opencloud-eu/web/pull/3734)]
-- fix: reject whitespace-only app token notes [[#3732](https://github.com/opencloud-eu/web/pull/3732)]
-- fix: stop sending the cached space name on space and quota updates [[#3705](https://github.com/opencloud-eu/web/pull/3705)]
-- fix: keep open context menus when a file in the list changes [[#3785](https://github.com/opencloud-eu/web/pull/3785)]
-- fix: keep filter chips in sync with the URL on back and forward [[#3699](https://github.com/opencloud-eu/web/pull/3699)]
-- fix: don't limit the length of vault passwords [[#3727](https://github.com/opencloud-eu/web/pull/3727)]
-- fix: sum up all files in the upload quota check [[#3698](https://github.com/opencloud-eu/web/pull/3698)]
-- fix: keep both on upload for special-character and same-named folders [[#3693](https://github.com/opencloud-eu/web/pull/3693)]
-- fix: wait for user data before showing the user batch actions [[#3733](https://github.com/opencloud-eu/web/pull/3733)]
-- fix: stop the share recipient search spinner when the search fails [[#3717](https://github.com/opencloud-eu/web/pull/3717)]
-- fix: show the file name instead of the share id for single file shares in apps [[#3714](https://github.com/opencloud-eu/web/pull/3714)]
-- fix: split pasted tags on commas [[#3713](https://github.com/opencloud-eu/web/pull/3713)]
-- fix: show the new link type only after the link was updated [[#3704](https://github.com/opencloud-eu/web/pull/3704)]
-- fix: no error when a drop is hidden while updating its position [[#3702](https://github.com/opencloud-eu/web/pull/3702)]
-- fix(editor): keep escaped thematic breaks as paragraph text [[#3765](https://github.com/opencloud-eu/web/pull/3765)]
-- fix: open mobile bottom drawers as named modal dialogs [[#3645](https://github.com/opencloud-eu/web/pull/3645)]
-- fix: open external notification links in a new tab [[#3743](https://github.com/opencloud-eu/web/pull/3743)]
-- fix: allow svg and webp images in the editor cloud image picker [[#3707](https://github.com/opencloud-eu/web/pull/3707)]
-- fix: ignore desktop file drops on breadcrumb items [[#3706](https://github.com/opencloud-eu/web/pull/3706)]
-- fix: round custom quotas to whole bytes [[#3695](https://github.com/opencloud-eu/web/pull/3695)]
-- fix: keep the selection after link changes in shared via link and shared with others [[#3696](https://github.com/opencloud-eu/web/pull/3696)]
-- fix: keep folder and extensionless names intact when renaming with hidden extensions [[#3687](https://github.com/opencloud-eu/web/pull/3687)]
-- fix: reload app tokens once a token is created [[#3692](https://github.com/opencloud-eu/web/pull/3692)]
-- fix: apply delegated token updates in embed mode [[#3686](https://github.com/opencloud-eu/web/pull/3686)]
-- fix: don't add already selected rows again on shift arrow in admin settings [[#3691](https://github.com/opencloud-eu/web/pull/3691)]
-- fix: stop the search preview from hanging when a provider search fails [[#3690](https://github.com/opencloud-eu/web/pull/3690)]
-- fix(web-runtime): handle wrong passwords on the public link page [[#3592](https://github.com/opencloud-eu/web/pull/3592)]
-- fix: select shares from notifications and show the highest share role [[#3598](https://github.com/opencloud-eu/web/pull/3598)]
-- fix: make upload actions reactive [[#3651](https://github.com/opencloud-eu/web/pull/3651)]
-- fix(editor): keep task list content and indented code fences in markdown [[#3616](https://github.com/opencloud-eu/web/pull/3616)]
-- fix: keep public link uploads on the server origin after entering the password [[#3688](https://github.com/opencloud-eu/web/pull/3688)]
-- fix: keep skipped files out of uploads [[#3689](https://github.com/opencloud-eu/web/pull/3689)]
-- fix: ignore space key in admin settings lists without a selected row [[#3685](https://github.com/opencloud-eu/web/pull/3685)]
-- fix: close embedded pickers with Escape [[#3630](https://github.com/opencloud-eu/web/pull/3630)]
-- fix: list links on space roots as spaces in shared via link [[#3605](https://github.com/opencloud-eu/web/pull/3605)]
-- fix: no image from the cloud in the text editor on public links [[#3632](https://github.com/opencloud-eu/web/pull/3632)]
-- fix(design-system): OcSwitch keeps its focus, OcMobileDrop takes it when opened [[#3627](https://github.com/opencloud-eu/web/pull/3627)]
-- fix: show folder loading errors in the app wrapper instead of an endless spinner [[#3603](https://github.com/opencloud-eu/web/pull/3603)]
-- fix: wait for the sidebar resource before rendering the shares panel [[#3639](https://github.com/opencloud-eu/web/pull/3639)]
-- fix(web-pkg): enforce the maximum password length of the password policy [[#3599](https://github.com/opencloud-eu/web/pull/3599)]
-- fix: reject images that can't be decoded before cropping [[#3600](https://github.com/opencloud-eu/web/pull/3600)]
-- fix: keep the file list up to date after uploads [[#3587](https://github.com/opencloud-eu/web/pull/3587)]
-- fix: keep spaces in changed passwords and log out from the profile page without errors [[#3597](https://github.com/opencloud-eu/web/pull/3597)]
-- fix(admin-settings): keep users and groups whose deletion failed [[#3596](https://github.com/opencloud-eu/web/pull/3596)]
-- fix: let space managers enable disabled spaces [[#3602](https://github.com/opencloud-eu/web/pull/3602)]
-- fix(web-pkg): check the event target for disabled key bindings [[#3595](https://github.com/opencloud-eu/web/pull/3595)]
-- fix(search): fall back to the first provider on the search list [[#3594](https://github.com/opencloud-eu/web/pull/3594)]
-- fix(rclone-crypt): skip the unlock page in the browser history [[#3593](https://github.com/opencloud-eu/web/pull/3593)]
-- fix: public link actions and the password policy for anonymous visitors [[#3591](https://github.com/opencloud-eu/web/pull/3591)]
-- fix(web-runtime): keep the public link context when unlocking a vault [[#3606](https://github.com/opencloud-eu/web/pull/3606)]
-- fix: limit expiration dates to 100 years in the future [[#3601](https://github.com/opencloud-eu/web/pull/3601)]
-- fix: update the sidebar preview when switching to a resource with the same mdate [[#3615](https://github.com/opencloud-eu/web/pull/3615)]
-- fix: handle deep links to deleted or missing files [[#3590](https://github.com/opencloud-eu/web/pull/3590)]
-- fix: show the whole image in the file details preview [[#3609](https://github.com/opencloud-eu/web/pull/3609)]
-- fix(files): report moved files after cut & paste and block pasting into own subfolders [[#3588](https://github.com/opencloud-eu/web/pull/3588)]
-- fix(web-runtime): keep upload progress sane after resume and show failed upload details [[#3586](https://github.com/opencloud-eu/web/pull/3586)]
-- fix(tests): authenticate basic auth requests with the username [[#3318](https://github.com/opencloud-eu/web/pull/3318)]
-- fix(design-system): derive a valid color for every icon name [[#3585](https://github.com/opencloud-eu/web/pull/3585)]
-- fix(web-pkg): limit resource names to 255 bytes [[#3589](https://github.com/opencloud-eu/web/pull/3589)]
-- fix: mobile fixes for form messages, the page size select, the floating action button, batch icons, preview swiping and Save as [[#3578](https://github.com/opencloud-eu/web/pull/3578)]
-- fix(yjs): run initial hydration only on the first sync [[#3581](https://github.com/opencloud-eu/web/pull/3581)]
-- fix(design-system): stop raw buttons from filling stroke-only shapes in resource icons [[#3575](https://github.com/opencloud-eu/web/pull/3575)]
-- fix: mobile layout fixes for long names, search fields and space icons [[#3573](https://github.com/opencloud-eu/web/pull/3573)]
-- fix: improve mobile usability of tooltips, switches, editor menus and admin tables [[#3550](https://github.com/opencloud-eu/web/pull/3550)]
-- fix(admin-settings): respect the app icon fill type in the apps list [[#3567](https://github.com/opencloud-eu/web/pull/3567)]
-- fix: prevent app token from being generated more than once [[#3541](https://github.com/opencloud-eu/web/pull/3541)]
-- fix: text editor bugs found during exploratory testing [[#3533](https://github.com/opencloud-eu/web/pull/3533)]
-- fix(web-pkg): align the rename button with the name when the path is shown [[#3551](https://github.com/opencloud-eu/web/pull/3551)]
-- fix(web-app-files): highlight the search term in the names of the search results [[#3555](https://github.com/opencloud-eu/web/pull/3555)]
-- fix: improve mobile layouts with css-only adjustments [[#3549](https://github.com/opencloud-eu/web/pull/3549)]
+- fix: show topbar logo on account page for public links and guests [[#4417](https://github.com/opencloud-eu/web/pull/4417)]
+- fix: remove the slash when the editor block menu is dismissed [[#4334](https://github.com/opencloud-eu/web/pull/4334)]
+- fix: only cancel the embedded picker on Escape without a selection [[#4399](https://github.com/opencloud-eu/web/pull/4399)]
+- fix: count down the rate limit wait on the guest link renew page [[#4387](https://github.com/opencloud-eu/web/pull/4387)]
+- fix: support card wrap buttons when they exceed the card [[#4415](https://github.com/opencloud-eu/web/pull/4415)]
+- fix: pick the target folder when saving or exporting from Collabora [[#4374](https://github.com/opencloud-eu/web/pull/4374)]
+- fix: don't render a revoked space image url after the image changed [[#4404](https://github.com/opencloud-eu/web/pull/4404)]
+- fix: pick up external file updates in a guest's open editor [[#4385](https://github.com/opencloud-eu/web/pull/4385)]
+- fix: keep positioned content inside the sidebar panel body [[#4401](https://github.com/opencloud-eu/web/pull/4401)]
+- fix: only show the office settings to users who can manage fonts [[#4398](https://github.com/opencloud-eu/web/pull/4398)]
+- fix: escape link and image targets and titles when saving markdown [[#4316](https://github.com/opencloud-eu/web/pull/4316)]
+- fix: use object-cover for space overview images [[#4413](https://github.com/opencloud-eu/web/pull/4413)]
+- fix: don't select a row when its link starts a navigation [[#4408](https://github.com/opencloud-eu/web/pull/4408)]
+- fix: wrap long values in share access details [[#4382](https://github.com/opencloud-eu/web/pull/4382)]
+- fix: set remoteItemId on shortcuts and files created in a share [[#4384](https://github.com/opencloud-eu/web/pull/4384)]
+- fix: don't query an empty toggle selector when opening a mobile drop [[#4400](https://github.com/opencloud-eu/web/pull/4400)]
+- fix: fit rotated preview images into the stage [[#4405](https://github.com/opencloud-eu/web/pull/4405)]
+- fix: normalize guest addresses like the server stores them [[#4403](https://github.com/opencloud-eu/web/pull/4403)]
+- fix: grammar [[#4409](https://github.com/opencloud-eu/web/pull/4409)]
+- fix: keep unlocked vaults in sync when moving their parent folder [[#4383](https://github.com/opencloud-eu/web/pull/4383)]
+- fix: show an error when the search fails and search again on resubmit [[#4365](https://github.com/opencloud-eu/web/pull/4365)]
+- fix: don't treat text after a dot as file extension when it contains spaces [[#4369](https://github.com/opencloud-eu/web/pull/4369)]
+- fix: don't select the whole text field value on click [[#4362](https://github.com/opencloud-eu/web/pull/4362)]
+- fix: don't offer creating or copying into a view-only space root [[#4360](https://github.com/opencloud-eu/web/pull/4360)]
+- feat: make the support card stand out in the sidebar [[#4346](https://github.com/opencloud-eu/web/pull/4346)]
+- fix: wrap long resource names when truncation is disabled [[#4381](https://github.com/opencloud-eu/web/pull/4381)]
+- fix: show an error message when loading a folder or list fails [[#4356](https://github.com/opencloud-eu/web/pull/4356)]
+- fix: handle name clashes inside a move or copy batch and cancel on closing the conflict dialog [[#4355](https://github.com/opencloud-eu/web/pull/4355)]
+- fix: keep deleted files up to date and don't restore items restored elsewhere [[#4283](https://github.com/opencloud-eu/web/pull/4283)]
+- fix: show hidden shares when a link points to a hidden share [[#4349](https://github.com/opencloud-eu/web/pull/4349)]
+- fix: remove just added tags in the shares views [[#4347](https://github.com/opencloud-eu/web/pull/4347)]
+- fix: title the not found page for inaccessible project spaces [[#4337](https://github.com/opencloud-eu/web/pull/4337)]
+- fix: hide sponsor link and version in the sidebar in embed mode [[#4370](https://github.com/opencloud-eu/web/pull/4370)]
+- fix: don't return to redirect-only routes when cancelling a vault unlock [[#4294](https://github.com/opencloud-eu/web/pull/4294)]
+- fix: use the shared sorting and pagination in the spaces and trash overviews [[#4270](https://github.com/opencloud-eu/web/pull/4270)]
+- fix: resolve links into another user's personal space via the file id [[#4315](https://github.com/opencloud-eu/web/pull/4315)]
+- fix: don't throw when the list refresh after a failed upload fails [[#4336](https://github.com/opencloud-eu/web/pull/4336)]
+- fix: enforce the password policy when setting a vault password on the unlock page [[#4335](https://github.com/opencloud-eu/web/pull/4335)]
+- fix: skip the access revoked message when access to a share remains [[#4313](https://github.com/opencloud-eu/web/pull/4313)]
+- fix: fall back to shared with me when a share's mount point is gone [[#4345](https://github.com/opencloud-eu/web/pull/4345)]
+- fix: keep an open app in place when the folder of its file gets renamed [[#4292](https://github.com/opencloud-eu/web/pull/4292)]
+- fix: don't load shares of disabled project spaces [[#4338](https://github.com/opencloud-eu/web/pull/4338)]
+- fix: list a partially duplicated space and tell the user it's incomplete [[#4290](https://github.com/opencloud-eu/web/pull/4290)]
+- fix: scroll to the current search match when the search term changes [[#4314](https://github.com/opencloud-eu/web/pull/4314)]
+- fix: keep a space when access remains after a member removal [[#4312](https://github.com/opencloud-eu/web/pull/4312)]
+- fix: keep image embeds in markdown when saving [[#4340](https://github.com/opencloud-eu/web/pull/4340)]
+- fix: copy only the selected content in the markdown editor [[#4271](https://github.com/opencloud-eu/web/pull/4271)]
+- fix: keep moved items in favorites and search results [[#4282](https://github.com/opencloud-eu/web/pull/4282)]
+- fix: keep upload batch out of uppy until it is prepared [[#4327](https://github.com/opencloud-eu/web/pull/4327)]
+- fix: show the load error for video and audio files that can't be played [[#4251](https://github.com/opencloud-eu/web/pull/4251)]
+- fix: ignore update-token messages without an access token in delegated embed mode [[#4215](https://github.com/opencloud-eu/web/pull/4215)]
+- fix: report a created space when only some files could not be copied [[#4252](https://github.com/opencloud-eu/web/pull/4252)]
+- fix: keep the list filters when stepping through files in the preview [[#4246](https://github.com/opencloud-eu/web/pull/4246)]
+- fix: show the server's upload error on servers without TUS [[#4243](https://github.com/opencloud-eu/web/pull/4243)]
+- fix: restore notification preference checkboxes when saving fails [[#4244](https://github.com/opencloud-eu/web/pull/4244)]
+- fix: open public links with a path after the token [[#4240](https://github.com/opencloud-eu/web/pull/4240)]
+- fix: show not found in apps for an unknown space or a route without a file [[#4259](https://github.com/opencloud-eu/web/pull/4259)]
+- fix: improve focus management of the select after picking an option [[#4262](https://github.com/opencloud-eu/web/pull/4262)]
+- fix: keep the text editor search and replace panel as a drop on mobile [[#4309](https://github.com/opencloud-eu/web/pull/4309)]
+- fix: skip the rename request when the name is unchanged [[#4237](https://github.com/opencloud-eu/web/pull/4237)]
+- fix: keep the open file unchanged when its store entry is renamed [[#4303](https://github.com/opencloud-eu/web/pull/4303)]
+- fix: reload a filtered users list instead of adding a newly created user [[#4239](https://github.com/opencloud-eu/web/pull/4239)]
+- fix: follow a rename of the file open in an app [[#4300](https://github.com/opencloud-eu/web/pull/4300)]
+- fix: show errors when setting a space icon, image or description fails [[#4211](https://github.com/opencloud-eu/web/pull/4211)]
+- fix: reload the user after a partially failed save in the edit user panel [[#4212](https://github.com/opencloud-eu/web/pull/4212)]
+- fix: ignore items-per-page values below 1 [[#4213](https://github.com/opencloud-eu/web/pull/4213)]
+- fix: keep failed recipients selected in the invite form [[#4206](https://github.com/opencloud-eu/web/pull/4206)]
+- fix: don't preselect a quota for several items with different quotas [[#4205](https://github.com/opencloud-eu/web/pull/4205)]
+- fix: report delete, paste and restore failures on network errors [[#4192](https://github.com/opencloud-eu/web/pull/4192)]
+- fix: show the full value of truncated user content on hover [[#4124](https://github.com/opencloud-eu/web/pull/4124)]
+- fix: revert the tags selection when a tag change fails [[#4167](https://github.com/opencloud-eu/web/pull/4167)]
+- fix: remove removed resources from the selection [[#4168](https://github.com/opencloud-eu/web/pull/4168)]
+- fix: wait for a running save before asking about unsaved changes on close [[#4277](https://github.com/opencloud-eu/web/pull/4277)]
+- fix: keep folders with # in their name in the preview and drive redirect URLs [[#4174](https://github.com/opencloud-eu/web/pull/4174)]
+- fix: trim embed-file-types values from the URL query [[#4169](https://github.com/opencloud-eu/web/pull/4169)]
+- fix: refresh file list when all files of an uploaded folder fail [[#4207](https://github.com/opencloud-eu/web/pull/4207)]
+- fix: ignore deferred panzoom transforms after the preview image is gone [[#4216](https://github.com/opencloud-eu/web/pull/4216)]
+- fix: keep favorite state and tags on the received share root [[#4208](https://github.com/opencloud-eu/web/pull/4208)]
+- fix: show an error for EPUB files that can't be opened [[#4209](https://github.com/opencloud-eu/web/pull/4209)]
+- fix: show message for spaces skipped when duplicating [[#4210](https://github.com/opencloud-eu/web/pull/4210)]
+- fix: stream vault content encryption block by block [[#4125](https://github.com/opencloud-eu/web/pull/4125)]
+- fix: stop the shares panel loader when loading the shares fails [[#4203](https://github.com/opencloud-eu/web/pull/4203)]
+- fix: let app tokens expire on the picked day [[#4202](https://github.com/opencloud-eu/web/pull/4202)]
+- fix: show the current space size in the space details after uploads and deletions [[#4204](https://github.com/opencloud-eu/web/pull/4204)]
+- fix: redirect /files/search to the search results page [[#4214](https://github.com/opencloud-eu/web/pull/4214)]
+- fix: rename dot-files correctly when file extensions are hidden [[#4157](https://github.com/opencloud-eu/web/pull/4157)]
+- fix: keep parent folder links and name tooltips usable for non-clickable resources [[#4242](https://github.com/opencloud-eu/web/pull/4242)]
+- fix: refetch notifications when opening the bell or returning to the tab [[#4166](https://github.com/opencloud-eu/web/pull/4166)]
+- fix: stay in folders with a # in their name when the scrollTo param is reset [[#4165](https://github.com/opencloud-eu/web/pull/4165)]
+- fix: keep the guest session when unlocking a vault [[#4264](https://github.com/opencloud-eu/web/pull/4264)]
+- fix: show an error when creating share links fails in embed mode [[#4170](https://github.com/opencloud-eu/web/pull/4170)]
+- fix: save expiration date of shares with custom permissions [[#4172](https://github.com/opencloud-eu/web/pull/4172)]
+- fix: use the full name as title for dot-files [[#4173](https://github.com/opencloud-eu/web/pull/4173)]
+- fix: keep upload batch out of uppy while the conflict dialog is open [[#4140](https://github.com/opencloud-eu/web/pull/4140)]
+- fix: don't return to a permanent link when cancelling a vault unlock [[#4155](https://github.com/opencloud-eu/web/pull/4155)]
+- fix: prevent duplicate GDPR export requests on double click [[#4156](https://github.com/opencloud-eu/web/pull/4156)]
+- fix: align shift-click range selection in admin lists and files table [[#4236](https://github.com/opencloud-eu/web/pull/4236)]
+- fix: replace the selection when dragging an unselected file [[#4153](https://github.com/opencloud-eu/web/pull/4153)]
+- fix: match embed file types case-insensitively [[#4154](https://github.com/opencloud-eu/web/pull/4154)]
+- fix: stream archive downloads on password protected public links [[#4115](https://github.com/opencloud-eu/web/pull/4115)]
+- fix: keep the guest session when a guest opens a route that needs a user [[#4086](https://github.com/opencloud-eu/web/pull/4086)]
+- fix: list sharers with the same display name separately in the Shared By filter [[#4152](https://github.com/opencloud-eu/web/pull/4152)]
+- fix: show the locked message when uploading onto a locked resource [[#4109](https://github.com/opencloud-eu/web/pull/4109)]
+- fix: show restored files again after undoing a delete on the search results page [[#4175](https://github.com/opencloud-eu/web/pull/4175)]
+- fix: keep the requested route when delegating authentication in embed mode [[#4191](https://github.com/opencloud-eu/web/pull/4191)]
+- fix: leave the oidc callback page when the sign-in fails [[#4218](https://github.com/opencloud-eu/web/pull/4218)]
+- fix: keep network errors when loading webdav files fails [[#4171](https://github.com/opencloud-eu/web/pull/4171)]
+- fix: ignore cancelled loading when leaving admin users, groups and spaces [[#4138](https://github.com/opencloud-eu/web/pull/4138)]
+- fix: escape double quotes in search queries [[#4094](https://github.com/opencloud-eu/web/pull/4094)]
+- fix: show error message when refreshing the file after a version restore fails [[#4137](https://github.com/opencloud-eu/web/pull/4137)]
+- fix: finish adding space members when the space refresh fails [[#4126](https://github.com/opencloud-eu/web/pull/4126)]
+- fix: don't carry the query of other views into the search [[#4128](https://github.com/opencloud-eu/web/pull/4128)]
+- fix: reload the folder README when README.md changes [[#4114](https://github.com/opencloud-eu/web/pull/4114)]
+- fix: respect reduced motion for the EPUB reader progress shimmer [[#4136](https://github.com/opencloud-eu/web/pull/4136)]
+- fix: reload after continuing with an unsupported browser [[#4110](https://github.com/opencloud-eu/web/pull/4110)]
+- fix: find scrollTo targets on all pages of the file lists [[#4118](https://github.com/opencloud-eu/web/pull/4118)]
+- fix: show error message when loading admin groups or spaces fails [[#4127](https://github.com/opencloud-eu/web/pull/4127)]
+- fix: show "No favorites found" when a favorites filter matches nothing [[#4129](https://github.com/opencloud-eu/web/pull/4129)]
+- fix: ignore cancelled resource loading when opening an app via fileId [[#4130](https://github.com/opencloud-eu/web/pull/4130)]
+- fix: correct forbidden characters in space name error [[#4108](https://github.com/opencloud-eu/web/pull/4108)]
+- fix: apply sse file events after running folder load [[#4083](https://github.com/opencloud-eu/web/pull/4083)]
+- fix: wait for a running save instead of hanging in AppWrapper [[#4131](https://github.com/opencloud-eu/web/pull/4131)]
+- fix: keep long values in the admin users and spaces tables in bounds [[#4116](https://github.com/opencloud-eu/web/pull/4116)]
+- fix: prevent double profile picture upload on repeated set [[#4107](https://github.com/opencloud-eu/web/pull/4107)]
+- fix: reset avatar file input after a rejected file [[#4106](https://github.com/opencloud-eu/web/pull/4106)]
+- fix: trim group names when creating and renaming groups [[#4105](https://github.com/opencloud-eu/web/pull/4105)]
+- fix: show error message when restoring a file version fails [[#4102](https://github.com/opencloud-eu/web/pull/4102)]
+- fix: hide extension preferences with only one option [[#4112](https://github.com/opencloud-eu/web/pull/4112)]
+- fix: focus the first input when opening text entry modals [[#4089](https://github.com/opencloud-eu/web/pull/4089)]
+- Rework the EPUB reader [[#3924](https://github.com/opencloud-eu/web/pull/3924)]
+- fix: hide guest invites when guest links are disabled [[#4071](https://github.com/opencloud-eu/web/pull/4071)]
+- fix: pause toasts, fix pagination semantics and name upload states [[#4069](https://github.com/opencloud-eu/web/pull/4069)]
+- fix: show all invite search results returned by the server [[#4081](https://github.com/opencloud-eu/web/pull/4081)]
+- fix: restore parent folders before their children from the trash [[#4076](https://github.com/opencloud-eu/web/pull/4076)]
+- fix: play flac files in chromium browsers [[#4080](https://github.com/opencloud-eu/web/pull/4080)]
+- fix: raise contrast, target sizes and visibility of small UI parts [[#4074](https://github.com/opencloud-eu/web/pull/4074)]
+- fix: copy action for the current folder [[#4073](https://github.com/opencloud-eu/web/pull/4073)]
+- fix: versions for guest users [[#4067](https://github.com/opencloud-eu/web/pull/4067)]
+- fix: prevent clipped descenders in resource names [[#4072](https://github.com/opencloud-eu/web/pull/4072)]
+- fix: restore the cleartext name when undoing a deletion in a vault [[#4024](https://github.com/opencloud-eu/web/pull/4024)]
+- fix(text-editor): allow inline code inside other marks in markdown [[#4066](https://github.com/opencloud-eu/web/pull/4066)]
+- fix: keep upload info closable when folder creation fails [[#4030](https://github.com/opencloud-eu/web/pull/4030)]
+- fix: resolve permanent links into unsynced shares [[#4042](https://github.com/opencloud-eu/web/pull/4042)]
+- fix: only escape markdown text where it would be read as syntax [[#4038](https://github.com/opencloud-eu/web/pull/4038)]
+- fix: more small a11y fixes from the audit [[#4043](https://github.com/opencloud-eu/web/pull/4043)]
+- fix: truncate long sidebar nav item labels [[#4056](https://github.com/opencloud-eu/web/pull/4056)]
+- fix: validate name length in vaults [[#4054](https://github.com/opencloud-eu/web/pull/4054)]
+- fix(preview): keep the active file when the folder changes [[#4051](https://github.com/opencloud-eu/web/pull/4051)]
+- fix: keep raw html and decode named entities in markdown files [[#4025](https://github.com/opencloud-eu/web/pull/4025)]
+- fix: small a11y fixes from the third audit round [[#4023](https://github.com/opencloud-eu/web/pull/4023)]
 
 ### ✅ Tests
 
-- test(e2e): only fail on critical and serious best-practice a11y findings [[#3980](https://github.com/opencloud-eu/web/pull/3980)]
-- test(e2e): extend a11y coverage and add keyboard checks [[#3795](https://github.com/opencloud-eu/web/pull/3795)]
-- test: exclude Claude worktrees from Vitest discovery [[#3815](https://github.com/opencloud-eu/web/pull/3815)]
-- test(e2e): cover sse events for share recipients [[#3799](https://github.com/opencloud-eu/web/pull/3799)]
-- fix(e2e): retry open-with submenu click to fix flaky context menu [[#3757](https://github.com/opencloud-eu/web/pull/3757)]
-- test: remove duplicated sidebar/context-menu variant coverage in e2e [[#3520](https://github.com/opencloud-eu/web/pull/3520)]
-
+- test(e2e): fix yjs test scenario behavior [[#4222](https://github.com/opencloud-eu/web/pull/4222)]
 
 ## Reva
 
 ### 🐛 Bug Fixes
 
-- fix(sharesstorageprovider): reject a share deleted by its mount point [[#917](https://github.com/opencloud-eu/reva/pull/917)]
-- Require parent permissions to delete or move a resource [[#916](https://github.com/opencloud-eu/reva/pull/916)]
-- fix(storageprovider): restrict possibility for sharee to remove the owner resource [[#897](https://github.com/opencloud-eu/reva/pull/897)]
-- fix: unlock the OS thread when ScopeUserByIds fails [[#899](https://github.com/opencloud-eu/reva/pull/899)]
-- fix(ocdav): send basic auth challenge for password protected links followup [[#915](https://github.com/opencloud-eu/reva/pull/915)]
-- fix(mime): normalise the extension RegisterMime is handed [[#908](https://github.com/opencloud-eu/reva/pull/908)]
-- fix(ocdav): send basic auth challenge for password protected links [[#904](https://github.com/opencloud-eu/reva/pull/904)]
-- fix(mime): map the rw2 extension [[#905](https://github.com/opencloud-eu/reva/pull/905)]
-- fix(wopi): register the zmd extension the way the mime table spells it [[#907](https://github.com/opencloud-eu/reva/pull/907)]
-- fix: do not delete the destination of a move across spaces [[#891](https://github.com/opencloud-eu/reva/pull/891)]
-- fix move return [[#892](https://github.com/opencloud-eu/reva/pull/892)]
-- fix(ocm): use a public-only client for WAYF provider discovery [[#814](https://github.com/opencloud-eu/reva/pull/814)]
-- rename the space root before purging it [[#876](https://github.com/opencloud-eu/reva/pull/876)]
-- fix(posix): retry a failed file once its ctime changes [[#809](https://github.com/opencloud-eu/reva/pull/809)]
-- fix(posix): re-assimilate moved and changed files during a scan [[#808](https://github.com/opencloud-eu/reva/pull/808)]
-- fix: add config to skip share manager migrations [[#877](https://github.com/opencloud-eu/reva/pull/877)]
-- fix: status code during share removal [[#878](https://github.com/opencloud-eu/reva/pull/878)]
-- fix: return not found when deleting unknown shares or spaces without … [[#874](https://github.com/opencloud-eu/reva/pull/874)]
-- fix(posix): keep files findable by id after their folder is renamed on disk [[#850](https://github.com/opencloud-eu/reva/pull/850)]
-- fix(posix): stop on-disk deletes and moves from resetting tree sizes to 0 [[#849](https://github.com/opencloud-eu/reva/pull/849)]
-- fix(posix): keep a handle on the blob for the copy target [[#807](https://github.com/opencloud-eu/reva/pull/807)]
-- test: wait for the DeleteRevision handler before redelivering [[#861](https://github.com/opencloud-eu/reva/pull/861)]
-- fix filedescriptor leaks [[#847](https://github.com/opencloud-eu/reva/pull/847)]
-
-### 📈 Enhancement
-
-- fix(mime): add the OOXML Visio types [[#900](https://github.com/opencloud-eu/reva/pull/900)]
-- Map .hif files to image/heif [[#911](https://github.com/opencloud-eu/reva/pull/911)]
-- feat: add default_quota to the spaces capability [[#880](https://github.com/opencloud-eu/reva/pull/880)]
-- fix(appprovider): pick a deterministic app when open with web names none [[#875](https://github.com/opencloud-eu/reva/pull/875)]
-- feat: make space2share migration repeatable [[#864](https://github.com/opencloud-eu/reva/pull/864)]
-- Harden unshare [[#856](https://github.com/opencloud-eu/reva/pull/856)]
-- feat: run decomposedfs on foreign metadata via metadata_prefix [[#859](https://github.com/opencloud-eu/reva/pull/859)]
-
-### ✅ Tests
-
-- fix: retry removing the tombstone of a purged space [[#889](https://github.com/opencloud-eu/reva/pull/889)]
-- try to remove the share migration lock on SIGTERM [[#869](https://github.com/opencloud-eu/reva/pull/869)]
-- fix: separate cronjobs for different tasks [[#868](https://github.com/opencloud-eu/reva/pull/868)]
-- fix: wait for inotify to react [[#863](https://github.com/opencloud-eu/reva/pull/863)]
+- Limit inviteAcceptDialog values to URL path or base that exactly matc… [[#924](https://github.com/opencloud-eu/reva/pull/924)]
+- fix(metrics): record the metadata lock hold time once per lock [[#979](https://github.com/opencloud-eu/reva/pull/979)]
+- fix(decomposedfs): return NotFound when restoring a missing trash item [[#982](https://github.com/opencloud-eu/reva/pull/982)]
+- fix(eventsmiddleware): read the grantee group of removed shares into the group id [[#981](https://github.com/opencloud-eu/reva/pull/981)]
+- fix(mime): map the ora extension to image/openraster [[#975](https://github.com/opencloud-eu/reva/pull/975)]
+- fix(mime): map the comic book archive extensions to their own types [[#974](https://github.com/opencloud-eu/reva/pull/974)]
+- fix(mime): map ai to application/illustrator [[#973](https://github.com/opencloud-eu/reva/pull/973)]
+- fix(mime): map the cr3 extension [[#972](https://github.com/opencloud-eu/reva/pull/972)]
+- fix(decomposedfs): delete all blobs when purging a space [[#971](https://github.com/opencloud-eu/reva/pull/971)]
+- fix(mime): map the 3mf, blend, fb2, ipynb and kra extensions [[#970](https://github.com/opencloud-eu/reva/pull/970)]
+- fix(tags): free a slot for each removed tag [[#968](https://github.com/opencloud-eu/reva/pull/968)]
+- fix(metrics): clarify the help texts of the upload session metrics [[#955](https://github.com/opencloud-eu/reva/pull/955)]
+- fix(mime): map the m4b and azw3 extensions [[#965](https://github.com/opencloud-eu/reva/pull/965)]
+- fix: escape realm in WWW-Authenticate challenges [[#920](https://github.com/opencloud-eu/reva/pull/920)]
