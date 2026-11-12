@@ -1,5 +1,5 @@
 name: Immich (Cuda)
-version: 3.4.0-ha10
+version: 3.4.1-ha11
 slug: immich_cuda
 description: High performance self-hosted photo and video management solution
 url: https://immich.app
