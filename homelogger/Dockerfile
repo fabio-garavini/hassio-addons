@@ -1,4 +1,4 @@
-ARG BUILD_FROM=francislaboratories/homelogger:0.6.0
+ARG BUILD_FROM=francislaboratories/homelogger:0.7.0
 
 FROM ${BUILD_FROM}
 
