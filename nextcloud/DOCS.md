@@ -36,3 +36,15 @@ If you want to store your data on a nas, you have to add a network storage for `
 You can change your data folder owner (user and group) by changing the `PUID` with the user uid and `PGID` with the group uid
 
 For example if you are mounting an NFS share with custom permissions
+
+Nextcloud's configuration and application file permissions are repaired automatically at startup.
+
+### Repairing data permissions
+
+If Nextcloud reports permission problems with its data directory, enable **Apply data permissions** in the app configuration:
+
+1. Enable **Apply data permissions**.
+2. Restart the app and wait for startup to complete. This can take a long time for large data directories.
+3. Once Nextcloud is working again, disable **Apply data permissions**.
+
+This recursively assigns the data directory to the user configured through `PUID`/`PGID` and grants that user read/write access to files and read/write/traverse access to directories. Enabling the option once is sufficient because these changes persist. It does not need to remain enabled unless permissions need to be repaired again.

@@ -47,6 +47,12 @@ configuration:
     description: >-
       Set this if you're running behind a reverse proxy. ex: `https://cloud.example.com/path`
       Full url for accessing your Nextcloud instance
+  APPLY_PERMISSIONS:
+    name: Apply data permissions
+    description: >-
+      Recursively update the Nextcloud data directory owner and permissions at every startup.
+      The owner is set to the user configured with `PUID` and `PGID`.
+      This can take a long time for large data directories.
   trusted_proxies:
     name: Trusted Proxies
   trusted_domains:

@@ -5,5 +5,6 @@
   "certfile": "fullchain.pem",
   "keyfile": "privkey.pem",
   "ADMIN_USER": "admin-user",
-  "ADMIN_PASS": "admin-password"
+  "ADMIN_PASS": "admin-password",
+  "APPLY_PERMISSIONS": false
 }
