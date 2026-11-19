@@ -1,52 +1,79 @@
-# 📦 ImmichFrame Release v1.0.39.0 – October 7, 2026
+# 📦 ImmichFrame Release v1.0.40.0 – November 16, 2026
 
-<!-- Release notes generated using configuration in .github/release.yml at v1.0.39.0 -->
+<!-- Release notes generated using configuration in .github/release.yml at v1.0.40.0 -->
 
-ImmichFrame now asks Immich for assets through the search API, which needs Immich v3.2.0 or newer, and no longer stalls when a large album is excluded. This release also includes a security fix — please upgrade.
+ImmichFrame now requires Immich v3.3.0 or newer, can show birthday memories and Immich's edited crops and rotations, and can take its settings from a file again. Frames on LG webOS that broke in v1.0.38.0 display correctly again.
 
 ---
 
 ## What's Changed
 
-### ⚠️ Breaking Changes
+### ✨ New Features
 
-#### 💥 Search API, minimum Immich v3.2.0
-**PR [#712](https://github.com/immichFrame/ImmichFrame/pull/712) by @JW-CH**
+#### 🎂 Birthday memories, without emptying the frame
+**PR [#730](https://github.com/immichFrame/ImmichFrame/pull/730) by @Squixx**
 
-Favorites, albums, people and tags are now one Immich search instead of separate pools. A photo is included when it matches any of those sources, and date, archive, video and excluded-album filters are applied by Immich. Update your Immich server to v3.2.0 or newer before upgrading the frame. An older server is logged as unsupported and the slideshow will not load.
-
-`Rating` is no longer an exact star match. A value of `3` shows images rated 3 or higher. Nothing else in your config has to change. An account with no favorites, albums, people or tags still shows the whole library, and memories-only accounts still skip that search. If the only configured source is a tag name Immich does not know, that account returns no assets.
+Update Immich to v3.3.0 or newer before upgrading. An older server is logged as unsupported: the frame still starts, so the account can be fixed in the admin UI, but the slideshow may not work. Immich 3.3 birthday memories used to fail every photo request on v1.0.39.0 when Memories was on, so the frame stayed empty. `ShowMemories` is still the main switch. `ShowOnThisDayMemories` and `ShowBirthdayMemories` both default to on, in the config and in the admin UI, so existing setups keep both. A birthday caption uses the year the photo was taken, not the person's birth year.
 
 ```yaml
-Rating: 3 # int, minimum stars
+ShowMemories: true
+ShowOnThisDayMemories: true # boolean, only used when ShowMemories is set
+ShowBirthdayMemories: true # boolean, needs a birth date on the person
+```
+
+---
+
+#### 🖼️ Crops and rotations from Immich
+**PR [#736](https://github.com/immichFrame/ImmichFrame/pull/736) by @johnmathews**
+
+Immich stores a crop or rotation as a non-destructive edit, and the frame was still asking for the original preview. Photos you edited in Immich now show that edit. A photo without edits is unchanged. Nothing to configure.
+
+---
+
+#### 📄 Settings from a file again
+**PR [#739](https://github.com/immichFrame/ImmichFrame/pull/739) by @JW-CH**
+
+Set `IMMICHFRAME_CONFIG_SOURCE=file` to make `Settings.json`, `Settings.yml` or `Settings.yaml` the only source of truth. That fits NixOS, Ansible, and a read-only config mount: the file is read once at startup, the admin UI is off, and ImmichFrame does not create `immichframe.db`. A missing file, an invalid file, an unknown key, or more than one settings file stops startup instead of falling back to defaults. Restart to apply edits. An existing database next to the file is left untouched. Unset the variable to use that database again. If it already has settings, the file is then ignored.
+
+```yaml
+environment:
+  IMMICHFRAME_CONFIG_SOURCE: file
+volumes:
+  - ./config:/app/Config:ro
 ```
 
 ---
 
 ### ⚡ Fixes
 
-#### 🔒 Security fix
-**Commit [`8c73e4f`](https://github.com/immichFrame/ImmichFrame/commit/8c73e4f) by @JW-CH**
+#### 📺 Layout on LG webOS and older Chromium
+**PR [#720](https://github.com/immichFrame/ImmichFrame/pull/720) by @JW-CH**
 
-This release includes a security fix. Please upgrade. Details will follow in a separate notice.
+Since v1.0.38.0, LG webOS 23 and older (Chromium before 99) ignored Tailwind's CSS layers. The frame no longer fit the screen: scrollbars appeared, and the clock, photos and videos sat off to the right. Those layers are removed at build time, so the same styles apply on those TVs again. Nothing to configure.
 
 ---
 
-#### 🐛 Large excluded albums no longer stall the frame
-**PR [#706](https://github.com/immichFrame/ImmichFrame/pull/706) by @sheltonial**
+### 🔨 Maintenance
 
-Excluding an album used to compare every slideshow asset against every excluded asset, over and over. On a large library that never finished, so `/api/Asset` hung and the frame looked empty. Exclusion is now a single lookup, and with the new search API Immich applies `ExcludedAlbums` itself instead of the frame downloading those assets just to drop them.
+#### 📦 Web and docs dependencies
+**PR [#716](https://github.com/immichFrame/ImmichFrame/pull/716) by @JW-CH**
 
+Frontend and documentation dependencies were updated. No settings or slideshow behavior change.
 
-<!-- Release notes generated using configuration in .github/release.yml at v1.0.39.0 -->
+---
 
-## What's Changed
-### ⚠️ Breaking Changes
-* Feat: Use new search api by @JW-CH in https://github.com/immichFrame/ImmichFrame/pull/712
-### 🚀 Other changes
-* Fix: WhereExcludes is O(n*m) and stalls the asset pool for large excluded albums by @sheltonial in https://github.com/immichFrame/ImmichFrame/pull/706
+#### 🔧 .NET 10
+**PR [#741](https://github.com/immichFrame/ImmichFrame/pull/741) by @JW-CH**
+
+The application and the container image now run on .NET 10. Pulling the image is enough. Building from source or running the tests needs the .NET 10 SDK.
+
+---
 
 ## New Contributors
-* @sheltonial made their first contribution in https://github.com/immichFrame/ImmichFrame/pull/706
 
-**Full Changelog**: https://github.com/immichFrame/ImmichFrame/compare/v1.0.38.0...v1.0.39.0
+- 🎉 @Squixx made their first contribution in [#730](https://github.com/immichFrame/ImmichFrame/pull/730) — welcome!
+- 🎉 @johnmathews made their first contribution in [#736](https://github.com/immichFrame/ImmichFrame/pull/736) — welcome!
+
+---
+
+**Full Changelog**: https://github.com/immichFrame/ImmichFrame/compare/v1.0.39.0...v1.0.40.0
