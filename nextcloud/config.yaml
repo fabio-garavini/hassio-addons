@@ -1,5 +1,5 @@
 name: Nextcloud
-version: 35.0.3-ha15
+version: 35.0.3-ha16
 slug: nextcloud
 description: Nextcloud all-in-one
 url: https://nextcloud.com
@@ -138,6 +138,7 @@ schema:
   OVERWRITEHOST: str?
   OVERWRITECLIURL: str?
   NEXTCLOUD_DATADIR: str
+  APPLY_PERMISSIONS: bool
   storage_mounts:
     - path: str
       type: list(local|smb|cifs|nfs)
@@ -170,6 +171,7 @@ options:
   keyfile: privkey.pem
   ADMIN_USER: admin
   NEXTCLOUD_DATADIR: /share/nextcloud
+  APPLY_PERMISSIONS: false
   storage_mounts: []
   env_vars: []
 ports:

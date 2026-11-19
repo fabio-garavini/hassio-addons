@@ -164,9 +164,21 @@ rm -f \
     /tmp/needs_upgrade
 
 # permissions
-lsiown abc:abc \
-    /app/www/public \
-    /config/www/nextcloud
+lsiown abc:abc /app/www/public
+# Backup restores can leave Nextcloud files owned by root and inaccessible to abc
+lsiown -R abc:abc /config/www/nextcloud
+
+notify_push_bin_dir="/config/www/nextcloud/apps/notify_push/bin"
+if [[ -d "${notify_push_bin_dir}" ]]; then
+    find "${notify_push_bin_dir}" -type f -name notify_push -exec chmod u+x {} +
+fi
+
+if [[ "${APPLY_PERMISSIONS:-false}" == "true" ]]; then
+    echo "Updating ownership and permissions in ${NEXTCLOUD_DATADIR} (this can take a while) ..."
+    lsiown -R abc:abc "${NEXTCLOUD_DATADIR}"
+    find "${NEXTCLOUD_DATADIR}" -type d -exec chmod u+rwx {} +
+    find "${NEXTCLOUD_DATADIR}" -type f -exec chmod u+rw {} +
+fi
 
 CONFIG_FILE="/config/nextcloud.json"
 
