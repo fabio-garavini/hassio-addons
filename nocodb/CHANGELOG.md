@@ -1,85 +1,170 @@
-<img width="1865" height="1147" alt="Group 115" src="https://github.com/user-attachments/assets/1f72ed6f-1f2b-4f89-a033-66b572c6bd90" />
 
-> ⚠️ **Timestamps include milliseconds.** On PostgreSQL and SQLite, date and time values in API responses, webhook payloads and CSV exports now include milliseconds (`12:34:56.000+00:00`). Check integrations that read dates in a fixed format.
-
-> **MCP lists every tool.** The MCP server at `/mcp` now lists every tool. If Windsurf or VS Code Copilot shows too many tools, connect it again with the `/mcp-discovery` URL. [Learn more](https://docs.nocodb.com/docs/mcp#clients-that-cap-the-tool-list)
-
-> **Password changes sign out your apps.** Changing your password deletes your API tokens and disconnects apps you authorized with OAuth. [Learn more](https://nocodb.com/docs/product/account-settings/api-tokens#password-changes-delete-your-tokens)
-
-## Improvements
-
-- **Classic apps on phones** - Published classic apps fit phone screens, including the sidebar, toolbars, record forms, dashboard groups and pivot widgets.
-- **Group by more field types** - Classic app pages group by Links, Formula, Lookup, Rollup and link count fields, and List widgets get a group by setting. [Learn more](https://docs.nocodb.com/docs/classic-apps/layouts/table#grid)
-- **Resize columns in classic apps** - Drag a column edge in a List widget to resize it. Builders save the width for everyone. [Learn more](https://docs.nocodb.com/docs/classic-apps/layouts/table#list)
-- **Open records from view widgets** - Calendar, Timeline and Gantt widgets on a dashboard can open a record when you click it. [Learn more](https://docs.nocodb.com/docs/classic-apps/layouts/dashboard#configuring-widgets)
-- **Hide widget titles** - Data, chart and number widgets in a classic app have a *Show title* switch.
-- **Button visibility by role** - Page buttons in a classic app can show only to the roles you choose. [Learn more](https://docs.nocodb.com/docs/classic-apps/elements#buttons)
-- **Reorder user filter tabs** - Builders drag user filter tabs into a new order. [Learn more](https://docs.nocodb.com/docs/classic-apps/elements#user-filters)
-- **Sort Single Select by option order** - A sort on a Single Select field can follow the order of its options instead of A to Z. [Learn more](https://docs.nocodb.com/docs/product/tables/table-operations/sort#sort-a-single-select-field-by-option-order)
-- **Sign out of other devices** - *Account* > *Security* signs you out everywhere except the current browser on NocoDB Cloud. [Learn more](https://docs.nocodb.com/docs/product/account-settings/authentication/sign-out-other-devices)
-- **Templates on Home** - Home and the *New project* page show a template gallery on NocoDB Cloud, and projects built with AI start with a few sample records. [Learn more](https://docs.nocodb.com/docs/product/projects/create-project#from-template)
-- **Greek** - NocoDB is now available in Greek. [Learn more](https://docs.nocodb.com/docs/product/account-settings/language)
-- **MCP rate limits** - MCP has its own limit per account. A client that goes over it is told how long to wait.
-- **MCP connected apps** - The list of connected apps shows when each app was last used. [Learn more](https://docs.nocodb.com/docs/mcp/connections#managing-and-removing-access)
-- **OAuth consent screen** - The consent screen shows where you will be sent and warns when an app is not verified by NocoDB.
-- **Live updates** - Gallery, Kanban, Map, dashboards and classic app record review refresh in place when collaborators edit.
+<img width="1865" height="1147" alt="2026.10.2 : Bug Fix Release" src="https://github.com/user-attachments/assets/df5a8f63-c53b-45e2-b664-e78df076595d" />
 
 ## What's Fixed
 
-- **Workflows and webhooks** - *When record updated* workflows and update webhooks run when records are linked or unlinked through the API, paste or a foreign key change. [Learn more](https://docs.nocodb.com/docs/workflows/nodes/trigger-nodes/record-updated#how-it-works)
-- **Formulas** - Formulas with `?` inside text evaluate, Checkbox values act as 1 and 0 in PostgreSQL formulas, and XOR results can be filtered.
-- **Filters** - *is blank* filters on Rollups work, and *like* filters on User fields match names only.
-- **Links** - Self-linking one-to-one fields show the linked record, and duplicated projects keep their links.
-- **Copying data** - Duplicating and importing a project keeps Long Text and JSON values longer than 100,000 characters.
-- **Classic apps** - Search in the builder, link pickers in forms, Timeline labels, default page names, unhidden form fields, list scrollbars and conditional row colors behave as expected.
-- **Sharing** - The classic app *Share* dialog can give an existing member a higher role, and a second invite keeps the first invite link working.
-- **Attachments** - Escape and arrow keys work in the attachment preview everywhere it opens.
-- **Tables** - A new table can take a trashed table's name, even near the database name length limit.
-- **SQL Server and Oracle** - Sorts that repeat a field work on SQL Server, and on Oracle a Number field converts to Decimal and text formulas sort.
-- **AI chat** - Chat works with Claude Opus 5.5, Sonnet 5.5 and Fable 5.1 integrations.
-- **Sign-in** - Forgetting your password no longer signs you out, and sign-in errors show one message for every case.
+- **Fields and formulas** - Changing a field type on PostgreSQL keeps every value that fits, renaming a field updates the formulas that use it, and a math error blanks only its own row.
+- **Filters** - *Is any of* matches the exact select option, empty filter groups are removed, and date filters work on lookups of date formulas and rollups.
+- **More filters** - Date filters with a wrong value are rejected on save, and filters on cross-base links apply for people who can see the linked table.
+- **Grid and records** - Escape cancels a cell edit, pasting a value that does not fit keeps the old one, and one edit makes one revision entry.
+- **Expanded records** - Ctrl/Cmd+F uses the browser's find while a record is expanded, and *Create & Link* from a new record creates the linked record when you save.
+- **Typing** - The first key typed with a Chinese or Japanese IME reaches the cell, and a barcode scanner in the link picker links the scanned record.
+- **Dates and numbers** - Dates before year 100 keep their year, Decimal fields from external databases use the column's scale, and Calendar weekdays follow the UI language.
+- **Rich text** - Rich text and code blocks keep their content and indentation after save and reload. [Learn more](/docs/product/tables/fields/field-types/text-based/rich-text)
+- **Comments** - Text in angle brackets, such as `Name <a@b.com>`, is kept in comments.
+- **Links** - *Create & Link* on a self-link links the right way, and deleting a table from Trash removes its link fields.
+- **Lookups** - A Lookup through a many-to-many link keeps the display value of the linked records, and filters on nested Lookups apply the Lookup's own conditions. [Learn more](/docs/product/tables/fields/field-types/links-based/lookup#applying-filters)
+- **External databases** - PostgreSQL generated columns are read-only, MySQL DateTime rollups show the right time, and links to a table with a composite primary key are rejected before anything is created.
+- **Trash** - Deleting or restoring a record keeps its linked records that are already in Trash listed there. [Learn more](/docs/product/projects/project-trash#restoring-an-entry)
+- **Duplicate** - Duplicating a project or table skips filters on cross-base links it does not copy, and works with column defaults that contain `?`. [Learn more](/docs/product/projects/actions-on-project#duplicate-project)
+- **Imports and exports** - Excel imports keep sheet names, and exports write link display values.
+- **CSV import** - Merging a CSV on Id updates existing records, and webhooks and workflows of imported records see their links.
+- **Kanban** - Boards with more than 25 stacks show every stack after *Collapse all*. [Learn more](/docs/product/tables/views/view-types/kanban#collapse-stack)
+- **Calendar** - A calendar on a date rollup shows records as all-day events.
+- **Classic apps** - A dashboard group filter applies to every widget, form pages send *Email responses*, people pickers list only people who have access, and table pages show number separators.
+- **Forms** - Forms that require sign-in open after sign-in, with no redirect loop.
+- **Workflows** - Send email accepts a comma-separated list, run history shows why a run failed before its first step, scripts run with the NocoAI integration, and a workflow that can never run is not left Live. [Learn more](/docs/workflows/nodes/action-nodes/send-email)
+- **Webhooks** - The sample payload shows link fields as real payloads do. [Learn more](/docs/product/tables/table-operations/webhook/create-webhook#configuring-webhook)
+- **Table Sync** - Paste-link syncs from a password-protected shared view accept the password. [Learn more](/docs/product/sync/nocodb-sync#source)
+- **Security** - Shared views and shared dashboards return only the fields they show, forms write only their own fields, Editors no longer see secrets stored in workflow steps, and workflow webhooks accept request bodies up to 1 MB.
+- **Scripts** - `table.selectRecordsAsync({ recordIds })` returns only the requested records. [Learn more](/docs/workflows/scripts/api-reference/table#selectrecordsasync)
+- **Teams** - Adding or removing a team member updates their project role right away. [Learn more](/docs/product/collaboration/teams#assign-roles-to-teams)
+- **Documents** - Dragging a column in a document table resizes that table.
+- **Grid columns** - Dragging a column header saves a unique position for each column.
+- **Phones and tablets** - Tapping a Button field runs its action, and the sidebar starts collapsed on tablets.
+- **Error messages** - Server errors show as toasts again, and failed SQL actions name the connection problem.
+- **Plan label** - The sidebar shows the right plan after you sign in again.
 
 ## Self-Hosting Notes
 
-- **First sign-up** - On a new licensed install, the first super admin gets the default workspace and organization without a restart.
-- **License refresh** - *Refresh* on the License page, or a restart, activates a license that shows as pending. [Learn more](https://docs.nocodb.com/docs/self-hosting/license-activation#refresh-license)
-- **Secure attachments** - Setting only `NC_ATTACHMENT_ACCESS_CONTROL_ENABLED=true` now turns on secure attachments, so `/download` and `/dl` stop serving files. Use the signed URLs that attachment responses return. [Learn more](https://docs.nocodb.com/docs/self-hosting/environment-variables#storage)
-- **Local databases** - ClickHouse on a private network, and MySQL or PostgreSQL over a Unix socket, need `NC_ALLOW_LOCAL_EXTERNAL_DBS=true`. [Learn more](https://docs.nocodb.com/docs/self-hosting/environment-variables#product-configuration)
-- **MCP tokens** - MCP token secrets are stored hashed and shown only once. Tokens already in your MCP clients keep working.
-- **Long table names** - New SQL Server and Oracle table names are limited to 125 characters.
-- **Security hardening** - Sign-up, invitations, OAuth, shared views, data exports, database connections and stored secrets are hardened, and dependencies are patched.
+- **SCIM groups** - Groups from Entra ID and Okta grant their team's workspace role. [Learn more](/docs/product/account-settings/authentication/scim#group-provisioning)
+- **Airgapped licenses** - *Refresh License* renews airgapped licenses. [Learn more](/docs/self-hosting/license-activation#refresh-license)
+- **MariaDB** - `REGEX_REPLACE` and `REGEX_EXTRACT` work on MariaDB, and MariaDB works as the metadata database. [Learn more](/docs/product/tables/fields/field-types/formula/string-functions#regex_replace)
+- **External databases** - A super admin sign-in leaves external database connections closed until they are used.
+- **Support chat** - `NC_DISABLE_SUPPORT_CHAT` also stops the browser from loading the chat script. [Learn more](/docs/self-hosting/environment-variables#support-chat)
+- **SSO** - Sign-in through `NC_SSO=oidc` works again. With `NC_SSO=saml`, an IdP-initiated sign-in restarts once from NocoDB, so the IdP must return RelayState unchanged. [Learn more](/docs/self-hosting/environment-variables#authentication)
+- **Windows** - CSV and document exports work with local storage on Windows.
+- **AI gateways** - AI features work with OpenAI-compatible gateways that return JSON inside code fences.
+- **Faster link writes** - On Community Edition, writes with links no longer read every linked record again. Deletes and adding links are several times faster, and inserts and updates with links about a third faster.
+- **Timezones** - Date formulas work when PostgreSQL reports a legacy timezone name, such as `Asia/Calcutta`.
 
 ---
 
-For more details on the features introduced in 2026.10.0, see the [2026.10.0 changelog](https://docs.nocodb.com/docs/changelog/2026.10.0).
+For the changes in the previous release, see the [2026.10.1 changelog](/docs/changelog/2026.10.1).
 
+---
 
-- [**closed**] Changing password records a duplicate sign-in audit event and drops the current session if OAuth token revocation fails [#14939](https://github.com/nocodb/nocodb/issues/14939)
-- [**closed**] Add Greek (el) language support [#14936](https://github.com/nocodb/nocodb/issues/14936)
-- [**closed**] 🐛 Bug: Node.js version has to be updated [#14874](https://github.com/nocodb/nocodb/issues/14874)
-- [**closed**] 🐛 Bug: Google OAuth doesn't function as expected [#14048](https://github.com/nocodb/nocodb/issues/14048)
-- [**🔦 Type: Feature**] 🔦 Feature: postfix the object name with the column name of the table with the constraint to allow the user to recognise the DB-Link [#13871](https://github.com/nocodb/nocodb/issues/13871)
-- [**🔦 Type: Feature**] 🔦 Feature: Keyboard navigation associated with fk_field [#13830](https://github.com/nocodb/nocodb/issues/13830)
-- [**🔦 Type: Feature**] 🔦 Feature: Form conditional logic: Lookup fields not available as condition source for "Show on conditions" [#13803](https://github.com/nocodb/nocodb/issues/13803)
-- [**closed**] 🐛 Bug: bulkUpdate silently fails — prepareMetaUpdateQuery stub returns undefined, generates invalid SQL [#13778](https://github.com/nocodb/nocodb/issues/13778)
-- [**closed**] 🐛 Bug: [ExternalDB][SQLite]DATEADD formula returns blank when using a field reference as the second argument (SQLite) [#13538](https://github.com/nocodb/nocodb/issues/13538)
-- [**🔦 Type: Feature**] 🔦 Feature: MCP OAuth 2.1 support for AI agent integration (claude.ai, etc.) [#13363](https://github.com/nocodb/nocodb/issues/13363)
-- [**closed**] 🐛 Bug: Chatwoot widget does not follow app dark/light theme toggle [#13148](https://github.com/nocodb/nocodb/issues/13148)
-- [**🔦 Type: Feature**] 🔦 Feature:  records group only support 3 groups nested , if it can support as many as possible [#12786](https://github.com/nocodb/nocodb/issues/12786)
-- [**🔦 Type: Feature**] 🔦 Feature: Add UTF-8-BOM (utf-8-sig) encoding option for CSV exports to properly handle special characters [#12671](https://github.com/nocodb/nocodb/issues/12671)
-- [**🔦 Type: Feature**] 🔦 Feature: Add "K" "M" "B" suffix to currency field [#12657](https://github.com/nocodb/nocodb/issues/12657)
-- [**🔦 Type: Feature**] 🔦 Feature: Add create table and create field functions in the MCP server [#12588](https://github.com/nocodb/nocodb/issues/12588)
-- [**🔦 Type: Feature**] 🔦 Feature: [Seft hosted] Allow setup NC_MAX_TEXT_LENGTH with environment variables [#12500](https://github.com/nocodb/nocodb/issues/12500)
-- [**👋 For : Community or Good First Issue**] 🐛 Bug: [Self hosted] Issues with French Translation in NocoDB [#12453](https://github.com/nocodb/nocodb/issues/12453)
-- [**🔦 Type: Feature**] 🔦 Feature: Allow pinning multiple columns in table view [#11723](https://github.com/nocodb/nocodb/issues/11723)
-- [**🔦 Type: Feature**] 🔦 Feature: allow creating new fields for csv imports into existing tables [#11190](https://github.com/nocodb/nocodb/issues/11190)
-- [**🔦 Type: Feature**] 🔦 Feature: Form Conditions Based On Linked Record [#11132](https://github.com/nocodb/nocodb/issues/11132)
-- [**🔦 Type: Feature**] 🔦 Feature: Export calendar view data in .ics format [#10228](https://github.com/nocodb/nocodb/issues/10228)
-- [**🔦 Type: Feature**] 🔦 Feature: Calendar view on mobile [#9825](https://github.com/nocodb/nocodb/issues/9825)
-- [**🔦 Type: Feature**] 🔦 Feature: Add `HASH` formula [#9518](https://github.com/nocodb/nocodb/issues/9518)
-- [**🔦 Type: Feature**] 🔦 Feature: see photos of other team members that have the same database open [#8275](https://github.com/nocodb/nocodb/issues/8275)
-- [**🔦 Type: Feature**] 🔦 Feature: [Admin panel] The size of the Attachment should be controlled. [#8273](https://github.com/nocodb/nocodb/issues/8273)
-- [**🔦 Type: Feature**] 🔦 Feature:  Allow screenhots (image jpeg) in Card comments. [#7429](https://github.com/nocodb/nocodb/issues/7429)
-- [**🔦 Type: Feature**] 🔦 Feature: Incoming webhooks from other datasources [#7037](https://github.com/nocodb/nocodb/issues/7037)
-- [**🔦 Type: Feature**] 🔦 Feature: Custom form view layout [#6908](https://github.com/nocodb/nocodb/issues/6908)
-- [**🔦 Type: Feature**] 🔦 Feature: Rich Formatting in Email Webhooks [#4131](https://github.com/nocodb/nocodb/issues/4131)
+- [**closed**] v3 data API: writes with links take 8–50 s because of the post-write reload [#15069](https://github.com/nocodb/nocodb/issues/15069)
+- [**closed**] 🐛 Bug: Rich Text cell changes code blocks, leading spaces and escaped text on save [#15054](https://github.com/nocodb/nocodb/issues/15054)
+- [**closed**] 🐛 Bug: Rich Text Markdown serialization leaks leading whitespace on fenced code blocks, stripping code indentation on every edit/save cycle [#15049](https://github.com/nocodb/nocodb/issues/15049)
+- [**closed**] 🐛 Bug: Rich Text Markdown serialization corrupts nested ordered lists after blank lines (<br>) due to leaked leading whitespace [#15043](https://github.com/nocodb/nocodb/issues/15043)
+- [**closed**] 🐛 Bug: convertMS2Duration rounds without carrying into the next unit (00:60, 00:00:59.10) [#15035](https://github.com/nocodb/nocodb/issues/15035)
+- [**closed**] 🐛 Bug: API v2 `where=(checkbox,is,true)` is ignored since upgrading to 2026.10.1 (returns all rows) [#15005](https://github.com/nocodb/nocodb/issues/15005)
+- [**closed**] Suggest: An HN badge would help [#15000](https://github.com/nocodb/nocodb/issues/15000)
+- [**closed**] 🐛 Bug: Unable to download the NocoDB binary from get.nocodb.com [#14996](https://github.com/nocodb/nocodb/issues/14996)
+- [**closed**] Request CVE assignment for GHSA-2ggp-wwhj-f84q [#14994](https://github.com/nocodb/nocodb/issues/14994)
+- [**closed**] Bug: v3 records/upsert with an inline Links field leaves a Postgres transaction open ("idle in transaction") and the request never responds [#14993](https://github.com/nocodb/nocodb/issues/14993)
+- [**closed**] 🔦 Feature: Middle-mouse open in new tab [#14989](https://github.com/nocodb/nocodb/issues/14989)
+- [**closed**] 🐛 Bug: New Personal Access Tokens return "Invalid token" (ERR_AUTHENTICATION_REQUIRED) on all API v2 endpoints — self-hosted CE, 2026.10.0 and 2026.10.1 [#14959](https://github.com/nocodb/nocodb/issues/14959)
+- [**closed**] 🐛 Bug: Expanded record fails with loader.load() must be called with a value when a Lookup exists on a Links field whose target table has its own Links field [#14951](https://github.com/nocodb/nocodb/issues/14951)
+- [**closed**] 🐛 Bug: Single-select hover issue (linux) [#14949](https://github.com/nocodb/nocodb/issues/14949)
+- [**closed**] 🐛 Bug: in Interfaces group filter doesn't work with all group widgets [#14948](https://github.com/nocodb/nocodb/issues/14948)
+- [**closed**] 🐛 Bug: Rich Text Markdown serialization corrupts headings and code blocks after images [#14943](https://github.com/nocodb/nocodb/issues/14943)
+- [**closed**] formula(pg): SWITCH with numeric expression and boolean WHEN cases casts to ::text instead of 1/0 [#14932](https://github.com/nocodb/nocodb/issues/14932)
+- [**closed**] 🐛 Bug: (Self-Hosted) Large Kanban views with collapsed stacks are not visible nor searchable [#14930](https://github.com/nocodb/nocodb/issues/14930)
+- [**closed**] TablesService: getTableNameLengthLimit and resolveFreePhysicalTableName check string .length instead of UTF-8 byte length for pg and oracledb [#14929](https://github.com/nocodb/nocodb/issues/14929)
+- [**closed**] MultiSelectCellRenderer hover highlight boundary drifts from rendered tag position [#14928](https://github.com/nocodb/nocodb/issues/14928)
+- [**closed**] Cancel button in attachment RenameFile modal is missing @click="onCancel" and uses invalid html-type="back" [#14927](https://github.com/nocodb/nocodb/issues/14927)
+- [**closed**] 🔦 Feature:  Workflows: "Update view filter" action [#14875](https://github.com/nocodb/nocodb/issues/14875)
+- [**closed**] [Docs]: Dead Travis CI badge in 9 translated READMEs (travis-ci.org/dwyl/esta.svg 404, image URL points at dwyl/esta) [#14806](https://github.com/nocodb/nocodb/issues/14806)
+- [**closed**] 🐛 Bug: `DATETIME_FORMAT(NOW())` may return a different date from `NOW()` when using a non-UTC timezone [#14785](https://github.com/nocodb/nocodb/issues/14785)
+- [**closed**] 🐛 Bug:  url-fields not exported [#14765](https://github.com/nocodb/nocodb/issues/14765)
+- [**🔦 Type: Feature**] 🔦 Feature: Full-text search among all NocoDocs [#14576](https://github.com/nocodb/nocodb/issues/14576)
+- [**closed**] `convertDateTime` applies a fixed Europe/Berlin-like offset regardless of container `TZ` — affects `CreatedTime`/`UpdatedTime` (since #8593/#10835) and silently corrupts raw storage for regular `DateTime` columns [#14471](https://github.com/nocodb/nocodb/issues/14471)
+- [**🔦 Type: Feature**] 🔦 Feature: Url formatting stays when it's a lookup field [#14450](https://github.com/nocodb/nocodb/issues/14450)
+- [**closed**] 🐛 Bug: Dashboard number widget-no timezone selector [#14312](https://github.com/nocodb/nocodb/issues/14312)
+- [**closed**] 🐛 Bug: Git repository is unusable under Windows [#14287](https://github.com/nocodb/nocodb/issues/14287)
+- [**closed**] 🐛 Bug: use openai compatible AI_NoObjectGeneratedError [#14268](https://github.com/nocodb/nocodb/issues/14268)
+- [**closed**] 🐛 Bug: xlsx import of referenced fields fails if the "name" content of the referenced field is provided [#14240](https://github.com/nocodb/nocodb/issues/14240)
+- [**closed**] 🐛 Bug: Searching in linked records is very slow and unreliable [#14232](https://github.com/nocodb/nocodb/issues/14232)
+- [**closed**] 🐛 Bug: Some lookup fields resolve to "null" values in API, Grid View and CSV export on self-hosted deployments [#14229](https://github.com/nocodb/nocodb/issues/14229)
+- [**closed**] 🐛 Bug: db field name should be displayed next to the display name [#14136](https://github.com/nocodb/nocodb/issues/14136)
+- [**closed**] 🐛 Bug: V3 list vue requires license, V1/V2 do not [#14062](https://github.com/nocodb/nocodb/issues/14062)
+- [**🔦 Type: Feature**] 🔦 Feature: date widget date entry must be terminated by ENTER + TAB [#13999](https://github.com/nocodb/nocodb/issues/13999)
+- [**closed**] 🐛 Bug: Notifications doesn't work [#13922](https://github.com/nocodb/nocodb/issues/13922)
+- [**closed**] 🐛 Bug: __nc_deleted ambiguous column error on self-referential LTAR field in shared/internal views [#13853](https://github.com/nocodb/nocodb/issues/13853)
+- [**closed**] V2 LinkToAnotherRecord (om) sort uses display-value lookup instead of count [#13811](https://github.com/nocodb/nocodb/issues/13811)
+- [**closed**] 🐛 Bug: Cannot duplicate base - "Expected 1 bindings, saw X" [#13763](https://github.com/nocodb/nocodb/issues/13763)
+- [**closed**] 🐛 Bug: [ExternalDB][MariaDB] CAST(... AS JSON) breaks all tables on MariaDB (ERROR 1064) [#13614](https://github.com/nocodb/nocodb/issues/13614)
+- [**closed**] 🐛 Bug:  An error occurs when exporting documents in on-premises deployment mode. [本地部署模式下，导出文档提示报错] [#13605](https://github.com/nocodb/nocodb/issues/13605)
+- [**closed**] 🐛Noco AI Auto-Suggest falsely reports duplicate table alias “Sample Views” when creating a new table [#13577](https://github.com/nocodb/nocodb/issues/13577)
+- [**closed**] [Seft hosted]  Record update failed: Network Error [#13559](https://github.com/nocodb/nocodb/issues/13559)
+- [**closed**] 🐛 Bug: won't connect to custom dns database [#13504](https://github.com/nocodb/nocodb/issues/13504)
+- [**closed**] 🐛 Bug: error 500 on our view [#13490](https://github.com/nocodb/nocodb/issues/13490)
+- [**closed**] 🐛 Bug: nocodb will not update from Homebrew [#13480](https://github.com/nocodb/nocodb/issues/13480)
+- [**closed**] 🐛 Bug: NocoAI remains stuck in loading state with no content in Recommended, Ask, Analyze, and Build tabs [#13456](https://github.com/nocodb/nocodb/issues/13456)
+- [**closed**] 🐛 Bug: BelongsTo field link/unlink does not update grid UI when Infinite Scrolling is disabled [#13307](https://github.com/nocodb/nocodb/issues/13307)
+- [**closed**] 🐛 Bug: Cross Base Link blocks base selection even with Owner permission [#13283](https://github.com/nocodb/nocodb/issues/13283)
+- [**🔦 Type: Feature**] 🔦 Feature: Add toggle list / collapsible list support to Rich Text editor [#13281](https://github.com/nocodb/nocodb/issues/13281)
+- [**👋 For : Community or Good First Issue**][**✈️ Type: i18n translation**] 🐛 Bug: French translation (fr.json) corrupted — NULL bytes replacing accented characters (126 keys affected) [#13172](https://github.com/nocodb/nocodb/issues/13172)
+- [**closed**] 🐛 Bug: Chatwoot still loading when NC_DISABLE_SUPPORT_CHAT is true [#13157](https://github.com/nocodb/nocodb/issues/13157)
+- [**closed**] 🐛 Bug: Import from URL in browser basically cannot work for end users [#13111](https://github.com/nocodb/nocodb/issues/13111)
+- [**closed**] 🐛 Bug: Cannot delete attachment from UI - "Cannot read properties of undefined (reading 'id')" in FileReference.delete [#13096](https://github.com/nocodb/nocodb/issues/13096)
+- [**closed**] 🐛 Bug: Form Preview shows extra fields, but Shared Form hides them (shows “-”) + attachment image not displayed [#13030](https://github.com/nocodb/nocodb/issues/13030)
+- [**closed**] 🐛 Bug: M2M relationship on external PostgreSQL generates invalid SQL (missing FROM-clause) [#12987](https://github.com/nocodb/nocodb/issues/12987)
+- [**closed**] 🐛 Bug: [Self Hosted] Reset email settings results in error [#12865](https://github.com/nocodb/nocodb/issues/12865)
+- [**closed**] 🐛 Bug: [Self Hosted] containrrr/watchtower keeps restarting after server update-upgrade [#12735](https://github.com/nocodb/nocodb/issues/12735)
+- [**🔦 Type: Feature**] 🔦 Feature: Improve accessibility of the forms [#12691](https://github.com/nocodb/nocodb/issues/12691)
+- [**closed**] 🐛 Bug: cannot find the button to expand all groups after grouping [#12688](https://github.com/nocodb/nocodb/issues/12688)
+- [**closed**] 🐛 Bug: Thumbnails and downloads broken for local disk images after configuring S3 storage [#12685](https://github.com/nocodb/nocodb/issues/12685)
+- [**closed**] 🐛 Bug: [Self Hosted] Traefik version used by auto-upstall no longer works on latest Docker [#12655](https://github.com/nocodb/nocodb/issues/12655)
+- [**closed**] 🐛 Bug: [Self Hosted] Error: No exported member BaseVersion in ~/utils/globals [#12650](https://github.com/nocodb/nocodb/issues/12650)
+- [**closed**] 🐛 Bug: Lexicographical is very strict [#12573](https://github.com/nocodb/nocodb/issues/12573)
+- [**closed**] 🐛 Bug: [External DB] All External DB connections instanciated when NocoDB is accessed by any user [#12554](https://github.com/nocodb/nocodb/issues/12554)
+- [**closed**] [Self hosted] Trying to run NocoDB inside Alpine Container [#12534](https://github.com/nocodb/nocodb/issues/12534)
+- [**🔦 Type: Feature**] 🔦 Feature: Image Thumbnails in Kanban View Cards [#12510](https://github.com/nocodb/nocodb/issues/12510)
+- [**closed**] 🐛 Bug: [self-hosted] In development mode - CSV Export consistently fails with “Not found” [#12373](https://github.com/nocodb/nocodb/issues/12373)
+- [**🔦 Type: Feature**] 🔦 Feature: Add support for table & field permission CRUD API [#12085](https://github.com/nocodb/nocodb/issues/12085)
+- [**closed**] 🐛 Bug: Unsatisfactory font rendering in grid view [#12047](https://github.com/nocodb/nocodb/issues/12047)
+- [**🦭 DB : MariaDB**] 🐛 Bug: [external db] MariaDb View Decimal Values are rounded [#11887](https://github.com/nocodb/nocodb/issues/11887)
+- [**closed**] 🐛 Bug: View Page Error on iPhone 12 [#11720](https://github.com/nocodb/nocodb/issues/11720)
+- [**closed**] 🐛 Bug: [external db] On MariaDB 10.11 : REGEX_REPLACE fails for simple Hello World test [#11675](https://github.com/nocodb/nocodb/issues/11675)
+- [**closed**] 🐛 Bug: Changes to other fields deleted when creating new field [#11577](https://github.com/nocodb/nocodb/issues/11577)
+- [**closed**] 🐛 Bug: [external db] MySQL rollup column do not get formatted during execAndParse [#11425](https://github.com/nocodb/nocodb/issues/11425)
+- [**closed**] 🐛 Bug: [external db] metadata sync issue after update [#11333](https://github.com/nocodb/nocodb/issues/11333)
+- [**closed**] 🐛 Bug: Lost the first button using Chinese input method - 使用中文输入法丢失第一个按键 [#11038](https://github.com/nocodb/nocodb/issues/11038)
+- [**closed**] 🐛 Bug: Webhook sample payload is different for links [#11028](https://github.com/nocodb/nocodb/issues/11028)
+- [**closed**] 🐛 Bug: [external db] error when deleting record with links [#11021](https://github.com/nocodb/nocodb/issues/11021)
+- [**closed**] 🐛 Bug: CTRL+F no longer works in item view/kanban [#10970](https://github.com/nocodb/nocodb/issues/10970)
+- [**🔦 Type: Feature**] 🔦 Feature: Calendar view supporting multiple date ranges [#10703](https://github.com/nocodb/nocodb/issues/10703)
+- [**closed**] 🐛 Feature: Groups do not respect sorting [#10609](https://github.com/nocodb/nocodb/issues/10609)
+- [**closed**] 🐛 Bug: Expand All does not apply across multiple levels [#10565](https://github.com/nocodb/nocodb/issues/10565)
+- [**closed**] 🐛 Bug: [external db] Rearranging columns in GUI produces identical column order indexes [#10386](https://github.com/nocodb/nocodb/issues/10386)
+- [**🔦 Type: Feature**] 🔦 Feature: Support for Line Breaks in Formula Columns for Multi-line Formatting [#10299](https://github.com/nocodb/nocodb/issues/10299)
+- [**closed**] 🐛 Bug: Re-import CSV [#10223](https://github.com/nocodb/nocodb/issues/10223)
+- [**closed**] 🐛 Bug: support i18n for calendar headers [#10176](https://github.com/nocodb/nocodb/issues/10176)
+- [**closed**] 🐛 Bug: [external db] PATCH on record with composite PK fails systematically [#10078](https://github.com/nocodb/nocodb/issues/10078)
+- [**closed**] 🐛 Bug: Formatting for a Formula field gets changed to accomodate the formula [#10073](https://github.com/nocodb/nocodb/issues/10073)
+- [**🔦 Type: Feature**] 🔦 Feature: Ability for form submitters to email their submission to themselves [#9978](https://github.com/nocodb/nocodb/issues/9978)
+- [**🐛 Type: Bug**] 🐛 Bug: [external db] Relation update fails when tables have primary keys of different types [#9951](https://github.com/nocodb/nocodb/issues/9951)
+- [**🐛 Type: Bug**] 🐛 Bug: [external db] Unable to update record when foreingn key points to alphanumeric key [#9881](https://github.com/nocodb/nocodb/issues/9881)
+- [**🐛 Type: Bug**] 🐛 Bug: [self-hosted] : Failed to insert row: This record already exists. [#9837](https://github.com/nocodb/nocodb/issues/9837)
+- [**🐛 Type: Bug**] 🐛 Bug: [self-hosted] : Update failed with Postgres 17 [#9704](https://github.com/nocodb/nocodb/issues/9704)
+- [**🐛 Type: Bug**] 🐛 Bug: [external db] Cascade on delete & links with composite pk [#9583](https://github.com/nocodb/nocodb/issues/9583)
+- [**🐛 Type: Bug**] 🐛 Bug: [external db] : Unable to Directly Add a Record when PK is tied to a function [#9490](https://github.com/nocodb/nocodb/issues/9490)
+- [**🐛 Type: Bug**] 🐛 Bug: [external db] Impossible to add rows via form view to table that has only foreign keys [#9365](https://github.com/nocodb/nocodb/issues/9365)
+- [**🐛 Type: Bug**] 🐛 Bug: Rich text API response is not in markdown syntax [#9338](https://github.com/nocodb/nocodb/issues/9338)
+- [**🐛 Type: Bug**] 🐛 Bug: [external db] Table with `GENERATED ALWAYS AS (generation_expr) STORED PRIMARY KEY` or `NOT NULL GENERATED ALWAYS AS (generation_expr) STORED` column not fillable from NocoDB [#9278](https://github.com/nocodb/nocodb/issues/9278)
+- [**🐛 Type: Bug**] 🐛 Bug: [external db] Using external Postgresql data source with are Farsi field names leads to problems.  [#9207](https://github.com/nocodb/nocodb/issues/9207)
+- [**🔦 Type: Feature**] 🔦 Feature: Form validations- add support for `{{today}}` as a dynamic variable [#9122](https://github.com/nocodb/nocodb/issues/9122)
+- [**closed**] 🐛 Bug: [external db] Impossible to directly fill "Has many" field when creating record via form view [#8768](https://github.com/nocodb/nocodb/issues/8768)
+- [**🔦 Type: Feature**] 🔦 Feature: Support grouping in gallery view [#8754](https://github.com/nocodb/nocodb/issues/8754)
+- [**closed**] 🐛 Bug: [external db] PostgreSQL column of type `date` is misinterpreted for dates < `0100-01-01` [#8753](https://github.com/nocodb/nocodb/issues/8753)
+- [**closed**] 🐛 Bug: [external db] Unable to connect to MySQL database with read-only access. [#8727](https://github.com/nocodb/nocodb/issues/8727)
+- [**closed**] 🐛 Bug: Input of lookup field doesn't update with barcode scanner [#8625](https://github.com/nocodb/nocodb/issues/8625)
+- [**closed**] 🐛 Bug: [external db] Unable to create new records. Possibly tied to PK not auto-incrementing, auto-filling. [#7514](https://github.com/nocodb/nocodb/issues/7514)
+- [**closed**] 🐛 Bug: [external db] Constraint violation when submitting form with many-to-many relation after 0.204.0 upgrade [#7472](https://github.com/nocodb/nocodb/issues/7472)
+- [**closed**] 🐛 Bug: [external db] Geo localtion column issue on Safari [#7416](https://github.com/nocodb/nocodb/issues/7416)
+- [**closed**] 🐛 Bug: [external db] Unable to update an entry with timestampz and milliseconds as primary key [#6551](https://github.com/nocodb/nocodb/issues/6551)
+- [**🟣 Priority: Low**] 🐛 Bug: Creating 2 M2M Relationships will not be reflected in ERD View [#4607](https://github.com/nocodb/nocodb/issues/4607)
+- [**🐛 Type: Bug**] 🐛 Bug: [external db] NocoDB can't sync data if multiple many-to-many relations with constraints named the same exist [#4442](https://github.com/nocodb/nocodb/issues/4442)
