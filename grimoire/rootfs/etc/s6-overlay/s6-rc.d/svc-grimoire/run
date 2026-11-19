@@ -3,7 +3,100 @@
 
 set -e
 
+readonly DATA_DIR="${DATA_DIR:-/config}"
+readonly LEGACY_DB="${DATA_DIR}/db.sqlite"
+readonly MIGRATION_MARKER="${DATA_DIR}/.legacy-migration-complete"
+readonly MIGRATION_PORT=3211
+readonly MIGRATION_DAEMON_URL="http://127.0.0.1:${MIGRATION_PORT}"
+
+migration_daemon_pid=""
+
+stop_migration_daemon() {
+    if [[ -n "${migration_daemon_pid}" ]]; then
+        if kill -0 "${migration_daemon_pid}" 2>/dev/null; then
+            kill -TERM "${migration_daemon_pid}"
+        fi
+        wait "${migration_daemon_pid}" 2>/dev/null || true
+        migration_daemon_pid=""
+    fi
+}
+
+migrate_legacy_database() {
+    local inspect_result
+    local owner_ids_json
+    local ready=false
+    local -a owner_ids
+
+    echo "[svc-grimoire] Legacy Grimoire database detected; starting automatic migration"
+
+    # Use a separate port so NGINX only exposes the UI after migration completes.
+    PORT="${MIGRATION_PORT}" bun run daemon:start &
+    migration_daemon_pid=$!
+    trap stop_migration_daemon EXIT
+    trap 'exit 143' TERM
+    trap 'exit 130' INT
+
+    for ((attempt = 0; attempt < 60; attempt++)); do
+        if curl -fsS "${MIGRATION_DAEMON_URL}/health" >/dev/null 2>&1; then
+            ready=true
+            break
+        fi
+        if ! kill -0 "${migration_daemon_pid}" 2>/dev/null; then
+            echo "[svc-grimoire] Temporary daemon exited before migration" >&2
+            return 1
+        fi
+        sleep 1
+    done
+
+    if [[ "${ready}" != true ]]; then
+        echo "[svc-grimoire] Temporary daemon did not become ready for migration" >&2
+        return 1
+    fi
+
+    inspect_result="$(
+        cd /app/daemon
+        bun src/cli.ts migrate inspect \
+            --data-dir "${DATA_DIR}" \
+            --daemon-url "${MIGRATION_DAEMON_URL}" \
+            --json
+    )"
+    owner_ids_json="$(jq -e '.data.users | map(.id)' <<<"${inspect_result}")"
+    mapfile -t owner_ids < <(jq -r '.[]' <<<"${owner_ids_json}")
+
+    if ((${#owner_ids[@]} == 0)); then
+        echo "[svc-grimoire] Legacy database contains no owners; nothing to import"
+    fi
+
+    # Grimoire 1.x is single-user, so import every legacy owner into one library.
+    # --merge makes retries idempotent and preserves data from duplicate URLs.
+    for owner_id in "${owner_ids[@]}"; do
+        echo "[svc-grimoire] Importing legacy owner ${owner_id}"
+        (
+            cd /app/daemon
+            bun src/cli.ts migrate apply \
+                --data-dir "${DATA_DIR}" \
+                --owner "${owner_id}" \
+                --merge \
+                --yes \
+                --daemon-url "${MIGRATION_DAEMON_URL}" \
+                --json
+        )
+    done
+
+    # Keep db.sqlite and user-uploads untouched as a recovery copy.
+    printf 'Legacy Grimoire migration completed successfully.\n' >"${MIGRATION_MARKER}.tmp"
+    mv "${MIGRATION_MARKER}.tmp" "${MIGRATION_MARKER}"
+    echo "[svc-grimoire] Legacy migration completed successfully"
+
+    stop_migration_daemon
+    trap - EXIT TERM INT
+}
+
 cd /app || exit 1
 
+if [[ -f "${LEGACY_DB}" && ! -f "${MIGRATION_MARKER}" ]]; then
+    migrate_legacy_database
+fi
+
 # Start the application
-bun run daemon:start
+exec bun run daemon:start
