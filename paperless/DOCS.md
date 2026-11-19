@@ -37,6 +37,7 @@ Follow these steps to install Paperless-ngx in Home Assistant:
 | `Admin password`    | Yes      | -       | Strong password for admin account.                                          |
 | `OCR language`      | No       | `eng`   | OCR language code (e.g., `deu` for German, `fra` for French).               |
 | `Paperless URL`               | No       | -       | Full URL (e.g., `http://paperless.example.com:8000`). Required for reverse proxies. |
+| `Allowed hosts`               | No       | `[]`    | Additional hostnames or IP addresses allowed to access Paperless. The app and `Paperless URL` hostnames are allowed automatically. |
 | `Secret key`        | No       | Auto-generated | Secret key for session security. **Change this if exposed to the internet!** Generate via `openssl rand -hex 32`. |
 | `Consumer file polling`    | No      | -       | If paperless won't find documents added to your consume folder, it might not be able to automatically detect filesystem changes. In that case, specify a polling interval in seconds here, which will then cause paperless to periodically check your consumption directory for changes.                                          |
 
@@ -65,6 +66,30 @@ To store documents on a NAS:
 
 - **Default**: `http://[HOME_ASSISTANT_IP]:8000` (replace with your HA IP).
 - **Custom Domain**: Set `PAPERLESS_URL` to your domain (e.g., `https://docs.example.com`).
+- **Additional hostnames or IP addresses**: Starting with Paperless 3.5.0, setting `PAPERLESS_URL` restricts requests to that URL's hostname and `localhost`. If you also access Paperless through a Home Assistant hostname, IP address, or another reverse-proxy hostname, add each one as a separate `Allowed hosts` entry:
+
+  ```yaml
+  PAPERLESS_ALLOWED_HOSTS:
+    - homeassistant.local
+    - 192.168.1.10
+    - paperless.example.com
+  ```
+
+  Enter hostnames or IP addresses without URL schemes or ports. The add-on automatically allows its own app hostname, while Paperless automatically allows the hostname from `PAPERLESS_URL` and `localhost`; you do not need to add those entries yourself.
+
+  If neither `PAPERLESS_URL` nor any allowed hosts are configured, Paperless keeps its default of accepting all hosts. Adding `*` as the only allowed-host entry also enables unrestricted access, but this is not recommended for internet-exposed installations.
+
+---
+
+## ⬆️ Upgrading from 3.4.x
+
+- Create a Home Assistant backup before upgrading.
+- Paperless applies its database migrations automatically during startup. Existing workflows are not rewritten, and existing document notes remain plain text unless you change their format.
+- Review the allowed-hosts behavior above if `PAPERLESS_URL` is configured.
+- If you customized `PAPERLESS_OCR_USER_ARGS`, remove the Paperless-managed arguments `input_file_or_options`, `output_file`, and `sidecar`; these are now rejected or ignored.
+- Expired sessions are now cleared automatically every day at 03:00. Use `PAPERLESS_SESSION_CLEANUP_TASK_CRON` through `env_vars` to customize the schedule.
+- OIDC deployments using `PAPERLESS_SOCIAL_ACCOUNT_MFA_TRUSTED_AMR` should review their trusted values; the default now correctly resolves to `mfa`.
+- AI users do not need to rebuild or re-embed their index. To apply the new on-disk layout and performance improvements to an existing index, optionally run `document_llmindex compact` inside the add-on container after the upgrade.
 
 ---
 

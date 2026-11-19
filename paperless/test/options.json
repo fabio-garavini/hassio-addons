@@ -1,4 +1,5 @@
 {
+  "PAPERLESS_URL": "https://paperless.example.com",
   "ssl": true,
   "certfile": "fullchain.pem",
   "keyfile": "privkey.pem",
@@ -6,6 +7,11 @@
   "USERMAP_GID": 0,
   "PAPERLESS_TIME_ZONE": "Etc/UTC",
   "PAPERLESS_TRUSTED_PROXIES": "172.30.32.0/23",
+  "PAPERLESS_ALLOWED_HOSTS": [
+    "homeassistant.local",
+    "192.168.1.10",
+    "127.0.0.1"
+  ],
   "storage_mounts": [],
   "env_vars": [],
   "PAPERLESS_SECRET_KEY": "secret-key"
