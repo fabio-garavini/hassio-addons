@@ -1,19 +1,213 @@
-Grimoire 1.3.1 is a patch release with a new AI provider, theme fixes and tighter outbound-request security.
+Docker: `docker pull goniszewski/grimoire:1.4.0` (also `1.4` and `latest`, amd64 + arm64).
+
+Upgrading a v0.5 Docker install? Follow the migration guide first; v0.5 volumes are not compatible with 1.x.
 
 ## Added
+- Tags can have an optional description. Add one when creating a tag or edit it
+  from the Tags page or a tag's detail page; it shows under the tag name and
+  is kept in backups (#186).
+- Filter by several tags at once: turn on Combine in the sidebar's Tags header
+  (or Ctrl/Cmd/Shift-click tags) and choose whether bookmarks must have all of
+  them or any of them. The API accepts up to 25 repeated `tag` parameters with
+  `tag_match=all|any` (#10).
+- Share links: opening `/add?url=…&title=…&note=…&tags=a,b` prefills the Add
+  Bookmark dialog (usable from bookmarklets, scripts, or Android share). If the
+  URL is already saved, the existing bookmark opens for editing instead. The
+  Add dialog now also accepts a title and tags for a single URL.
+- Unsaved drafts of the Add dialog and of bookmark title/notes edits are kept in
+  browser local storage and offered back after an accidental close, failed save,
+  or crash. They never leave the browser, are not part of backups, and expire
+  after 7 days.
+- A gallery view shows bookmarks as an image-first masonry of their cached
+  preview images, with an optional "Images only" filter (#197).
+- A LiteLLM proxy is available as an AI provider in Settings. Choose a model
+  from the list the proxy serves; the virtual key is optional and is left out
+  of backups.
+- Multi-architecture (amd64 and arm64) Docker images are published to Docker Hub
+  as `goniszewski/grimoire`, tagged with the exact version (`X.Y.Z`) and the
+  minor version (`X.Y`). `docker compose up -d` now pulls the image instead of
+  building it.
+- A guide for moving a v0.5 Docker install to 1.x, using `grimoire migrate`
+  inside the container.
 
-- **Cheaper Inference provider:** Use Cheaper Inference as an AI provider for enrichment.
+## Fixed
+- Imports from Shaarli and other PHP-based exporters no longer show apostrophes
+  as `&#039;` in titles and notes, and the import guide now covers Shaarli,
+  Linkding and Pinboard exports (#8).
+- Imported tags are converted to Grimoire's tag format (for example `Web Dev`
+  becomes `web-dev`) instead of being created with spellings the tag editor
+  would reject. Tags with nothing usable left are skipped, and the import
+  preview shows the final name for each tag.
 
-## Fixes
-
-- Theme switching now applies and persists correctly.
-- Trusted reverse proxy origins are accepted for remote access.
+## Changed
+- The Docker Hub `latest` tag now points to Grimoire 1.x. The old v0.5 image
+  stays available as `goniszewski/grimoire:legacy-v0.5`. A v0.5 data volume is
+  not compatible with 1.x (data moved from `/app/data` to `/data`); follow the
+  migration guide before upgrading.
 
 ## Security
+- Development dependency `minimatch` updated to resolve a Dependabot alert.
 
-- Outbound fetches now resolve DNS and block reserved address ranges, including NAT64, 6to4 and Teredo IPv6 and internal-only hostnames.
-- Dependency updates for `fast-uri` (GHSA-58mr-gqgx-xq4g, GHSA-qw65-cvwx-89v3).
+## [1.3.1] - 2026-11-06
+## Added
+- Cheaper Inference is available as an AI provider.
 
-## Install and upgrade
+## Fixed
+- Theme switching works and the selected theme is remembered.
+- Grimoire works behind trusted reverse proxy origins.
 
-Signed macOS and Linux release archives, SHA-256 files, detached signatures, and the public release key are attached. The signing-key fingerprint is `DB04AD8F2F2CB7753F0DFA3FED72EFB58D928945`. Back up your library before upgrading. Native upgrades preserve data under `~/.local/share/littleimp`.
+## Security
+- Outbound fetches resolve each hop's hostname and reject private or reserved
+  addresses, including NAT64, 6to4, and Teredo-embedded IPv6 and internal-only
+  hostnames.
+- Dependencies updated to resolve audit findings, including `fast-uri`
+  (GHSA-58mr-gqgx-xq4g, GHSA-qw65-cvwx-89v3).
+
+## [1.3.0] - 2026-09-28
+
+## Added
+- Later / Revisit rounds present a small shuffled stack of saved bookmarks,
+  remember progress locally, and support Skip, Mark as read, Postpone, Undo,
+  Remove from Later, and recoverable Trash.
+- Paste multiple links into the save dialog, optionally add them to Later, and
+  see per-link failures; a single link can include a note.
+- Sidebar folders can expand and collapse.
+
+## Fixed
+- Bookmarklet capture works on pages whose content security policy blocks the
+  old embedded frame, and failed AI enrichment responses can be retried.
+- Docker builds use aligned frontend lockfiles.
+
+## [1.2.0] - 2026-09-17
+
+## Added
+- Homebrew installation and managed service support, with `grimoire` as the
+  primary CLI and `littleimp` retained as a compatibility alias.
+- Versioned Companion protocol discovery and capability negotiation for official
+  browser extensions.
+- Authenticated single-page and bulk-tab capture with editable titles, notes,
+  categories, tags, selected text, pinning, and Read Later state.
+- Managed integration tokens for Companion, bookmarklets, MCP clients, and
+  other supported local integrations.
+
+## Changed
+- Browser Integration settings now explain how named integration tokens are
+  shared across supported clients and recommend separate tokens for independent
+  revocation.
+
+## Fixed
+- Search defaults to relevance instead of inheriting the library date sort,
+  restoring meaningful ordering for AI and mixed search. Explicit search sorts
+  remain available without changing the saved library order.
+- Model connection tests can be retried after a failed attempt in Settings.
+- Native self-updates are blocked for Homebrew-managed installations; use
+  `brew upgrade grimoire` instead.
+- Opening Browser Integration settings from an extension now loads the SPA
+  instead of returning the JSON settings endpoint.
+
+## [1.1.0] - 2026-08-12
+
+## Added
+- AI provider model picker in Settings: a searchable OpenRouter model combobox
+  with a Free models only filter and custom (typed) model entry, backed by a
+  new `GET /settings/ai-models` catalog endpoint (SSRF-guarded, size-capped).
+- Route-level error boundary so malformed API data cannot blank the app.
+
+## Fixed
+- OpenRouter default model normalized to `openai/gpt-latest` (the `~` fallback
+  prefix is dropped and stored values are stripped on load).
+- Concurrent same-URL bookmark creates return the existing bookmark instead of
+  failing with a raw error; trashed/archived duplicates get a clear 409.
+- Mutations await daemon confirmation before success toasts, dialog close, and
+  undo actions; failures surface as destructive toasts.
+- Bulk category moves use category IDs, and list/search filters prefer
+  `category_id` over the category name.
+- The bookmarklet embeds the token and daemon URL via `JSON.stringify` so
+  quotes or backslashes cannot break the generated script.
+
+## Security
+- SSRF hardening: outbound page fetches and update checks follow redirects
+  manually and validate every hop; private hosts, embedded credentials, and
+  non-http(s) schemes are rejected at bookmarks, capture, MCP, and import.
+- Remote upgrades require HTTPS release bases and detached signatures by
+  default, with optional signing-key fingerprint pinning and download size
+  caps; `--allow-unsigned` / `LITTLEIMP_ALLOW_UNSIGNED_UPGRADE=1` is an
+  explicit escape hatch.
+- The daemon refuses non-loopback binds unless running in a container or
+  `LITTLEIMP_ALLOW_NON_LOOPBACK_BIND=1` is set explicitly.
+- Mutating HTTP routes get default JSON body limits; restore no longer accepts
+  `allow_unsafe_no_checksum` over the HTTP API.
+
+## [1.0.0] - 2026-07-20
+
+## Changed
+- General-availability release. The `littleimp`/`littleimpd` daemon and CLI
+  tooling names are stable on-disk identifiers and remain unchanged.
+
+## [1.0.1] - 2026-08-03
+
+## Fixed
+- The one-command installer now defaults to the current release version instead
+  of the stale `0.1.0-beta`.
+- GitHub issue and repository extraction now accepts `www.github.com` URLs and
+  keeps stripping a trailing `.git` from repository names.
+- Outbound HTTP requests identify as `Grimoire/<version>` (derived from the
+  packaged version) instead of the stale `LittleImp/0.0`.
+- The sqlite-vec index is rebuilt in a single atomic transaction at daemon start.
+- E2E mocks, test fixtures, and release docs aligned with the 1.0.x version
+  identity and the `goniszewski/grimoire` repository.
+
+## [1.0.1] - 2026-08-03
+
+## Fixed
+- The one-command installer now defaults to the current release version instead
+  of the stale `0.1.0-beta`.
+- GitHub issue and repository extraction now accepts `www.github.com` URLs and
+  keeps stripping a trailing `.git` from repository names.
+- Outbound HTTP requests identify as `Grimoire/<version>` (derived from the
+  packaged version) instead of the stale `LittleImp/0.0`.
+- The sqlite-vec index is rebuilt in a single atomic transaction at daemon start.
+- E2E mocks, test fixtures, and release docs aligned with the 1.0.x version
+  identity and the `goniszewski/grimoire` repository.
+
+## [0.1.0-beta] - 2026-05-28
+
+## Added
+- Local-first bookmark manager with a React SPA frontend (Vite + Tailwind + shadcn/ui)
+- `littleimpd` — a standalone Bun/Hono background daemon that runs at `127.0.0.1:3210`
+- SQLite-backed bookmark storage with full-text and semantic (embedding) search
+- Content extraction pipeline: fetches page title, description, favicon, and reading time
+- AI enrichment: auto-tagging and category suggestions via a local LLM (Ollama-compatible)
+- Auto-clustering / category organisation — disabled until library reaches 20 bookmarks
+- Browser bookmark import (HTML export format supported by Chrome, Firefox, Safari)
+- JSON / CSV export with active-filter support
+- Archive, trash, pin, and read-status tracking per bookmark
+- Keyboard shortcuts: `⌘N` add, `⌘K` AI palette, `Escape` dismiss selection
+- Global paste handler — paste any URL on the main screen to add it instantly
+- Dark mode by default; light mode toggle
+- macOS LaunchAgent (auto-starts on login) and Linux systemd user unit
+- Idempotent `install.sh` with `--upgrade` and `--uninstall [--purge]` modes
+- `DaemonOfflineBanner` — shown when the daemon is unreachable
+- First-run empty-state screen with prompts to add or import bookmarks
+- Timeline, Archive, Trash, Domains, and Review Queue views
+- App lock with optional PIN and configurable auto-lock timeout
+- Settings page for AI, embeddings, backup destination, scheduled snapshots, and S3-compatible backup targets
+- Portable backup/restore snapshots with manifest, checksums, non-secret settings export, rollback directory creation, and restart-required restore responses
+- Docker deployment path that serves the frontend and daemon API from one loopback-bound container port
+- Streamable HTTP MCP endpoint at `/mcp` with bookmark search, read, create, and category-list tools
+- Source-of-truth API contract in `daemon/src/api/contract.ts` with generated `API.md` and `docs/api-contract.json`
+- CI and local quality gates for linting, type-checks, frontend tests, daemon tests, API docs drift checks, production build, E2E tests, and Docker health validation
+- Packaged `littleimp` CLI backup commands for create, list, restore, verify, encrypted package creation, encrypted package verification, and encrypted package restore.
+- In-app local backup verification from Settings without restoring a snapshot.
+- Multi-provider LLM settings for Anthropic, OpenRouter, OpenAI-compatible custom endpoints, and DeepSeek, plus custom OpenAI-compatible embeddings.
+- Native installer support for installing a prebuilt frontend bundle from packaged release layouts.
+- CLI, daemon API, and Settings update checks for GitHub Releases-compatible release sources.
+- Packaged `littleimp update install` flow for explicit native upgrades with archive download, local archive support, checksum/signature verification, daemon restart, health-version verification, and rollback guidance.
+- Settings backup rows can create encrypted `.littleimp-backup.enc` packages through the daemon `/backup/package` endpoint.
+- Settings and daemon API support encrypted package verification and restore for package files under the configured backup folder.
+- Homebrew formula for an alternate MVP install path backed by checksum-verified release archives and `brew services`.
+- Redacted local diagnostics from Settings, `littleimp diagnostics`, and `GET /diagnostics` for support bundles without telemetry.
+- Production browser hardening headers, loopback-only unsafe browser origin handling, and declared body-size guards for expensive local operations.
+- Installed-artifact E2E smoke coverage for packaged archive install, daemon health, core user journeys, backup/restore, update checks, upgrade data preservation, and uninstall without purge.
+
+## Changed
