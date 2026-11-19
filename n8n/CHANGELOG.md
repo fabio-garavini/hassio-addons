@@ -1,5 +1,9 @@
 ## [2.48.5](https://github.com/n8n-io/n8n/compare/n8n@2.48.4...n8n@2.48.5) (2026-11-18)
 
+### Add-on changes
+
+* Synchronize the external JavaScript and Python task-runner configuration with upstream, including shutdown environment propagation and JavaScript Web Storage hardening.
+* Document upgrade considerations introduced since n8n 2.43.0 in [DOCS.md](DOCS.md).
 
 ### Bug Fixes
 

@@ -23,6 +23,27 @@ This monolithic package includes:
    - Click **OPEN WEB UI** and follow first-run wizard
 1. **Configure Libraries** (see Storage section below)
 
+## ⬆️ Upgrade Notes
+
+### Deprecated nodes (n8n 2.43.3 and later)
+
+The **Function**, **Function Item**, and **LangChain Code** nodes are deprecated. By default, n8n blocks adding or editing these nodes and may block imports or sub-workflows that contain them. Existing, unchanged workflows generally continue to run. Migrate affected workflows to supported nodes before making changes.
+
+If you need more time to migrate, you can temporarily disable this enforcement in the add-on configuration:
+
+```yaml
+env_vars:
+  - key: N8N_DEPRECATED_NODES_BLOCK
+    value: "false"
+```
+
+This is only a temporary opt-out; remove it after migrating your workflows.
+
+### Other behavior changes
+
+- **n8n 2.43.0:** Workflow publishing validates required inputs more strictly.
+- **n8n 2.45.0:** The durable scheduler is enabled. `N8N_SCHEDULER_MIN_INTERVAL` was removed and no longer has any effect.
+- **n8n 2.46.0:** Granular credential sharing is always enabled.
 
 ## 📄 Redis
 
