@@ -1,24 +1,32 @@
-This is a maintenance release for Frigate 0.18 that includes some security fixes.
-
-## Images
-
-- [ghcr.io/blakeblackshear/frigate:0.18.2](https://github.com/blakeblackshear/frigate/pkgs/container/frigate/1391143005?tag=0.18.2)
-- [ghcr.io/blakeblackshear/frigate:0.18.2-standard-arm64](https://github.com/blakeblackshear/frigate/pkgs/container/frigate/1391102931?tag=0.18.2-standard-arm64)
-- [ghcr.io/blakeblackshear/frigate:0.18.2-tensorrt](https://github.com/blakeblackshear/frigate/pkgs/container/frigate/1391215249?tag=0.18.2-tensorrt)
-- [ghcr.io/blakeblackshear/frigate:0.18.2-rk](https://github.com/blakeblackshear/frigate/pkgs/container/frigate/1391162041?tag=0.18.2-rk)
-- [ghcr.io/blakeblackshear/frigate:0.18.2-rocm](https://github.com/blakeblackshear/frigate/pkgs/container/frigate/1391271833?tag=0.18.2-rocm)
-- [ghcr.io/blakeblackshear/frigate:0.18.2-tensorrt-jp6](https://github.com/blakeblackshear/frigate/pkgs/container/frigate/1391116063?tag=0.18.2-tensorrt-jp6)
-- [ghcr.io/blakeblackshear/frigate:0.18.2-synaptics](https://github.com/blakeblackshear/frigate/pkgs/container/frigate/1391150122?tag=0.18.2-synaptics)
+## Security fixes
+- [NGINX2Root (CVE-2026-123007): bundled nginx 1.27.4 with HTTP/2 enabled allows unauthenticated RCE as root](https://github.com/blakeblackshear/frigate/security/advisories/GHSA-7822-v38f-8p44)
 
 ## What's Changed
+* bump version in docs by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/24673
+* Fix nginx uninitialized variable warning by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/24682
+* Restrict go2rtc ffmpeg and ngrok options without arbitrary exec by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/24709
+* plus docs update by @blakeblackshear in https://github.com/blakeblackshear/frigate/pull/24686
+* Restrict go2rtc variable expansion in stream sources by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/24734
+* docs: Adds a note that disabling V8 optimisations may cause live view issues by @andrewpwade in https://github.com/blakeblackshear/frigate/pull/24754
+* Remove ptz camera recommendation table from docs by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/24739
+* Check ownership before stopping a camera watch from chat by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/24776
+* Add reostream to third party extensions by @VoltTech21 in https://github.com/blakeblackshear/frigate/pull/24747
+* docs: add FrigatePiP to third party extensions by @maciejgornicz in https://github.com/blakeblackshear/frigate/pull/24863
+* update recommended camera list by @blakeblackshear in https://github.com/blakeblackshear/frigate/pull/24919
+* docs: add yuFriEye (iOS/macOS client) to third party extensions by @yufretti in https://github.com/blakeblackshear/frigate/pull/24942
+* Add MJPEG stream warning back to docs by @NickM-27 in https://github.com/blakeblackshear/frigate/pull/24954
+* Add Frigate+ model selection guide by @blakeblackshear in https://github.com/blakeblackshear/frigate/pull/24981
+* Clarify region size in model guide by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/24984
+* Update third_party_extensions.md with Home Assistant Marketplace integrations that support Frigate by @jeyrb in https://github.com/blakeblackshear/frigate/pull/24965
+* Organize extensions for Frigate by @NickM-27 in https://github.com/blakeblackshear/frigate/pull/24991
+* Update nginx and backport module changes by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/25009
+* Bump version by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/25011
 
-### Security Fixes
-* [source scheme bypasses go2rtc exec-filter in Frigate allowing admin-authenticated RCE as root  (GHSA-qjjw-3v66-279f)](https://github.com/blakeblackshear/frigate/security/advisories/GHSA-qjjw-3v66-279f)
-* [direct websocket paths allows viewers to perform RCE as root (GHSA-93xj-hg88-ffg7)](https://github.com/blakeblackshear/frigate/security/advisories/GHSA-93xj-hg88-ffg7)
-* [the /auth media and stream checks classify the raw request path, not the one nginx serves (GHSA-3cxh-fj2f-h497)](https://github.com/blakeblackshear/frigate/security/advisories/GHSA-3cxh-fj2f-h497)
+## New Contributors
+* @andrewpwade made their first contribution in https://github.com/blakeblackshear/frigate/pull/24754
+* @VoltTech21 made their first contribution in https://github.com/blakeblackshear/frigate/pull/24747
+* @maciejgornicz made their first contribution in https://github.com/blakeblackshear/frigate/pull/24863
+* @yufretti made their first contribution in https://github.com/blakeblackshear/frigate/pull/24942
+* @jeyrb made their first contribution in https://github.com/blakeblackshear/frigate/pull/24965
 
-## What's Changed
-* Security patches by @blakeblackshear in https://github.com/blakeblackshear/frigate/pull/24658
-* Normalize request paths in media auth by @hawkeye217 in https://github.com/blakeblackshear/frigate/pull/24662
-
-**Full Changelog**: https://github.com/blakeblackshear/frigate/compare/v0.18.1...v0.18.2
+**Full Changelog**: https://github.com/blakeblackshear/frigate/compare/v0.18.2...v0.18.3
