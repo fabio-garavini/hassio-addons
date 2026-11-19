@@ -8,6 +8,7 @@ services:
         BUILD_ARCH: aarch64
         BUILD_VERSION: ${VERSION:-latest}
     container_name: grimoire-aarch64
+    entrypoint: ["/bin/bash", "-c", "bun /test/create-legacy-db.ts && exec /init"]
     ports:
       - 8080:8080
     environment:
@@ -17,8 +18,9 @@ services:
       - ./options.json:/data/options.json:ro
       - config:/config
       - ssl:/ssl
+      - ./create-legacy-db.ts:/test/create-legacy-db.ts:ro
     healthcheck:
-      test: ["CMD-SHELL", "curl -sk https://127.0.0.1:8080/health | jq -e '.status == \"ok\"'"]
+      test: ["CMD-SHELL", "curl -sk https://127.0.0.1:8080/health | jq -e '.status == \"ok\"' && curl -sk 'https://127.0.0.1:8080/bookmarks?limit=100' | jq -e '(.data | map(.title) | sort) == [\"Alice bookmark\", \"Bob bookmark\"]' && test -f /config/.legacy-migration-complete && test -f /config/db.sqlite"]
       interval: 10s
       timeout: 5s
       retries: 5
