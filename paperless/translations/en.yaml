@@ -1,6 +1,12 @@
 configuration:
   PAPERLESS_URL:
     name: Paperless URL
+  PAPERLESS_ALLOWED_HOSTS:
+    name: Allowed hosts
+    description: >-
+      Additional hostnames or IP addresses allowed to access Paperless. Enter one host per item, without a URL scheme or port.
+
+      The app hostname and the hostname from `Paperless URL` are allowed automatically. Leave this list empty if you do not need additional hosts.
   ssl:
     name: SSL
     description: >-

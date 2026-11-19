@@ -3,7 +3,7 @@
 ### Add-on upgrade notes
 
 - Paperless applies the 3.5.0 database migrations automatically during startup; no add-on-specific data migration is required.
-- If `PAPERLESS_URL` is configured, review the new allowed-hosts behavior and the `PAPERLESS_ALLOWED_HOSTS` example in `DOCS.md`.
+- Use the new `PAPERLESS_ALLOWED_HOSTS` list for additional access hostnames or IP addresses. The app hostname and the hostname from `PAPERLESS_URL` are allowed automatically.
 - Existing AI indexes do not require migration or re-embedding. Optionally run `document_llmindex compact` to apply the new on-disk layout.
 
 ### Changes

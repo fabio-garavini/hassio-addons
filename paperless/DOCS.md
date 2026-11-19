@@ -37,6 +37,7 @@ Follow these steps to install Paperless-ngx in Home Assistant:
 | `Admin password`    | Yes      | -       | Strong password for admin account.                                          |
 | `OCR language`      | No       | `eng`   | OCR language code (e.g., `deu` for German, `fra` for French).               |
 | `Paperless URL`               | No       | -       | Full URL (e.g., `http://paperless.example.com:8000`). Required for reverse proxies. |
+| `Allowed hosts`               | No       | `[]`    | Additional hostnames or IP addresses allowed to access Paperless. The app and `Paperless URL` hostnames are allowed automatically. |
 | `Secret key`        | No       | Auto-generated | Secret key for session security. **Change this if exposed to the internet!** Generate via `openssl rand -hex 32`. |
 | `Consumer file polling`    | No      | -       | If paperless won't find documents added to your consume folder, it might not be able to automatically detect filesystem changes. In that case, specify a polling interval in seconds here, which will then cause paperless to periodically check your consumption directory for changes.                                          |
 
@@ -65,15 +66,18 @@ To store documents on a NAS:
 
 - **Default**: `http://[HOME_ASSISTANT_IP]:8000` (replace with your HA IP).
 - **Custom Domain**: Set `PAPERLESS_URL` to your domain (e.g., `https://docs.example.com`).
-- **Additional hostnames or IP addresses**: Starting with Paperless 3.5.0, setting `PAPERLESS_URL` restricts requests to that URL's hostname and `localhost`. If you also access Paperless through a Home Assistant hostname, IP address, or another reverse-proxy hostname, add those hosts through `env_vars`:
+- **Additional hostnames or IP addresses**: Starting with Paperless 3.5.0, setting `PAPERLESS_URL` restricts requests to that URL's hostname and `localhost`. If you also access Paperless through a Home Assistant hostname, IP address, or another reverse-proxy hostname, add each one as a separate `Allowed hosts` entry:
 
   ```yaml
-  env_vars:
-    - key: PAPERLESS_ALLOWED_HOSTS
-      value: homeassistant.local,192.168.1.10,paperless.example.com
+  PAPERLESS_ALLOWED_HOSTS:
+    - homeassistant.local
+    - 192.168.1.10
+    - paperless.example.com
   ```
 
-  Use a comma-separated list without URL schemes or ports. The hostname from `PAPERLESS_URL` is allowed automatically. Setting `PAPERLESS_ALLOWED_HOSTS` to `*` restores the previous unrestricted behavior, but is not recommended for internet-exposed installations.
+  Enter hostnames or IP addresses without URL schemes or ports. The add-on automatically allows its own app hostname, while Paperless automatically allows the hostname from `PAPERLESS_URL` and `localhost`; you do not need to add those entries yourself.
+
+  If neither `PAPERLESS_URL` nor any allowed hosts are configured, Paperless keeps its default of accepting all hosts. Adding `*` as the only allowed-host entry also enables unrestricted access, but this is not recommended for internet-exposed installations.
 
 ---
 

@@ -5,6 +5,40 @@ set +u
 
 declare -r log_prefix="[init-folders]"
 
+OPTIONS_SOURCE="${ADDON_DATA_FOLDER:-"/data"}/options.json"
+configured_allowed_hosts=$(jq -r '
+	(.PAPERLESS_ALLOWED_HOSTS // [])
+	| map(select(type == "string") | gsub("^\\s+|\\s+$"; "") | select(length > 0))
+	| join(",")
+' "${OPTIONS_SOURCE}")
+
+# Paperless separately allows localhost and the PAPERLESS_URL hostname.
+# Preserve its unrestricted default until a URL or allowed host is set.
+if [[ -n "${PAPERLESS_URL}${PAPERLESS_ALLOWED_HOSTS}${configured_allowed_hosts}" ]]; then
+	app_hostname=""
+	if [[ -n "${SUPERVISOR_TOKEN}" ]]; then
+		app_hostname=$(bashio::app.hostname 2>/dev/null)
+	fi
+	if [[ ! "${app_hostname}" =~ ^[A-Za-z0-9][A-Za-z0-9.-]*$ ]]; then
+		app_hostname=$(hostname)
+	fi
+	allowed_hosts=$(jq -nr \
+		--arg configured "${configured_allowed_hosts}" \
+		--arg existing "${PAPERLESS_ALLOWED_HOSTS}" \
+		--arg hostname "${app_hostname}" '
+		[$configured, $existing]
+		| map(split(","))
+		| flatten
+		| map(gsub("^\\s+|\\s+$"; "") | select(length > 0))
+		| . + [$hostname]
+		| if index("*") != null then ["*"] else unique end
+		| join(",")
+	')
+	printf "%s" "${allowed_hosts}" > /var/run/s6/container_environment/PAPERLESS_ALLOWED_HOSTS
+	export PAPERLESS_ALLOWED_HOSTS="${allowed_hosts}"
+	bashio::log.info "Allowed Paperless hosts: ${allowed_hosts}"
+fi
+
 declare -r export_dir="${PAPERLESS_EXPORT_DIR:-/usr/src/paperless/export}"
 declare -r data_dir="${PAPERLESS_DATA_DIR:-/usr/src/paperless/data}"
 declare -r media_root_dir="${PAPERLESS_MEDIA_ROOT:-/usr/src/paperless/media}"
