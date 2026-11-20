@@ -1,5 +1,5 @@
 name: Gitlab
-version: 19.6.0-ha22
+version: 19.6.1-ha24
 slug: gitlab
 description: Gitlab Comunity Edition
 url: https://gitlab.com/rluna-gitlab/gitlab-ce
