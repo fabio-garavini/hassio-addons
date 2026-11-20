@@ -132,6 +132,14 @@ _All-in-one_
 
 [HomeLogger](https://github.com/FrancisLaboratories/homelogger) is an open source self-hosted home maintenance and asset tracker: it centralizes appliances, repairs, and maintenance tasks so you can record work, receipts, and schedules for things around your home
 
+### 🔥 Hotpot
+
+_All-in-one_
+
+[Hotpot](https://github.com/erik/hotpot) renders customizable heatmaps from GPS activities and includes a web interface and XYZ tile server.
+
+![screenshot](https://user-images.githubusercontent.com/188935/273125894-7f76eabb-585b-405d-af16-a93df2d85cb4.png)
+
 ### 📷 Immich
 
 _All-in-one_

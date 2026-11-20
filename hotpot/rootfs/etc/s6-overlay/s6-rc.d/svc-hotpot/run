@@ -1,0 +1,39 @@
+#!/command/with-contenv bash
+# shellcheck shell=bash
+
+set -e
+
+args=(--db /data/hotpot.sqlite3)
+
+if [[ "${VERBOSE:-false}" == "true" ]]; then
+    args+=(--verbose)
+fi
+
+args+=(serve --host 127.0.0.1 --port "${SERVICE_PORT:-8081}")
+
+if [[ "${UPLOAD:-false}" == "true" ]]; then
+    args+=(--upload)
+fi
+
+if [[ "${RENDER:-false}" == "true" ]]; then
+    args+=(--render)
+fi
+
+if [[ "${INSPECT:-false}" == "true" ]]; then
+    args+=(--inspect)
+fi
+
+if [[ "${FETCH:-false}" == "true" ]]; then
+    args+=(--fetch)
+fi
+
+if [[ "${STRAVA_WEBHOOK:-false}" == "true" ]]; then
+    args+=(--strava-webhook)
+fi
+
+if [[ "${CORS:-false}" == "true" ]]; then
+    args+=(--cors)
+fi
+
+echo "[svc-hotpot] Starting Hotpot"
+exec hotpot "${args[@]}"

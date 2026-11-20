@@ -10,6 +10,7 @@ OPTIONS_SOURCE=${ADDON_DATA_FOLDER:-"/data"}/options.json
 service_port=${SERVICE_PORT:-80}
 service_protocol=${SERVICE_PROTOCOL:-http}
 nginx_port=${NGINX_PORT:-8080}
+ingress_port=${INGRESS_PORT:-}
 certfile="/ssl/$(jq -r '.certfile' $OPTIONS_SOURCE)"
 keyfile="/ssl/$(jq -r '.keyfile' $OPTIONS_SOURCE)"
 ingress_user="$(jq -r '.ingress_user' $OPTIONS_SOURCE)"
@@ -44,8 +45,9 @@ printf '{
   "port": "%s",
   "protocol": "%s",
   "ssl": %s,
+  "ingress_port": "%s",
   "ingress_user": "%s"
-}' "$certfile" "$keyfile" "$nginx_port" "$service_protocol" "$(jq -r '.ssl' $OPTIONS_SOURCE)" "$ingress_user" \
+}' "$certfile" "$keyfile" "$nginx_port" "$service_protocol" "$(jq -r '.ssl' $OPTIONS_SOURCE)" "$ingress_port" "$ingress_user" \
     | tempio \
         -template /etc/nginx/templates/direct.gtpl \
         -out /etc/nginx/servers/direct.conf

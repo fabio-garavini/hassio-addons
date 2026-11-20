@@ -1,0 +1,14 @@
+{
+  "TZ": "Etc/UTC",
+  "ssl": true,
+  "certfile": "fullchain.pem",
+  "keyfile": "privkey.pem",
+  "UPLOAD": true,
+  "RENDER": true,
+  "INSPECT": true,
+  "FETCH": false,
+  "STRAVA_WEBHOOK": false,
+  "CORS": false,
+  "VERBOSE": false,
+  "HOTPOT_UPLOAD_TOKEN": "test-upload-token"
+}

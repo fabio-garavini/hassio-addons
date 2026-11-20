@@ -1,0 +1,30 @@
+name: hotpot-amd64
+services:
+  hotpot-amd64:
+    image: fabioogaravini/hassio-hotpot:${VERSION:-latest}-amd64
+    build:
+      context: ..
+      args:
+        BUILD_ARCH: amd64
+        BUILD_VERSION: ${VERSION:-latest}
+    container_name: hotpot-amd64
+    ports:
+      - 8080:8080
+    environment:
+      - TZ=Etc/UTC
+    volumes:
+      - data:/data
+      - ./options.json:/data/options.json:ro
+      - ssl:/ssl
+      - share:/share
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fk https://127.0.0.1:8080/api/activity-count | grep -qx 0 && curl -fk -H 'X-Ingress-Path: /api/hassio_ingress/test' https://127.0.0.1:8080/ | grep -q 'src=\"/api/hassio_ingress/test/static/main.js\"' && curl -fk -H 'X-Ingress-Path: /api/hassio_ingress/test' https://127.0.0.1:8080/static/main.js | grep -q 'fetch(\"/api/hassio_ingress/test/upload\"' && curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8099 | grep -qx 403 && test -f /data/hotpot.sqlite3"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  data:
+  ssl:
+  share:

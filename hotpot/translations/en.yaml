@@ -1,0 +1,76 @@
+configuration:
+  TZ:
+    name: Timezone
+    description: >-
+      Timezone used by the app, for example `Europe/Rome`. The default is
+      `Etc/UTC`.
+  ssl:
+    name: SSL
+    description: >-
+      Enable HTTPS for direct external connections on port `8080`. Existing
+      certificate files are used when available; otherwise a self-signed
+      certificate is generated. Disable this option to use HTTP. This option
+      does not affect Home Assistant Ingress.
+  certfile:
+    name: SSL Certificate File
+    description: >-
+      Name of the SSL certificate file located under the `/ssl/` directory.
+  keyfile:
+    name: SSL Private Key File
+    description: >-
+      Name of the SSL private key file located under the `/ssl/` directory.
+  UPLOAD:
+    name: Enable Activity Uploads
+    description: >-
+      Enable browser and HTTP activity uploads. Set a strong upload token
+      before exposing the app externally; without a token, uploads are
+      unauthenticated.
+  RENDER:
+    name: Enable Image Rendering
+    description: >-
+      Enable the `/render` endpoint for exporting heatmap viewports as images.
+  INSPECT:
+    name: Enable Activity Inspection
+    description: >-
+      Allow looking up activities near a point from the web UI.
+  FETCH:
+    name: Enable External Activity Fetching
+    description: >-
+      Enable the `/fetch/intervals.icu` endpoint. An intervals.icu API key is
+      required.
+  STRAVA_WEBHOOK:
+    name: Enable Strava Webhook
+    description: >-
+      Enable Strava activity webhook endpoints. All Strava credentials must be
+      configured and Hotpot's Strava OAuth setup must be completed first.
+  CORS:
+    name: Enable CORS
+    description: >-
+      Allow cross-origin GET requests to the Hotpot server.
+  VERBOSE:
+    name: Verbose Logging
+    description: >-
+      Enable verbose Hotpot logs for troubleshooting.
+  HOTPOT_UPLOAD_TOKEN:
+    name: Upload Token
+    description: >-
+      Optional bearer token used to authenticate activity upload and fetch
+      requests. Strongly recommended when uploads or fetching are enabled.
+  INTERVALS_ICU_API_KEY:
+    name: intervals.icu API Key
+    description: >-
+      API key used to import activities from intervals.icu.
+  STRAVA_CLIENT_ID:
+    name: Strava Client ID
+    description: >-
+      Client ID of your Strava API application.
+  STRAVA_CLIENT_SECRET:
+    name: Strava Client Secret
+    description: >-
+      Client secret of your Strava API application.
+  STRAVA_WEBHOOK_SECRET:
+    name: Strava Webhook Secret
+    description: >-
+      Secret used to validate Strava webhook requests.
+network:
+  8080/tcp: Hotpot Web UI and Tile Server (not required for Ingress)
