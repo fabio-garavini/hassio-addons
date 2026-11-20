@@ -2,32 +2,65 @@
 
 [![](https://img.shields.io/static/v1?label=Support+me&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/fabio-garavini)
 
-[Calibre](https://calibre-ebook.com/) is a powerful and easy-to-use e-book
-manager. This app packages the full Calibre desktop — library management,
-format conversion, metadata editor and e-book viewer — into a single Home
-Assistant container, served through a browser-based desktop (KasmVNC) on
-port **8181**. Open `https://<your-home-assistant-ip>:8181` and you land on
-the Calibre setup wizard — no extra database, no reverse proxy, no VNC
-client required.
+[Calibre](https://calibre-ebook.com/) is a powerful, open-source e-book
+manager. This Home Assistant app packages the **full Calibre desktop**—library
+management, metadata editing, format conversion and the e-book viewer—into an
+all-in-one container. [Selkies](https://docs.linuxserver.io/selkies/) streams
+the desktop to your browser over HTTPS, so no external database, desktop
+installation or VNC client is needed.
 
-If you only need a lightweight web *reader* for an existing library, see the
-companion **Calibre Web** app instead.
-
-![Calibre](https://calibre-ebook.com/_static/calibre-128.png)
+![Calibre](https://raw.githubusercontent.com/fabio-garavini/hassio-addons/main/calibre/icon.png)
 
 ## ✨ Features
 
-- **All-in-one** — full Calibre desktop in your browser, nothing else to
-  install
-- **Web-based desktop** — KasmVNC serves the Calibre GUI over HTTPS on port
-  `8181`
-- **First-run wizard** — on first launch you're walked straight through
-  creating your library
-- **Hardware acceleration** — exposes `/dev/dri`, `/dev/dxg`, `/dev/kfd`
-  and a wide range of disk devices for GPU rendering and disk management
-- **External storage** — mount local disks (USB) or network shares
-  (SMB/CIFS/NFS) directly from the app config
-- **Custom environment** — inject arbitrary environment variables into the
-  container
+- Full Calibre desktop in a modern browser on **amd64** and **aarch64**
+- First-run wizard for creating or opening a Calibre library
+- Optional Calibre Content server and OPDS catalog on port `8081`
+- Browser file uploads, clipboard, fullscreen and adjustable stream quality
+- Read/write access to Home Assistant `/media` and `/share` folders
+- Optional local disk and SMB/CIFS/NFS storage mounts
+- Optional GPU acceleration and advanced Selkies environment settings
 
-[Official Calibre documentation](https://manual.calibre-ebook.com/)
+## 🚀 Quick start
+
+1. Install and start the app.
+2. Select **Open Web UI**, or visit
+   `https://<home-assistant-address>:8181`.
+3. Accept the expected self-signed certificate warning.
+4. In Calibre's setup wizard, use **`/config/Calibre Library`** for the
+   simplest installation, or an empty shared folder such as
+   **`/share/calibre/Calibre Library`** if Calibre Web will use the library.
+   For a shared library, align `PUID`/`PGID` in both apps before importing
+   books if Calibre Web needs write access.
+5. Add books through Calibre's **Add books** button.
+
+> [!WARNING]
+> The desktop Web UI has **no password by default**. Set **both** `CUSTOM_USER`
+> and `PASSWORD` to enable HTTP basic authentication. Do not expose the desktop
+> directly to the internet; use a VPN or a secured reverse proxy.
+
+## 🔁 Integrations
+
+- Use **[Calibre Web](../calibre-web/DOCS.md)** with a shared library for
+  polished reading and multi-user access.
+- Use **Nextcloud** or **Syncthing** to provide an import folder and keep
+  backup copies.
+- Use **Cloudflared** for secured remote access without router port forwarding.
+- Connect OPDS readers and KOReader through Calibre's optional Content server.
+
+If you only need a lightweight web reader for an existing library, see the
+companion **[Calibre Web](../calibre-web/DOCS.md)** app. For a small HTML/OPDS
+catalog, [COPS](https://github.com/mikespub-org/seblucas-cops) is another
+alternative. The documentation includes a comparison to help you choose.
+
+## 📖 Documentation
+
+Read the **[complete app documentation](DOCS.md)** for first-run setup, all
+configuration options, importing books, Content server/OPDS, storage mounts,
+security, backups, updates and troubleshooting.
+
+Additional resources:
+
+- [Official Calibre user manual](https://manual.calibre-ebook.com/)
+- [LinuxServer.io Calibre image](https://docs.linuxserver.io/images/docker-calibre/)
+- [Report an app issue](https://github.com/fabio-garavini/hassio-addons/issues)

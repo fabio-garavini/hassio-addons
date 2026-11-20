@@ -51,6 +51,7 @@ RUN \
         /var/lib/apt/lists/*
 
 COPY .common/addon-config /
+COPY .common/mount-external-storage /
 
 COPY rootfs /
 
