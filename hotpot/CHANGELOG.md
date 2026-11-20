@@ -1,3 +1,8 @@
+## Home Assistant app 0.4.0-ha2
+
+- Prevent MapLibre warnings for OpenFreeMap's `circle-11` sprite alias when zooming and panning.
+- Remove a duplicate NGINX MIME-type warning.
+
 ## Home Assistant app 0.4.0-ha1
 
 - Add Home Assistant Ingress support, including asset, tile, upload, render, and inspection URLs.
