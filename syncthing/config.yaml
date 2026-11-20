@@ -16,7 +16,7 @@ backup: cold
 map:
   - type: app_config
     read_only: false
-  - type: addons
+  - type: local_apps
     read_only: false
   - type: all_app_configs
     read_only: false
