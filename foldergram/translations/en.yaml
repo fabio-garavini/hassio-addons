@@ -1,0 +1,33 @@
+configuration:
+  TZ:
+    name: Timezone
+  ssl:
+    name: SSL
+    description: >-
+      Enable HTTPS for direct external access. Existing certificate files are used when available; otherwise a self-signed certificate is generated. This option does not affect Home Assistant Ingress.
+  certfile:
+    name: SSL Certificate File
+    description: Name of the SSL certificate file located under the `/ssl/` directory.
+  keyfile:
+    name: SSL Private Key File
+    description: Name of the SSL private key file located under the `/ssl/` directory.
+  GALLERY_ROOT:
+    name: Primary Gallery Path
+    description: Absolute container path of the primary gallery. Media files must be inside album folders, not directly in this root.
+  GALLERY_EXCLUDED_FOLDERS:
+    name: Excluded Folders
+    description: Comma-separated folder names or exact paths relative to the primary gallery, such as `@eaDir,Archive/cache`.
+  DERIVATIVE_MODE:
+    name: Derivative Generation
+    description: Generate thumbnails and previews during scans or lazily on first request.
+  IMAGE_DETAIL_SOURCE:
+    name: Image Detail Source
+    description: Use generated previews or stream original images on image detail pages.
+  CSRF_TRUSTED_ORIGINS:
+    name: Additional Trusted Origins
+    description: Optional comma-separated browser origins allowed for mutating API requests when using an external reverse proxy.
+  env_vars:
+    name: Additional Environment Variables
+    description: Advanced Foldergram settings, including optional Immich integration variables.
+network:
+  8080/tcp: Foldergram Web UI (not required for Ingress)

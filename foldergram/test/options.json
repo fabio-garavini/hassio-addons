@@ -1,0 +1,11 @@
+{
+  "TZ": "Etc/UTC",
+  "ssl": true,
+  "certfile": "fullchain.pem",
+  "keyfile": "privkey.pem",
+  "GALLERY_ROOT": "/media/foldergram",
+  "GALLERY_EXCLUDED_FOLDERS": "",
+  "DERIVATIVE_MODE": "eager",
+  "IMAGE_DETAIL_SOURCE": "preview",
+  "env_vars": []
+}

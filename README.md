@@ -71,6 +71,14 @@ _All-in-one_
 
 **FUTO Notes** is an end-to-end encrypted notes app.
 
+### 🖼️ Foldergram
+
+_All-in-one_
+
+[Foldergram](https://github.com/foldergram/foldergram) is a local-first photo and video gallery for your folders, with Instagram-inspired browsing and optional read-only Immich integration.
+
+![Foldergram demo](https://raw.githubusercontent.com/foldergram/foldergram/v1.3.3/docs/media/foldergram-readme.gif)
+
 ### 📹 Frigate NVR
 
 [Frigate NVR](https://frigate.video) with realtime local object detection for IP cameras (ROCm version)

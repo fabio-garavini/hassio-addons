@@ -1,0 +1,11 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+
+set -e
+
+bashio::log.info "[svc-foldergram] Preparing Foldergram storage"
+mkdir -p "$DATA_ROOT" "$GALLERY_ROOT"
+
+bashio::log.info "[svc-foldergram] Starting Foldergram"
+cd /app || exit 1
+exec pnpm start
