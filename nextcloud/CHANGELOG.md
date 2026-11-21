@@ -1,9 +1,6 @@
 
 ## Nextcloud 35.0.3
 
-* Fix inaccessible config files and app executables after restoring a Home Assistant backup (#1061)
-* Add optional `APPLY_PERMISSIONS` setting to repair Nextcloud data ownership and permissions at startup
-
 ### [server](https://github.com/nextcloud/server)
 * [Fix\(sharing\): hide external sharing section when link sharing disabled (server#64335)](https://github.com/nextcloud/server/pull/64335)
 * [Fix\(files\_sharing\): limit the share token input to the maximum token length (server#64710)](https://github.com/nextcloud/server/pull/64710)
