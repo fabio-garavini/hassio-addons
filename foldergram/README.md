@@ -1,9 +1,29 @@
-# Home Assistant app: Foldergram 🖼️
+# Foldergram 🖼️
 
-[![](https://img.shields.io/static/v1?label=Support+me&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/fabio-garavini)
+[![Source: Foldergram](https://img.shields.io/badge/Source-Foldergram-blue?logo=git)](https://github.com/foldergram/foldergram)
+
+![Foldergram demo](https://raw.githubusercontent.com/foldergram/foldergram/v1.3.3/docs/media/foldergram-readme.gif)
 
 [Foldergram](https://github.com/foldergram/foldergram) is a local-first photo and video gallery for your folders, with Instagram-inspired browsing and optional read-only Immich integration.
 
 Browse multiple local galleries through a familiar feed, folder profiles, reels, and a media viewer while your originals stay in place.
 
-![Foldergram demo](https://raw.githubusercontent.com/foldergram/foldergram/v1.3.3/docs/media/foldergram-readme.gif)
+<!-- APP_AUTHOR_START -->
+<hr>
+<table>
+  <tr>
+    <td width="120" align="center" valign="bottom">
+      <a href="https://github.com/fabio-garavini">
+        <img src="https://www.gravatar.com/avatar/0237c9a30faa34297c155c9f794fe47e?s=112" alt="Fabio Garavini" width="112" height="112" style="border-radius: 50%;">
+      </a>
+    </td>
+    <td valign="middle">
+      <h3>App made by Fabio Garavini</h3>
+      <p><sub>Help me create free and open-source Home Assistant apps for everyone!</sub></p>
+      <a href="https://github.com/sponsors/fabio-garavini">
+        <img src="https://img.shields.io/badge/support%20my%20work-GitHub%20Sponsors-fe8e86?style=for-the-badge&logo=github" alt="support my work">
+      </a>
+    </td>
+  </tr>
+</table>
+<!-- APP_AUTHOR_END -->

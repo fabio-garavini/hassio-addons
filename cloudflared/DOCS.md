@@ -1,4 +1,6 @@
-# Home Assistant app: Cloudflare Tunneling Service ☁️ by Fabio Garavini
+# Cloudflare Tunneling Service ☁️
+
+[![Source: Cloudflared](https://img.shields.io/badge/Source-Cloudflared-blue?logo=git)](https://github.com/cloudflare/cloudflared)
 
 Cloudflare Tunnel provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address.
 
@@ -41,7 +43,6 @@ Now you can:
 
 For **Dashboard managed** the only config that you need is `TOKEN`, **if you set a Cloudflare token every other configuration is ignored** and must be configured through the `Cloudflare Zero Trust` page
 
-
 #### **`TOKEN`**
 
 See the [**Dashboard managed**](#dashboard-managed) section
@@ -64,3 +65,23 @@ Network subnets routed through Cloudflare addon, make your private network acces
 Must be in the following format `<IP/CIDR>` example: `192.168.1.0/24`
 
 To delete a network routing you need to do it from **Cloudflare Zero Trust** dashboard `Networks > Routes`
+
+<!-- APP_AUTHOR_START -->
+<hr>
+<table>
+  <tr>
+    <td width="120" align="center" valign="bottom">
+      <a href="https://github.com/fabio-garavini">
+        <img src="https://www.gravatar.com/avatar/0237c9a30faa34297c155c9f794fe47e?s=112" alt="Fabio Garavini" width="112" height="112" style="border-radius: 50%;">
+      </a>
+    </td>
+    <td valign="middle">
+      <h3>App made by Fabio Garavini</h3>
+      <p><sub>Help me create free and open-source Home Assistant apps for everyone!</sub></p>
+      <a href="https://github.com/sponsors/fabio-garavini">
+        <img src="https://img.shields.io/badge/support%20my%20work-GitHub%20Sponsors-fe8e86?style=for-the-badge&logo=github" alt="support my work">
+      </a>
+    </td>
+  </tr>
+</table>
+<!-- APP_AUTHOR_END -->
