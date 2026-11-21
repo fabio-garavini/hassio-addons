@@ -1,7 +1,7 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/n8n-io/n8n:2.48.6
+ARG BUILD_FROM=ghcr.io/n8n-io/n8n:2.48.7
 
-ARG BUILD_VERSION=2.48.6-ha38
+ARG BUILD_VERSION=2.48.7-ha39
 
 FROM ghcr.io/n8n-io/runners:${BUILD_VERSION%-ha*} AS runner
 
