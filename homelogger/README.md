@@ -1,6 +1,6 @@
-# Home Assistant app: HomeLogger 🏠 by Fabio Garavini
+# HomeLogger 🏠
 
-[![](https://img.shields.io/static/v1?label=Support+me&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/fabio-garavini)
+[![Source: HomeLogger](https://img.shields.io/badge/Source-HomeLogger-blue?logo=git)](https://github.com/FrancisLaboratories/homelogger)
 
 **HomeLogger** is a simple home maintenance and asset tracker for homeowners. It centralizes appliances, repairs, and maintenance tasks so you can record work, receipts, and schedules for things around your home.
 
@@ -42,3 +42,23 @@ The HomeLogger add-on exposes the following ports:
 | `ssl` | `true` | Enable HTTPS. Uses `certfile` and `keyfile` from the `/ssl` folder if present, otherwise falls back to a self-signed certificate |
 
 Data (database and uploaded files) is stored in the add-on config folder and is included in Home Assistant backups.
+
+<!-- APP_AUTHOR_START -->
+<hr>
+<table>
+  <tr>
+    <td width="120" align="center" valign="bottom">
+      <a href="https://github.com/fabio-garavini">
+        <img src="https://www.gravatar.com/avatar/0237c9a30faa34297c155c9f794fe47e?s=112" alt="Fabio Garavini" width="112" height="112" style="border-radius: 50%;">
+      </a>
+    </td>
+    <td valign="middle">
+      <h3>App made by Fabio Garavini</h3>
+      <p><sub>Help me create free and open-source Home Assistant apps for everyone!</sub></p>
+      <a href="https://github.com/sponsors/fabio-garavini">
+        <img src="https://img.shields.io/badge/support%20my%20work-GitHub%20Sponsors-fe8e86?style=for-the-badge&logo=github" alt="support my work">
+      </a>
+    </td>
+  </tr>
+</table>
+<!-- APP_AUTHOR_END -->
