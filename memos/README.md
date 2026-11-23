@@ -2,7 +2,7 @@
 
 [![Source: Memos](https://img.shields.io/badge/Source-Memos-blue?logo=git)](https://www.usememos.com/)
 
-![screenshot](https://camo.githubusercontent.com/e31052e97a940bf0afde9a63e59dd7a03c7cb698e0378df0876d131972b115a9/68747470733a2f2f7777772e7573656d656d6f732e636f6d2f64656d6f2e706e67)
+![screenshot](https://raw.githubusercontent.com/usememos/.github/refs/heads/main/assets/previews/timeline-dark.png)
 
 An open-source, self-hosted note-taking solution designed for seamless deployment and multi-platform access. Experience effortless plain text writing with pain-free, complemented by robust Markdown syntax support for enhanced formatting.
 

@@ -2,7 +2,7 @@
 
 [![Source: Grimoire](https://img.shields.io/badge/Source-Grimoire-blue?logo=git)](https://github.com/goniszewski/grimoire)
 
-![logo](https://github.com/fabio-garavini/hassio-addons/raw/main/grimoire/icon.png)
+![logo](https://github.com/hunter-read/grimoire/blob/main/docs/images/Systems%20View.png?raw=true)
 
 Bookmark manager for the wizards 🧙
 

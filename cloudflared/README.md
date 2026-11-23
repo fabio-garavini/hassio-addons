@@ -2,7 +2,7 @@
 
 [![Source: Cloudflared](https://img.shields.io/badge/Source-Cloudflared-blue?logo=git)](https://github.com/cloudflare/cloudflared)
 
-![scheme](https://developers.cloudflare.com/_astro/handshake.eh3a-Ml1_1IcAgC.webp)
+![scheme](https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01KW44H9CDKNMNK3F9PJ5PN5EC.png&w=715&h=340&f=webp&fit=cover&position=center)
 
 [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks) provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address.
 

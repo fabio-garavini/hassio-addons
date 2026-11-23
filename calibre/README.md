@@ -4,8 +4,6 @@
 
 ![Calibre](https://raw.githubusercontent.com/fabio-garavini/hassio-addons/main/calibre/icon.png)
 
-Calibre is a powerful and easy to use e-book manager.
-
 [Calibre](https://calibre-ebook.com/) is a powerful, open-source e-book
 manager. This Home Assistant app packages the **full Calibre desktop**—library
 management, metadata editing, format conversion and the e-book viewer—into an

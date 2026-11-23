@@ -57,7 +57,7 @@ _All-in-one_
 
 [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks) provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address.
 
-![scheme](https://developers.cloudflare.com/_astro/handshake.eh3a-Ml1_1IcAgC.webp)
+![scheme](https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01KW44H9CDKNMNK3F9PJ5PN5EC.png&w=715&h=340&f=webp&fit=cover&position=center)
 
 ### 🏦 ezBookkeeping
 
@@ -67,7 +67,9 @@ _All-in-one_
 
 ![screenshot](https://raw.githubusercontent.com/wiki/mayswind/ezbookkeeping/img/desktop/en.png)
 
-### 📒 FUTO Notes (Server)
+### 📒 FUTO Notes
+
+_Server_
 
 **FUTO Notes** is an end-to-end encrypted notes app.
 
@@ -105,7 +107,7 @@ _All-in-one_
 
 [Grimoire](https://github.com/goniszewski/grimoire) Bookmark manager for the wizards 🧙
 
-![main screenshot](https://github.com/goniszewski/grimoire/raw/main/screenshots/only-unread-white.png)
+![main screenshot](https://github.com/hunter-read/grimoire/blob/main/docs/images/Systems%20View.png?raw=true)
 
 ### 🧮 Grist
 
@@ -202,7 +204,7 @@ _All-in-one_
 
 An open-source, self-hosted note-taking solution designed for seamless deployment and multi-platform access. Experience effortless plain text writing with pain-free, complemented by robust Markdown syntax support for enhanced formatting.
 
-![screenshot](https://camo.githubusercontent.com/e31052e97a940bf0afde9a63e59dd7a03c7cb698e0378df0876d131972b115a9/68747470733a2f2f7777772e7573656d656d6f732e636f6d2f64656d6f2e706e67)
+![screenshot](https://raw.githubusercontent.com/usememos/.github/refs/heads/main/assets/previews/timeline-dark.png)
 
 ### 🐼 Monica
 
@@ -292,7 +294,7 @@ _All-in-one_
 
 Spoolman is a self-hosted web service designed to help you efficiently manage your 3D printer filament spools and monitor their usage. It acts as a centralized database that seamlessly integrates with popular 3D printing software like [OctoPrint](https://octoprint.org/) and [Klipper](https://www.klipper3d.org/)/[Moonraker](https://moonraker.readthedocs.io/en/latest/). When connected, it automatically updates spool weights as printing progresses, giving you real-time insights into filament usage.
 
-![screenshot](https://github.com/Donkie/Spoolman/assets/2332094/33928d5e-440f-4445-aca9-456c4370ad0d)
+![screenshot](https://raw.githubusercontent.com/Donkie/Spoolman/master/.github/media/client-screenshot.png)
 
 ### 🧵 Spoolman Sync
 
@@ -307,3 +309,5 @@ SpoolmanSync automatically tracks which filament spools are loaded in your Bambu
 _All-in-one_
 
 [Syncthing](https://syncthing.net/) is a continuous file synchronization program. It synchronizes files between two or more computers in real time, safely protected from prying eyes.
+
+![screenshot](https://docs.syncthing.net/_images/gui1.png)
