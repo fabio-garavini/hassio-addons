@@ -1,2 +1,51 @@
+- **\[Breaking\]**
+    - Use the new token format (support for the legacy token format will be removed in v2.3.0. If you have created API tokens or MCP tokens without an expiration date, please create new tokens to replace them)
+    - Clear all session tokens by default when disabling a user
+    - Clear all session tokens when deleting a user
+    - Disable automatic login after email verification
+    - Delete temporary tokens before performing verification during password recovery and OAuth 2.0 authentication (#765)
+    - Change the default value of `forget_password_require_email_verify` to `true`
+    - Load language resources asynchronously
+
+- **\[Features\]**
+    - Add Hindi translation (#746, #747, thanks @rahul05ranjan)
+    - Add Slovak translation (#753, thanks @Laybr1990)
+    - Support adding multiple transactions at once on desktop version
+    - Add user custom import presets ([#721](https://github.com/mayswind/ezbookkeeping/discussions/721))
+    - Support filtering scheduled transactions by status and displaying them in a calendar view (#710)
+    - Support selecting which MCP tools are enabled for an MCP token
+    - Add MCP tool `delete_transaction` to delete transaction (#733, thanks @Minister944)
+
+- **\[Enhancements\]**
+    - Improved Polish translation (#751, #766, #768, thanks @mnowok)
+    - Improved Spanish translation (#754, thanks @abrugues)
+    - Improved Turkish translation (#755, thanks @snizamaddinov)
+    - Improved Italian translation (#760, thanks @mcagl)
+    - Add picture indicator for transactions with attached images in the transaction list page (#738)
+    - Support caching user avatars and transaction pictures in browser
+    - Support importing beancount transactions with one posting that has no amount specified
+    - Support importing ING structured :86: fields in MT940 files (#757)
+    - Support configuring income and expense amount colors during user registration
+    - Support blue as a color option for income and expense amounts
+    - Add annotations to MCP tools
+    - Support importing WeChat fund transfer transactions from WeChat Pay statement files (#763, thanks @yllhwa)
+    - Improve the robustness of the `ParseAmount` function that converts amount strings to numeric values (#748, thanks @kevin9327)
+    - Other user interface optimization
+
+- **\[Development\]**
+    - Upgrade Golang to 1.27.4
+    - Upgrade Node.js to 26.13.1
+    - Upgrade Alpine base image to 3.24.4
+
 - **\[Bug Fixes\]**
-    - Fix the issue where the current week date range in overview widgets does not follow the user's settings after the first login (#726, thanks @LudwigJMarx)
+    - Fix incorrect date ranges when shifting a date range that spans a daylight saving time transition (#734)
+    - Fix incorrect leap year handling when shifting date ranges
+    - Fix the issue where changing the transaction time while editing a transaction resets the time zone to the system default (#735)
+    - Fix incorrect style when last sub account under an account is hidden (#743)
+    - Fix incorrect exchange rate calculations for the Uzbekistani Sum when using the exchange rates data of the Central Bank of the Republic of Uzbekistan (#752, thanks @Bortlesboat)
+    - Fix QIF import failing on Quicken dates padded with spaces (#758, thanks @jayhemnani9910)
+    - Fix the Information to Account Owner field of the last transaction may be overwritten by the statement's Information to Account Owner field when importing MT940 files (#759, thanks @wavebyrd)
+    - Fix a potential infinite loop when parsing invalid OFX 1.x files (#761)
+    - Fix the the editable transaction date range is not calculated based on the client time zone when set to This week or later, This month or later, or This year or later (#767, thanks @LudwigJMarx)
+    - Fix the account balance trends chart may freeze when the credit card statement date is set to the 28th of the month (#769, thanks @LudwigJMarx)
+    - Add missing localized aria labels (#756)
