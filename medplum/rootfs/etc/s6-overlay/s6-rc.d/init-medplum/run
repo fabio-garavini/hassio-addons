@@ -1,0 +1,65 @@
+#!/command/with-contenv bash
+# shellcheck shell=bash
+
+set -Eeuo pipefail
+
+node /usr/local/bin/medplum-server-config.js
+
+base_url="${MEDPLUM_BASE_URL:-}"
+app_base_url="${MEDPLUM_APP_BASE_URL:-}"
+
+if [ -z "$base_url" ] || [ -z "$app_base_url" ]; then
+    if [ -n "$base_url" ] || [ -n "$app_base_url" ]; then
+        echo "[init-medplum] Leave both URL options empty, or configure both explicitly" >&2
+        exit 1
+    fi
+
+    scheme="http"
+    if jq -e '.ssl == true' "${ADDON_DATA_FOLDER:-/data}/options.json" > /dev/null; then
+        scheme="https"
+    fi
+
+    host="homeassistant.local"
+    if [ -n "${SUPERVISOR_TOKEN:-}" ]; then
+        # shellcheck source=/dev/null
+        source /usr/lib/bashio/bashio.sh
+        detected_host="$(bashio::network 'network.info' \
+            '[.interfaces[] | select(.ipv4.ready == true) | .ipv4.address[0]][0] // empty' \
+            | cut -d/ -f1 || true)"
+        host="${detected_host:-$host}"
+    fi
+
+    base_url="${scheme}://${host}:8103/"
+    app_base_url="${scheme}://${host}:8080/"
+    echo "[init-medplum] Using direct URLs on ${host}"
+fi
+
+export MEDPLUM_BASE_URL="${base_url%/}/"
+export MEDPLUM_APP_BASE_URL="${app_base_url%/}/"
+export MEDPLUM_STORAGE_BASE_URL="${MEDPLUM_BASE_URL}storage/"
+
+# Persist the resolved values for the remaining init scripts and services.
+if [ -d /var/run/s6/container_environment ]; then
+    for key in MEDPLUM_BASE_URL MEDPLUM_APP_BASE_URL MEDPLUM_STORAGE_BASE_URL; do
+        printf '%s' "${!key}" > "/var/run/s6/container_environment/$key"
+    done
+fi
+
+mkdir -p /config/binary /config/medplum
+
+# Keep a stable signing key so previously issued binary-storage URLs remain
+# valid across add-on restarts.
+if [ ! -s /config/medplum/signing-key.pem ] || [ ! -s /config/medplum/signing-key.pass ]; then
+    echo "[init-medplum] Generating persistent binary-storage signing key"
+    passphrase="$(openssl rand -hex 32)"
+    umask 077
+    printf '%s' "$passphrase" > /config/medplum/signing-key.pass
+    openssl genrsa -aes256 -passout "pass:${passphrase}" \
+        -out /config/medplum/signing-key.pem 2048
+fi
+
+chown -R node:node /config/binary /config/medplum
+chmod 700 /config/medplum
+chmod 600 /config/medplum/signing-key.pem /config/medplum/signing-key.pass
+
+echo "[init-medplum] Medplum storage and signing key are ready"

@@ -25,11 +25,11 @@ if jq -e '.clean_redis == true' "$OPTIONS_SOURCE" > /dev/null; then
 	rm -f "${REDIS_DATADIR:-/config/redis}/dump.rdd"
 fi
 
-s6-notifyoncheck -s 1000 -n 300 -w 1000 -c "redis-cli PING" \
+s6-notifyoncheck -s 1000 -n 300 -w 1000 -c "redis-cli -s /var/run/redis/redis.sock PING" \
 	s6-setuidgid redis \
 		redis-server ${REDIS_DATADIR:-/config/redis}/redis.conf \
 		--bind 0.0.0.0 \
-		--port 6379 \
+		--port "${REDIS_PORT:-6379}" \
 		--pidfile /var/run/redis/redis.pid \
 		--always-show-logo no \
 		--dir "${REDIS_DATADIR:-/config/redis}" \

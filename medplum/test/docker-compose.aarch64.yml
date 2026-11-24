@@ -1,0 +1,31 @@
+name: medplum-aarch64
+services:
+  medplum-aarch64:
+    image: fabioogaravini/hassio-medplum:${VERSION:-latest}-aarch64
+    build:
+      context: ..
+      args:
+        BUILD_ARCH: aarch64
+        BUILD_VERSION: ${VERSION:-latest}
+    container_name: medplum-aarch64
+    ports:
+      - 18080:8080
+      - 18103:8103
+    environment:
+      - TZ=Etc/UTC
+    volumes:
+      - data:/data
+      - ./options.json:/data/options.json:ro
+      - config:/config
+      - ssl:/ssl
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h /var/run/postgresql -U medplum && redis-cli -s /var/run/redis/redis.sock PING && ! ss -ltn | grep -Eq ':(5432|6379) ' && curl -fsS http://127.0.0.1:8103/healthcheck && curl -fsS http://127.0.0.1:8080/signin && curl -fsS -H 'X-Ingress-Path: /api/hassio_ingress/test' http://127.0.0.1:8099/health || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 20
+      start_period: 120s
+
+volumes:
+  data:
+  config:
+  ssl:

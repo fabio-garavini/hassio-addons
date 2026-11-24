@@ -198,6 +198,14 @@ Mealie is a self hosted recipe manager, meal planner and shopping list. Easily a
 
 ![screenshot](https://github.com/mealie-recipes/mealie/raw/mealie-next/docs/docs/assets/img/home_screenshot.png)
 
+### 🏥 Medplum
+
+_All-in-one_
+
+[Medplum](https://www.medplum.com) is an open-source healthcare platform with a FHIR API, web app, authentication, and automation tools.
+
+![screenshot](https://www.medplum.com/img/provider/medplum-provider-app-cover-image.webp)
+
 ### 🦜 Memos
 
 _All-in-one_

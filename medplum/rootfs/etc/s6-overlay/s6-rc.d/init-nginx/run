@@ -1,0 +1,170 @@
+#!/command/with-contenv bash
+# shellcheck shell=bash
+
+set -Eeuo pipefail
+
+OPTIONS_SOURCE=${ADDON_DATA_FOLDER:-/data}/options.json
+
+# Always start from pristine app assets so URL changes work on restart.
+rm -rf /var/www/medplum
+mkdir -p /var/www/medplum
+cp -a /opt/medplum/app/. /var/www/medplum/
+node /usr/local/bin/medplum-app-config.js
+
+nginx_port=${NGINX_PORT:-8080}
+api_port=8103
+ingress_port=${INGRESS_PORT:-8099}
+service_port=${SERVICE_PORT:-8104}
+certfile="/ssl/$(jq -r '.certfile' "$OPTIONS_SOURCE")"
+keyfile="/ssl/$(jq -r '.keyfile' "$OPTIONS_SOURCE")"
+listen_suffix=""
+ssl_configuration=""
+
+if jq -e '.ssl == true' "$OPTIONS_SOURCE" > /dev/null; then
+    if [ ! -f "$certfile" ] || [ ! -f "$keyfile" ]; then
+        echo "[init-nginx] SSL certificate missing; generating a self-signed certificate"
+        certfile="/data/ssl/fullchain.pem"
+        keyfile="/data/ssl/privkey.pem"
+        /usr/local/bin/ssl-check-generate.sh "$certfile" "$keyfile" true
+    else
+        /usr/local/bin/ssl-check-generate.sh "$certfile" "$keyfile" false
+    fi
+
+    listen_suffix="ssl"
+    ssl_configuration="include /etc/nginx/includes/ssl_params.conf;
+    ssl_certificate ${certfile};
+    ssl_certificate_key ${keyfile};
+    error_page 497 =301 https://\$http_host\$request_uri;"
+fi
+
+cat > /etc/nginx/includes/upstream.conf <<EOF
+upstream backend {
+    server 127.0.0.1:${service_port};
+}
+EOF
+
+cat > /etc/nginx/includes/medplum-direct-rewrite.conf <<'EOF'
+sub_filter_once off;
+sub_filter_types text/javascript application/javascript;
+sub_filter '__MEDPLUM_ROUTER_BASENAME__' '';
+sub_filter '__MEDPLUM_INGRESS_PATH__' '';
+EOF
+
+cat > /etc/nginx/includes/medplum-ingress-rewrite.conf <<'EOF'
+sub_filter_once off;
+sub_filter_types text/javascript application/javascript;
+sub_filter '__MEDPLUM_ROUTER_BASENAME__' '$http_x_ingress_path/web';
+sub_filter '__MEDPLUM_INGRESS_PATH__' '$http_x_ingress_path';
+sub_filter 'href="/' 'href="$http_x_ingress_path/web/';
+sub_filter 'src="/' 'src="$http_x_ingress_path/web/';
+EOF
+
+cat > /etc/nginx/servers/direct.conf <<EOF
+server {
+    listen ${nginx_port} default_server ${listen_suffix};
+    server_name _;
+
+    root /var/www/medplum;
+    index index.html;
+    ${ssl_configuration}
+    include /etc/nginx/includes/medplum-direct-rewrite.conf;
+
+    add_header X-Content-Type-Options nosniff always;
+    add_header Referrer-Policy no-referrer always;
+
+    location = /health {
+        access_log off;
+        return 200 'ok\n';
+        add_header Content-Type text/plain;
+    }
+
+    # The main bundle contains runtime URLs. Revalidate it so configuration
+    # changes are not hidden by a long-lived browser cache.
+    location ~ ^/assets/index-.*\.js$ {
+        add_header Cache-Control "no-cache";
+        try_files \$uri =404;
+    }
+
+    location /assets/ {
+        expires 1y;
+        add_header Cache-Control "public, no-transform";
+        try_files \$uri =404;
+    }
+
+    location / {
+        try_files \$uri \$uri/ /index.html;
+    }
+}
+
+server {
+    listen ${api_port} default_server ${listen_suffix};
+    server_name _;
+
+    ${ssl_configuration}
+    include /etc/nginx/includes/proxy_params.conf;
+
+    location / {
+        proxy_pass http://backend;
+        proxy_request_buffering off;
+        proxy_set_header Host \$http_host;
+        proxy_set_header X-Forwarded-Host \$http_host;
+    }
+}
+
+server {
+    listen ${ingress_port} default_server;
+    server_name _;
+    absolute_redirect off;
+
+    allow 127.0.0.1;
+    allow 172.30.32.2;
+    deny all;
+
+    root /var/www/medplum;
+    index index.html;
+    include /etc/nginx/includes/medplum-ingress-rewrite.conf;
+
+    location = /health {
+        access_log off;
+        return 200 'ok\n';
+        add_header Content-Type text/plain;
+    }
+
+    location /server/ {
+        rewrite ^/server(/.*)$ \$1 break;
+        include /etc/nginx/includes/proxy_params.conf;
+        proxy_pass http://backend;
+        proxy_request_buffering off;
+        proxy_set_header Host \$http_x_forwarded_host;
+        proxy_set_header X-Forwarded-Host \$http_x_forwarded_host;
+        proxy_set_header X-Forwarded-Proto \$http_x_forwarded_proto;
+        proxy_set_header X-Forwarded-Prefix \$http_x_ingress_path/server;
+    }
+
+    location = / {
+        add_header Cache-Control "no-store";
+        return 302 \$http_x_ingress_path/web/;
+    }
+
+    location = /web {
+        try_files /index.html =404;
+    }
+
+    location ~ ^/web/assets/index-.*\.js$ {
+        rewrite ^/web(/.*)$ \$1 break;
+        add_header Cache-Control "no-cache";
+        try_files \$uri =404;
+    }
+
+    location /web/ {
+        rewrite ^/web(/.*)$ \$1 break;
+        try_files \$uri /index.html;
+    }
+
+    location / {
+        try_files \$uri \$uri/ /index.html;
+    }
+}
+EOF
+
+nginx -t

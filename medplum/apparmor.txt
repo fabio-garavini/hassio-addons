@@ -1,0 +1,64 @@
+#include <tunables/global>
+
+profile medplum flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+
+  capability,
+  file,
+  signal,
+  network udp,
+  network tcp,
+  network dgram,
+  network stream,
+  network inet,
+  network inet6,
+  network netlink raw,
+  network unix dgram,
+  network unix stream,
+
+  capability setgid,
+  capability setuid,
+
+  # S6-Overlay
+  /init ix,
+  /bin/** ix,
+  /usr/bin/** ix,
+  /usr/local/bin/** ix,
+  /run/{s6,s6-rc*,service}/** ix,
+  /package/** ix,
+  /command/** ix,
+  /etc/s6/** rix,
+  /run/s6/** rix,
+  /etc/services.d/** rwix,
+  /etc/cont-init.d/** rwix,
+  /etc/cont-finish.d/** rwix,
+  /var/run/{,**} mrwkl,
+  /run/{,**} rwk,
+  /dev/tty rw,
+  /dev/** mrwkl,
+
+  # Bashio
+  /usr/lib/bashio/** ix,
+  /tmp/** mrwkl,
+
+  /usr/share/zoneinfo/** rw,
+  /etc/localtime rw,
+  /etc/environment rw,
+
+  # PostgreSQL, Redis, Node, and Nginx
+  /usr/lib/postgresql/** rwix,
+  /etc/postgresql/** rwix,
+  /usr/share/postgresql/** rwix,
+  /etc/redis/** rwix,
+  /usr/src/medplum/** rwix,
+  /usr/lib/node_modules/** rix,
+  /usr/local/lib/node_modules/** rix,
+  /opt/medplum/** r,
+  /var/www/** mrwkl,
+  /etc/nginx/** rwix,
+
+  # Data access
+  /data/** rw,
+  /config/** rw,
+  /ssl/** r,
+}

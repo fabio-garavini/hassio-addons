@@ -1,0 +1,10 @@
+{
+  "MEDPLUM_BASE_URL": "http://127.0.0.1:18103/",
+  "MEDPLUM_APP_BASE_URL": "http://127.0.0.1:18080/",
+  "MEDPLUM_REGISTER_ENABLED": true,
+  "DB_STORAGE_TYPE": "HDD",
+  "ssl": false,
+  "certfile": "fullchain.pem",
+  "keyfile": "privkey.pem",
+  "env_vars": []
+}

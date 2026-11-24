@@ -16,6 +16,8 @@
  *   4. Dockerfile ARG BUILD_FROM matches the rendered build_from image and an
  *      inline ARG BUILD_VERSION matches config.yaml's version (no-default
  *      ARG BUILD_VERSION declarations are legitimate and skipped)
+ *   5. An optional build.source_version_arg names another Dockerfile ARG that
+ *      must equal source.current_version
  *
  * CHANGELOG.md is deliberately not verified: its content is a fetched
  * release body, only the "# <version>" fallback header is generated.
@@ -235,6 +237,23 @@ function checkDockerfile(addon, info, config, buildFromImage) {
     fail(`${addon}: Dockerfile ARG BUILD_FROM "${unquote(fromMatch[1])}" != expected "${expectedFrom}"`);
   } else {
     ok(`${addon}: Dockerfile ARG BUILD_FROM matches`);
+  }
+
+  const sourceVersionArg = info.build?.source_version_arg;
+  if (sourceVersionArg != null) {
+    const sourceVersionMatch = new RegExp(`^ARG ${sourceVersionArg}=(.+)$`, 'm').exec(content);
+    if (!sourceVersionMatch) {
+      fail(`${addon}: Dockerfile is missing an "ARG ${sourceVersionArg}=" line`);
+    } else {
+      const actual = unquote(sourceVersionMatch[1]);
+      if (actual !== String(info.source.current_version)) {
+        fail(
+          `${addon}: Dockerfile ARG ${sourceVersionArg} "${actual}" != source.current_version "${info.source.current_version}"`
+        );
+      } else {
+        ok(`${addon}: Dockerfile ARG ${sourceVersionArg} matches source.current_version`);
+      }
+    }
   }
 
   const versionMatch = /^ARG BUILD_VERSION=(.+)$/m.exec(content);

@@ -1,0 +1,53 @@
+name: Medplum
+version: 5.2.18-ha0
+slug: medplum
+description: Open-source healthcare platform with FHIR API and web app
+url: https://www.medplum.com
+ingress: true
+ingress_stream: true
+panel_title: Medplum
+panel_icon: mdi:medical-bag
+panel_admin: false
+arch:
+  - aarch64
+  - amd64
+init: false
+hassio_api: true
+map:
+  - type: app_config
+    read_only: false
+  - type: ssl
+backup: cold
+backup_exclude:
+  - "**/logs"
+schema:
+  MEDPLUM_BASE_URL: str?
+  MEDPLUM_APP_BASE_URL: str?
+  MEDPLUM_REGISTER_ENABLED: bool
+  DB_STORAGE_TYPE: list(SSD|HDD)
+  ssl: bool
+  certfile: str?
+  keyfile: str?
+  MEDPLUM_SUPPORT_EMAIL: str?
+  MEDPLUM_EMAIL_PROVIDER: list(none|smtp)?
+  MEDPLUM_SMTP_HOST: str?
+  MEDPLUM_SMTP_PORT: int(0,)?
+  MEDPLUM_SMTP_USERNAME: str?
+  MEDPLUM_SMTP_PASSWORD: password?
+  env_vars:
+    - key: match(^[A-Za-z0-9_-]+$)
+      value: str
+options:
+  MEDPLUM_REGISTER_ENABLED: true
+  DB_STORAGE_TYPE: SSD
+  ssl: false
+  certfile: fullchain.pem
+  keyfile: privkey.pem
+  env_vars: []
+ports:
+  8080/tcp: null
+  8103/tcp: null
+ports_description:
+  8080/tcp: Optional direct web app access
+  8103/tcp: Optional direct API access
+image: fabioogaravini/hassio-medplum

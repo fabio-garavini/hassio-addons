@@ -1,0 +1,51 @@
+configuration:
+  MEDPLUM_BASE_URL:
+    name: Medplum API URL
+    description: >-
+      Leave empty for ingress, or enter the externally reachable direct API URL
+      with protocol, host, port, and trailing slash.
+  MEDPLUM_APP_BASE_URL:
+    name: Medplum Web App URL
+    description: >-
+      Leave empty for ingress, or enter the externally reachable direct web app
+      URL with protocol, host, port, and trailing slash.
+  MEDPLUM_REGISTER_ENABLED:
+    name: Enable Registration
+    description: >-
+      Allow new account registration in the app and API. Consider disabling
+      this after creating the accounts you need.
+  DB_STORAGE_TYPE:
+    name: Database Storage Type
+    description: Select the PostgreSQL tuning profile for your storage device. Defaults to SSD.
+  ssl:
+    name: SSL
+    description: Enable HTTPS on both the web app and API listeners.
+  certfile:
+    name: SSL Certificate File
+    description: Certificate filename in the Home Assistant `/ssl` directory.
+  keyfile:
+    name: SSL Private Key File
+    description: Private key filename in the Home Assistant `/ssl` directory.
+  MEDPLUM_SUPPORT_EMAIL:
+    name: Support Email
+    description: Optional sender identity used when sending Medplum system emails.
+  MEDPLUM_EMAIL_PROVIDER:
+    name: Email Provider
+    description: Select SMTP to enable email, or leave empty to keep email disabled.
+  MEDPLUM_SMTP_HOST:
+    name: SMTP Host
+    description: SMTP server hostname used when Email Provider is SMTP.
+  MEDPLUM_SMTP_PORT:
+    name: SMTP Port
+    description: SMTP server port, commonly 587 for STARTTLS or 465 for implicit TLS.
+  MEDPLUM_SMTP_USERNAME:
+    name: SMTP Username
+    description: Optional username for SMTP authentication.
+  MEDPLUM_SMTP_PASSWORD:
+    name: SMTP Password
+    description: Optional password for SMTP authentication.
+  env_vars:
+    name: Additional Environment Variables
+    description: >-
+      Advanced Medplum server or app environment variables, such as other email
+      providers or runtime settings. These use Medplum's `MEDPLUM_*` environment configuration.

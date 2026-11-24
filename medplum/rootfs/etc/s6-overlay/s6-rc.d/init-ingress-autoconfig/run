@@ -1,0 +1,47 @@
+#!/command/with-contenv bash
+# shellcheck shell=bash
+
+set -Eeuo pipefail
+
+# shellcheck source=/dev/null
+source /usr/lib/bashio/bashio.sh
+
+# Explicit URLs are a direct-access/reverse-proxy configuration; do not replace them.
+if ! jq -e '[.MEDPLUM_BASE_URL, .MEDPLUM_APP_BASE_URL] | all(. == null or . == "")' \
+    "${ADDON_DATA_FOLDER:-/data}/options.json" > /dev/null; then
+    exit 0
+fi
+
+if [ -z "${SUPERVISOR_TOKEN:-}" ]; then
+    exit 0
+fi
+
+# Supervisor publishes the ingress entry after the app has started.
+for _ in {1..120}; do
+    ingress_path="$(bashio::api.supervisor GET /addons/local_medplum/info false '.ingress_entry // empty' || true)"
+    if [ -n "$ingress_path" ]; then
+        host="$(bashio::network 'network.info' \
+            '[.interfaces[] | select(.ipv4.ready == true) | .ipv4.address[0]][0] // empty' \
+            | cut -d/ -f1 || true)"
+        host="${host:-homeassistant.local}"
+        # Fallback for server work outside an HTTP request. Browser and storage
+        # requests use their actual forwarded origin instead.
+        external_port="${INGRESS_EXTERNAL_PORT:-8123}"
+
+        echo "[init-ingress-autoconfig] Applying ingress at ${ingress_path}"
+        MEDPLUM_BASE_URL="http://${host}:${external_port}${ingress_path}/server/"
+        MEDPLUM_APP_BASE_URL="http://${host}:${external_port}${ingress_path}/web/"
+        # with-contenv reloads these files when the init script is invoked again.
+        printf '%s' "$MEDPLUM_BASE_URL" > /var/run/s6/container_environment/MEDPLUM_BASE_URL
+        printf '%s' "$MEDPLUM_APP_BASE_URL" > /var/run/s6/container_environment/MEDPLUM_APP_BASE_URL
+        /etc/s6-overlay/s6-rc.d/init-medplum/run
+        /etc/s6-overlay/s6-rc.d/init-nginx/run
+        s6-svc -t /run/service/svc-medplum
+        s6-svc -t /run/service/svc-nginx
+        exit 0
+    fi
+    sleep 1
+done
+
+echo "[init-ingress-autoconfig] No ingress entry was published; keeping direct fallback URLs" >&2
+exit 1

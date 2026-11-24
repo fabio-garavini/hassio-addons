@@ -198,6 +198,15 @@ function renderBuild(ctx) {
     dockerfile,
     true
   );
+  if (info.build?.source_version_arg != null) {
+    dockerfileContent = replaceDockerfileArg(
+      dockerfileContent,
+      info.build.source_version_arg,
+      info.source.current_version,
+      dockerfile,
+      true
+    );
+  }
   // BUILD_VERSION may legitimately be declared without an inline default
   // (e.g. "ARG BUILD_VERSION \" with the value passed as a build arg)
   dockerfileContent = replaceDockerfileArg(dockerfileContent, 'BUILD_VERSION', config.version, dockerfile, false);
