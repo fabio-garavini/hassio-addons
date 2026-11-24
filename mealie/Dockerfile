@@ -1,6 +1,5 @@
-ARG BUILD_FROM=ghcr.io/mealie-recipes/mealie:v3.31.0
 
-FROM ${BUILD_FROM}
+FROM ghcr.io/mealie-recipes/mealie:v3.31.0
 
 ARG BUILD_ARCH=amd64
 

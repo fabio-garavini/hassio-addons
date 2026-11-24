@@ -1,6 +1,5 @@
-ARG BUILD_FROM=ghcr.io/foldergram/foldergram:1.3.3
 
-FROM ${BUILD_FROM}
+FROM ghcr.io/foldergram/foldergram:1.3.3
 
 # Generic app variables
 ENV \

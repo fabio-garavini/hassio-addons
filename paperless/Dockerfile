@@ -1,5 +1,4 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/paperless-ngx/paperless-ngx:3.5.1
 
 ARG TIKA_VERSION=3.3.1
 ARG GOTENBERG_VERSION=8.35
@@ -8,7 +7,7 @@ FROM gotenberg/gotenberg:${GOTENBERG_VERSION} AS gotenberg
 
 FROM apache/tika:${TIKA_VERSION}.0 AS tika
 
-FROM $BUILD_FROM
+FROM ghcr.io/paperless-ngx/paperless-ngx:3.5.1
 
 ARG TIKA_VERSION
 ARG BUILD_ARCH=amd64

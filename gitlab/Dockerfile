@@ -1,7 +1,6 @@
-ARG BUILD_FROM=docker.io/library/ubuntu
 ARG UBUNTU_VERSION="noble"
 
-FROM ${BUILD_FROM}:${UBUNTU_VERSION}
+FROM docker.io/library/ubuntu:${UBUNTU_VERSION}
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 

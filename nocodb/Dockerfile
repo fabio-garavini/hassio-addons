@@ -1,6 +1,5 @@
-ARG BUILD_FROM=docker.io/nocodb/nocodb:2026.10.2
 
-FROM ${BUILD_FROM}
+FROM docker.io/nocodb/nocodb:2026.10.2
 
 # Container Environment variables
 ENV \

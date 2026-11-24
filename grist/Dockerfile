@@ -1,7 +1,6 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=gristlabs/grist-oss:1.7.22
 
-FROM ${BUILD_FROM}
+FROM gristlabs/grist-oss:1.7.22
 
 # Container Environment variables
 ENV \

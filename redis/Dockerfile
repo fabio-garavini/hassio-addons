@@ -1,8 +1,7 @@
-ARG BUILD_FROM=redis/redis-stack:7.4.0-v8
 
 FROM oliver006/redis_exporter:alpine AS redis-exporter
 
-FROM ${BUILD_FROM}
+FROM redis/redis-stack:7.4.0-v8
 
 ENV REDIS_DATA_DIR="/config" \
     RIPORT=8001

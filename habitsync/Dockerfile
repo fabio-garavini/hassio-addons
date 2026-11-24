@@ -1,7 +1,6 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/jofoerster/habitsync:0.19.3
 
-FROM ${BUILD_FROM}
+FROM ghcr.io/jofoerster/habitsync:0.19.3
 
 ENV \
     SERVICE_PORT=6842 \

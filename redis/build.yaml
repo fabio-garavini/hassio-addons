@@ -1,3 +1,0 @@
-build_from:
-  aarch64: redis/redis-stack:7.4.0-v8
-  amd64: redis/redis-stack:7.4.0-v8

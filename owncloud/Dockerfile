@@ -1,7 +1,6 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=docker.io/owncloud/server:11.1.0
 
-FROM ${BUILD_FROM}
+FROM docker.io/owncloud/server:11.1.0
 
 ENV \
     OWNCLOUD_VOLUME_FILES="/share/owncloud" \

@@ -1,7 +1,6 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=library/monica:5.0.0-beta.5-apache
 
-FROM $BUILD_FROM
+FROM library/monica:5.0.0-beta.5-apache
 
 # Container Environment variables
 ENV \

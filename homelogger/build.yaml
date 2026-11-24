@@ -1,3 +1,0 @@
-build_from:
-  aarch64: francislaboratories/homelogger:0.7.0
-  amd64: francislaboratories/homelogger:0.7.0

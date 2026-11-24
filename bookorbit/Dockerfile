@@ -1,7 +1,6 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/bookorbit/bookorbit:3.9.0
 
-FROM ${BUILD_FROM}
+FROM ghcr.io/bookorbit/bookorbit:3.9.0
 
 # Environment variables
 ENV \

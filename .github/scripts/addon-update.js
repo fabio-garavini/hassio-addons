@@ -170,34 +170,27 @@ function renderBuild(ctx) {
   const { info, config, addonSlug } = ctx;
   if (info.build == null || !(info.build?.enabled ?? true)) return null;
 
-  const buildFile = path.join(addonSlug, 'build.yaml');
   const dockerfile = path.join(addonSlug, 'Dockerfile');
-
-  const build = readYamlFile(buildFile);
-
   const buildVersion =
     info.build?.version_template != null ? renderVersionTemplate(ctx, info.build.version_template) : null;
-  const buildFromImage = `${info.build?.image ?? info.source.image}${buildVersion != null ? `:${buildVersion}` : ''}`;
-
-  if (!Array.isArray(config.arch) || config.arch.length === 0) {
-    throw new Error(`${ctx.configFile}: "config.arch" must be a non-empty list when a build section is present`);
-  }
-  build.build_from = {};
-  for (const arch of config.arch) {
-    build.build_from[arch] = replaceArchPlaceholder(buildFromImage, arch);
-  }
+  const buildImage = info.build?.image ?? info.source.image;
 
   if (!fs.existsSync(dockerfile)) {
     throw new Error(`${dockerfile} not found but a build section is present`);
   }
   let dockerfileContent = fs.readFileSync(dockerfile, 'utf8');
-  dockerfileContent = replaceDockerfileArg(
-    dockerfileContent,
-    'BUILD_FROM',
-    replaceArchPlaceholder(buildFromImage, 'amd64'),
-    dockerfile,
-    true
-  );
+  if (buildImage) {
+    const fromRegex = new RegExp(
+      `^FROM\\s+${escapeRegExp(buildImage)}(?<suffix>[^\\s]*)(?<stage>\\s+AS\\s+.*)?$`,
+      'im'
+    );
+    const fromMatch = fromRegex.exec(dockerfileContent);
+    if (fromMatch) {
+      const versionSuffix = buildVersion != null ? `:${buildVersion}` : fromMatch.groups.suffix;
+      const stage = fromMatch.groups.stage ?? '';
+      dockerfileContent = dockerfileContent.replace(fromRegex, `FROM ${buildImage}${versionSuffix}${stage}`);
+    }
+  }
   if (info.build?.source_version_arg != null) {
     dockerfileContent = replaceDockerfileArg(
       dockerfileContent,
@@ -211,11 +204,11 @@ function renderBuild(ctx) {
   // (e.g. "ARG BUILD_VERSION \" with the value passed as a build arg)
   dockerfileContent = replaceDockerfileArg(dockerfileContent, 'BUILD_VERSION', config.version, dockerfile, false);
 
-  return { build, buildFile, dockerfileContent, dockerfile };
+  return { dockerfileContent, dockerfile };
 }
 
-function replaceArchPlaceholder(value, arch) {
-  return value.replaceAll('{{arch}}', arch).replaceAll('{arch}', arch);
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function replaceDockerfileArg(content, name, value, file, required) {
@@ -236,7 +229,6 @@ function writeAll(ctx, { changelog, buildResult }) {
   }
 
   if (buildResult != null) {
-    fs.writeFileSync(buildResult.buildFile, yaml.stringify(buildResult.build), 'utf8');
     fs.writeFileSync(buildResult.dockerfile, buildResult.dockerfileContent, 'utf8');
   }
 }

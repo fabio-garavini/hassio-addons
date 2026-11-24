@@ -1,3 +1,0 @@
-build_from:
-  aarch64: docker.io/opencloudeu/opencloud-rolling:9.2.0
-  amd64: docker.io/opencloudeu/opencloud-rolling:9.2.0

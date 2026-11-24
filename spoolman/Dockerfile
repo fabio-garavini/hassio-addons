@@ -1,7 +1,6 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/donkie/spoolman:0.27.1
 
-FROM ${BUILD_FROM}
+FROM ghcr.io/donkie/spoolman:0.27.1
 
 ENV \
     SERVICE_PORT=8000 \

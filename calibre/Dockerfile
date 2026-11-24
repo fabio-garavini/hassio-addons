@@ -1,6 +1,5 @@
-ARG BUILD_FROM=lscr.io/linuxserver/calibre:v9.19.0-ls434
 
-FROM ${BUILD_FROM}
+FROM lscr.io/linuxserver/calibre:v9.19.0-ls434
 
 ENV \
     START_DOCKER=false \

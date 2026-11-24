@@ -1,7 +1,6 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/linuxserver/nextcloud:35.0.3-ls4
 
-FROM $BUILD_FROM
+FROM ghcr.io/linuxserver/nextcloud:35.0.3-ls4
 
 ENV REDIS_SOCKET="/var/run/redis/redis.sock"
 

@@ -1,11 +1,10 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=node:24.22.1-trixie-slim
 ARG MEDPLUM_VERSION=5.2.18
 
 FROM medplum/medplum-server:${MEDPLUM_VERSION} AS medplum-server
 FROM medplum/medplum-app:${MEDPLUM_VERSION} AS medplum-app
 
-FROM ${BUILD_FROM}
+FROM node:24.22.1-trixie-slim
 
 ENV \
     TERM="xterm-256color" \

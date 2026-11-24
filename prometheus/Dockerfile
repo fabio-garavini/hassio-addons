@@ -1,5 +1,4 @@
-ARG BUILD_FROM=prom/prometheus:v3.16.0
-FROM ${BUILD_FROM}
+FROM prom/prometheus:v3.16.0
 
 # hadolint ignore=DL3002,DL3066
 USER root

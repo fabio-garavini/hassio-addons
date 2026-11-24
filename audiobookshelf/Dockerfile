@@ -1,7 +1,6 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/advplyr/audiobookshelf:2.38.0
 
-FROM ${BUILD_FROM}
+FROM ghcr.io/advplyr/audiobookshelf:2.38.0
 
 ENV METADATA_PATH="/config/metadata"
 

@@ -1,6 +1,5 @@
-ARG BUILD_FROM=mayswind/ezbookkeeping:2.2.0
 
-FROM ${BUILD_FROM}
+FROM mayswind/ezbookkeeping:2.2.0
 
 # Generic Addon variables
 ENV \

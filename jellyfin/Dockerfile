@@ -1,6 +1,5 @@
-ARG BUILD_FROM=jellyfin/jellyfin:12.4
 
-FROM ${BUILD_FROM}
+FROM jellyfin/jellyfin:12.4
 
 # Generic Addon variables
 ENV \

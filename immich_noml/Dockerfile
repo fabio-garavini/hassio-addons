@@ -1,7 +1,6 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/imagegenius/immich:3.4.2-noml
 
-FROM ${BUILD_FROM}
+FROM ghcr.io/imagegenius/immich:3.4.2-noml
 
 ARG BUILD_ARCH=amd64
 

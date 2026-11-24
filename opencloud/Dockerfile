@@ -1,7 +1,6 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=docker.io/opencloudeu/opencloud-rolling:9.2.0
 
-FROM ${BUILD_FROM}
+FROM docker.io/opencloudeu/opencloud-rolling:9.2.0
 
 ENV \
     OC_CONFIG_DIR="/config" \

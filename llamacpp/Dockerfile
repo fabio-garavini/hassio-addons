@@ -1,6 +1,4 @@
-ARG BUILD_FROM=ghcr.io/ggml-org/llama.cpp:server-v1.0.0-b12359-b1b770d
-
-FROM ${BUILD_FROM}
+FROM ghcr.io/ggml-org/llama.cpp:server-v1.0.0-b12359-b1b770d
 
 ENV \
     TERM="xterm-256color" \

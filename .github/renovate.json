@@ -45,7 +45,6 @@
         ],
         "fileFilters": [
           "*/config.yaml",
-          "*/build.yaml",
           "*/CHANGELOG.md",
           "*/addon_info.yaml",
           "*/Dockerfile"

@@ -1,11 +1,10 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/n8n-io/n8n:2.48.8
 
 ARG BUILD_VERSION=2.48.8-ha40
 
 FROM ghcr.io/n8n-io/runners:${BUILD_VERSION%-ha*} AS runner
 
-FROM ${BUILD_FROM}
+FROM ghcr.io/n8n-io/n8n:2.48.8
 
 # n8n environment variables
 # hadolint ignore=DL3064

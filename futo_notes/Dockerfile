@@ -1,5 +1,4 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=debian:bookworm-slim
 ARG BUILD_VERSION=0.7.1-ha2
 
 # renovate: datasource=gitlab-tags depName=futo-notes/futo-notes-server registryUrl=https://gitlab.futo.org
@@ -7,7 +6,7 @@ ARG FUTO_NOTES_VERSION=v0.7.1
 
 FROM futotech/notes-server:${FUTO_NOTES_VERSION} AS futo-notes
 
-FROM ${BUILD_FROM}
+FROM debian:bookworm-slim
 
 # Global addon environment.
 ENV \

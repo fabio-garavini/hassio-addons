@@ -1,3 +1,0 @@
-build_from:
-  aarch64: gitea/gitea:28.4.0
-  amd64: gitea/gitea:28.4.0

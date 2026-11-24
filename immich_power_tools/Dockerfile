@@ -1,10 +1,9 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=alpine:latest
 ARG BUILD_VERSION=0.26.0-ha3
 
 FROM ghcr.io/immich-power-tools/immich-power-tools:${BUILD_VERSION%-ha*} AS immich_power_tools
 
-FROM ${BUILD_FROM}
+FROM alpine:latest
 
 # Generic Addon variables
 ENV \

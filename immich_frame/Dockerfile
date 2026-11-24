@@ -1,7 +1,6 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/immichframe/immichframe:v1.0.40.0
 
-FROM ${BUILD_FROM}
+FROM ghcr.io/immichframe/immichframe:v1.0.40.0
 
 ARG BUILD_VERSION=1.0.40.0-ha3
 

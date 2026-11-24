@@ -1,6 +1,5 @@
-ARG BUILD_FROM=ghcr.io/linuxserver/luanti:5.18.0-ls53
 
-FROM ${BUILD_FROM}
+FROM ghcr.io/linuxserver/luanti:5.18.0-ls53
 
 COPY .common/addon-config /
 

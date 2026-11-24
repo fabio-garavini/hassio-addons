@@ -1,7 +1,6 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=gitea/gitea:28.4.0
 
-FROM $BUILD_FROM
+FROM gitea/gitea:28.4.0
 
 ENV GITEA_WORK_DIR=/data \
     INSTALL_LOCK=true \

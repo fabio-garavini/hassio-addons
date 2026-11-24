@@ -1,7 +1,6 @@
-ARG BUILD_FROM=ghcr.io/erik/hotpot:v0.4.0
 ARG BUILD_VERSION=0.4.0-ha2
 
-FROM ${BUILD_FROM}
+FROM ghcr.io/erik/hotpot:v0.4.0
 
 # Generic app variables
 ENV \

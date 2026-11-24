@@ -1,7 +1,6 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/karakeep-app/karakeep:0.35.0
 
-FROM ${BUILD_FROM}
+FROM ghcr.io/karakeep-app/karakeep:0.35.0
 
 # Environment variables
 ENV \

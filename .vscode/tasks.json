@@ -1,79 +1,119 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "Start Home Assistant",
-            "type": "shell",
-            "command": "supervisor_run",
-            "group": {
-                "kind": "test",
-                "isDefault": true
-            },
-            "presentation": {
-                "reveal": "always",
-                "panel": "new"
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Hassio Addon: build & test (amd64)",
-            "type": "shell",
-            "command": "cd ./${input:addonName}/test && docker compose -f docker-compose.amd64.yml up --build && docker compose -f docker-compose.amd64.yml down -v",
-            "group": "build",
-            "problemMatcher": []
-        }
-    ],
-    "inputs": [
-        {
-            "id": "addonName",
-            "type": "pickString",
-            "description": "Select the addon",
-            "options": [
-                "audiobookshelf",
-                "bookorbit",
-                "calibre",
-                "calibre-web",
-                "cloudflared",
-                "collabora_code",
-                "ezbookkeeping",
-                "frigate_rk",
-                "frigate_rocm",
-                "frigate_tensorrt",
-                "frigate_tensorrt_jp6",
-                "futo_notes",
-                "gitea",
-                "gitlab",
-                "grimoire",
-                "grist",
-                "habitsync",
-                "homelogger",
-                "immich",
-                "immich_cuda",
-                "immich_frame",
-                "immich_noml",
-                "immich_openvino",
-                "immich_power_tools",
-                "jellyfin",
-                "karakeep",
-                "luanti",
-                "mealie",
-                "memos",
-                "monica",
-                "n8n",
-                "nextcloud",
-                "nocodb",
-                "opencloud",
-                "openspeedtest",
-                "owncloud",
-                "paperless",
-                "pocketbase",
-                "postgres_16",
-                "prometheus",
-                "redis",
-                "spoolman",
-                "spoolman_sync",
-                "syncthing"
-            ]
-        }
-    ]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start Home Assistant",
+      "type": "shell",
+      "command": "supervisor_run",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Install App",
+      "type": "shell",
+      "command": "ha apps install \"local_${input:appName}\"",
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Start App",
+      "type": "shell",
+      "command": "ha apps stop \"local_${input:appName}\"; ha apps start \"local_${input:appName}\"; ha apps logs -f \"local_${input:appName}\"",
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": [],
+      "runOptions": {
+        "reevaluateOnRerun": false
+      }
+    },
+    {
+      "label": "Rebuild and Start App",
+      "type": "shell",
+      "command": "ha apps rebuild --force \"local_${input:appName}\"; ha apps start \"local_${input:appName}\"; ha apps logs -f \"local_${input:appName}\"",
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "appName",
+      "type": "pickString",
+      "description": "Name of app (to add your app to this list, please edit .vscode/tasks.json)",
+      "options": [
+        "audiobookshelf",
+        "bookorbit",
+        "calibre",
+        "calibre-web",
+        "cloudflared",
+        "collabora_code",
+        "ezbookkeeping",
+        "frigate_rk",
+        "frigate_rocm",
+        "frigate_tensorrt",
+        "frigate_tensorrt_jp6",
+        "futo_notes",
+        "gitea",
+        "gitlab",
+        "grimoire",
+        "grist",
+        "habitsync",
+        "homelogger",
+        "immich",
+        "immich_cuda",
+        "immich_frame",
+        "immich_noml",
+        "immich_openvino",
+        "immich_power_tools",
+        "jellyfin",
+        "karakeep",
+        "llamacpp",
+        "luanti",
+        "mealie",
+        "medplum",
+        "memos",
+        "monica",
+        "n8n",
+        "nextcloud",
+        "nocodb",
+        "opencloud",
+        "openspeedtest",
+        "owncloud",
+        "paperless",
+        "pocketbase",
+        "postgres_16",
+        "prometheus",
+        "redis",
+        "spoolman",
+        "spoolman_sync",
+        "syncthing"
+      ]
+    }
+  ]
 }

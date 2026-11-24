@@ -1,7 +1,6 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_FROM=ghcr.io/gibz104/spoolmansync:2.1.2
 
-FROM ${BUILD_FROM}
+FROM ghcr.io/gibz104/spoolmansync:2.1.2
 
 ENV HA_MODE="external"
 

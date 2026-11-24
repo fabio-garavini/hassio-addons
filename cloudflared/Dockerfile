@@ -1,6 +1,5 @@
-ARG BUILD_FROM=alpine:latest
 
-FROM ${BUILD_FROM}
+FROM alpine:latest
 
 # Generic Addon variables
 ENV \

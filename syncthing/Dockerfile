@@ -1,6 +1,5 @@
-ARG BUILD_FROM=ghcr.io/linuxserver/syncthing:v2.1.7-ls238
 
-FROM ${BUILD_FROM}
+FROM ghcr.io/linuxserver/syncthing:v2.1.7-ls238
 
 COPY .common/addon-config /
 
