@@ -28,6 +28,11 @@ A `.nofoldergram` file inside a folder excludes that folder and all descendants.
 
 - **Derivative Generation:** `eager` creates thumbnails and previews during scans; `lazy` creates missing derivatives on first request.
 - **Image Detail Source:** `preview` uses generated previews; `original` streams original images on detail pages.
+- **Video Delivery Mode:** `streaming` plays compatible originals or converts short sections on demand for newly imported local videos; `previews` saves full MP4 previews when needed. Changing this option does not switch existing videos automatically. Use **Settings → Scan & Library** in Foldergram to switch existing local videos.
+- **Streaming Cache Path:** optional path for temporary streaming segments. Leave it blank to use `/config/foldergram/hls-cache`. A custom path must be writable and separate from galleries, the database, thumbnails, previews, and other Foldergram storage.
+- **Streaming Cache Size Limit:** total space available to cached segments and conversions in progress; defaults to `2147483648` bytes (2 GiB).
+- **Streaming Cache Maximum Age:** how long unused segments can stay in the cache; defaults to `24` hours and must be greater than zero.
+- **Video Transcoding Concurrency:** number of simultaneous video conversions, from `1` to `8`; defaults to `1`.
 - **Additional Trusted Origins:** usually unnecessary for the built-in Web UI. Set comma-separated origins only when an external reverse proxy requires them.
 - **Additional Environment Variables:** advanced upstream settings. Each entry needs a `key` and a string `value`.
 
