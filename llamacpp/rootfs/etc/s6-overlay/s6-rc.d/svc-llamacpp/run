@@ -1,0 +1,17 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+
+set -Eeuo pipefail
+
+cd /app
+
+if [[ "$LLAMA_ARG_MODELS_DIR" != "/data/models" && -d /data/models ]]; then
+    bashio::log.warning "[svc-llamacpp] Models Directory changed. Deleting /data/models"
+    rm -rf -- /data/models
+fi
+
+mkdir -p "$LLAMA_ARG_MODELS_DIR" "$LLAMA_CACHE" "$HF_HOME" "$HF_HUB_CACHE"
+
+bashio::log.info "[svc-llamacpp] Starting llama-server in router mode..."
+
+exec /app/llama-server

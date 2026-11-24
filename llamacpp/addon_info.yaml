@@ -1,0 +1,18 @@
+source:
+  type: github-releases
+  repo: ggml-org/llama.cpp
+  current_version: v1.0.0-b12359-b1b770d
+  version_template: regex:^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)-b(?<build>\d+)-(?<revision>[0-9a-f]+)$
+config:
+  version_template: "{{major}}.{{minor}}.{{patch}}-ha{{app_build}}"
+  build: 0
+  image: fabioogaravini/hassio-llamacpp
+build:
+  image: ghcr.io/ggml-org/llama.cpp
+  version_template: server-v{{major}}.{{minor}}.{{patch}}-b{{build}}-{{revision}}
+changelog:
+  source: github-releases
+  repo: ggml-org/llama.cpp
+  version_template: v{{major}}.{{minor}}.{{patch}}
+test:
+  enable: true

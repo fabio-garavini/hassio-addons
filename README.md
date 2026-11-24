@@ -190,6 +190,14 @@ A self-hostable bookmark-everything app with a touch of AI for the data hoarders
 
 ![screenshot](https://github.com/karakeep-app/karakeep/raw/main/screenshots/homepage.png?raw=true)
 
+### 🦙 llama.cpp
+
+_All-in-one_
+
+[llama.cpp](https://github.com/ggml-org/llama.cpp) provides local LLM inference with a multi-model router, Llama Chat through Home Assistant ingress, and an OpenAI-compatible API.
+
+![screenshot](https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/Llama.cpp_screenshot.png/960px-Llama.cpp_screenshot.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail&_=20260608042616)
+
 ### 🍜 Mealie
 
 _All-in-one_

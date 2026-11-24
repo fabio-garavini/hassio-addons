@@ -1,0 +1,37 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+
+set -Eeuo pipefail
+
+if [[ -z "${SUPERVISOR_TOKEN:-${HASSIO_TOKEN:-}}" ]]; then
+    bashio::log.warning "[init-llamacpp-discovery] No Supervisor token; skipping discovery"
+    exit 0
+fi
+
+protocol="http"
+if bashio::config.true 'ssl'; then
+    protocol="https"
+fi
+
+host="$(hostname)"
+base_url="${protocol}://${host}:8080/v1"
+
+if [[ -s /data/discovery.uuid ]]; then
+    bashio::discovery.delete "$(cat /data/discovery.uuid)" || true
+    rm -f /data/discovery.uuid
+fi
+
+config=$(bashio::var.json \
+    host "${host}" \
+    port "^8080" \
+    base_url "${base_url}" \
+    api_key "${LLAMA_API_KEY:-}" \
+    ssl "^$(bashio::config 'ssl')")
+
+if bashio::discovery "llama_cpp" "${config}" > /data/discovery.uuid; then
+    bashio::log.info "[init-llamacpp-discovery] Published llama.cpp integration discovery for ${base_url}"
+else
+    bashio::log.error "[init-llamacpp-discovery] Failed to publish integration discovery"
+    rm -f /data/discovery.uuid
+    exit 1
+fi

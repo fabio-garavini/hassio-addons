@@ -1,0 +1,369 @@
+configuration:
+  ssl:
+    name: SSL
+    description: >-
+      Enable HTTPS on the optional direct Web UI and API port.
+  certfile:
+    name: SSL Certificate File
+    description: >-
+      Certificate filename in the Home Assistant `/ssl` directory.
+  keyfile:
+    name: SSL Private Key File
+    description: >-
+      Private key filename in the Home Assistant `/ssl` directory.
+  LLAMA_API_KEY:
+    name: API Key
+    description: >-
+      Optional bearer token required by the server. Recommended whenever the
+      direct port is exposed. Llama Chat asks for this key when configured.
+  LLAMA_ARG_MODELS_DIR:
+    name: Models Directory
+    description: >-
+      Directory containing local GGUF models. Use a path under `/share` or
+      `/config`, or use `/data/models` (default). Changing away from
+      `/data/models` permanently deletes that directory on the next startup.
+  LLAMA_ARG_MODELS_PRESET:
+    name: Model Preset File
+    description: >-
+      Optional INI file with global and per-model router settings.
+  LLAMA_ARG_MODELS_MAX:
+    name: Maximum Loaded Models
+    description: >-
+      Maximum model instances kept loaded simultaneously (default: `4`). `0` means unlimited.
+  LLAMA_ARG_MODELS_MEMORY_MARGIN:
+    name: Device Memory Margin (MiB)
+    description: >-
+      Per-device free-memory target used when loading a model (default: `0`).
+      The router unloads idle least-recently-used models as needed. Models serving
+      requests are not unloaded. Loading still proceeds if the target cannot be
+      met. `0` disables memory-based unloading. This has no effect without GPU devices.
+  LLAMA_ARG_MODELS_AUTOLOAD:
+    name: Automatic Model Loading
+    description: >-
+      Load a model automatically when a request selects it (default: enabled).
+  LLAMA_ARG_CTX_SIZE:
+    name: Context Size
+    description: >-
+      Context tokens per loaded model (default: `0` uses the model's own value).
+  LLAMA_ARG_N_PARALLEL:
+    name: Parallel Slots
+    description: >-
+      Inference slots per loaded model (default: `-1` = auto).
+  LLAMA_ARG_THREADS:
+    name: CPU Threads
+    description: >-
+      CPU threads used during generation (default: `-1`, automatic).
+  LLAMA_ARG_BATCH:
+    name: Logical Batch Size
+    description: >-
+      Maximum logical batch size for prompt processing (default: `2048`).
+  LLAMA_ARG_UBATCH:
+    name: Physical Batch Size
+    description: >-
+      Maximum physical batch size for prompt processing (default: `512`).
+  LLAMA_ARG_N_PREDICT:
+    name: Predicted Tokens
+    description: >-
+      Maximum tokens to generate per response (default: `-1`, unlimited).
+  LLAMA_ARG_N_GPU_LAYERS:
+    name: GPU Layers
+    description: >-
+      Maximum model layers to store in VRAM: a non-negative integer, `auto`
+      (default), or `all`. Offload requires a GPU-enabled llama.cpp build.
+      The pinned app image is CPU-only.
+  LLAMA_ARG_EMBEDDINGS:
+    name: Enable Embeddings
+    description: >-
+      Enable the embeddings endpoint when using a supported model
+  LLAMA_ARG_RERANKING:
+    name: Enable Reranking
+    description: >-
+      Enable the reranking endpoint when using a supported model.
+  LLAMA_ARG_POOLING:
+    name: Embedding Pooling
+    description: >-
+      Pooling method for embeddings (default: the model's own method).
+  LLAMA_ARG_FLASH_ATTN:
+    name: Flash Attention
+    description: >-
+      Enable or disable Flash Attention, or select it automatically.
+  LLAMA_ARG_CACHE_TYPE_K:
+    name: K Cache Data Type
+    description: >-
+      Data type used for the key-value K cache.
+  LLAMA_ARG_CACHE_TYPE_V:
+    name: V Cache Data Type
+    description: >-
+      Data type used for the key-value V cache.
+  LLAMA_ARG_KV_OFFLOAD:
+    name: KV Cache Offloading
+    description: >-
+      Offload the key-value cache to an available device.
+  LLAMA_ARG_REPACK:
+    name: Weight Repacking
+    description: >-
+      Enable model weight repacking when supported.
+  LLAMA_ARG_LOAD_MODE:
+    name: Model Load Mode
+    description: >-
+      Select mmap, memory locking, DirectIO, or automatic loading.
+  LLAMA_ARG_LAZY_MODE:
+    name: Lazy Tensor Loading
+    description: >-
+      Read selected model tensors from disk on demand.
+  LLAMA_ARG_NUMA:
+    name: NUMA Mode
+    description: >-
+      Control thread distribution on multi-node NUMA systems.
+  LLAMA_ARG_CPU_MOE:
+    name: Keep MoE Weights on CPU
+    description: >-
+      Keep all Mixture-of-Experts weights in CPU memory.
+  LLAMA_ARG_N_CPU_MOE:
+    name: CPU MoE Layers
+    description: >-
+      Keep the first N Mixture-of-Experts layers in CPU memory.
+  LLAMA_ARG_MOE_CACHE_MIB:
+    name: MoE Cache Size (MiB)
+    description: >-
+      GPU cache size for Mixture-of-Experts kept on the CPU (default: `0`, disabled).
+  LLAMA_ARG_MOE_CACHE_CPU_SHARE:
+    name: MoE CPU Cache Share
+    description: >-
+      Fraction of MoE cache misses computed by the CPU rather than uploaded (default: `0.0`).
+  LLAMA_ARG_N_CPU_FFN:
+    name: CPU FFN Layers
+    description: >-
+      Keep dense feed-forward weights of the first N layers in CPU memory.
+      For MoE expert weights, use CPU MoE Layers instead.
+  LLAMA_ARG_FIT:
+    name: Fit Models to Memory
+    description: >-
+      Automatically adjust unset arguments to fit available device memory (default: enabled).
+  LLAMA_ARG_FIT_TARGET:
+    name: Fit Target Margin (MiB)
+    description: >-
+      Target free-memory margin per device in MiB (default: `1024`). Use
+      comma-separated values for multiple devices. One value applies to every device.
+  LLAMA_ARG_FIT_CTX:
+    name: Minimum Fit Context
+    description: >-
+      Minimum context size allowed when fitting models to memory (default: `4096`).
+  LLAMA_ARG_RPC:
+    name: RPC Servers
+    description: >-
+      Comma-separated remote llama.cpp RPC servers in host:port form.
+  LLAMA_ARG_MMPROJ_AUTO:
+    name: Automatic Multimodal Projector
+    description: >-
+      Automatically download and use an available multimodal projector (default: enabled).
+  LLAMA_ARG_MMPROJ_OFFLOAD:
+    name: Offload Multimodal Projector
+    description: >-
+      Offload multimodal projector computation to an available device (default: enabled).
+  LLAMA_ARG_IMAGE_MIN_TOKENS:
+    name: Minimum Image Tokens
+    description: >-
+      Minimum token budget for each image (default: the model value).
+  LLAMA_ARG_IMAGE_MAX_TOKENS:
+    name: Maximum Image Tokens
+    description: >-
+      Maximum token budget for each image (default: the model value).
+  LLAMA_ARG_MTMD_BATCH_MAX_TOKENS:
+    name: Multimodal Batch Tokens
+    description: >-
+      Maximum image tokens processed per multimodal batch (default: `1024`).
+  LLAMA_ARG_VIDEO_FPS:
+    name: Video Frame Rate
+    description: >-
+      Frames per second sampled when processing video input (default: `4.0`).
+  LLAMA_ARG_VIDEO_TIMESTAMP_INTERVAL:
+    name: Video Timestamp Interval
+    description: >-
+      Interval in milliseconds between video timestamps (default: `5000`).
+  LLAMA_ARG_MEDIA_ALLOW_PRIVATE_URLS:
+    name: Allow Private Media URLs
+    description: >-
+      Allow media downloads from localhost or private network addresses (default: disabled).
+  LLAMA_ARG_TEMPERATURE:
+    name: Temperature
+    description: >-
+      Sampling randomness (default: `0.8`). Lower values are more deterministic.
+  LLAMA_ARG_TOP_K:
+    name: Top K
+    description: >-
+      Limit token selection to the K most probable tokens (default: `40`). `0` disables it.
+  LLAMA_ARG_TOP_P:
+    name: Top P
+    description: >-
+      Nucleus sampling cumulative probability threshold (default: `0.95`). `1.0` disables it.
+  LLAMA_ARG_MIN_P:
+    name: Minimum Probability
+    description: >-
+      Minimum token probability relative to the most likely token (default: `0.05`). `0.0` disables it.
+  LLAMA_ARG_REPEAT_PENALTY:
+    name: Repetition Penalty
+    description: >-
+      Penalty applied to repeated token sequences (default: `1.0`, disabled).
+      Must be greater than `0`.
+  LLAMA_ARG_PRESENCE_PENALTY:
+    name: Presence Penalty
+    description: >-
+      Penalize tokens already present in the generated text (default: `0.0`, disabled).
+  LLAMA_ARG_FREQUENCY_PENALTY:
+    name: Frequency Penalty
+    description: >-
+      Penalize tokens based on their frequency in the generated text (default: `0.0`, disabled).
+  LLAMA_ARG_BACKEND_SAMPLING:
+    name: Backend Sampling
+    description: >-
+      Enable experimental backend sampling (default: disabled).
+  LLAMA_ARG_CACHE_PROMPT:
+    name: Prompt Caching
+    description: >-
+      Reuse matching prompt prefixes from earlier requests (default: enabled).
+  LLAMA_ARG_CACHE_REUSE:
+    name: Cache Reuse Chunk Size (Tokens)
+    description: >-
+      Minimum chunk size in tokens to reuse through KV shifting (default: `0`).
+      Requires prompt caching.
+  LLAMA_ARG_CONTEXT_SHIFT:
+    name: Context Shifting
+    description: >-
+      Shift context when generating beyond the context limit (default: disabled).
+  LLAMA_ARG_CONT_BATCHING:
+    name: Continuous Batching
+    description: >-
+      Enable continuous/dynamic batching for concurrent requests (default: enabled).
+  LLAMA_ARG_KV_UNIFIED:
+    name: Unified KV Cache
+    description: >-
+      Share one unified KV buffer across inference sequences (default: enabled when Parallel Slots is automatic).
+  LLAMA_ARG_KV_UNIFIED_PER_SLOT:
+    name: KV Context per Slot
+    description: >-
+      Context limit in tokens per parallel slot (default: unset). When set without
+      an explicit context size, the shared KV pool is sized to
+      `parallel slots × this value`.
+  LLAMA_ARG_CTX_CHECKPOINTS:
+    name: Context Checkpoints
+    description: >-
+      Maximum context checkpoints saved per slot (default: `32`).
+  LLAMA_ARG_CHECKPOINT_MIN_SPACING_NT:
+    name: Checkpoint Minimum Spacing (Tokens)
+    description: >-
+      Minimum token spacing between context checkpoints (default: `8192`).
+      `0` has no minimum.
+  LLAMA_ARG_CACHE_RAM:
+    name: Cache RAM (MiB)
+    description: >-
+      Maximum in-RAM prompt-cache size per loaded model (default: `8192` MiB).
+      Decision models default to `0`. `-1` is unlimited and `0` disables the cache.
+  LLAMA_ARG_CACHE_IDLE_SLOTS:
+    name: Cache Idle Slots
+    description: >-
+      Save idle slots to the prompt cache when starting a new task, and clear
+      them when using unified KV. Enabled by default but requires nonzero Cache RAM.
+  LLAMA_ARG_JINJA:
+    name: Jinja Templates
+    description: >-
+      Use the Jinja template engine for chat and tool calling (default: enabled).
+  LLAMA_ARG_THINK:
+    name: Reasoning Output Format
+    description: >-
+      Controls extraction and placement of reasoning tags (default: `auto`).
+      `none` leaves thoughts unparsed in `message.content`. `deepseek` places them
+      in `message.reasoning_content`. `deepseek-legacy` also retains `<think>`
+      tags in `message.content`.
+  LLAMA_ARG_REASONING:
+    name: Reasoning Mode
+    description: >-
+      Enable or disable reasoning, or detect it from the chat template (default: `auto`).
+  LLAMA_ARG_REASONING_EFFORT:
+    name: Reasoning Effort
+    description: >-
+      Optional effort level such as minimal, low, medium, high, xhigh, or max (default: `default`).
+  LLAMA_ARG_THINK_BUDGET:
+    name: Reasoning Token Budget
+    description: >-
+      Reasoning token limit (default: `-1`, unlimited). `0` ends immediately.
+  LLAMA_ARG_THINK_BUDGET_MESSAGE:
+    name: Reasoning Budget Message
+    description: >-
+      Message inserted before the closing reasoning tag when budget is exhausted.
+  LLAMA_ARG_REASONING_PRESERVE:
+    name: Preserve Reasoning History
+    description: >-
+      Preserve reasoning traces in conversation history when supported (default: enabled).
+  LLAMA_ARG_CHAT_TEMPLATE_KWARGS:
+    name: Chat Template Parameters
+    description: >-
+      Additional parameters for the Jinja chat template as a JSON object.
+  LLAMA_ARG_SKIP_CHAT_PARSING:
+    name: Skip Chat Parsing
+    description: >-
+      Return raw content including reasoning and tool-call markup (default: disabled).
+  LLAMA_ARG_PREFILL_ASSISTANT:
+    name: Prefill Assistant Messages
+    description: >-
+      Continue generation when the last message belongs to the assistant (default: enabled).
+  LLAMA_ARG_TIMEOUT:
+    name: HTTP Timeout
+    description: >-
+      Server read and write timeout in seconds (default: `3600`).
+  LLAMA_ARG_SSE_PING_INTERVAL:
+    name: SSE Ping Interval
+    description: >-
+      Seconds between stream keepalive pings (default: `30`). `-1` disables pings.
+  LLAMA_ARG_THREADS_HTTP:
+    name: HTTP Threads
+    description: >-
+      Number of threads used to process HTTP requests (default: `-1`, automatic).
+  LLAMA_ARG_ENDPOINT_METRICS:
+    name: Prometheus Metrics
+    description: >-
+      Enable Prometheus-compatible metrics (default: disabled). In router mode,
+      request model-instance metrics with `GET /metrics?model=<model-id>`.
+  LLAMA_ARG_ENDPOINT_PROPS:
+    name: Editable Server Properties
+    description: >-
+      Allow a selected model instance's global properties to be changed through
+      `POST /props?model=<model-id>` (default: disabled).
+  LLAMA_ARG_ENDPOINT_SLOTS:
+    name: Slot Monitoring
+    description: >-
+      Expose slot monitoring (default: enabled). In router mode, use
+      `GET /slots?model=<model-id>`.
+  LLAMA_ARG_CORS_ORIGINS:
+    name: CORS Origins
+    description: >-
+      Comma-separated allowed origins (default: `*`). The special value `localhost`
+      allows same-origin requests only, such as the built-in UI.
+  LLAMA_ARG_CORS_CREDENTIALS:
+    name: CORS Credentials
+    description: >-
+      Allow credentials in cross-origin requests (default: enabled). When origins
+      are `*`, the server echoes the request Origin and allows credentials.
+      Restrict origins for browser-accessible or untrusted deployments.
+  LLAMA_ARG_OFFLINE:
+    name: Offline Mode
+    description: >-
+      Force use of cached models and prevent network access (default: disabled).
+  LLAMA_ARG_UI_CONFIG:
+    name: Llama Chat Preferences
+    description: >-
+      Default Llama Chat preferences as a JSON object.
+  LLAMA_ARG_LOG_VERBOSITY:
+    name: Log Verbosity
+    description: >-
+      Log level from 0 (generic) to 5 (debug) (default: `3`, info).
+  LLAMA_ARG_LOG_TIMESTAMPS:
+    name: Log Timestamps
+    description: >-
+      Include timestamps in log messages (default: enabled).
+  env_vars:
+    name: Additional Environment Variables
+    description: >-
+      Advanced environment settings such as `HF_TOKEN` or supported `LLAMA_ARG_*`
+      variables. Only variables marked `(env: ...)` in the pinned server's help
+      are read by llama.cpp. Use a model preset for CLI-only options.

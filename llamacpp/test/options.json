@@ -1,0 +1,9 @@
+{
+  "ssl": false,
+  "certfile": "fullchain.pem",
+  "keyfile": "privkey.pem",
+  "LLAMA_ARG_MODELS_DIR": "/data/models",
+  "LLAMA_ARG_MODELS_AUTOLOAD": true,
+  "LLAMA_ARG_EMBEDDINGS": true,
+  "env_vars": []
+}
