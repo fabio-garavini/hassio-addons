@@ -95,9 +95,16 @@ jobs:
 
       - name: 🚀 Get add-on information
         id: info
-        uses: frenck/action-addon-information@v1
-        with:
-          path: "./${{ matrix.addon }}"
+        run: |
+          target="${{ matrix.addon }}"
+          config="${target}/config.yaml"
+          echo "target=${target}" >> "$GITHUB_OUTPUT"
+          for key in image version name description; do
+            value=$(yq --no-colors eval ".${key}" "$config")
+            echo "${key}=${value}" >> "$GITHUB_OUTPUT"
+          done
+          architectures=$(yq --no-colors eval -o=json '.arch' "$config" | jq -c '.')
+          echo "architectures=${architectures}" >> "$GITHUB_OUTPUT"
 
       - name: 🔍 Check add-on arch
         id: check
@@ -295,9 +302,16 @@ jobs:
 
       - name: 🚀 Run add-on information action
         id: info
-        uses: frenck/action-addon-information@v1
-        with:
-          path: "./${{ matrix.addon }}"
+        run: |
+          target="${{ matrix.addon }}"
+          config="${target}/config.yaml"
+          echo "target=${target}" >> "$GITHUB_OUTPUT"
+          for key in image version name description; do
+            value=$(yq --no-colors eval ".${key}" "$config")
+            echo "${key}=${value}" >> "$GITHUB_OUTPUT"
+          done
+          architectures=$(yq --no-colors eval -o=json '.arch' "$config" | jq -c '.')
+          echo "architectures=${architectures}" >> "$GITHUB_OUTPUT"
 
       - name: ℹ️ Get version name tag
         id: version
