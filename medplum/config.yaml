@@ -1,5 +1,5 @@
 name: Medplum
-version: 5.2.18-ha0
+version: 5.2.18-ha1
 slug: medplum
 description: Open-source healthcare platform with FHIR API and web app
 url: https://www.medplum.com

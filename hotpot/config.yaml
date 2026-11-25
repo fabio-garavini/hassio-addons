@@ -1,5 +1,5 @@
 name: Hotpot
-version: 0.4.0-ha2
+version: 0.4.0-ha3
 slug: hotpot
 description: Heatmap renderer and tile server for GPS activity data
 url: https://github.com/erik/hotpot

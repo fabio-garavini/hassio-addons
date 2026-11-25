@@ -1,5 +1,9 @@
 ## Highlights
 
+- **Join the BookOrbit community on Reddit**: r/BookOrbit is now open. Ask for help, show a setup or a library, and trade ideas with other BookOrbit users. Join at https://www.reddit.com/r/BookOrbit/ <!-- icon: MessagesSquare -->
+
+<hr>
+
 - **Every edition of a book, grouped as one**: Group the ebook, the audiobook, a translation and other printings of one book as editions. Lists, series and author pages show the book once, opened at the edition read last, while each edition keeps its own files and progress. Add edition suggests likely matches. iOS 1.12.0 shows editions too and needs BookOrbit 3.10.0 or later. More info: https://bookorbit.app/book-editions <!-- icon: Layers -->
 
 <img width="600" alt="Every edition of a book sits under its title" src="https://github.com/user-attachments/assets/fdf5ebfa-c4c8-4ed3-9361-eed27501198e" />
