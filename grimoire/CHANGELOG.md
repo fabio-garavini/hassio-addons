@@ -1,9 +1,8 @@
 Docker: `docker pull goniszewski/grimoire:1.4.0` (also `1.4` and `latest`, amd64 + arm64).
 
-Add-on upgrades from Grimoire 0.4.4/0.5 automatically preserve and import the existing library; the generic Docker migration guide is not needed.
+Upgrading a v0.5 Docker install? Follow the migration guide first; v0.5 volumes are not compatible with 1.x.
 
 ## Added
-- The add-on automatically imports legacy 0.4.4/0.5 libraries for every owner on first startup, without manual migration steps. The original database and media are preserved.
 - Tags can have an optional description. Add one when creating a tag or edit it
   from the Tags page or a tag's detail page; it shows under the tag name and
   is kept in backups (#186).

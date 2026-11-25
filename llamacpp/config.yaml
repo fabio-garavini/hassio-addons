@@ -1,5 +1,5 @@
 name: llama.cpp
-version: 1.0.0-ha0
+version: 1.0.0-ha1
 slug: llamacpp
 description: Local LLM inference with a multi-model router and OpenAI-compatible API
 url: https://github.com/ggml-org/llama.cpp

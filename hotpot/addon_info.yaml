@@ -5,7 +5,7 @@ source:
   version_template: regex:^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 config:
   version_template: "{{major}}.{{minor}}.{{patch}}-ha{{app_build}}"
-  build: 2
+  build: 3
   image: fabioogaravini/hassio-hotpot
 build:
   image: ghcr.io/erik/hotpot

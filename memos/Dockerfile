@@ -1,5 +1,5 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_VERSION=26.11.2-ha5
+ARG BUILD_VERSION=26.11.2-ha6
 
 FROM ghcr.io/usememos/memos:${BUILD_VERSION%-ha*} AS memos
 
@@ -47,7 +47,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Addon base configuration
 ARG BUILD_ARCH=amd64
 # renovate: datasource=github-releases packageName=hassio-addons/bashio
-ARG BASHIO_VERSION="v0.19.0"
+ARG BASHIO_VERSION="v0.20.0"
 # renovate: datasource=github-releases packageName=just-containers/s6-overlay versioning=regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)\.(?<other>\d+)$
 ARG S6_OVERLAY_VERSION="3.2.1.0"
 # renovate: datasource=github-releases packageName=home-assistant/tempio
