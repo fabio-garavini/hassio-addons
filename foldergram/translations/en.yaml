@@ -23,6 +23,21 @@ configuration:
   IMAGE_DETAIL_SOURCE:
     name: Image Detail Source
     description: Use generated previews or stream original images on image detail pages.
+  VIDEO_DELIVERY_MODE:
+    name: Video Delivery Mode
+    description: Use on-demand streaming or saved MP4 previews for newly imported local videos. Existing videos can be switched in Foldergram settings.
+  HLS_CACHE_DIR:
+    name: Streaming Cache Path
+    description: Optional absolute container path for temporary streaming segments. Leave blank to use `/config/foldergram/hls-cache`.
+  HLS_CACHE_MAX_BYTES:
+    name: Streaming Cache Size Limit
+    description: Maximum total size in bytes for cached streaming segments and conversions in progress. The default is 2 GiB.
+  HLS_CACHE_MAX_AGE_HOURS:
+    name: Streaming Cache Maximum Age
+    description: Number of hours unused streaming segments can remain in the cache. Must be greater than zero.
+  HLS_TRANSCODE_CONCURRENCY:
+    name: Video Transcoding Concurrency
+    description: Number of video conversions that can run at once, from 1 to 8.
   CSRF_TRUSTED_ORIGINS:
     name: Additional Trusted Origins
     description: Optional comma-separated browser origins allowed for mutating API requests when using an external reverse proxy.
