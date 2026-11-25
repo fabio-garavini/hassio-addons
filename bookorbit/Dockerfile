@@ -1,6 +1,6 @@
 # check=skip=SecretsUsedInArgOrEnv
 
-FROM ghcr.io/bookorbit/bookorbit:3.9.0
+FROM ghcr.io/bookorbit/bookorbit:3.10.0
 
 # Environment variables
 ENV \
