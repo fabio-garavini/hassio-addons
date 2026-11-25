@@ -33,11 +33,11 @@ schema:
   GALLERY_EXCLUDED_FOLDERS: str?
   DERIVATIVE_MODE: list(eager|lazy)
   IMAGE_DETAIL_SOURCE: list(preview|original)
-  VIDEO_DELIVERY_MODE: list(streaming|previews)
+  VIDEO_DELIVERY_MODE: list(streaming|previews)?
   HLS_CACHE_DIR: str?
-  HLS_CACHE_MAX_BYTES: int(1,)
-  HLS_CACHE_MAX_AGE_HOURS: float(0.0,)
-  HLS_TRANSCODE_CONCURRENCY: int(1,8)
+  HLS_CACHE_MAX_BYTES: int(1,)?
+  HLS_CACHE_MAX_AGE_HOURS: float(0.0,)?
+  HLS_TRANSCODE_CONCURRENCY: int(1,8)?
   CSRF_TRUSTED_ORIGINS: str?
   env_vars:
     - key: match(^[A-Za-z0-9_-]+$)
@@ -51,11 +51,6 @@ options:
   GALLERY_EXCLUDED_FOLDERS: ""
   DERIVATIVE_MODE: eager
   IMAGE_DETAIL_SOURCE: preview
-  VIDEO_DELIVERY_MODE: streaming
-  HLS_CACHE_DIR: ""
-  HLS_CACHE_MAX_BYTES: 2147483648
-  HLS_CACHE_MAX_AGE_HOURS: 24
-  HLS_TRANSCODE_CONCURRENCY: 1
   env_vars: []
 ports:
   8080/tcp: null
