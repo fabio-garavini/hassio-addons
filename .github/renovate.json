@@ -49,7 +49,7 @@
           "*/addon_info.yaml",
           "*/Dockerfile"
         ],
-        "executionMode": "update"
+        "executionMode": "branch"
       },
       "maxMajorIncrement": 0
     },
@@ -67,13 +67,13 @@
       "groupName": "opencloud"
     },
     {
-      "description": "Group add-on base images into one PR",
+      "description": "Group add-on base images into one PR per app",
       "matchPackageNames": [
         "hassio-addons/bashio",
         "home-assistant/tempio",
         "just-containers/s6-overlay"
       ],
-      "groupName": "add-on base images"
+      "groupName": "{{parentDir}} base images"
     },
     {
       "description": "Group n8n core with its task runner",
