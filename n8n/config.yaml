@@ -22,7 +22,6 @@ backup_exclude:
   - "**/logs"
 schema:
   N8N_LOG_LEVEL: list(error|warn|info|debug)
-  TZ: str?
   GENERIC_TIMEZONE: str?
   ssl: bool
   certfile: str?

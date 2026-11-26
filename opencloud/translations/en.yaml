@@ -7,8 +7,6 @@ configuration:
       This must be set to the url you use to connect to OpenCloud (ex: https://homeassistant.local:9200)
   OC_BASE_DATA_PATH:
     name: Storage Location
-  TZ:
-    name: Timezone
   ssl:
     name: SSL
     description: >-

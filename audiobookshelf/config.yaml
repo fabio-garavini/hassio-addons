@@ -23,12 +23,10 @@ backup: cold
 backup_exclude:
   - "**/logs"
 schema:
-  TZ: str?
   ssl: bool
   certfile: str?
   keyfile: str?
 options:
-  TZ: Etc/UTC
   ssl: true
   certfile: fullchain.pem
   keyfile: privkey.pem

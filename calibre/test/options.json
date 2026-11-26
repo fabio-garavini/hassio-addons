@@ -1,7 +1,6 @@
 {
   "PUID": 0,
   "PGID": 0,
-  "TZ": "Etc/UTC",
   "FILE_MANAGER_PATH": "/share/calibre",
   "storage_mounts": [],
   "env_vars": []

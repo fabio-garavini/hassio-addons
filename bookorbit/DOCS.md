@@ -74,7 +74,6 @@ Highlights:
 | `PUID`               | integer | Yes      | `0`               | **User ID** under which BookOrbit runs. Match this to a real user on your host if your books live on mounted storage owned by that user. Leave at `0` if unsure.        |
 | `PGID`               | integer | Yes      | `0`               | **Group ID** under which BookOrbit runs. See `PUID` above.                                                                                                             |
 | `JWT_SECRET`         | string  | Yes      | random value               | **App secrets** should be set to a unique long random secret                                                                                                |
-| `TZ`                 | string  | No       | `Etc/UTC`         | Timezone used for displaying dates and times. Example: `Europe/Rome`.                                                                                                  |
 | `env_vars`           | list    | No       | `[]`              | Additional environment variables to inject into the container. Each entry has a `key` (must match `^[A-Za-z0-9_-]+$`) and a `value`. Useful for advanced settings. |
 
 > [!TIP]

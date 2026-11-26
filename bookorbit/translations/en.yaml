@@ -11,13 +11,6 @@ configuration:
       Group ID
 
       If you're not sure, leave it as default.
-  TZ:
-    name: Timezone
-    description: >-
-      Timezone used for displaying dates and times. (Default: `Etc/UTC`)
-
-      You can find your timezone identifier here:
-      https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   ssl:
     name: SSL
     description: >-

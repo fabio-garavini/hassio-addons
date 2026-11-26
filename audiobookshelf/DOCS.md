@@ -38,7 +38,6 @@ database or web server required.
 
 | Option     | Type    | Required | Default          | Description                                                                                                                                                                                  |
 | ---------- | ------- | -------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `TZ`       | string  | No       | `Etc/UTC`        | Timezone used by the app for logs and scheduled tasks (e.g. `Europe/Rome`). Use any [TZ database name](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).                       |
 | `ssl`      | boolean | Yes      | `true`           | Serve the Web UI over HTTPS. If `certfile`/`keyfile` are not provided, a self-signed certificate is generated automatically (your browser will show a warning the first time).                |
 | `certfile` | string  | No       | `fullchain.pem`  | Name of the SSL certificate file inside `/ssl/` (typically provided by the Let's Encrypt app). Example: `fullchain.pem`.                                                                     |
 | `keyfile`  | string  | No       | `privkey.pem`    | Name of the SSL private key file inside `/ssl/`. Example: `privkey.pem`.                                                                                                                     |

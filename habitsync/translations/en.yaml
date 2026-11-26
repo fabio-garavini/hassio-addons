@@ -1,8 +1,6 @@
 configuration:
   users:
     name: Users
-  TZ:
-    name: Timezone
   ssl:
     name: SSL
     description: >-

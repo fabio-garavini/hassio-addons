@@ -22,10 +22,8 @@ ports_description:
 schema:
   PUID: int(0,)
   PGID: int(0,)
-  TZ: str?
   CLI_ARGS: str?
 options:
   PUID: 0
   PGID: 0
-  TZ: Etc/UTC
 image: fabioogaravini/hassio-luanti

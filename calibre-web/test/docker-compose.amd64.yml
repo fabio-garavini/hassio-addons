@@ -8,6 +8,8 @@ services:
         BUILD_ARCH: amd64
         BUILD_VERSION: ${VERSION:-latest}
     container_name: calibre-web-amd64
+    environment:
+      - TZ=Etc/UTC
     ports:
       - "8080:8080"
     volumes:

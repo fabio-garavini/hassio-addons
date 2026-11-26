@@ -2,7 +2,6 @@
   "ssl": false,
   "certfile": "fullchain.pem",
   "keyfile": "privkey.pem",
-  "TZ": "Etc/UTC",
   "General": {
     "DownloadImages": false,
     "RenewImagesDuration": 30,

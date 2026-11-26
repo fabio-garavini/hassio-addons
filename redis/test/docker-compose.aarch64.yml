@@ -8,6 +8,8 @@ services:
         BUILD_ARCH: aarch64
         BUILD_VERSION: ${VERSION:-latest}
     container_name: redis-aarch64
+    environment:
+      - TZ=Etc/UTC
     ports:
       - 6379:6379
       - 8001:8001

@@ -4,6 +4,5 @@
   "keyfile": "privkey.pem",
   "ingress_user": "admin",
   "PUID": 1000,
-  "PGID": 1000,
-  "TZ": "Etc/UTC"
+  "PGID": 1000
 }

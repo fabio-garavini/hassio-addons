@@ -125,7 +125,6 @@ devices:
   - /dev/vdf3
   - /dev/vdf4
 schema:
-  TZ: str?
   IMMICH_LOG_LEVEL: list(verbose|debug|log|warn|error)
   ssl: bool
   certfile: str?
@@ -161,7 +160,6 @@ schema:
     - key: match(^[A-Za-z0-9_-]+$)
       value: str
 options:
-  TZ: Etc/UTC
   IMMICH_LOG_LEVEL: log
   ssl: false
   certfile: fullchain.pem

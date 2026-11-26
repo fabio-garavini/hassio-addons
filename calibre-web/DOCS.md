@@ -60,7 +60,6 @@ auto-login.
 | `ingress_user` | string  | No       | `admin`          | Calibre Web username that will be automatically logged in when accessing through the Home Assistant Ingress sidebar panel. Leave as `admin` for first setup, then change it. |
 | `PUID`         | integer | Yes      | `1000`           | **User ID** under which Calibre Web runs. Match this to a real user on your host if you want files on mounted storage to be owned by that user.                              |
 | `PGID`         | integer | Yes      | `1000`           | **Group ID** under which Calibre Web runs. See `PUID` above.                                                                                                                 |
-| `TZ`           | string  | No       | `Etc/UTC`        | Timezone used by the app for logs and timestamps. Example: `Europe/Rome`.                                                                                                    |
 
 > [!TIP]
 > After creating your own user in Calibre Web, set `ingress_user` to that

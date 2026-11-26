@@ -1,6 +1,4 @@
 configuration:
-  TZ:
-    name: Timezone
   ssl:
     name: SSL
     description: >-

@@ -8,6 +8,8 @@ services:
         BUILD_ARCH: aarch64
         BUILD_VERSION: ${VERSION:-latest}
     container_name: nocodb-aarch64
+    environment:
+      - TZ=Etc/UTC
     ports:
       - "8080:8080"
     volumes:

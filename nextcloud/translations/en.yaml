@@ -11,12 +11,6 @@ configuration:
       Group ID used to run Nextcloud. (Default: `1000`)
 
       If you're not sure, leave as default
-  TZ:
-    name: Timezone
-    description: >-
-      Local timezone
-      You can find your timezone identifier here:
-      https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   certfile:
     name: SSL Certificate
     description: >-

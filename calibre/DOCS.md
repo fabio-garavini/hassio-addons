@@ -318,7 +318,6 @@ restart.
 | ------ | ---- | -------- | ------- | ----------- |
 | `PUID` | integer | Yes | `0` | Numeric user ID used to run Calibre. The default is root. Set this to the owner of your files when required by external storage permissions. |
 | `PGID` | integer | Yes | `0` | Numeric group ID used to run Calibre. Normally changed together with `PUID`. |
-| `TZ` | string | No | `Etc/UTC` | Timezone for the app, using a name such as `Europe/Rome`. |
 | `FILE_MANAGER_PATH` | string | No | `/share/calibre` | Initial folder for Selkies file uploads and downloads. This is not the Calibre library setting. The folder must be writable by the configured `PUID`/`PGID`. |
 | `CUSTOM_USER` | string | No | `abc` when authentication is enabled | Username for desktop Web UI HTTP basic authentication. Set this together with `PASSWORD` to enable authentication and choose a non-default username. |
 | `PASSWORD` | password | No | — | Set this together with `CUSTOM_USER` to enable desktop Web UI HTTP basic authentication. Leave both empty only on a trusted network. |
@@ -338,7 +337,6 @@ restart.
 ```yaml
 PUID: 0
 PGID: 0
-TZ: Europe/Rome
 FILE_MANAGER_PATH: /share/calibre
 CUSTOM_USER: calibre-admin
 PASSWORD: "replace-with-a-long-unique-password"

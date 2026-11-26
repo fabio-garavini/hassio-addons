@@ -128,7 +128,6 @@ devices:
 schema:
   PUID: int(0,)
   PGID: int(0,)
-  TZ: str?
   certfile: str?
   keyfile: str?
   ADMIN_USER: str

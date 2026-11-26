@@ -32,12 +32,6 @@ Any random string, used to encrypt PocketBase settings
 
 It's recommended to change the default encryption key
 
-### `TZ`
-
-(*Optional*)
-
-Time zone of the server
-
 <!-- APP_AUTHOR_START -->
 <hr>
 <table>

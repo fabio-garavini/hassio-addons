@@ -126,7 +126,6 @@ devices:
 schema:
   PUID: int(0,)
   PGID: int(0,)
-  TZ: str?
   FILE_MANAGER_PATH: str?
   CUSTOM_USER: str?
   PASSWORD: password?
@@ -146,7 +145,6 @@ schema:
 options:
   PUID: 0
   PGID: 0
-  TZ: Etc/UTC
   FILE_MANAGER_PATH: /share/calibre
   storage_mounts: []
   env_vars: []

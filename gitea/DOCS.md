@@ -9,7 +9,6 @@
 ## ✨ Features
 
 - **User Management**: Custom UID/GID configuration
-- **Time Zone Support**: Optional timezone configuration
 - **Lightweight**: Minimal configuration required
 - **Self-contained**: No external database dependencies
 
@@ -23,7 +22,6 @@
 |--------|------|----------|-------------|---------|
 | `User ID` | integer | Yes | User ID for the Gitea process (≥1000) | `1000` |
 | `Group ID` | integer | Yes | Group ID for the Gitea process (≥1000) | `1000` |
-| `TZ` | string | No | Timezone (e.g., "America/New_York") | System default |
 | `Disable registration` | boolean | No | Disable new user registration | `false` |
 | `Git LFS support` | boolean | No | Enable Git LFS support | `true` |
 | `Disable SSH` | boolean | No | Disable built-in SSH server | `false` |
@@ -48,7 +46,6 @@
 ### Configure
 
 1. (Optional) Set UID/GID matching your system user
-1. Configure timezone if needed
 1. (Recommended) Set a custom SECRET_KEY for enhanced security
 1. Start the addon
 

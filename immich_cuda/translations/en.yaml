@@ -11,13 +11,6 @@ configuration:
       Group ID used to run Immich. (Default: `0` → `root`)
 
       If you're not sure, leave it as default.
-  TZ:
-    name: Timezone
-    description: >-
-      Timezone used for displaying dates and times. (Default: `Etc/UTC`)
-
-      You can find your timezone identifier here:
-      https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   IMMICH_LOG_LEVEL:
     name: Log Level
   ssl:

@@ -19,7 +19,6 @@ schema:
   ADMIN_EMAIL: str
   ADMIN_PASSWORD: password
   ENCRYPTION_KEY: password
-  TZ: str?
 options:
   ENCRYPTION_KEY: xogmwSqmcMauBi8wootWVdBz4PCMEjC8
 ports:

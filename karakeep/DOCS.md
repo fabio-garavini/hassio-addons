@@ -7,7 +7,6 @@ The Karakeep Addon is a bookmark-everything app with a touch of AI, designed spe
 ## Configuration
 
 - `NEXTAUTH_URL`: The URL of the Karakeep instance. Example `http://<homeassistant-ip>:3011`.
-- `TZ`: The timezone to use for the addon. Example `Europe/Rome`.
 - `DISABLE_SIGNUPS`: Whether to disable signups for new users. Defaults to `false`.
 - `NEXTAUTH_SECRET`: A secret key used for authentication. Defaults to a random value.
 - `MAX_ASSET_SIZE_MB`: The maximum size of assets (e.g. images) that can be uploaded. Defaults to `4`.

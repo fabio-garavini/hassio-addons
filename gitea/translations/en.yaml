@@ -7,13 +7,6 @@ configuration:
     name: Group ID
     description: >-
       Group ID used to run Gitea
-  TZ:
-    name: Timezone
-    description: >-
-      Timezone used for displaying dates and times. (Default: `Etc/UTC`)
-
-      You can find your timezone identifier here:
-      https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   DISABLE_REGISTRATION:
     name: Disable registration
     description: >-

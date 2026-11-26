@@ -2,7 +2,6 @@
   "OC_LOG_LEVEL": "warn",
   "OC_BASE_DATA_PATH": "/share/opencloud",
   "OC_URL": "https://localhost:8080",
-  "TZ": "Etc/UTC",
   "ssl": true,
   "certfile": "fullchain.pem",
   "keyfile": "privkey.pem",

@@ -29,7 +29,6 @@ A unofficial immich client to provide better tools to organize and manage your i
 | `POWER_TOOLS_ENDPOINT_URL`    | No       | -     | SURL of the Power Tools endpoint (Used for share links) |
 | `GOOGLE_MAPS_API_KEY`    | No       | -     | Google Maps API Key for heatmap |
 | `GEMINI_API_KEY`    | No       | -     | Gemini API Key for parsing search query in "Find" |
-| `TZ`      | Yes      | `Etc/UTC`       | Timezone (e.g., `Europe/London`) |
 
 <!-- APP_AUTHOR_START -->
 <hr>

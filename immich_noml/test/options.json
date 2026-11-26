@@ -1,5 +1,4 @@
 {
-  "TZ": "Etc/UTC",
   "IMMICH_LOG_LEVEL": "log",
   "ssl": true,
   "certfile": "fullchain.pem",
