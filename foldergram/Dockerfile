@@ -1,5 +1,5 @@
 
-FROM ghcr.io/foldergram/foldergram:1.4.0
+FROM ghcr.io/foldergram/foldergram:1.4.1
 
 # Generic app variables
 ENV \
