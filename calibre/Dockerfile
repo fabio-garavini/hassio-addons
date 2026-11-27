@@ -1,5 +1,5 @@
 
-FROM lscr.io/linuxserver/calibre:v9.19.0-ls434
+FROM lscr.io/linuxserver/calibre:v9.19.0-ls435
 
 ENV \
     START_DOCKER=false \
