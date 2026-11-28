@@ -1,10 +1,10 @@
 # check=skip=SecretsUsedInArgOrEnv
 
-ARG BUILD_VERSION=2.49.5-ha42
+ARG BUILD_VERSION=2.49.8-ha43
 
 FROM ghcr.io/n8n-io/runners:${BUILD_VERSION%-ha*} AS runner
 
-FROM ghcr.io/n8n-io/n8n:2.49.5
+FROM ghcr.io/n8n-io/n8n:2.49.8
 
 # n8n environment variables
 # hadolint ignore=DL3064
