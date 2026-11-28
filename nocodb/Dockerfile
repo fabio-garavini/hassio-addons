@@ -1,5 +1,5 @@
 
-FROM docker.io/nocodb/nocodb:2026.10.2
+FROM docker.io/nocodb/nocodb:2026.11.0
 
 # Container Environment variables
 ENV \
