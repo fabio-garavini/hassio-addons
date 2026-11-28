@@ -1,5 +1,5 @@
 # check=skip=SecretsUsedInArgOrEnv
-ARG BUILD_VERSION=26.11.2-ha6
+ARG BUILD_VERSION=26.11.3-ha7
 
 FROM ghcr.io/usememos/memos:${BUILD_VERSION%-ha*} AS memos
 
